@@ -1,0 +1,48 @@
+{
+  "name": "cuke-monkey",
+  "version": "0.1.0",
+  "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
+  "keywords": [
+    "simian",
+    "meteor",
+    "velocity",
+    "bdd",
+    "atdd",
+    "cucumber",
+    "webdriverio",
+    "selenium",
+    "phantom",
+    "testing",
+    "saucelabs"
+  ],
+  "author": "Sam Hatoum <sam@xolv.io> (http://xolv.io)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xolvio/cuke-monkey"
+  },
+  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/xolvio/cuke-monkey/issues"
+  },
+  "main": "lib/cuker.js",
+  "bin": {
+    "cuker": "./bin/cuke-monkey"
+  },
+  "dependencies": {
+    "async": "~0.9.0",
+    "chai": "~2.1.2",
+    "chai-as-promised": "~4.3.0",
+    "cucumber": "~0.4.8",
+    "minimist": "~1.1.0",
+    "phantomjs": "~1.9.16",
+    "saucelabs": "~0.1.1",
+    "selenium-launcher": "~1.1.11",
+    "webdriverio": "~2.4.5",
+    "ddp": "~0.10.0",
+    "freeport": "~1.0.4"
+  },
+  "devDependencies": {
+    "fs-extra": "~0.17.0"
+  }
+}
