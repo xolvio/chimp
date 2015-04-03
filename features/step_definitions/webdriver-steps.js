@@ -8,13 +8,7 @@ var myStepDefinitionsWrapper = function () {
 
   this.Then(/^I see the title of "([^"]*)"$/, function (title, callback) {
     this.browser.
-      getTitle().should.become(title).
-      notify(function(){
-        console.log(this);
-        callback();
-      }, function() {
-        console.log(this,arguments)
-      });
+      getTitle().should.become(title).and.notify(callback);
   });
 
 };
