@@ -31,10 +31,12 @@ var myStepDefinitionsWrapper = function () {
     });
 
     proc.stdout.on('data', function (data) {
+      //process.stdout.write(data);
       stdOutMessages.push(data.toString());
     });
 
     proc.stderr.on('data', function (data) {
+      //process.stderr.write(data);
       stdErrMessages.push(data.toString());
     });
 
@@ -55,7 +57,6 @@ var myStepDefinitionsWrapper = function () {
     } else {
       callback.fail(message + ' was not seen in the console log');
     }
-
 
   });
 

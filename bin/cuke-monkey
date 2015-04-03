@@ -7,7 +7,6 @@ var argv = minimist(process.argv, {
     "browser": "phantomjs",
     "platform": "ANY",
     "name": "",
-    "tags": [],
     "debug": false,
     "host": "localhost",
     "path": "features",
