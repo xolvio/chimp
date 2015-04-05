@@ -6,4 +6,4 @@ Feature: Use browser inside steps
 
   Scenario: Run test
     When  I visit "http://www.google.com"
-    Then  I see the title of "Googled"
+    Then  I see the title of "Google"
