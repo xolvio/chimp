@@ -13,8 +13,6 @@ var argv = minimist(process.argv, {
     "user": "",
     "key": "",
     "log": "silent",
-    "ddp_host": "localhost",
-    "ddp_port": "3000",
     "timeoutsAsyncScript": 10000
   },
   'boolean': true
@@ -22,7 +20,7 @@ var argv = minimist(process.argv, {
 
 try {
   var cuker = new Cuker(argv);
-  cuker.run(function(err) {
+  cuker.run(function (err) {
     if (err) {
       process.exit(2);
     }
