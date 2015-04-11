@@ -14,6 +14,7 @@ Cuke Monkey can be used locally or configured to use [Simian](http://simian.io) 
 - Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)
 - Leverage the power of PhantomJS, Selenium, SauceLabs for seamless integration between optimized local development
 and full continuous integration support.
+- Use promises everywhere
 - Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
 
 ## Quick Start
