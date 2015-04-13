@@ -35,7 +35,7 @@
     "chai": "~2.2.0",
     "chai-as-promised": "~4.3.0",
     "cucumber": "git+https://github.com/xolvio/cucumber-js.git#cuke-monkey",
-    "ddp": "~0.10.0",
+    "ddp": "git+https://github.com/xolvio/node-ddp-client.git#master",
     "freeport": "~1.0.4",
     "minimist": "~1.1.0",
     "phantomjs-bin": "~1.0.1",
