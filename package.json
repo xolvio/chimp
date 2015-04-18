@@ -42,7 +42,7 @@
     "progress": "^1.1.8",
     "saucelabs": "~0.1.1",
     "selenium-standalone": "^4.2.2",
-    "webdriverio": "~2.4.5"
+    "webdriverio": "git+https://github.com/xolvio/webdriverio.git#dispatch"
   },
   "devDependencies": {
     "fs-extra": "~0.17.0"
