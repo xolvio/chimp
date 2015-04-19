@@ -9,7 +9,6 @@ var argv = minimist(process.argv, {
     "name": "",
     "debug": false,
     "host": "localhost",
-    "port": "4444",
     "path": "features",
     "user": "",
     "key": "",
