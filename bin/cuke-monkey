@@ -20,13 +20,8 @@ var argv = minimist(process.argv, {
 
 try {
   var cuker = new Cuker(argv);
-  cuker.run(function (err) {
-    if (err) {
-      process.exit(2);
-    }
-    else {
-      process.exit(0);
-    }
+  cuker.start(function (err) {
+    process.exit(err ? 2 : 0);
   });
 } catch (ex) {
   process.stderr.write(ex.stack + '\n');

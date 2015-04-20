@@ -41,8 +41,11 @@
     "phantomjs-bin": "~1.0.1",
     "progress": "^1.1.8",
     "saucelabs": "~0.1.1",
-    "selenium-standalone": "^4.2.2",
-    "webdriverio": "~2.4.5"
+    "selenium-standalone": "^4.4.0",
+    "webdriverio": "~2.4.5",
+    "chokidar": "~1.0.1",
+    "fibers": "~1.0.5",
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "fs-extra": "~0.17.0"
