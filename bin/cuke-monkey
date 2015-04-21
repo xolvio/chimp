@@ -19,11 +19,26 @@ var argv = minimist(process.argv, {
 });
 
 try {
-  var cuker = new Cuker(argv);
-  cuker.start(function (err) {
-    process.exit(err ? 2 : 0);
-  });
+  if (!argv.port) {
+    freeport(function (error, port) {
+      if (error) {
+        throw error;
+      }
+      argv.port = port;
+      startCuker(argv);
+    });
+  } else {
+    startCuker(argv)
+  }
+
 } catch (ex) {
   process.stderr.write(ex.stack + '\n');
   process.exit(2);
+}
+
+function startCuker(options) {
+  var cuker = new Cuker(options);
+  cuker.start(function (err) {
+    process.exit(err ? 2 : 0);
+  });
 }

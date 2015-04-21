@@ -25,6 +25,9 @@
   "bugs": {
     "url": "https://github.com/xolvio/cuke-monkey/issues"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "main": "lib/cuker.js",
   "bin": {
     "cuke-monkey": "./bin/cuke-monkey"
@@ -48,6 +51,7 @@
     "underscore": "~1.8.3"
   },
   "devDependencies": {
-    "fs-extra": "~0.17.0"
+    "fs-extra": "~0.17.0",
+    "jest-cli": "^0.4.0"
   }
 }
