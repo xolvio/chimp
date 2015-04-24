@@ -28,7 +28,7 @@
   "scripts": {
     "test": "jest"
   },
-  "main": "lib/cuker.js",
+  "main": "lib/monkey.js",
   "bin": {
     "cuke-monkey": "./bin/cuke-monkey"
   },
@@ -48,7 +48,8 @@
     "webdriverio": "~2.4.5",
     "chokidar": "~1.0.1",
     "fibers": "~1.0.5",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "loglevel": "~1.2.0"
   },
   "devDependencies": {
     "fs-extra": "~0.17.0",

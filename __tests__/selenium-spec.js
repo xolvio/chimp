@@ -9,7 +9,7 @@ describe('Selenium', function () {
       var Selenium = require('../lib/selenium');
       var createSelenium = function () {
         new Selenium();
-      }
+      };
 
       expect(createSelenium).toThrow('options is required');
     });
@@ -19,7 +19,7 @@ describe('Selenium', function () {
       var options = {};
       var createSelenium = function () {
         new Selenium(options);
-      }
+      };
 
       expect(createSelenium).toThrow('options.port is required');
     });
@@ -31,6 +31,24 @@ describe('Selenium', function () {
 
       expect(selenium.options.port).toBe('4444');
     });
+
+    it('does not modify original options', function () {
+      var Selenium = require('../lib/selenium');
+
+      var originalOptions = {
+        port: 4444,
+        someVar: 1234
+      };
+      var selenium = new Selenium(originalOptions);
+      originalOptions.someVar = 5678;
+
+      expect(selenium.options.someVar).toBe(1234);
+    });
+
+    // TODO
+    it('creates a singleton by default', function() {});
+    it('does not create a singleton when disable-singleton is present', function() {});
+
 
   });
 
@@ -69,10 +87,10 @@ describe('Selenium', function () {
       selenium.install = jest.genMockFunction();
       selenium.install.mockImplementation(function (callback) {
         callback(null);
-      })
+      });
 
       var callback = function () {};
-      selenium.run(callback);
+      selenium.start(callback);
 
       expect(seleniumStandalone.start.mock.calls[0][0].seleniumArgs).toEqual(['-port', port]);
     });
@@ -84,14 +102,14 @@ describe('Selenium', function () {
       selenium.install = jest.genMockFunction();
       selenium.install.mockImplementation(function (callback) {
         callback(null);
-      })
+      });
       var seleniumChild = {};
       seleniumStandalone.start.mockImplementation(function (options, callback) {
         callback(null, seleniumChild);
-      })
+      });
 
       var callback = function () {};
-      selenium.run(callback);
+      selenium.start(callback);
 
       expect(selenium.child).toBe(seleniumChild);
     });
@@ -105,14 +123,14 @@ describe('Selenium', function () {
         selenium.install = jest.genMockFunction();
         selenium.install.mockImplementation(function (callback) {
           callback(null);
-        })
+        });
         var seleniumChild = {};
         seleniumStandalone.start.mockImplementation(function (options, callback) {
           callback(null, seleniumChild);
-        })
+        });
 
         var callback = jest.genMockFunction();
-        selenium.run(callback);
+        selenium.start(callback);
 
         expect(callback.mock.calls[0]).toEqual([null]);
       });
@@ -128,14 +146,14 @@ describe('Selenium', function () {
         selenium.install = jest.genMockFunction();
         selenium.install.mockImplementation(function (callback) {
           callback(null);
-        })
+        });
         var error = new Error('Selenium start error');
         seleniumStandalone.start.mockImplementation(function (options, callback) {
           callback(error);
-        })
+        });
 
         var callback = jest.genMockFunction();
-        selenium.run(callback);
+        selenium.start(callback);
 
         expect(callback.mock.calls[0]).toEqual([error]);
       });
@@ -144,7 +162,7 @@ describe('Selenium', function () {
 
   });
 
-  describe('interrupt', function () {
+  describe('stop', function () {
 
     describe('when selenium is running', function () {
 
@@ -157,7 +175,7 @@ describe('Selenium', function () {
         selenium.child = seleniumChild;
 
         var callback = jest.genMockFunction();
-        selenium.interrupt(callback);
+        selenium.stop(callback);
 
         expect(seleniumChild.kill).toBeCalled();
         expect(selenium.child).toBe(null);
@@ -173,12 +191,22 @@ describe('Selenium', function () {
         var selenium = new Selenium({port: '4444'});
 
         var callback = jest.genMockFunction();
-        selenium.interrupt(callback);
+        selenium.stop(callback);
 
+        expect(typeof selenium.child).toBe('undefined');
         expect(callback).toBeCalledWith(null);
+
       });
 
     });
+
+  });
+
+  describe('interrupt', function () {
+
+    // TODO
+    it('should not call kill by default', function() {});
+    it('should call kill when --disable-singleton is enabled', function() {});
 
   });
 

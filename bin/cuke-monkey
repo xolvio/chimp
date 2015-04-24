@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-var Cuker = require('../lib/cuker.js');
-var minimist = require('minimist');
+var Monkey    = require('../lib/monkey.js'),
+    minimist = require('minimist'),
+    freeport = require('freeport');
 
 var argv = minimist(process.argv, {
   'default': {
@@ -25,10 +26,10 @@ try {
         throw error;
       }
       argv.port = port;
-      startCuker(argv);
+      startMonkey(argv);
     });
   } else {
-    startCuker(argv)
+    startMonkey(argv)
   }
 
 } catch (ex) {
@@ -36,9 +37,9 @@ try {
   process.exit(2);
 }
 
-function startCuker(options) {
-  var cuker = new Cuker(options);
-  cuker.start(function (err) {
+function startMonkey (options) {
+  var monkey = new Monkey(options);
+  monkey.init(function (err) {
     process.exit(err ? 2 : 0);
   });
 }
