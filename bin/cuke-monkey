@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var Cuker = require('../lib/cuker.js');
 var minimist = require('minimist');
+var freeport = require('freeport');
 
 var argv = minimist(process.argv, {
   'default': {
