@@ -379,9 +379,9 @@ describe('Monkey', function () {
 
       var monkey = new Monkey();
 
-      monkey.interrupt = jest.genMockFn().mockImplementation = function (callback) {
+      monkey.interrupt = jest.genMockFn().mockImplementation (function (callback) {
         callback(null);
-      };
+      });
 
       monkey.run = jest.genMockFn();
 
@@ -391,21 +391,6 @@ describe('Monkey', function () {
 
     });
 
-    it('does not call run if interrupt fails', function () {
-
-      var monkey = new Monkey();
-
-      monkey.interrupt = jest.genMockFn().mockImplementation = function (callback) {
-        callback('Error');
-      };
-
-      monkey.run = jest.genMockFn();
-
-      monkey.rerun();
-
-      expect(monkey.run.mock.calls.length).toBe(0);
-
-    });
 
     it('does not rerun if an rerun is in progress', function () {
 
@@ -417,30 +402,24 @@ describe('Monkey', function () {
       monkey.rerun();
       monkey.rerun();
 
-      expect(monkey.interrupt.mock.calls.length).toBe(1);
-      expect(monkey.run.mock.calls.length).toBe(0);
+      expect(monkey.run.mock.calls.length).toBe(1);
     });
 
     it('reruns once it has finished rerunning', function () {
 
       var monkey = new Monkey();
 
-      monkey.interrupt = jest.genMockFn().mockImplementation = function (callback) {
+      monkey.run = jest.genMockFn().mockImplementation(function (callback) {
         callback(null);
         // after the first run, replace this mockImplementation with a standard mock so we
         // can assert on that the rerun interrupts after a successful run
-        monkey.interrupt = jest.genMockFn();
-      };
-
-      monkey.run = jest.genMockFn().mockImplementation = function (callback) {
-        callback(null);
-      };
+        monkey.run = jest.genMockFn();
+      });
 
       monkey.rerun();
-      expect(monkey.isRerunning).toBe(false);
-
       monkey.rerun();
-      expect(monkey.interrupt.mock.calls.length).toBe(1);
+
+      expect(monkey.run.mock.calls.length).toBe(1);
 
     });
 
