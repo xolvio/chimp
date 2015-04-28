@@ -45,9 +45,28 @@ describe('Selenium', function () {
       expect(selenium.options.someVar).toBe(1234);
     });
 
-    // TODO
-    it('creates a singleton by default', function () {});
-    it('does not create a singleton when --selenium-singleton is false', function () {});
+    it('creates a singleton by default', function () {
+      var Selenium = require('../lib/selenium');
+
+      var selenium = new Selenium({port: 4444});
+
+      var selenium2 = new Selenium({port: 5678});
+
+      expect(selenium).toBe(selenium2);
+
+    });
+
+    it('does not create a singleton when --clean-selenium-server is truthy', function () {
+
+      var Selenium = require('../lib/selenium');
+
+      var selenium = new Selenium({port: '4444', 'clean-selenium-server': true});
+
+      var selenium2 = new Selenium({port: 5678});
+
+      expect(selenium).not.toBe(selenium2);
+
+    });
 
 
   });
