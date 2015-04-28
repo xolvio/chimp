@@ -1,5 +1,6 @@
 jest.dontMock('../lib/monkey.js');
 jest.dontMock('underscore');
+jest.dontMock('async');
 
 //jest.dontMock('loglevel'); require('loglevel').setLevel('TRACE');
 
@@ -40,9 +41,11 @@ describe('Monkey', function () {
   });
 
   describe('bin path', function () {
+
     it('sets the bin path to the location of cuke-monkey', function () {
       expect(Monkey.bin.match(/cuke-monkey\/bin\/cuke-monkey$/)).not.toBe(null);
     });
+
   });
 
   describe('init', function () {
@@ -157,11 +160,11 @@ describe('Monkey', function () {
 
       var allCallback = chokidar.watcher.on.mock.calls[1][1];
 
-      monkey._interruptAndRun = jest.genMockFunction();
+      monkey.rerun = jest.genMockFunction();
 
       allCallback('not-unlink');
 
-      expect(monkey._interruptAndRun.mock.calls.length).toBe(1);
+      expect(monkey.rerun.mock.calls.length).toBe(1);
 
     });
 
@@ -182,17 +185,18 @@ describe('Monkey', function () {
 
       var allCallback = chokidar.watcher.on.mock.calls[1][1];
 
-      monkey._interruptAndRun = jest.genMockFunction();
+      monkey.rerun = jest.genMockFunction();
 
       allCallback('unlink', '/path/some.feature');
 
-      expect(monkey._interruptAndRun.mock.calls.length).toBe(0);
+      expect(monkey.rerun.mock.calls.length).toBe(0);
 
     });
 
     it('a deleted non-feature triggers the interrupt and run sequence', function () {
 
       var chokidar = require('chokidar');
+      var async = require('async');
       var Monkey = require('../lib/monkey.js');
 
       var monkey = new Monkey();
@@ -207,11 +211,11 @@ describe('Monkey', function () {
 
       var allCallback = chokidar.watcher.on.mock.calls[1][1];
 
-      monkey._interruptAndRun = jest.genMockFunction();
+      monkey.rerun = jest.genMockFunction();
 
       allCallback('unlink', '/path/some.feature.js');
 
-      expect(monkey._interruptAndRun.mock.calls.length).toBe(1);
+      expect(monkey.rerun.mock.calls.length).toBe(1);
 
     });
 
@@ -252,7 +256,7 @@ describe('Monkey', function () {
       var callback = jest.genMockFn();
       monkey.run(callback);
 
-      expect(monkey.interrupt.mock.calls.length).toBe(1);
+      expect(monkey.interrupt.mock.calls.length).toBe(2);
       expect(monkey._startProcesses.mock.calls.length).toBe(1);
       expect(callback.mock.calls.length).toBe(1);
 
@@ -274,23 +278,23 @@ describe('Monkey', function () {
 
     });
 
-    it('bubbles start processes callback without modifying the arguments', function () {
+    it('stops all processes on successful runs', function () {
 
       var monkey = new Monkey();
-      var someArgs = ['some', 'args'];
 
       monkey.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
         return callback();
       });
       monkey._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
-        return callback.apply(this, someArgs);
+        return callback();
       });
+
+      monkey.stop = jest.genMockFunction();
 
       var callback = jest.genMockFn();
       monkey.run(callback);
 
-      expect(callback.mock.calls.length).toBe(1);
-      expect(callback.mock.calls[0]).toEqual(['some', 'args']);
+      expect(monkey.interrupt.mock.calls.length).toBe(2);
 
     });
 
@@ -335,6 +339,7 @@ describe('Monkey', function () {
       var Monkey = require('../lib/monkey');
 
       var monkey = new Monkey();
+      monkey.processes = [{interrupt: jest.genMockFn()}];
       var someArgs = ['some', 'args'];
 
       async.series = jest.genMockFunction().mockImplementation(function (processes, callback) {
@@ -349,11 +354,107 @@ describe('Monkey', function () {
 
     });
 
+    it('calls the callback when no processes have been started', function () {
+
+      var async = require('async');
+      var Monkey = require('../lib/monkey');
+
+      var monkey = new Monkey();
+
+      async.series = jest.genMockFn();
+
+      var callback = jest.genMockFn();
+      monkey.interrupt(callback);
+
+      expect(callback.mock.calls.length).toBe(1);
+      expect(async.series.mock.calls.length).toBe(0);
+
+    });
+
+  });
+
+  describe('rerun', function () {
+
+    it('calls run if interrupt is successful', function () {
+
+      var monkey = new Monkey();
+
+      monkey.interrupt = jest.genMockFn().mockImplementation = function (callback) {
+        callback(null);
+      };
+
+      monkey.run = jest.genMockFn();
+
+      monkey.rerun();
+
+      expect(monkey.run.mock.calls.length).toBe(1);
+
+    });
+
+    it('does not call run if interrupt fails', function () {
+
+      var monkey = new Monkey();
+
+      monkey.interrupt = jest.genMockFn().mockImplementation = function (callback) {
+        callback('Error');
+      };
+
+      monkey.run = jest.genMockFn();
+
+      monkey.rerun();
+
+      expect(monkey.run.mock.calls.length).toBe(0);
+
+    });
+
+    it('does not rerun if an rerun is in progress', function () {
+
+      var monkey = new Monkey();
+
+      monkey.interrupt = jest.genMockFn();
+      monkey.run = jest.genMockFn();
+
+      monkey.rerun();
+      monkey.rerun();
+
+      expect(monkey.interrupt.mock.calls.length).toBe(1);
+      expect(monkey.run.mock.calls.length).toBe(0);
+    });
+
+    it('reruns once it has finished rerunning', function () {
+
+      var monkey = new Monkey();
+
+      monkey.interrupt = jest.genMockFn().mockImplementation = function (callback) {
+        callback(null);
+        // after the first run, replace this mockImplementation with a standard mock so we
+        // can assert on that the rerun interrupts after a successful run
+        monkey.interrupt = jest.genMockFn();
+      };
+
+      monkey.run = jest.genMockFn().mockImplementation = function (callback) {
+        callback(null);
+      };
+
+      monkey.rerun();
+      expect(monkey.isRerunning).toBe(false);
+
+      monkey.rerun();
+      expect(monkey.interrupt.mock.calls.length).toBe(1);
+
+    });
+
   });
 
   describe('_startProcesses', function () {
 
     it('creates an array of series of processes and starts them', function () {
+
+      var async = require('async');
+
+      var Monkey = require('../lib/monkey.js');
+
+      async.series = jest.genMockFn();
 
       var monkey = new Monkey();
       var processes = [];
@@ -495,65 +596,5 @@ describe('Monkey', function () {
 
   });
 
-  describe('_interruptAndRun', function () {
-
-    it('calls interrupt then run', function () {
-
-      var logLevel = require('loglevel');
-      var Monkey = require('../lib/monkey.js');
-
-      var monkey = new Monkey();
-
-      monkey.interrupt = jest.genMockFn().mockImplementation = function(callback) {
-        callback();
-      };
-      monkey.run = jest.genMockFn().mockImplementation = function(callback) {
-        callback();
-      };
-
-      monkey._interruptAndRun();
-
-      expect(logLevel.error.mock.calls.length).toBe(0);
-
-    });
-
-    it('logs an error when interrupt callback returns an error', function () {
-
-      var logLevel = require('loglevel');
-      var Monkey = require('../lib/monkey.js');
-
-      var monkey = new Monkey();
-
-      monkey.interrupt = jest.genMockFn().mockImplementation = function(callback) {
-        callback('error');
-      };
-
-      monkey._interruptAndRun();
-
-      expect(logLevel.error.mock.calls.length).toBe(1);
-
-    });
-
-    it('logs an error when run callback returns an error', function () {
-
-      var logLevel = require('loglevel');
-      var Monkey = require('../lib/monkey.js');
-
-      var monkey = new Monkey();
-
-      monkey.interrupt = jest.genMockFn().mockImplementation = function(callback) {
-        callback();
-      };
-      monkey.run = jest.genMockFn().mockImplementation = function(callback) {
-        callback('error');
-      };
-
-      monkey._interruptAndRun();
-
-      expect(logLevel.error.mock.calls.length).toBe(1);
-
-    });
-
-  });
 
 });

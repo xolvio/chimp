@@ -46,8 +46,8 @@ describe('Selenium', function () {
     });
 
     // TODO
-    it('creates a singleton by default', function() {});
-    it('does not create a singleton when disable-singleton is present', function() {});
+    it('creates a singleton by default', function () {});
+    it('does not create a singleton when --selenium-singleton is false', function () {});
 
 
   });
@@ -77,7 +77,7 @@ describe('Selenium', function () {
 
   });
 
-  describe('run', function () {
+  describe('start', function () {
 
     it('uses options.port to start selenium', function () {
       var Selenium = require('../lib/selenium');
@@ -103,7 +103,11 @@ describe('Selenium', function () {
       selenium.install.mockImplementation(function (callback) {
         callback(null);
       });
-      var seleniumChild = {};
+      var seleniumChild = {
+        stderr: {
+          on: jest.genMockFunction()
+        }
+      };
       seleniumStandalone.start.mockImplementation(function (options, callback) {
         callback(null, seleniumChild);
       });
@@ -114,49 +118,72 @@ describe('Selenium', function () {
       expect(selenium.child).toBe(seleniumChild);
     });
 
-    describe('when selenium has been started successfully', function () {
+    it('calls the callback with null when selenium has been started successfully', function () {
 
-      it('calls the callback with null', function () {
-        var Selenium = require('../lib/selenium');
-        var selenium = new Selenium({port: '4444'});
-        var seleniumStandalone = require('selenium-standalone');
-        selenium.install = jest.genMockFunction();
-        selenium.install.mockImplementation(function (callback) {
-          callback(null);
-        });
-        var seleniumChild = {};
-        seleniumStandalone.start.mockImplementation(function (options, callback) {
-          callback(null, seleniumChild);
-        });
-
-        var callback = jest.genMockFunction();
-        selenium.start(callback);
-
-        expect(callback.mock.calls[0]).toEqual([null]);
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444'});
+      var seleniumStandalone = require('selenium-standalone');
+      selenium.install = jest.genMockFunction();
+      selenium.install.mockImplementation(function (callback) {
+        callback(null);
       });
+      var seleniumChild = {
+        stderr: {
+          on: jest.genMockFunction()
+        }
+      };
+      seleniumStandalone.start.mockImplementation(function (options, callback) {
+        callback(null, seleniumChild);
+      });
+
+      var callback = jest.genMockFunction();
+      selenium.start(callback);
+
+      expect(callback.mock.calls[0]).toEqual([null]);
 
     });
 
-    describe('when starting selenium failed', function () {
+    it('calls the callback with the error when selenium fails to start', function () {
 
-      it('calls the callback with the error', function () {
-        var Selenium = require('../lib/selenium');
-        var selenium = new Selenium({port: '4444'});
-        var seleniumStandalone = require('selenium-standalone');
-        selenium.install = jest.genMockFunction();
-        selenium.install.mockImplementation(function (callback) {
-          callback(null);
-        });
-        var error = new Error('Selenium start error');
-        seleniumStandalone.start.mockImplementation(function (options, callback) {
-          callback(error);
-        });
-
-        var callback = jest.genMockFunction();
-        selenium.start(callback);
-
-        expect(callback.mock.calls[0]).toEqual([error]);
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444'});
+      var seleniumStandalone = require('selenium-standalone');
+      selenium.install = jest.genMockFunction();
+      selenium.install.mockImplementation(function (callback) {
+        callback(null);
       });
+      var error = new Error('Selenium start error');
+      seleniumStandalone.start.mockImplementation(function (options, callback) {
+        callback(error);
+      });
+
+      var callback = jest.genMockFunction();
+      selenium.start(callback);
+
+      expect(callback.mock.calls[0]).toEqual([error]);
+
+    });
+
+    it('logs the output of the child process', function () {
+      // TODO
+    });
+
+    it('calls the callback immediately with null when selenium is already running', function () {
+
+      var seleniumStandalone = require('selenium-standalone');
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444'});
+
+      var callback = jest.genMockFunction();
+
+      seleniumStandalone.start = jest.genMockFn();
+
+      selenium.child = 'not null';
+      selenium.start(callback);
+
+      expect(callback.mock.calls.length).toBe(1);
+      expect(callback.mock.calls[0][0]).toBe(null);
+      expect(seleniumStandalone.start.mock.calls.length).toBe(0);
 
     });
 
@@ -193,7 +220,7 @@ describe('Selenium', function () {
         var callback = jest.genMockFunction();
         selenium.stop(callback);
 
-        expect(typeof selenium.child).toBe('undefined');
+        expect(selenium.child).toBe(null);
         expect(callback).toBeCalledWith(null);
 
       });
@@ -204,9 +231,36 @@ describe('Selenium', function () {
 
   describe('interrupt', function () {
 
-    // TODO
-    it('should not call kill by default', function() {});
-    it('should call kill when --disable-singleton is enabled', function() {});
+    it('should return immediately by default', function () {
+
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444'});
+
+      var callback = jest.genMockFunction();
+
+      selenium.stop = jest.genMockFn();
+
+      selenium.interrupt(callback);
+
+      expect(callback).toBeCalledWith(null);
+      expect(selenium.stop.mock.calls.length).toBe(0);
+
+    });
+
+    it('should call kill when --clean-selenium-server is truthy', function () {
+
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444', 'clean-selenium-server': true});
+
+      selenium.stop = jest.genMockFn();
+
+      var callback = 'callback';
+      selenium.interrupt(callback);
+
+      expect(selenium.stop.mock.calls.length).toBe(1);
+      expect(selenium.stop.mock.calls[0][0]).toBe(callback);
+
+    });
 
   });
 
