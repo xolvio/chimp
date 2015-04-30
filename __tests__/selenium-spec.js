@@ -56,7 +56,7 @@ describe('Selenium', function () {
 
     });
 
-    it('does not create a singleton when --clean-selenium-server is truthy', function () {
+    it('does not create a singleton when --clean-selenium-server is true', function () {
 
       var Selenium = require('../lib/selenium');
 
@@ -266,7 +266,7 @@ describe('Selenium', function () {
 
     });
 
-    it('should call kill when --clean-selenium-server is truthy', function () {
+    it('should call kill when --clean-selenium-server is true', function () {
 
       var Selenium = require('../lib/selenium');
       var selenium = new Selenium({port: '4444', 'clean-selenium-server': true});
