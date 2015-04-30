@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-var Monkey    = require('../lib/monkey.js'),
+var Monkey   = require('../lib/monkey.js'),
     minimist = require('minimist'),
-    freeport = require('freeport');
+    freeport = require('freeport'),
+    log      = require('../lib/log');
 
 var argv = minimist(process.argv, {
   'default': {
