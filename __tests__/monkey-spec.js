@@ -379,7 +379,7 @@ describe('Monkey', function () {
 
       var monkey = new Monkey();
 
-      monkey.interrupt = jest.genMockFn().mockImplementation (function (callback) {
+      monkey.interrupt = jest.genMockFn().mockImplementation(function (callback) {
         callback(null);
       });
 
@@ -391,18 +391,16 @@ describe('Monkey', function () {
 
     });
 
-
     it('does not rerun if an rerun is in progress', function () {
 
       var monkey = new Monkey();
 
-      monkey.interrupt = jest.genMockFn();
       monkey.run = jest.genMockFn();
 
-      monkey.rerun();
+      monkey.isInterrupting = true;
       monkey.rerun();
 
-      expect(monkey.run.mock.calls.length).toBe(1);
+      expect(monkey.run.mock.calls.length).toBe(0);
     });
 
     it('reruns once it has finished rerunning', function () {
@@ -574,6 +572,5 @@ describe('Monkey', function () {
     });
 
   });
-
 
 });
