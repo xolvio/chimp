@@ -48,7 +48,7 @@ describe('Session Manager', function () {
 
     beforeEach(function () {
       delete process.env['no-session-reuse'];
-      delete process.env['watch'];
+      delete process.env['monkey.watch'];
     });
 
     it('should delegate the webdriver remote call if using phantom', function () {
@@ -104,11 +104,12 @@ describe('Session Manager', function () {
 
     });
 
-    it('should reuse a session if one has already started', function () {
+    it('should reuse a session if one has already started in watch mode', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
 
+      process.env['monkey.watch'] = true;
       var browser = {requestHandler : {sessionID : 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
@@ -155,23 +156,24 @@ describe('Session Manager', function () {
 
     });
 
-    it('ignores does not reuse sessions in watch mode', function () {
+    it('ignores respects no-session-reuse in watch mode', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       wd.remote = jest.genMockFn().
-        mockReturnValueOnce('return from remote1').
-        mockReturnValueOnce('return from remote2');
+        mockReturnValueOnce('return from remote call 1').
+        mockReturnValueOnce('return from remote call 2');
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
       var options = {some: 'options'};
-      process.env['watch'] = true;
+      process.env['monkey.watch'] = true;
+      process.env['no-session-reuse'] = true;
       var browser1 = sessionManager.remote(options);
       var browser2 = sessionManager.remote(options);
 
-      expect(browser1).toBe('return from remote1');
-      expect(browser2).toBe('return from remote2');
+      expect(browser1).toBe('return from remote call 1');
+      expect(browser2).toBe('return from remote call 2');
 
       expect(wd.remote.mock.calls.length).toBe(2);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
@@ -181,9 +183,7 @@ describe('Session Manager', function () {
 
     });
 
-
-    it('should monkey patch the browser when reusing sessions', function () {
-
+    it('should monkey patch the browser when reusing sessions in watch mode', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
@@ -191,6 +191,7 @@ describe('Session Manager', function () {
       var sessions = [];
       sessionManager._getWebdriverSessions = jest.genMockFn().mockReturnValue(sessions);
       wd.remote = jest.genMockFn();
+      process.env['monkey.watch'] = true;
 
       sessionManager._monkeyPatchBrowserSessionManagement = jest.genMockFn();
 
