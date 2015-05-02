@@ -99,7 +99,7 @@ describe('process-helper', function () {
 
     it('logs the output of the child process stderr events', function () {
 
-      var log = require('loglevel'),
+      var log = require('../lib/log.js'),
           processHelper = require('../lib/process-helper.js');
 
       var child = {
@@ -108,7 +108,7 @@ describe('process-helper', function () {
             eventTrigger('blah');
             expect(event).toBe('data');
             expect(log.debug.mock.calls.length).toBe(1);
-            expect(log.debug.mock.calls[0][0]).toBe('prefix');
+            expect(log.debug.mock.calls[0][0]).toBe('[cuke-monkey][prefix.stdout]');
             expect(log.debug.mock.calls[0][1]).toBe('blah');
           })
         },
@@ -116,9 +116,9 @@ describe('process-helper', function () {
           on: jest.genMockFn().mockImplementation(function (event, eventTrigger) {
             eventTrigger('blah blah');
             expect(event).toBe('data');
-            expect(log.error.mock.calls.length).toBe(1);
-            expect(log.error.mock.calls[0][0]).toBe('prefix');
-            expect(log.error.mock.calls[0][1]).toBe('blah blah');
+            expect(log.debug.mock.calls.length).toBe(2);
+            expect(log.debug.mock.calls[1][0]).toBe('[cuke-monkey][prefix.stderr]');
+            expect(log.debug.mock.calls[1][1]).toBe('blah blah');
           })
         }
       };
@@ -201,11 +201,12 @@ describe('process-helper', function () {
       var processHelper = require('../lib/process-helper.js');
 
       process.kill = jest.genMockFn().mockImplementation(function () {
-        // the first call is the actual kill
+        // the first call checks if the process exists
+        // the second call is the actual kill
         // subsequent calls are checking if the process exists
         // it takes 3 calls to go through all the execution paths for this SUT
-        if (process.kill.mock.calls.length === 3) {
-          throw new Error('process with this id not found (or something)')
+        if (process.kill.mock.calls.length === 4) {
+          throw({code: 'ESRCH'});
         }
       });
 
@@ -218,13 +219,14 @@ describe('process-helper', function () {
       processHelper.kill(options, callback);
       jest.runAllTimers();
 
-      expect(process.kill.mock.calls.length).toBe(3);
+      expect(process.kill.mock.calls.length).toBe(4);
       expect(process.kill.mock.calls[0][0]).toEqual(1234);
-      expect(typeof process.kill.mock.calls[0][1]).toBe('undefined');
-      expect(process.kill.mock.calls[1][0]).toEqual(1234);
-      expect(process.kill.mock.calls[1][1]).toEqual(0);
+      expect(process.kill.mock.calls[0][1]).toBe(0);
+      expect(typeof process.kill.mock.calls[1][1]).toBe('undefined');
       expect(process.kill.mock.calls[2][0]).toEqual(1234);
       expect(process.kill.mock.calls[2][1]).toEqual(0);
+      expect(process.kill.mock.calls[3][0]).toEqual(1234);
+      expect(process.kill.mock.calls[3][1]).toEqual(0);
 
       expect(options.child).toBe(null);
 
