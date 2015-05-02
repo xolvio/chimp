@@ -2,8 +2,6 @@ jest.dontMock('../lib/monkey.js');
 jest.dontMock('underscore');
 jest.dontMock('async');
 
-//jest.dontMock('loglevel'); require('loglevel').setLevel('TRACE');
-
 describe('Monkey', function () {
 
   var Monkey = require('../lib/monkey');
@@ -238,6 +236,20 @@ describe('Monkey', function () {
 
     });
 
+    it('uses the watchTag with cucumber', function () {
+
+      var Monkey = require('../lib/monkey.js');
+
+      var monkey = new Monkey({
+        watchTags: '@someTag,@andAnotherTag'
+      });
+
+      monkey.watch();
+
+      expect(monkey.options.tags).toBe('@someTag,@andAnotherTag');
+
+    });
+
   });
 
   describe('run', function () {
@@ -360,14 +372,58 @@ describe('Monkey', function () {
       var Monkey = require('../lib/monkey');
 
       var monkey = new Monkey();
+      monkey.isInterrupting = true;
 
       async.series = jest.genMockFn();
 
       var callback = jest.genMockFn();
       monkey.interrupt(callback);
 
+      expect(monkey.isInterrupting).toBe(false);
       expect(callback.mock.calls.length).toBe(1);
       expect(async.series.mock.calls.length).toBe(0);
+
+    });
+
+    it('cancels the isInterrupting flag after all processes have run with no errors', function () {
+
+      var _ = require('underscore');
+      var async = require('async');
+      var Monkey = require('../lib/monkey');
+      var monkey = new Monkey();
+
+      monkey.isInterrupting = true;
+      monkey.processes = ['yo'];
+      _.collect = jest.genMockFn();
+
+      async.series = jest.genMockFn().mockImpl(function (procs, func) {
+        func();
+      });
+
+      monkey.interrupt(jest.genMockFn());
+
+      expect(monkey.isInterrupting).toBe(false);
+
+    });
+
+    it('cancels the isInterrupting flag after all processes have run with errors', function () {
+
+      var _ = require('underscore');
+      var async = require('async');
+      var Monkey = require('../lib/monkey');
+      var monkey = new Monkey();
+
+      monkey.isInterrupting = true;
+      monkey.processes = ['yo'];
+      _.collect = jest.genMockFn();
+
+      async.series = jest.genMockFn().mockImpl(function (procs, func) {
+        func('error');
+      });
+
+      monkey.interrupt(jest.genMockFn());
+
+      expect(monkey.isInterrupting).toBe(false);
 
     });
 
@@ -501,6 +557,27 @@ describe('Monkey', function () {
       expect(callback.mock.calls.length).toBe(1);
       expect(processes[0].state).toBe('started');
       expect(processes[1].state).toBe('constructed');
+
+    });
+
+    it('cancels the isInterrupting flag on error', function () {
+
+      var _ = require('underscore');
+      var async = require('async');
+      var Monkey = require('../lib/monkey');
+      var monkey = new Monkey();
+
+      monkey.isInterrupting = true;
+      monkey._createProcesses = jest.genMockFn();
+      _.collect = jest.genMockFn().mockReturnValue(['yo']);
+
+      async.series = jest.genMockFn().mockImpl(function (procs, func) {
+        func('error');
+      });
+
+      monkey._startProcesses(jest.genMockFn());
+
+      expect(monkey.isInterrupting).toBe(false);
 
     });
 
