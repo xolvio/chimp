@@ -6,16 +6,19 @@ var Monkey   = require('../lib/monkey.js'),
 
 var argv = minimist(process.argv, {
   'default': {
-    "browser": "phantomjs",
-    "platform": "ANY",
-    "name": "",
-    "debug": false,
-    "host": "localhost",
-    "path": "features",
-    "user": "",
-    "key": "",
-    "log": "silent",
-    "timeoutsAsyncScript": 10000
+    'browser': 'phantomjs',
+    'platform': 'ANY',
+    'name': '',
+    'debug': false,
+    'host': 'localhost',
+    'path': 'features',
+    'user': '',
+    'key': '',
+    'log': 'info',
+    'snippets' : true,
+    'format': 'pretty',
+    'watchTags': '@dev',
+    'timeoutsAsyncScript': 10000
   },
   'boolean': true
 });
