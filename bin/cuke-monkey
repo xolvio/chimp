@@ -18,7 +18,8 @@ var argv = minimist(process.argv, {
     'snippets' : true,
     'format': 'pretty',
     'watchTags': '@dev',
-    'timeoutsAsyncScript': 10000
+    'timeoutsAsyncScript': 10000,
+    'screenshotPath': '.'
   },
   'boolean': true
 });
