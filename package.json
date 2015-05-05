@@ -50,7 +50,8 @@
     "fibers": "~1.0.5",
     "underscore": "~1.8.3",
     "loglevel": "~1.2.0",
-    "sync-request": "2.0.1"
+    "sync-request": "2.0.1",
+    "hapi": "8.4.0"
   },
   "devDependencies": {
     "fs-extra": "~0.17.0",

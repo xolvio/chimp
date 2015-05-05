@@ -55,6 +55,7 @@ describe('Monkey', function () {
       monkey.run = jest.genMockFunction();
       monkey.start = jest.genMockFunction();
       monkey.watch = jest.genMockFunction();
+      monkey.server = jest.genMockFunction();
       var callback = function () {};
 
       monkey.init(callback);
@@ -64,6 +65,7 @@ describe('Monkey', function () {
 
       expect(monkey.start.mock.calls.length).toBe(0);
       expect(monkey.watch.mock.calls.length).toBe(0);
+      expect(monkey.server.mock.calls.length).toBe(0);
 
     });
 
@@ -74,6 +76,7 @@ describe('Monkey', function () {
       monkey.run = jest.genMockFunction();
       monkey.start = jest.genMockFunction();
       monkey.watch = jest.genMockFunction();
+      monkey.server = jest.genMockFunction();
 
       monkey.init();
 
@@ -82,23 +85,26 @@ describe('Monkey', function () {
 
       expect(monkey.run.mock.calls.length).toBe(0);
       expect(monkey.start.mock.calls.length).toBe(0);
+      expect(monkey.server.mock.calls.length).toBe(0);
     });
 
-    it('kicks-off the right run [default] / server / watch )', function () {
+    it('runs in server mode)', function () {
 
       var monkey = new Monkey({server: true});
 
       monkey.run = jest.genMockFunction();
       monkey.start = jest.genMockFunction();
       monkey.watch = jest.genMockFunction();
+      monkey.server = jest.genMockFunction();
 
       monkey.init();
 
-      expect(monkey.start).toBeCalledWith();
-      expect(monkey.start.mock.calls.length).toBe(1);
+      expect(monkey.server.mock.calls.length).toBe(1);
+      expect(typeof monkey.server.mock.calls[0][0]).toBe('undefined');
 
-      expect(monkey.run.mock.calls.length).toBe(0);
       expect(monkey.watch.mock.calls.length).toBe(0);
+      expect(monkey.run.mock.calls.length).toBe(0);
+      expect(monkey.start.mock.calls.length).toBe(0);
     });
 
   });
@@ -247,6 +253,96 @@ describe('Monkey', function () {
       monkey.watch();
 
       expect(monkey.options.tags).toBe('@someTag,@andAnotherTag');
+
+    });
+
+  });
+
+  describe('server', function () {
+
+    it('listens on a freeport when server-port is not provided', function () {
+      var freeport = require('freeport');
+      var Monkey = require('../lib/monkey.js');
+      var monkey = new Monkey();
+
+      monkey.server();
+
+      expect(freeport.mock.calls.length).toBe(1);
+    });
+
+    it('listens on the server-port when it is provided', function () {
+      var freeport = require('freeport');
+      var Monkey = require('../lib/monkey.js');
+      var monkey = new Monkey({serverPort: 1234});
+
+      monkey._startServer = jest.genMockFn();
+
+      monkey.server();
+
+      expect(monkey._startServer.mock.calls.length).toBe(1);
+      expect(monkey._startServer.mock.calls[0][0]).toBe(1234);
+      expect(freeport.mock.calls.length).toBe(0);
+    });
+
+    it('calls a DDP endpoint with the server address on startup if ddp is passed', function () {
+    });
+
+    it('exposes the run and interrupt endpoints', function () {
+
+      var Hapi = require('hapi');
+
+      var Monkey = require('../lib/monkey.js');
+      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+
+      monkey.server();
+
+      expect(Hapi.instance.route.mock.calls[0][0].method).toBe('GET');
+      expect(Hapi.instance.route.mock.calls[0][0].path).toBe('/run');
+
+      expect(Hapi.instance.route.mock.calls[1][0].method).toBe('GET');
+      expect(Hapi.instance.route.mock.calls[1][0].path).toBe('/interrupt');
+    });
+
+    it('returns cucumber results when run handler is called successfully', function () {
+
+      var Hapi = require('hapi');
+      var Monkey = require('../lib/monkey.js');
+      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+
+      monkey.rerun = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback(null,
+          [null, [null, 'cucumber results']]
+        );
+      });
+
+
+      monkey.server();
+      var getHandler = Hapi.instance.route.mock.calls[0][0].handler;
+      var reply = jest.genMockFn();
+      getHandler(null, reply);
+
+      expect(reply.mock.calls[0][0]).toBe('cucumber results');
+
+    });
+
+    it('returns "done" when interrupt handler is called successfully', function () {
+
+      var Hapi = require('hapi');
+      var Monkey = require('../lib/monkey.js');
+      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+
+      monkey.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback(null,
+          [null, [null, 'cucumber results']]
+        );
+      });
+
+      monkey.server();
+      var interruptHandler = Hapi.instance.route.mock.calls[1][0].handler;
+      var reply = jest.genMockFn();
+      interruptHandler(null, reply);
+
+      expect(reply.mock.calls[0][0]).toBe('done');
 
     });
 

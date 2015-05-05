@@ -15,11 +15,12 @@ var argv = minimist(process.argv, {
     'user': '',
     'key': '',
     'log': 'info',
-    'snippets' : true,
+    'snippets': true,
     'format': 'pretty',
     'watchTags': '@dev',
     'timeoutsAsyncScript': 10000,
-    'screenshotPath': '.'
+    'screenshotPath': '.',
+    'serverHost': 'localhost'
   },
   'boolean': true
 });
