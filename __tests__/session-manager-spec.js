@@ -129,6 +129,31 @@ describe('Session Manager', function () {
 
     });
 
+    it('should reuse a session if one has already started in server mode', function () {
+
+      var wd = require('webdriverio');
+      var SessionManager = require('../lib/session-manager');
+
+      process.env['monkey.server'] = true;
+      var browser = {requestHandler : {sessionID : 'some-id'}};
+      wd.remote = jest.genMockFn().mockReturnValue(browser);
+
+      var sessionManager = new SessionManager({port: 1234, browser: 'something'});
+
+      var sessions = [{id: 'session-id'}];
+      sessionManager._getWebdriverSessions = jest.genMockFn().mockReturnValue(sessions);
+
+      var options = {some: 'options'};
+      var result = sessionManager.remote(options);
+
+      expect(result).toBe(browser);
+
+      expect(wd.remote.mock.calls.length).toBe(1);
+      expect(wd.remote.mock.calls[0][0]).toBe(options);
+      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
+
+    });
+
     it('starts a new session when no-session-reuse is true when a session exists', function () {
 
       var wd = require('webdriverio');
