@@ -68,13 +68,14 @@ describe('Session Manager', function () {
 
       var options = {some: 'options'};
 
-      var browser1 = sessionManager.remote(options);
-      var browser2 = sessionManager.remote(options);
+      var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
+      sessionManager.remote(options, callback);
 
 
       expect(wd.remote.mock.calls.length).toBe(2);
-      expect(browser1).toBe('return from remote1');
-      expect(browser2).toBe('return from remote2');
+      expect(callback.mock.calls[0][1]).toBe('return from remote1');
+      expect(callback.mock.calls[1][1]).toBe('return from remote2');
       expect(wd.remote.mock.calls[0][0]).toBe(options);
       expect(wd.remote.mock.calls[1][0]).toBe(options);
 
@@ -90,15 +91,15 @@ describe('Session Manager', function () {
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
       var sessions = [];
-      sessionManager._getWebdriverSessions = jest.genMockFn().mockReturnValue(sessions);
+      sessionManager._getWebdriverSessions = jest.genMockFn().mockImpl(function (callback) {
+        callback(null, sessions);
+      });
 
       var options = {some: 'options'};
       var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
 
-      var browser = sessionManager.remote(options);
-
-      expect(browser).toBe('return from remote');
-
+      expect(callback.mock.calls[0][1]).toBe('return from remote');
       expect(wd.remote.mock.calls.length).toBe(1);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
 
@@ -110,22 +111,26 @@ describe('Session Manager', function () {
       var SessionManager = require('../lib/session-manager');
 
       process.env['monkey.watch'] = true;
-      var browser = {requestHandler : {sessionID : 'some-id'}};
+      var browser = {requestHandler: {sessionID: 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
       var sessions = [{id: 'session-id'}];
-      sessionManager._getWebdriverSessions = jest.genMockFn().mockReturnValue(sessions);
+      sessionManager._getWebdriverSessions = jest.genMockFn().mockImplementation(function (callback) {
+        callback(null, sessions);
+      });
 
       var options = {some: 'options'};
-      var result = sessionManager.remote(options);
+      var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
 
-      expect(result).toBe(browser);
+
+      expect(callback.mock.calls[0][1]).toBe(browser);
+      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
 
       expect(wd.remote.mock.calls.length).toBe(1);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
-      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
 
     });
 
@@ -135,22 +140,26 @@ describe('Session Manager', function () {
       var SessionManager = require('../lib/session-manager');
 
       process.env['monkey.server'] = true;
-      var browser = {requestHandler : {sessionID : 'some-id'}};
+      var browser = {requestHandler: {sessionID: 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
       var sessions = [{id: 'session-id'}];
-      sessionManager._getWebdriverSessions = jest.genMockFn().mockReturnValue(sessions);
+      sessionManager._getWebdriverSessions = jest.genMockFn().mockImplementation(function (callback) {
+        callback(null, sessions);
+      });
 
       var options = {some: 'options'};
-      var result = sessionManager.remote(options);
+      var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
 
-      expect(result).toBe(browser);
+
+      expect(callback.mock.calls[0][1]).toBe(browser);
+      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
 
       expect(wd.remote.mock.calls.length).toBe(1);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
-      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
 
     });
 
@@ -166,18 +175,18 @@ describe('Session Manager', function () {
 
       var options = {some: 'options'};
       process.env['no-session-reuse'] = true;
-      var browser1 = sessionManager.remote(options);
-      var browser2 = sessionManager.remote(options);
+      var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
+      sessionManager.remote(options, callback);
 
-
-      expect(browser1).toBe('return from remote1');
-      expect(browser2).toBe('return from remote2');
+      expect(callback.mock.calls[0][1]).toBe('return from remote1');
+      expect(callback.mock.calls[1][1]).toBe('return from remote2');
+      expect(callback.mock.calls[1][1].requestHandler).toBeFalsy();
+      expect(callback.mock.calls[1][1].requestHandler).toBeFalsy();
 
       expect(wd.remote.mock.calls.length).toBe(2);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
       expect(wd.remote.mock.calls[1][0]).toBe(options);
-      expect(browser1.requestHandler).toBeFalsy();
-      expect(browser2.requestHandler).toBeFalsy(null);
 
     });
 
@@ -187,24 +196,25 @@ describe('Session Manager', function () {
       var SessionManager = require('../lib/session-manager');
 
       wd.remote = jest.genMockFn().
-        mockReturnValueOnce('return from remote call 1').
-        mockReturnValueOnce('return from remote call 2');
+        mockReturnValueOnce('return from remote1').
+        mockReturnValueOnce('return from remote2');
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
       var options = {some: 'options'};
       process.env['monkey.watch'] = true;
       process.env['no-session-reuse'] = true;
-      var browser1 = sessionManager.remote(options);
-      var browser2 = sessionManager.remote(options);
+      var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
+      sessionManager.remote(options, callback);
 
-      expect(browser1).toBe('return from remote call 1');
-      expect(browser2).toBe('return from remote call 2');
+      expect(callback.mock.calls[0][1]).toBe('return from remote1');
+      expect(callback.mock.calls[1][1]).toBe('return from remote2');
+      expect(callback.mock.calls[0][1].requestHandler).toBeFalsy();
+      expect(callback.mock.calls[1][1].requestHandler).toBeFalsy();
 
       expect(wd.remote.mock.calls.length).toBe(2);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
       expect(wd.remote.mock.calls[1][0]).toBe(options);
-      expect(browser1.requestHandler).toBeFalsy();
-      expect(browser2.requestHandler).toBeFalsy(null);
 
     });
 
@@ -214,14 +224,17 @@ describe('Session Manager', function () {
       var SessionManager = require('../lib/session-manager');
       var sessionManager = new SessionManager({port: 1234, browser: 'somebrowser'});
       var sessions = [];
-      sessionManager._getWebdriverSessions = jest.genMockFn().mockReturnValue(sessions);
+      sessionManager._getWebdriverSessions = jest.genMockFn().mockImplementation(function (callback) {
+        callback(null, sessions);
+      });
+
       wd.remote = jest.genMockFn();
       process.env['monkey.watch'] = true;
-
       sessionManager._monkeyPatchBrowserSessionManagement = jest.genMockFn();
 
       var options = {some: 'options'};
-      sessionManager.remote(options);
+      var callback = jest.genMockFn();
+      sessionManager.remote(options, callback);
 
       expect(sessionManager._monkeyPatchBrowserSessionManagement.mock.calls.length).toBe(1);
 

@@ -1,6 +1,6 @@
 {
   "name": "cuke-monkey",
-  "version": "0.5.4",
+  "version": "0.5.6",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
@@ -26,7 +26,7 @@
     "url": "https://github.com/xolvio/cuke-monkey/issues"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest -i"
   },
   "main": "lib/monkey.js",
   "bin": {
@@ -47,15 +47,13 @@
     "selenium-standalone": "^4.4.0",
     "webdriverio": "~2.4.5",
     "chokidar": "~1.0.1",
-    "fibers": "~1.0.5",
     "underscore": "~1.8.3",
     "loglevel": "~1.2.0",
-    "mkdirp" : "0.5.0",
-    "sync-request": "2.0.1",
+    "fs-extra": "~0.17.0",
+    "request": "2.55.0",
     "hapi": "8.4.0"
   },
   "devDependencies": {
-    "fs-extra": "~0.17.0",
     "jest-cli": "^0.4.0"
   }
 }

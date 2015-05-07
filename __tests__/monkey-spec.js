@@ -177,6 +177,9 @@ describe('Monkey', function () {
       var chokidar = require('chokidar');
       var Monkey = require('../lib/monkey.js');
 
+      //var _on = process.on;
+      //process.on = jest.genMockFunction();
+
       var monkey = new Monkey();
 
       monkey.run = jest.genMockFunction();
@@ -187,13 +190,15 @@ describe('Monkey', function () {
       var readyCallback = chokidar.watcher.on.mock.calls[0][1];
       readyCallback();
 
-      var allCallback = chokidar.watcher.on.mock.calls[1][1];
+      var allCallback = chokidar.watcher.on.mock.calls[1][1];//s
 
       monkey.rerun = jest.genMockFunction();
 
       allCallback('unlink', '/path/some.feature');
 
       expect(monkey.rerun.mock.calls.length).toBe(0);
+
+      //process.on = _on;
 
     });
 
@@ -339,7 +344,8 @@ describe('Monkey', function () {
 
       monkey.server();
       var interruptHandler = Hapi.instance.route.mock.calls[1][0].handler;
-      var reply = jest.genMockFn();
+      var headerMock = jest.genMockFn();
+      var reply = jest.genMockFn().mockReturnValue({header: headerMock});
       interruptHandler(null, reply);
 
       expect(reply.mock.calls[0][0]).toBe('done');

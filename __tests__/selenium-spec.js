@@ -216,16 +216,20 @@ describe('Selenium', function () {
         var Selenium = require('../lib/selenium');
         var selenium = new Selenium({port: '4444'});
         var seleniumChild = {
-          kill: jest.genMockFunction()
+          pid: 1234
         };
         selenium.child = seleniumChild;
+        _kill = process.kill;
+        process.kill = jest.genMockFn();
 
         var callback = jest.genMockFunction();
         selenium.stop(callback);
 
-        expect(seleniumChild.kill).toBeCalled();
+        expect(process.kill).toBeCalledWith(-1234, 'SIGINT');
         expect(selenium.child).toBe(null);
         expect(callback).toBeCalledWith(null);
+
+        process.kill = _kill;
       });
 
     });
