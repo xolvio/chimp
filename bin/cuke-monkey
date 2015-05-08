@@ -1,35 +1,51 @@
 #!/usr/bin/env node
-var Cuker = require('../lib/cuker.js');
-var minimist = require('minimist');
+var Monkey   = require('../lib/monkey.js'),
+    minimist = require('minimist'),
+    freeport = require('freeport'),
+    log      = require('../lib/log');
 
 var argv = minimist(process.argv, {
   'default': {
-    "browser": "phantomjs",
-    "platform": "ANY",
-    "name": "",
-    "debug": false,
-    "host": "localhost",
-    "port": "4444",
-    "path": "features",
-    "user": "",
-    "key": "",
-    "log": "silent",
-    "timeoutsAsyncScript": 10000
+    'browser': 'phantomjs',
+    'platform': 'ANY',
+    'name': '',
+    'debug': false,
+    'host': 'localhost',
+    'path': 'features',
+    'user': '',
+    'key': '',
+    'log': 'info',
+    'snippets': true,
+    'format': 'pretty',
+    'watchTags': '@dev',
+    'timeoutsAsyncScript': 10000,
+    'screenshotsPath': '.',
+    'serverHost': 'localhost'
   },
   'boolean': true
 });
 
 try {
-  var cuker = new Cuker(argv);
-  cuker.run(function (err) {
-    if (err) {
-      process.exit(2);
-    }
-    else {
-      process.exit(0);
-    }
-  });
+  if (!argv.port) {
+    freeport(function (error, port) {
+      if (error) {
+        throw error;
+      }
+      argv.port = port;
+      startMonkey(argv);
+    });
+  } else {
+    startMonkey(argv)
+  }
+
 } catch (ex) {
   process.stderr.write(ex.stack + '\n');
   process.exit(2);
+}
+
+function startMonkey (options) {
+  var monkey = new Monkey(options);
+  monkey.init(function (err) {
+    process.exit(err ? 2 : 0);
+  });
 }

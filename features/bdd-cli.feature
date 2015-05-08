@@ -16,5 +16,3 @@ Feature: Run BDD tests from the CLI
     When  I run cuke-monkey inside "myTestProject"
     Then  I see "0 scenarios" in the console
     And   I see "0 steps" in the console
-
-

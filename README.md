@@ -1,5 +1,7 @@
 # Cuke Monkey
 
+[![Circle CI](https://circleci.com/gh/xolvio/cuke-monkey.svg?style=svg)](https://circleci.com/gh/xolvio/cuke-monkey)
+
 Cuke Monkey is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
 Chai. It works as a standalone npm package for use in any project, and also as as 
 Velocity-compatible Meteor package.
