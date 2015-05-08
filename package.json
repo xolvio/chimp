@@ -1,6 +1,6 @@
 {
   "name": "cuke-monkey",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
