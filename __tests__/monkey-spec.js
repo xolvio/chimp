@@ -305,7 +305,10 @@ describe('Monkey', function () {
       expect(Hapi.instance.route.mock.calls[0][0].path).toBe('/run');
 
       expect(Hapi.instance.route.mock.calls[1][0].method).toBe('GET');
-      expect(Hapi.instance.route.mock.calls[1][0].path).toBe('/interrupt');
+      expect(Hapi.instance.route.mock.calls[1][0].path).toBe('/run/{absolutePath*}');
+
+      expect(Hapi.instance.route.mock.calls[2][0].method).toBe('GET');
+      expect(Hapi.instance.route.mock.calls[2][0].path).toBe('/interrupt');
     });
 
     it('returns cucumber results when run handler is called successfully', function () {
@@ -330,6 +333,30 @@ describe('Monkey', function () {
 
     });
 
+    it('returns cucumber results when run handler is called successfully with a feature', function () {
+
+      var Hapi = require('hapi');
+      var Monkey = require('../lib/monkey.js');
+      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+      monkey.options._ = {};
+
+      monkey.rerun = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback(null,
+          [null, [null, 'cucumber results']]
+        );
+      });
+
+      monkey.server();
+      var getHandler = Hapi.instance.route.mock.calls[1][0].handler;
+      var reply = jest.genMockFn();
+      var request = { params : {absolutePath : 'blah'}};
+      getHandler(request, reply);
+
+      expect(monkey.options._[2]).toBe(request.params.absolutePath);
+      expect(reply.mock.calls[0][0]).toBe('cucumber results');
+
+    });
+
     it('returns "done" when interrupt handler is called successfully', function () {
 
       var Hapi = require('hapi');
@@ -343,7 +370,7 @@ describe('Monkey', function () {
       });
 
       monkey.server();
-      var interruptHandler = Hapi.instance.route.mock.calls[1][0].handler;
+      var interruptHandler = Hapi.instance.route.mock.calls[2][0].handler;
       var headerMock = jest.genMockFn();
       var reply = jest.genMockFn().mockReturnValue({header: headerMock});
       interruptHandler(null, reply);
