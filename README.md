@@ -1,22 +1,24 @@
-# Cuke Monkey
+# Chimp by Xolv.io
 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
-Cuke Monkey is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
-Chai. It works as a standalone npm package for use in any project, and also as as 
-Velocity-compatible Meteor package.
+Chimp is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
+Chai. It works as a standalone npm package for use in any project.
 
-Cuke Monkey can be used locally or configured to use [Simian](http://simian.io) and 
+If you are using Meteor, you should see
+
+Chimp can be used locally or configured to use [Simian](http://simian.io) and 
 [SauceLabs](https://saucelabs.com). See below for more details.
 
 ## Features
 
 - Write your feature specs and step definitions with [CucumberJS](https://github.com/cucumber/cucumber-js)
-- Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API for composable test executions
+- Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API
 - Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)
 - Leverage the power of PhantomJS, Selenium, SauceLabs for seamless integration between optimized local development
 and full continuous integration support.
 - Use promises everywhere
+- DDP support for Meteor projects
 - Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
 
 ## Quick Start
@@ -25,7 +27,7 @@ and full continuous integration support.
 
 For CLI installation:
 ```bash
-npm install cuke-monkey -g
+npm install chimp -g
 ```
 
 ### Usage
@@ -33,15 +35,15 @@ npm install cuke-monkey -g
 Be sure to be inside a project that contains a `/features` directory and supporting files then:
 
 ```bash
-cuke-monkey
+chimp
 ```
 
-Cuke Monkey provides just enough native options to better facilitate the synergy between **CucumberJS**,
+Chimp provides just enough native options to better facilitate the synergy between **CucumberJS**,
 **PhantomJS**, **Selenium**, **SauceLabs**, and **WebdriverIO**. However all other CLI options are
 passed through to their respective binaries. This means that all CLI options from **CucumberJS**,
-**PhantomJS**, and **Selenium** are available to you through **Cuke Monkey**.
+**PhantomJS**, and **Selenium** are available to you through **Chimp**.
 
-#### Cuke Monkey Options
+#### Chimp Options
 
 ##### path
 
@@ -51,8 +53,8 @@ The path to your local `CucumberJS` features directory.
 - **default**: `./features`
 - **example usage:**
 ```
-cuke-monkey --path='tests/acceptance/features'
-cuke-monkey --path='tests/features'
+chimp --path='tests/acceptance/features'
+chimp --path='tests/features'
 ```
 
 ##### browser
@@ -64,8 +66,8 @@ machine such as `chrome`, `firefox` or any browser available to SauceLabs.
 - **default**: `phantomjs`
 - **example usage**:
 ```
-cuke-monkey --browser=firefox // would use local firefox instance
-cuke-monkey --browser=chrome // would use local chrome instance
+chimp --browser=firefox // would use local firefox instance
+chimp --browser=chrome // would use local chrome instance
 ```
 - **notes**
   - Selenium comes bundled with a driver for `firefox`. For other browsers
@@ -81,7 +83,7 @@ The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore t
 - **default**: `localhost`
 - **example usage:**
 ```
-cuke-monkey --host=ondemand.saucelabs.com
+chimp --host=ondemand.saucelabs.com
 ```
 
 ##### port
@@ -93,7 +95,7 @@ The port that used in conjunction with your host. Ignore this if your using
 - **default**: `4444`
 - **example usage:**
 ```
-cuke-monkey --port=80
+chimp --port=80
 ```
 
 ##### user
@@ -104,7 +106,7 @@ The user credentials to send to SauceLabs or authenticated grid environment.
 - **default**: ``
 - **example usage:**
 ```
-cuke-monkey --user=eric
+chimp --user=eric
 ```
 
 ##### key
@@ -115,7 +117,7 @@ The accessKey to send to SauceLabs or authenticated grid environment.
 - **default**: ``
 - **example usage:**
 ```
-cuke-monkey --key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+chimp --key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
 ```
 
 ##### platform
@@ -128,8 +130,8 @@ is ignored. See [SauceLabs supported platforms](https://saucelabs.com/platforms)
 - **default**: `ANY`
 - **example usage**:
 ```
-cuke-monkey --platform='Windows 7'
-cuke-monkey --platform='OS X 10.8'
+chimp --platform='Windows 7'
+chimp --platform='OS X 10.8'
 ```
 
 Type: `String` Default: **ANY**
@@ -143,8 +145,8 @@ request a specific version of a `browser`.
 - **default**: `ANY`
 - **example usage**:
 ```
-cuke-monkey --browser='firefox' --version='35' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
-cuke-monkey --browser='chrome' --version='35' --remote='http://yourseleniumhub.com:4444/wd/hub'
+chimp --browser='firefox' --version='35' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
+chimp --browser='chrome' --version='35' --remote='http://yourseleniumhub.com:4444/wd/hub'
 ```
 
 ##### name
@@ -155,7 +157,7 @@ a test name. In SauceLabs for instance this will appear in your test rules dashb
 - **default**: `unknown`
 - **example usage**:
 ```
-cuke-monkey --name='Acceptance Tests' --browser='firefox' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
+chimp --name='Acceptance Tests' --browser='firefox' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
 ```
 
 ##### log
@@ -166,7 +168,7 @@ Whether or not to display debug information. Namely `Webdriver` commands.
 - **options**: `silent`, `command`
 - **example usage**:
 ```
-cuke-monkey --log=command
+chimp --log=command
 ```
 
 #### CucumberJS Options
@@ -199,8 +201,8 @@ This project is originally forked from [Eric Clifford](https://github.com/ecliff
 [Cuked](https://github.com/eclifford/cuked), and has been modified to work with Simian and Velocity.
 Many thanks and all due Kudos go to Eric. In his words, he described the original project as:
 
-"Cuke Monkey is an alternative to monolithic testing frameworks that trap you into proprietary abstractions
-and API's. Cuke Monkey is built from the ground to synergize CucumberJS with the other industry standard
+"Chimp is an alternative to monolithic testing frameworks that trap you into proprietary abstractions
+and API's. Chimp is built from the ground to synergize CucumberJS with the other industry standard
 micro-libraries you know and love."
 
 Xolv.io aims to maintain this vision for this project.
