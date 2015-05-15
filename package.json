@@ -45,7 +45,7 @@
     "progress": "^1.1.8",
     "saucelabs": "~0.1.1",
     "selenium-standalone": "^4.4.0",
-    "webdriverio": "xolvio/webdriverio.git#dispatch",
+    "webdriverio": "~2.4.5",
     "chokidar": "~1.0.1",
     "underscore": "~1.8.3",
     "loglevel": "~1.2.0",
