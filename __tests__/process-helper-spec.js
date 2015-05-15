@@ -108,7 +108,7 @@ describe('process-helper', function () {
             eventTrigger('blah');
             expect(event).toBe('data');
             expect(log.debug.mock.calls.length).toBe(1);
-            expect(log.debug.mock.calls[0][0]).toBe('[cuke-monkey][prefix.stdout]');
+            expect(log.debug.mock.calls[0][0]).toBe('[chimp][prefix.stdout]');
             expect(log.debug.mock.calls[0][1]).toBe('blah');
           })
         },
@@ -117,7 +117,7 @@ describe('process-helper', function () {
             eventTrigger('blah blah');
             expect(event).toBe('data');
             expect(log.debug.mock.calls.length).toBe(2);
-            expect(log.debug.mock.calls[1][0]).toBe('[cuke-monkey][prefix.stderr]');
+            expect(log.debug.mock.calls[1][0]).toBe('[chimp][prefix.stderr]');
             expect(log.debug.mock.calls[1][1]).toBe('blah blah');
           })
         }
