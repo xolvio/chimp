@@ -48,7 +48,7 @@ describe('Session Manager', function () {
 
     beforeEach(function () {
       delete process.env['no-session-reuse'];
-      delete process.env['monkey.watch'];
+      delete process.env['chimp.watch'];
     });
 
     it('should delegate the webdriver remote call if using phantom', function () {
@@ -110,7 +110,7 @@ describe('Session Manager', function () {
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
 
-      process.env['monkey.watch'] = true;
+      process.env['chimp.watch'] = true;
       var browser = {requestHandler: {sessionID: 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
@@ -139,7 +139,7 @@ describe('Session Manager', function () {
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
 
-      process.env['monkey.server'] = true;
+      process.env['chimp.server'] = true;
       var browser = {requestHandler: {sessionID: 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
@@ -201,7 +201,7 @@ describe('Session Manager', function () {
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
       var options = {some: 'options'};
-      process.env['monkey.watch'] = true;
+      process.env['chimp.watch'] = true;
       process.env['no-session-reuse'] = true;
       var callback = jest.genMockFn();
       sessionManager.remote(options, callback);
@@ -229,7 +229,7 @@ describe('Session Manager', function () {
       });
 
       wd.remote = jest.genMockFn();
-      process.env['monkey.watch'] = true;
+      process.env['chimp.watch'] = true;
       sessionManager._monkeyPatchBrowserSessionManagement = jest.genMockFn();
 
       var options = {some: 'options'};

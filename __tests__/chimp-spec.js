@@ -1,38 +1,38 @@
-jest.dontMock('../lib/monkey.js');
+jest.dontMock('../lib/chimp.js');
 jest.dontMock('underscore');
 jest.dontMock('async');
 
-describe('Monkey', function () {
+describe('Chimp', function () {
 
-  var Monkey = require('../lib/monkey');
+  var Chimp = require('../lib/chimp');
 
   describe('constructor', function () {
 
     it('creates the processes array', function () {
-      expect(new Monkey().processes).toEqual(jasmine.any(Array));
+      expect(new Chimp().processes).toEqual(jasmine.any(Array));
     });
 
     it('created an options object if non are passed', function () {
-      var monkey = new Monkey();
-      expect(monkey.options).toBeDefined();
+      var chimp = new Chimp();
+      expect(chimp.options).toBeDefined();
     });
 
     it('stores the options object', function () {
       var myOptions = {};
-      var monkey = new Monkey(myOptions);
-      expect(monkey.options).toBe(myOptions);
+      var chimp = new Chimp(myOptions);
+      expect(chimp.options).toBe(myOptions);
     });
 
-    it('puts all the options on the environment hash prefixed with [monkey.]', function () {
+    it('puts all the options on the environment hash prefixed with [chimp.]', function () {
 
       var myOptions = {
         a: 1,
         b: "aString"
       };
-      var monkey = new Monkey(myOptions);
+      var chimp = new Chimp(myOptions);
 
-      expect(process.env['monkey.a']).toBe(myOptions.a.toString());
-      expect(process.env['monkey.b']).toBe(myOptions.b);
+      expect(process.env['chimp.a']).toBe(myOptions.a.toString());
+      expect(process.env['chimp.b']).toBe(myOptions.b);
 
     });
 
@@ -40,8 +40,8 @@ describe('Monkey', function () {
 
   describe('bin path', function () {
 
-    it('sets the bin path to the location of cuke-monkey', function () {
-      expect(Monkey.bin.match(/cuke-monkey\/bin\/cuke-monkey$/)).not.toBe(null);
+    it('sets the bin path to the location of chimp', function () {
+      expect(Chimp.bin.match(/chimp\/bin\/chimp$/)).not.toBe(null);
     });
 
   });
@@ -50,61 +50,61 @@ describe('Monkey', function () {
 
     it('runs in single mode when no mode option is passed', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFunction();
-      monkey.start = jest.genMockFunction();
-      monkey.watch = jest.genMockFunction();
-      monkey.server = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
+      chimp.start = jest.genMockFunction();
+      chimp.watch = jest.genMockFunction();
+      chimp.server = jest.genMockFunction();
       var callback = function () {};
 
-      monkey.init(callback);
+      chimp.init(callback);
 
-      expect(monkey.run).toBeCalledWith(callback);
-      expect(monkey.run.mock.calls.length).toBe(1);
+      expect(chimp.run).toBeCalledWith(callback);
+      expect(chimp.run.mock.calls.length).toBe(1);
 
-      expect(monkey.start.mock.calls.length).toBe(0);
-      expect(monkey.watch.mock.calls.length).toBe(0);
-      expect(monkey.server.mock.calls.length).toBe(0);
+      expect(chimp.start.mock.calls.length).toBe(0);
+      expect(chimp.watch.mock.calls.length).toBe(0);
+      expect(chimp.server.mock.calls.length).toBe(0);
 
     });
 
     it('runs in watch mode)', function () {
 
-      var monkey = new Monkey({watch: true});
+      var chimp = new Chimp({watch: true});
 
-      monkey.run = jest.genMockFunction();
-      monkey.start = jest.genMockFunction();
-      monkey.watch = jest.genMockFunction();
-      monkey.server = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
+      chimp.start = jest.genMockFunction();
+      chimp.watch = jest.genMockFunction();
+      chimp.server = jest.genMockFunction();
 
-      monkey.init();
+      chimp.init();
 
-      expect(monkey.watch).toBeCalledWith();
-      expect(monkey.watch.mock.calls.length).toBe(1);
+      expect(chimp.watch).toBeCalledWith();
+      expect(chimp.watch.mock.calls.length).toBe(1);
 
-      expect(monkey.run.mock.calls.length).toBe(0);
-      expect(monkey.start.mock.calls.length).toBe(0);
-      expect(monkey.server.mock.calls.length).toBe(0);
+      expect(chimp.run.mock.calls.length).toBe(0);
+      expect(chimp.start.mock.calls.length).toBe(0);
+      expect(chimp.server.mock.calls.length).toBe(0);
     });
 
     it('runs in server mode)', function () {
 
-      var monkey = new Monkey({server: true});
+      var chimp = new Chimp({server: true});
 
-      monkey.run = jest.genMockFunction();
-      monkey.start = jest.genMockFunction();
-      monkey.watch = jest.genMockFunction();
-      monkey.server = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
+      chimp.start = jest.genMockFunction();
+      chimp.watch = jest.genMockFunction();
+      chimp.server = jest.genMockFunction();
 
-      monkey.init();
+      chimp.init();
 
-      expect(monkey.server.mock.calls.length).toBe(1);
-      expect(typeof monkey.server.mock.calls[0][0]).toBe('undefined');
+      expect(chimp.server.mock.calls.length).toBe(1);
+      expect(typeof chimp.server.mock.calls[0][0]).toBe('undefined');
 
-      expect(monkey.watch.mock.calls.length).toBe(0);
-      expect(monkey.run.mock.calls.length).toBe(0);
-      expect(monkey.start.mock.calls.length).toBe(0);
+      expect(chimp.watch.mock.calls.length).toBe(0);
+      expect(chimp.run.mock.calls.length).toBe(0);
+      expect(chimp.start.mock.calls.length).toBe(0);
     });
 
   });
@@ -114,13 +114,13 @@ describe('Monkey', function () {
     it('initializes chokidar', function () {
 
       var chokidar = require('chokidar');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       var options = {path: 'abc'};
-      var monkey = new Monkey(options);
-      monkey.run = jest.genMockFunction();
+      var chimp = new Chimp(options);
+      chimp.run = jest.genMockFunction();
 
-      monkey.watch();
+      chimp.watch();
 
       expect(chokidar.watch.mock.calls[0][0]).toBe(options.path);
 
@@ -129,15 +129,15 @@ describe('Monkey', function () {
     it('all listener is registered after watcher is ready', function () {
 
       var chokidar = require('chokidar');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       var options = {path: 'abc'};
-      var monkey = new Monkey(options);
+      var chimp = new Chimp(options);
 
-      monkey.run = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
       chokidar.watcher.on = jest.genMockFunction();
 
-      monkey.watch();
+      chimp.watch();
       expect(chokidar.watcher.on.mock.calls[0][0]).toBe('ready');
 
       var readyCallback = chokidar.watcher.on.mock.calls[0][1];
@@ -150,53 +150,53 @@ describe('Monkey', function () {
     it('an non-unlink event triggers the interrupt and run sequence', function () {
 
       var chokidar = require('chokidar');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
       chokidar.watcher.on = jest.genMockFunction();
 
-      monkey.watch();
+      chimp.watch();
 
       var readyCallback = chokidar.watcher.on.mock.calls[0][1];
       readyCallback();
 
       var allCallback = chokidar.watcher.on.mock.calls[1][1];
 
-      monkey.rerun = jest.genMockFunction();
+      chimp.rerun = jest.genMockFunction();
 
       allCallback('not-unlink');
 
-      expect(monkey.rerun.mock.calls.length).toBe(1);
+      expect(chimp.rerun.mock.calls.length).toBe(1);
 
     });
 
     it('a deleted feature does not trigger the interrupt and run sequence', function () {
 
       var chokidar = require('chokidar');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       //var _on = process.on;
       //process.on = jest.genMockFunction();
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
       chokidar.watcher.on = jest.genMockFunction();
 
-      monkey.watch();
+      chimp.watch();
 
       var readyCallback = chokidar.watcher.on.mock.calls[0][1];
       readyCallback();
 
       var allCallback = chokidar.watcher.on.mock.calls[1][1];//s
 
-      monkey.rerun = jest.genMockFunction();
+      chimp.rerun = jest.genMockFunction();
 
       allCallback('unlink', '/path/some.feature');
 
-      expect(monkey.rerun.mock.calls.length).toBe(0);
+      expect(chimp.rerun.mock.calls.length).toBe(0);
 
       //process.on = _on;
 
@@ -206,58 +206,58 @@ describe('Monkey', function () {
 
       var chokidar = require('chokidar');
       var async = require('async');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
       chokidar.watcher.on = jest.genMockFunction();
 
-      monkey.watch();
+      chimp.watch();
 
       var readyCallback = chokidar.watcher.on.mock.calls[0][1];
       readyCallback();
 
       var allCallback = chokidar.watcher.on.mock.calls[1][1];
 
-      monkey.rerun = jest.genMockFunction();
+      chimp.rerun = jest.genMockFunction();
 
       allCallback('unlink', '/path/some.feature.js');
 
-      expect(monkey.rerun.mock.calls.length).toBe(1);
+      expect(chimp.rerun.mock.calls.length).toBe(1);
 
     });
 
     it('runs on startup', function () {
 
       var chokidar = require('chokidar');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFunction();
+      chimp.run = jest.genMockFunction();
       chokidar.watcher.on = jest.genMockFunction();
 
-      monkey.watch();
+      chimp.watch();
 
       var readyCallback = chokidar.watcher.on.mock.calls[0][1];
       readyCallback();
 
-      expect(monkey.run.mock.calls.length).toBe(1);
+      expect(chimp.run.mock.calls.length).toBe(1);
 
     });
 
     it('uses the watchTag with cucumber', function () {
 
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
-      var monkey = new Monkey({
+      var chimp = new Chimp({
         watchTags: '@someTag,@andAnotherTag'
       });
 
-      monkey.watch();
+      chimp.watch();
 
-      expect(monkey.options.tags).toBe('@someTag,@andAnotherTag');
+      expect(chimp.options.tags).toBe('@someTag,@andAnotherTag');
 
     });
 
@@ -267,25 +267,25 @@ describe('Monkey', function () {
 
     it('listens on a freeport when server-port is not provided', function () {
       var freeport = require('freeport');
-      var Monkey = require('../lib/monkey.js');
-      var monkey = new Monkey();
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp();
 
-      monkey.server();
+      chimp.server();
 
       expect(freeport.mock.calls.length).toBe(1);
     });
 
     it('listens on the server-port when it is provided', function () {
       var freeport = require('freeport');
-      var Monkey = require('../lib/monkey.js');
-      var monkey = new Monkey({serverPort: 1234});
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp({serverPort: 1234});
 
-      monkey._startServer = jest.genMockFn();
+      chimp._startServer = jest.genMockFn();
 
-      monkey.server();
+      chimp.server();
 
-      expect(monkey._startServer.mock.calls.length).toBe(1);
-      expect(monkey._startServer.mock.calls[0][0]).toBe(1234);
+      expect(chimp._startServer.mock.calls.length).toBe(1);
+      expect(chimp._startServer.mock.calls[0][0]).toBe(1234);
       expect(freeport.mock.calls.length).toBe(0);
     });
 
@@ -296,10 +296,10 @@ describe('Monkey', function () {
 
       var Hapi = require('hapi');
 
-      var Monkey = require('../lib/monkey.js');
-      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp({serverHost: 'localhost', serverPort: 1234});
 
-      monkey.server();
+      chimp.server();
 
       expect(Hapi.instance.route.mock.calls[0][0].method).toBe('GET');
       expect(Hapi.instance.route.mock.calls[0][0].path).toBe('/run');
@@ -314,17 +314,17 @@ describe('Monkey', function () {
     it('returns cucumber results when run handler is called successfully', function () {
 
       var Hapi = require('hapi');
-      var Monkey = require('../lib/monkey.js');
-      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp({serverHost: 'localhost', serverPort: 1234});
 
-      monkey.rerun = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp.rerun = jest.genMockFunction().mockImplementation(function (callback) {
         return callback(null,
           [null, [null, 'cucumber results']]
         );
       });
 
 
-      monkey.server();
+      chimp.server();
       var getHandler = Hapi.instance.route.mock.calls[0][0].handler;
       var reply = jest.genMockFn();
       getHandler(null, reply);
@@ -336,23 +336,23 @@ describe('Monkey', function () {
     it('returns cucumber results when run handler is called successfully with a feature', function () {
 
       var Hapi = require('hapi');
-      var Monkey = require('../lib/monkey.js');
-      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
-      monkey.options._ = {};
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp({serverHost: 'localhost', serverPort: 1234});
+      chimp.options._ = {};
 
-      monkey.rerun = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp.rerun = jest.genMockFunction().mockImplementation(function (callback) {
         return callback(null,
           [null, [null, 'cucumber results']]
         );
       });
 
-      monkey.server();
+      chimp.server();
       var getHandler = Hapi.instance.route.mock.calls[1][0].handler;
       var reply = jest.genMockFn();
       var request = { params : {absolutePath : 'blah'}};
       getHandler(request, reply);
 
-      expect(monkey.options._[2]).toBe(request.params.absolutePath);
+      expect(chimp.options._[2]).toBe(request.params.absolutePath);
       expect(reply.mock.calls[0][0]).toBe('cucumber results');
 
     });
@@ -360,16 +360,16 @@ describe('Monkey', function () {
     it('returns "done" when interrupt handler is called successfully', function () {
 
       var Hapi = require('hapi');
-      var Monkey = require('../lib/monkey.js');
-      var monkey = new Monkey({serverHost: 'localhost', serverPort: 1234});
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp({serverHost: 'localhost', serverPort: 1234});
 
-      monkey.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
         return callback(null,
           [null, [null, 'cucumber results']]
         );
       });
 
-      monkey.server();
+      chimp.server();
       var interruptHandler = Hapi.instance.route.mock.calls[2][0].handler;
       var headerMock = jest.genMockFn();
       var reply = jest.genMockFn().mockReturnValue({header: headerMock});
@@ -385,34 +385,34 @@ describe('Monkey', function () {
 
     it('interrupts any existing processes, starts processes and calls callback', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
         return callback();
       });
-      monkey._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
         return callback();
       });
 
       var callback = jest.genMockFn();
-      monkey.run(callback);
+      chimp.run(callback);
 
-      expect(monkey.interrupt.mock.calls.length).toBe(2);
-      expect(monkey._startProcesses.mock.calls.length).toBe(1);
+      expect(chimp.interrupt.mock.calls.length).toBe(2);
+      expect(chimp._startProcesses.mock.calls.length).toBe(1);
       expect(callback.mock.calls.length).toBe(1);
 
     });
 
     it('detects errors in interrupt and calls callback with an error', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
         return callback('error');
       });
 
       var callback = jest.genMockFn();
-      monkey.run(callback);
+      chimp.run(callback);
 
       expect(callback.mock.calls.length).toBe(1);
       expect(callback.mock.calls[0][0]).toEqual('error');
@@ -421,21 +421,21 @@ describe('Monkey', function () {
 
     it('stops all processes on successful runs', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
         return callback();
       });
-      monkey._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
+      chimp._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
         return callback();
       });
 
-      monkey.stop = jest.genMockFunction();
+      chimp.stop = jest.genMockFunction();
 
       var callback = jest.genMockFn();
-      monkey.run(callback);
+      chimp.run(callback);
 
-      expect(monkey.interrupt.mock.calls.length).toBe(2);
+      expect(chimp.interrupt.mock.calls.length).toBe(2);
 
     });
 
@@ -446,9 +446,9 @@ describe('Monkey', function () {
     it('calls interrupt on all processes in the reverse order that they were started', function () {
 
       jest.dontMock('async');
-      var Monkey = require('../lib/monkey');
+      var Chimp = require('../lib/chimp');
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
       var orderCounter = 0;
 
@@ -463,11 +463,11 @@ describe('Monkey', function () {
 
       var process1 = new Process('1');
       var process2 = new Process('2');
-      monkey.processes = [process1, process2];
+      chimp.processes = [process1, process2];
 
       var callback = jest.genMockFunction();
 
-      monkey.interrupt(callback);
+      chimp.interrupt(callback);
 
       expect(process2.orderRun).toBe(0);
       expect(process1.orderRun).toBe(1);
@@ -477,10 +477,10 @@ describe('Monkey', function () {
     it('bubbles callback without modifying the arguments', function () {
 
       var async = require('async');
-      var Monkey = require('../lib/monkey');
+      var Chimp = require('../lib/chimp');
 
-      var monkey = new Monkey();
-      monkey.processes = [{interrupt: jest.genMockFn()}];
+      var chimp = new Chimp();
+      chimp.processes = [{interrupt: jest.genMockFn()}];
       var someArgs = ['some', 'args'];
 
       async.series = jest.genMockFunction().mockImplementation(function (processes, callback) {
@@ -488,7 +488,7 @@ describe('Monkey', function () {
       });
 
       var callback = jest.genMockFn();
-      monkey.interrupt(callback);
+      chimp.interrupt(callback);
 
       expect(callback.mock.calls.length).toBe(1);
       expect(callback.mock.calls[0]).toEqual(['some', 'args']);
@@ -498,17 +498,17 @@ describe('Monkey', function () {
     it('calls the callback when no processes have been started', function () {
 
       var async = require('async');
-      var Monkey = require('../lib/monkey');
+      var Chimp = require('../lib/chimp');
 
-      var monkey = new Monkey();
-      monkey.isInterrupting = true;
+      var chimp = new Chimp();
+      chimp.isInterrupting = true;
 
       async.series = jest.genMockFn();
 
       var callback = jest.genMockFn();
-      monkey.interrupt(callback);
+      chimp.interrupt(callback);
 
-      expect(monkey.isInterrupting).toBe(false);
+      expect(chimp.isInterrupting).toBe(false);
       expect(callback.mock.calls.length).toBe(1);
       expect(async.series.mock.calls.length).toBe(0);
 
@@ -518,20 +518,20 @@ describe('Monkey', function () {
 
       var _ = require('underscore');
       var async = require('async');
-      var Monkey = require('../lib/monkey');
-      var monkey = new Monkey();
+      var Chimp = require('../lib/chimp');
+      var chimp = new Chimp();
 
-      monkey.isInterrupting = true;
-      monkey.processes = ['yo'];
+      chimp.isInterrupting = true;
+      chimp.processes = ['yo'];
       _.collect = jest.genMockFn();
 
       async.series = jest.genMockFn().mockImpl(function (procs, func) {
         func();
       });
 
-      monkey.interrupt(jest.genMockFn());
+      chimp.interrupt(jest.genMockFn());
 
-      expect(monkey.isInterrupting).toBe(false);
+      expect(chimp.isInterrupting).toBe(false);
 
     });
 
@@ -539,20 +539,20 @@ describe('Monkey', function () {
 
       var _ = require('underscore');
       var async = require('async');
-      var Monkey = require('../lib/monkey');
-      var monkey = new Monkey();
+      var Chimp = require('../lib/chimp');
+      var chimp = new Chimp();
 
-      monkey.isInterrupting = true;
-      monkey.processes = ['yo'];
+      chimp.isInterrupting = true;
+      chimp.processes = ['yo'];
       _.collect = jest.genMockFn();
 
       async.series = jest.genMockFn().mockImpl(function (procs, func) {
         func('error');
       });
 
-      monkey.interrupt(jest.genMockFn());
+      chimp.interrupt(jest.genMockFn());
 
-      expect(monkey.isInterrupting).toBe(false);
+      expect(chimp.isInterrupting).toBe(false);
 
     });
 
@@ -562,47 +562,47 @@ describe('Monkey', function () {
 
     it('calls run if interrupt is successful', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.interrupt = jest.genMockFn().mockImplementation(function (callback) {
+      chimp.interrupt = jest.genMockFn().mockImplementation(function (callback) {
         callback(null);
       });
 
-      monkey.run = jest.genMockFn();
+      chimp.run = jest.genMockFn();
 
-      monkey.rerun();
+      chimp.rerun();
 
-      expect(monkey.run.mock.calls.length).toBe(1);
+      expect(chimp.run.mock.calls.length).toBe(1);
 
     });
 
     it('does not rerun if an rerun is in progress', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFn();
+      chimp.run = jest.genMockFn();
 
-      monkey.isInterrupting = true;
-      monkey.rerun();
+      chimp.isInterrupting = true;
+      chimp.rerun();
 
-      expect(monkey.run.mock.calls.length).toBe(0);
+      expect(chimp.run.mock.calls.length).toBe(0);
     });
 
     it('reruns once it has finished rerunning', function () {
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
-      monkey.run = jest.genMockFn().mockImplementation(function (callback) {
+      chimp.run = jest.genMockFn().mockImplementation(function (callback) {
         callback(null);
         // after the first run, replace this mockImplementation with a standard mock so we
         // can assert on that the rerun interrupts after a successful run
-        monkey.run = jest.genMockFn();
+        chimp.run = jest.genMockFn();
       });
 
-      monkey.rerun();
-      monkey.rerun();
+      chimp.rerun();
+      chimp.rerun();
 
-      expect(monkey.run.mock.calls.length).toBe(1);
+      expect(chimp.run.mock.calls.length).toBe(1);
 
     });
 
@@ -614,27 +614,27 @@ describe('Monkey', function () {
 
       var async = require('async');
 
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       async.series = jest.genMockFn();
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
       var processes = [];
-      monkey._createProcesses = jest.genMockFunction().mockReturnValue(processes);
+      chimp._createProcesses = jest.genMockFunction().mockReturnValue(processes);
 
-      monkey._startProcesses();
+      chimp._startProcesses();
 
-      expect(monkey._createProcesses.mock.calls.length).toBe(1);
-      expect(monkey.processes).toBe(processes);
+      expect(chimp._createProcesses.mock.calls.length).toBe(1);
+      expect(chimp.processes).toBe(processes);
 
     });
 
     it('start each process in its own context and calls callback once', function () {
 
       jest.dontMock('async');
-      var Monkey = require('../lib/monkey');
+      var Chimp = require('../lib/chimp');
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
       function Process () {
         this.state = 'constructed';
@@ -646,11 +646,11 @@ describe('Monkey', function () {
       };
 
       var processes = [new Process(), new Process()];
-      monkey._createProcesses = jest.genMockFunction().mockReturnValue(processes);
+      chimp._createProcesses = jest.genMockFunction().mockReturnValue(processes);
 
       var callback = jest.genMockFunction();
 
-      monkey._startProcesses(callback);
+      chimp._startProcesses(callback);
 
       expect(typeof callback.mock.calls[0][0]).toBe('undefined');
       expect(callback.mock.calls.length).toBe(1);
@@ -662,9 +662,9 @@ describe('Monkey', function () {
     it('bubbles up errors in callback if an processes callback with an error', function () {
 
       jest.dontMock('async');
-      var Monkey = require('../lib/monkey');
+      var Chimp = require('../lib/chimp');
 
-      var monkey = new Monkey();
+      var chimp = new Chimp();
 
       function Process () {
         this.state = 'constructed';
@@ -676,11 +676,11 @@ describe('Monkey', function () {
       };
 
       var processes = [new Process('1'), new Process('2')];
-      monkey._createProcesses = jest.genMockFunction().mockReturnValue(processes);
+      chimp._createProcesses = jest.genMockFunction().mockReturnValue(processes);
 
       var callback = jest.genMockFunction();
 
-      monkey._startProcesses(callback);
+      chimp._startProcesses(callback);
 
       expect(callback.mock.calls[0][0]).toBe('error!');
       expect(callback.mock.calls.length).toBe(1);
@@ -693,20 +693,20 @@ describe('Monkey', function () {
 
       var _ = require('underscore');
       var async = require('async');
-      var Monkey = require('../lib/monkey');
-      var monkey = new Monkey();
+      var Chimp = require('../lib/chimp');
+      var chimp = new Chimp();
 
-      monkey.isInterrupting = true;
-      monkey._createProcesses = jest.genMockFn();
+      chimp.isInterrupting = true;
+      chimp._createProcesses = jest.genMockFn();
       _.collect = jest.genMockFn().mockReturnValue(['yo']);
 
       async.series = jest.genMockFn().mockImpl(function (procs, func) {
         func('error');
       });
 
-      monkey._startProcesses(jest.genMockFn());
+      chimp._startProcesses(jest.genMockFn());
 
-      expect(monkey.isInterrupting).toBe(false);
+      expect(chimp.isInterrupting).toBe(false);
 
     });
 
@@ -716,12 +716,12 @@ describe('Monkey', function () {
 
     it('adds a phantom', function () {
       var Phantom = require('../lib/phantom.js');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       var options = {browser: 'phantomjs'};
-      var monkey = new Monkey(options);
+      var chimp = new Chimp(options);
 
-      var processes = monkey._createProcesses();
+      var processes = chimp._createProcesses();
 
       expect(Phantom.mock.calls[0][0]).toBe(options);
       expect(processes.length).toBe(2);
@@ -730,12 +730,12 @@ describe('Monkey', function () {
 
     it('adds a selenium when no browser is passed', function () {
       var Selenium = require('../lib/selenium.js');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       var options = {browser: 'some-browser', host: ''};
-      var monkey = new Monkey(options);
+      var chimp = new Chimp(options);
 
-      var processes = monkey._createProcesses();
+      var processes = chimp._createProcesses();
 
       expect(Selenium.mock.calls[0][0]).toBe(options);
       expect(processes.length).toBe(2);
@@ -743,12 +743,12 @@ describe('Monkey', function () {
 
     it('does not add selenium when SauceLabs is the host', function () {
       var Selenium = require('../lib/selenium.js');
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
 
       var options = {host: 'saucelabs'};
-      var monkey = new Monkey(options);
+      var chimp = new Chimp(options);
 
-      var processes = monkey._createProcesses();
+      var processes = chimp._createProcesses();
 
       expect(Selenium.mock.calls.length).toBe(0);
       expect(processes.length).toBe(1);
@@ -757,12 +757,12 @@ describe('Monkey', function () {
     it('adds cucumber last', function () {
       jest.dontMock('../lib/cucumber.js');
 
-      var Monkey = require('../lib/monkey.js');
+      var Chimp = require('../lib/chimp.js');
       var options = {browser: 'phantomjs'};
 
-      var monkey = new Monkey(options);
+      var chimp = new Chimp(options);
 
-      var processes = monkey._createProcesses();
+      var processes = chimp._createProcesses();
 
       expect(typeof processes[0].cucumberChild).toBe('undefined');
       expect(typeof processes[1].cucumberChild).not.toBe('undefined');
@@ -770,9 +770,9 @@ describe('Monkey', function () {
 
     it('should add at least one process', function () {
 
-      var monkey = new Monkey({browser: 'phantomjs'});
+      var chimp = new Chimp({browser: 'phantomjs'});
 
-      var processes = monkey._createProcesses();
+      var processes = chimp._createProcesses();
 
       expect(processes.length).not.toBe(0);
     });

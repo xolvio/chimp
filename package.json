@@ -1,5 +1,5 @@
 {
-  "name": "cuke-monkey",
+  "name": "chimp",
   "version": "0.6.1",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
@@ -19,16 +19,16 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xolvio/cuke-monkey"
+    "url": "https://github.com/xolvio/chimp"
   },
   "homepage": "",
   "bugs": {
-    "url": "https://github.com/xolvio/cuke-monkey/issues"
+    "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
     "test": "jest -i"
   },
-  "main": "lib/monkey.js",
+  "main": "lib/chimp.js",
   "bin": {
     "cuke-monkey": "./bin/cuke-monkey"
   },

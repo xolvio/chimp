@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var Monkey   = require('../lib/monkey.js'),
+var Chimp   = require('../lib/chimp.js'),
     minimist = require('minimist'),
     freeport = require('freeport'),
     log      = require('../lib/log');
@@ -32,10 +32,10 @@ try {
         throw error;
       }
       argv.port = port;
-      startMonkey(argv);
+      startChimp(argv);
     });
   } else {
-    startMonkey(argv)
+    startChimp(argv)
   }
 
 } catch (ex) {
@@ -43,9 +43,9 @@ try {
   process.exit(2);
 }
 
-function startMonkey (options) {
-  var monkey = new Monkey(options);
-  monkey.init(function (err) {
+function startChimp (options) {
+  var chimp = new Chimp(options);
+  chimp.init(function (err) {
     process.exit(err ? 2 : 0);
   });
 }
