@@ -25,6 +25,10 @@ var argv = minimist(process.argv, {
   'boolean': true
 });
 
+if (argv.deviceName) {
+  argv.browser = '';
+}
+
 try {
   if (!argv.port) {
     freeport(function (error, port) {
