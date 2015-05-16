@@ -39,7 +39,7 @@ describe('Session Manager', function () {
       var createSessionManager = function () {
         new SessionManager(options);
       };
-      expect(createSessionManager).toThrow('options.browser or options.deviceName is required');
+      expect(createSessionManager).toThrow('[chimp][session-manager] options.browser or options.deviceName is required');
     });
 
   });
