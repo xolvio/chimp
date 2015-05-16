@@ -33,13 +33,13 @@ describe('Session Manager', function () {
       expect(createSessionManager).toThrow('options.port is required');
     });
 
-    it('throws when options.browser is not passed', function () {
+    it('throws when options.browser and options.device is not passed', function () {
       var SessionManager = require('../lib/session-manager');
       var options = {port: 1234};
       var createSessionManager = function () {
         new SessionManager(options);
       };
-      expect(createSessionManager).toThrow('options.browser is required');
+      expect(createSessionManager).toThrow('options.browser or options.deviceName is required');
     });
 
   });
