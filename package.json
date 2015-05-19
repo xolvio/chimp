@@ -1,6 +1,6 @@
 {
-  "name": "cuke-monkey",
-  "version": "0.2.6",
+  "name": "chimp",
+  "version": "0.7.1",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
@@ -19,30 +19,42 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xolvio/cuke-monkey"
+    "url": "https://github.com/xolvio/chimp"
   },
   "homepage": "",
   "bugs": {
-    "url": "https://github.com/xolvio/cuke-monkey/issues"
+    "url": "https://github.com/xolvio/chimp/issues"
   },
-  "main": "lib/cuker.js",
+  "scripts": {
+    "test": "jest -i"
+  },
+  "main": "lib/chimp.js",
   "bin": {
-    "cuke-monkey": "./bin/cuke-monkey"
+    "chimp": "./bin/chimp"
   },
   "dependencies": {
     "async": "~0.9.0",
+    "bluebird": "^2.9.24",
     "chai": "~2.2.0",
     "chai-as-promised": "~4.3.0",
-    "cucumber": "~0.4.8",
+    "cucumber": "xolvio/cucumber-js#cuke-monkey",
+    "ddp": "xolvio/node-ddp-client#master",
+    "freeport": "~1.0.4",
     "minimist": "~1.1.0",
     "phantomjs-bin": "~1.0.1",
+    "progress": "^1.1.8",
     "saucelabs": "~0.1.1",
-    "selenium-launcher": "~1.1.11",
+    "selenium-standalone": "^4.4.0",
     "webdriverio": "~2.4.5",
-    "ddp": "~0.10.0",
-    "freeport": "~1.0.4"
+    "chokidar": "~1.0.1",
+    "underscore": "~1.8.3",
+    "loglevel": "~1.2.0",
+    "fs-extra": "~0.17.0",
+    "request": "2.55.0",
+    "hapi": "8.4.0",
+    "chimp-widgets": "0.1.0"
   },
   "devDependencies": {
-    "fs-extra": "~0.17.0"
+    "jest-cli": "^0.4.0"
   }
 }

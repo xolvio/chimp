@@ -13,8 +13,6 @@ Feature: Run BDD tests from the CLI
     """
       Feature: My empty feature
     """
-    When  I run cuke-monkey inside "myTestProject"
+    When  I run chimp inside "myTestProject"
     Then  I see "0 scenarios" in the console
     And   I see "0 steps" in the console
-
-

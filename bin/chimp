@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+var Chimp   = require('../lib/chimp.js'),
+    minimist = require('minimist'),
+    freeport = require('freeport'),
+    log      = require('../lib/log');
+
+var argv = minimist(process.argv, {
+  'default': {
+    'browser': 'phantomjs',
+    'platform': 'ANY',
+    'name': '',
+    'debug': false,
+    'host': 'localhost',
+    'path': 'features',
+    'user': '',
+    'key': '',
+    'log': 'info',
+    'snippets': true,
+    'format': 'pretty',
+    'watchTags': '@dev',
+    'timeoutsAsyncScript': 10000,
+    'screenshotsPath': '.',
+    'serverHost': 'localhost'
+  },
+  'boolean': true
+});
+
+if (argv.deviceName) {
+  argv.browser = '';
+}
+
+try {
+  if (!argv.port) {
+    freeport(function (error, port) {
+      if (error) {
+        throw error;
+      }
+      argv.port = port;
+      startChimp(argv);
+    });
+  } else {
+    startChimp(argv)
+  }
+
+} catch (ex) {
+  process.stderr.write(ex.stack + '\n');
+  process.exit(2);
+}
+
+function startChimp (options) {
+  var chimp = new Chimp(options);
+  chimp.init(function (err) {
+    process.exit(err ? 2 : 0);
+  });
+}
