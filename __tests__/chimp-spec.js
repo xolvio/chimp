@@ -41,7 +41,7 @@ describe('Chimp', function () {
   describe('bin path', function () {
 
     it('sets the bin path to the location of chimp', function () {
-      expect(Chimp.bin.match(/chimp\/bin\/chimp$/)).not.toBe(null);
+      expect(Chimp.bin.match(/bin\/chimp$/)).not.toBe(null);
     });
 
   });
