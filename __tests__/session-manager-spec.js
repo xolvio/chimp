@@ -283,58 +283,59 @@ describe('Session Manager', function () {
       expect(callback.mock.calls.length).toBe(1);
       expect(typeof callback.mock.calls[0][0]).toBe('undefined');
 
-    })
-  });
-
-  it('retries when the browser returns an ECONNREFUSED error response', function () {
-
-    var SessionManager = require('../lib/session-manager');
-    var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
-
-    var browser = {
-      status: jest.genMockFn().mockImpl(function (callback) {
-        callback({message: 'blah ECONNREFUSED blah'});
-      })
-    };
-
-    var callback = jest.genMockFn();
-    var __waitForConnection = sessionManager._waitForConnection;
-    sessionManager._waitForConnection = jest.genMockFn().mockImpl(function () {
-      if (sessionManager._waitForConnectionCalled) {
-        return;
-      }
-      sessionManager._waitForConnectionCalled = true;
-      __waitForConnection.apply(this, arguments);
     });
-    sessionManager._waitForConnection(browser, callback);
 
-    jest.runAllTimers();
+    it('retries when the browser returns an ECONNREFUSED error response', function () {
 
-    expect(sessionManager._waitForConnection.mock.calls.length).toBe(2);
-    expect(callback.mock.calls.length).toBe(0);
+      var SessionManager = require('../lib/session-manager');
+      var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
+
+      var browser = {
+        status: jest.genMockFn().mockImpl(function (callback) {
+          callback({message: 'blah ECONNREFUSED blah'});
+        })
+      };
+
+      var callback = jest.genMockFn();
+      var __waitForConnection = sessionManager._waitForConnection;
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function () {
+        if (sessionManager._waitForConnectionCalled) {
+          return;
+        }
+        sessionManager._waitForConnectionCalled = true;
+        __waitForConnection.apply(this, arguments);
+      });
+      sessionManager._waitForConnection(browser, callback);
+
+      jest.runAllTimers();
+
+      expect(sessionManager._waitForConnection.mock.calls.length).toBe(2);
+      expect(callback.mock.calls.length).toBe(0);
+
+    });
+
+    it('returns an error when the max retries is reached', function () {
+
+
+      var SessionManager = require('../lib/session-manager');
+      var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
+
+      var browser = {
+        status: jest.genMockFn().mockImpl(function (callback) {
+          callback({message: 'blah ECONNREFUSED blah'});
+        })
+      };
+
+      var callback = jest.genMockFn();
+      sessionManager.retry = 4;
+      sessionManager.maxRetries = 5;
+      sessionManager._waitForConnection(browser, callback);
+
+      expect(callback.mock.calls.length).toBe(1);
+      expect(callback.mock.calls[0][0]).toBe('[chimp][session-manager] timed out retrying to connect to selenium server');
+
+    })
 
   });
-
-  it('returns an error when the max retries is reached', function () {
-
-
-    var SessionManager = require('../lib/session-manager');
-    var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
-
-    var browser = {
-      status: jest.genMockFn().mockImpl(function (callback) {
-        callback({message: 'blah ECONNREFUSED blah'});
-      })
-    };
-
-    var callback = jest.genMockFn();
-    sessionManager.retry = 4;
-    sessionManager.maxRetries = 5;
-    sessionManager._waitForConnection(browser, callback);
-
-    expect(callback.mock.calls.length).toBe(1);
-    expect(callback.mock.calls[0][0]).toBe('[chimp][session-manager] timed out retrying to connect to selenium server');
-
-  })
 
 });
