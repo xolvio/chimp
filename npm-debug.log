@@ -1,0 +1,127 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/Users/sam/.nvm/v0.10.38/bin/npm', 'publish' ]
+2 info using npm@2.9.1
+3 info using node@v0.10.38
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec { raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/sam/WebstormProjects/meteor-testing/chimp',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/sam/.npm/chimp/0.7.5/package.tgz not in flight; packing
+9 verbose tar pack [ '/Users/sam/.npm/chimp/0.7.5/package.tgz',
+9 verbose tar pack   '/Users/sam/WebstormProjects/meteor-testing/chimp' ]
+10 verbose tarball /Users/sam/.npm/chimp/0.7.5/package.tgz
+11 verbose folder /Users/sam/WebstormProjects/meteor-testing/chimp
+12 info prepublish chimp@0.7.5
+13 verbose addLocalTarball adding from inside cache /Users/sam/.npm/chimp/0.7.5/package.tgz
+14 silly cache afterAdd chimp@0.7.5
+15 verbose afterAdd /Users/sam/.npm/chimp/0.7.5/package/package.json not in flight; writing
+16 verbose afterAdd /Users/sam/.npm/chimp/0.7.5/package/package.json written
+17 silly publish { name: 'chimp',
+17 silly publish   version: '0.7.5',
+17 silly publish   description: 'BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs',
+17 silly publish   keywords:
+17 silly publish    [ 'simian',
+17 silly publish      'meteor',
+17 silly publish      'velocity',
+17 silly publish      'bdd',
+17 silly publish      'atdd',
+17 silly publish      'cucumber',
+17 silly publish      'webdriverio',
+17 silly publish      'selenium',
+17 silly publish      'phantom',
+17 silly publish      'testing',
+17 silly publish      'saucelabs' ],
+17 silly publish   author:
+17 silly publish    { name: 'Sam Hatoum',
+17 silly publish      email: 'sam@xolv.io',
+17 silly publish      url: 'http://xolv.io' },
+17 silly publish   license: 'MIT',
+17 silly publish   repository: { type: 'git', url: 'git+https://github.com/xolvio/chimp.git' },
+17 silly publish   homepage: 'https://github.com/xolvio/chimp#readme',
+17 silly publish   bugs: { url: 'https://github.com/xolvio/chimp/issues' },
+17 silly publish   scripts: { test: 'jest -i && ./bin/chimp' },
+17 silly publish   main: 'lib/chimp.js',
+17 silly publish   bin: { chimp: './bin/chimp' },
+17 silly publish   dependencies:
+17 silly publish    { async: '~0.9.0',
+17 silly publish      bluebird: '^2.9.24',
+17 silly publish      chai: '~2.2.0',
+17 silly publish      'chai-as-promised': '~4.3.0',
+17 silly publish      cucumber: 'github:xolvio/cucumber-js#cuke-monkey',
+17 silly publish      ddp: 'github:xolvio/node-ddp-client#master',
+17 silly publish      freeport: '~1.0.4',
+17 silly publish      minimist: '~1.1.0',
+17 silly publish      'phantomjs-bin': '~1.0.1',
+17 silly publish      progress: '^1.1.8',
+17 silly publish      saucelabs: '~0.1.1',
+17 silly publish      'selenium-standalone': '^4.4.0',
+17 silly publish      webdriverio: '~2.4.5',
+17 silly publish      chokidar: '~1.0.1',
+17 silly publish      underscore: '~1.8.3',
+17 silly publish      loglevel: '~1.2.0',
+17 silly publish      'fs-extra': '~0.17.0',
+17 silly publish      request: '2.55.0',
+17 silly publish      hapi: '8.4.0',
+17 silly publish      'chimp-widgets': '0.1.0' },
+17 silly publish   devDependencies: { 'jest-cli': '0.4.3' },
+17 silly publish   readme: '# Chimp by Xolv.io\n\n[![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)\n\nChimp is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and \nChai. It works as a standalone npm package for use in any project.\n\nIf you are using Meteor, you should see [xolvio:cucumber](https://github.com/xolvio/meteor-cucumber/)\n\nChimp can be used locally or configured to use [Simian](http://simian.io) and \n[SauceLabs](https://saucelabs.com). See below for more details.\n\n## Features\n- Write your feature specs and step definitions with [CucumberJS](https://github.com/cucumber/cucumber-js)\n- Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API\n- Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)\n- Leverage the power of PhantomJS, Selenium, SauceLabs for seamless integration between optimized local development\nand full continuous integration support.\n- Use promises everywhere\n- DDP support for Meteor projects\n- Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise\n\n## Quick Start\n\n### Installation\n\nFor CLI installation:\n```bash\nnpm install chimp -g\n```\n\nYou can also include chimp on a per-project basis by adding it to your `package.json` file.\n\n### Usage\n\nBe sure to be inside a project that contains a `/features` directory and supporting files then:\n\n```bash\nchimp\n```\n\nChimp provides just enough native options to better facilitate the synergy between **CucumberJS**,\n**PhantomJS**, **Selenium**, **SauceLabs**, and **WebdriverIO**. However all other CLI options are\npassed through to their respective binaries. This means that all CLI options from **CucumberJS**,\n**PhantomJS**, and **Selenium** are available to you through **Chimp**.\n\n#### Chimp Options\n\n##### path\n\nThe path to your local `CucumberJS` features directory.\n\n- **command**: `--path`\n- **default**: `./features`\n- **example usage:**\n```\nchimp --path=\'tests/acceptance/features\'\nchimp --path=\'tests/features\'\n```\n\n##### browser\n\nThe browser to use. The available options are `phantomjs`, any browser on your local\nmachine such as `chrome`, `firefox` or any browser available to SauceLabs.\n\n- **command**: `--browser`\n- **default**: `phantomjs`\n- **example usage**:\n```\nchimp --browser=firefox // would use local firefox instance\nchimp --browser=chrome // would use local chrome instance\n```\n- **notes**\n  - Selenium comes bundled with a driver for `firefox`. For other browsers\n  you will have to download those drivers.\n  - [full list of 3rd party bindings](http://www.seleniumhq.org/download/)\n\n##### host\n\nThe host domain that points to your Selenium Grid or SauceLabs hub url. Ignore this if your using\n`phantomjs` or local `selenium`.\n\n- **command**: `--host`\n- **default**: `localhost`\n- **example usage:**\n```\nchimp --host=ondemand.saucelabs.com\n```\n\n##### port\n\nThe port that used in conjunction with your host. Ignore this if your using\n`phantomjs` or local `selenium`.\n\n- **command**: `--port`\n- **default**: `4444`\n- **example usage:**\n```\nchimp --port=80\n```\n\n##### user\n\nThe user credentials to send to SauceLabs or authenticated grid environment.\n\n- **command**: `--user`\n- **default**: ``\n- **example usage:**\n```\nchimp --user=eric\n```\n\n##### key\n\nThe accessKey to send to SauceLabs or authenticated grid environment.\n\n- **command**: `--key`\n- **default**: ``\n- **example usage:**\n```\nchimp --key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx\n```\n\n##### platform\n\nIf your remote URL is a SauceLabs or Selenium Grid endpoint you may wish to request\na specific platform to run your tests on. If running tests on your local machine this\nis ignored. See [SauceLabs supported platforms](https://saucelabs.com/platforms)\n\n- **command**: `--platform`\n- **default**: `ANY`\n- **example usage**:\n```\nchimp --platform=\'Windows 7\'\nchimp --platform=\'OS X 10.8\'\n```\n\nType: `String` Default: **ANY**\n\n##### version\n\nIf using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to\nrequest a specific version of a `browser`.\n\n- **command**: `--version`\n- **default**: `ANY`\n- **example usage**:\n```\nchimp --browser=\'firefox\' --version=\'35\' --remote=\'http://user:key@ondemand.saucelabs.com/wd/hub\'\nchimp --browser=\'chrome\' --version=\'35\' --remote=\'http://yourseleniumhub.com:4444/wd/hub\'\n```\n\n##### name\nIf using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to assign\na test name. In SauceLabs for instance this will appear in your test rules dashboard.\n\n- **command**: `--name`\n- **default**: `unknown`\n- **example usage**:\n```\nchimp --name=\'Acceptance Tests\' --browser=\'firefox\' --remote=\'http://user:key@ondemand.saucelabs.com/wd/hub\'\n```\n\n##### log\nWhether or not to display debug information. Namely `Webdriver` commands.\n\n- **command**: `--log`\n- **default**: `silent`\n- **options**: `silent`, `command`\n- **example usage**:\n```\nchimp --log=command\n```\n\n#### CucumberJS Options\n\nUnfortunately the docs for CucumberJS don\'t list the CLI options, however the source for the argument\nparser contains a list of all the options.\n[Click here](https://github.com/cucumber/cucumber-js/blob/master/lib/cucumber/cli/argument_parser.js#L132)\nto see the source.\n\n#### PhantomJS Options\n\n[full list](http://phantomjs.org/api/command-line.html)\n\n#### Selenium CLI Options\n\n[full list](https://code.google.com/p/selenium/wiki/Grid2)\n\n\n## FAQ\n\n\n## Contributing\n\nFork the repo and issue a pull request\n\n\n## Credits\n\nThis project is originally forked from [Eric Clifford](https://github.com/eclifford)\'s excellent\n[Cuked](https://github.com/eclifford/cuked), and has been modified to work with Simian and Velocity.\nMany thanks and all due Kudos go to Eric. In his words, he described the original project as:\n\n"Chimp is an alternative to monolithic testing frameworks that trap you into proprietary abstractions\nand API\'s. Chimp is built from the ground to synergize CucumberJS with the other industry standard\nmicro-libraries you know and love."\n\nXolv.io aims to maintain this vision for this project.\n',
+17 silly publish   readmeFilename: 'README.md',
+17 silly publish   gitHead: 'a7d19361da961445773eb34967e2b50d3c8cc692',
+17 silly publish   _id: 'chimp@0.7.5',
+17 silly publish   _shasum: '52dbf600d056885f0181ff1e39c05c3a4b661bb2',
+17 silly publish   _from: '.' }
+18 verbose getPublishConfig undefined
+19 silly mapToRegistry name chimp
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/chimp
+23 verbose publish registryBase https://registry.npmjs.org/
+24 silly publish uploading /Users/sam/.npm/chimp/0.7.5/package.tgz
+25 verbose request uri https://registry.npmjs.org/chimp
+26 verbose request sending authorization for write operation
+27 info attempt registry request try #1 at 15:30:37
+28 verbose request using bearer token for auth
+29 verbose request id cc3ec8993ad808b6
+30 http request PUT https://registry.npmjs.org/chimp
+31 http 403 https://registry.npmjs.org/chimp
+32 verbose headers { 'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=60',
+32 verbose headers   'content-length': '95',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Fri, 22 May 2015 22:30:38 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-sjc3135-SJC',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1432333837.299671,VS0,VE1061' }
+33 verbose request invalidating /Users/sam/.npm/registry.npmjs.org/chimp on PUT
+34 error publish Failed PUT 403
+35 verbose stack Error: "You cannot publish over the previously published version 0.7.5." : chimp
+35 verbose stack     at CachingRegistryClient.<anonymous> (/Users/sam/.nvm/v0.10.38/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:247:14)
+35 verbose stack     at Request._callback (/Users/sam/.nvm/v0.10.38/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:170:14)
+35 verbose stack     at Request.self.callback (/Users/sam/.nvm/v0.10.38/lib/node_modules/npm/node_modules/request/request.js:368:22)
+35 verbose stack     at Request.emit (events.js:98:17)
+35 verbose stack     at Request.<anonymous> (/Users/sam/.nvm/v0.10.38/lib/node_modules/npm/node_modules/request/request.js:1219:14)
+35 verbose stack     at Request.emit (events.js:117:20)
+35 verbose stack     at IncomingMessage.<anonymous> (/Users/sam/.nvm/v0.10.38/lib/node_modules/npm/node_modules/request/request.js:1167:12)
+35 verbose stack     at IncomingMessage.emit (events.js:117:20)
+35 verbose stack     at _stream_readable.js:944:16
+35 verbose stack     at process._tickCallback (node.js:448:13)
+36 verbose statusCode 403
+37 verbose pkgid chimp
+38 verbose cwd /Users/sam/WebstormProjects/meteor-testing/chimp
+39 error Darwin 14.3.0
+40 error argv "node" "/Users/sam/.nvm/v0.10.38/bin/npm" "publish"
+41 error node v0.10.38
+42 error npm  v2.9.1
+43 error code E403
+44 error "You cannot publish over the previously published version 0.7.5." : chimp
+45 error If you need help, you may report this error at:
+45 error     <https://github.com/npm/npm/issues>
+46 verbose exit [ 1, true ]
