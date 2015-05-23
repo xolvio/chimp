@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
