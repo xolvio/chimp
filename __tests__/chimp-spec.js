@@ -289,7 +289,10 @@ describe('Chimp', function () {
       expect(freeport.mock.calls.length).toBe(0);
     });
 
-    it('calls a DDP endpoint with the server address on startup if ddp is passed', function () {
+    it('handshakes with a DDP endpoint with the server address on startup if ddp is passed', function () {
+
+      // TODO having some issues testing this. DDPClient is tricky to jest up
+
     });
 
     it('exposes the run and interrupt endpoints', function () {
@@ -349,7 +352,7 @@ describe('Chimp', function () {
       chimp.server();
       var getHandler = Hapi.instance.route.mock.calls[1][0].handler;
       var reply = jest.genMockFn();
-      var request = { params : {absolutePath : 'blah'}};
+      var request = {params: {absolutePath: 'blah'}};
       getHandler(request, reply);
 
       expect(chimp.options._[2]).toBe(request.params.absolutePath);
