@@ -1,5 +1,7 @@
 # Chimp by Xolv.io
 
+[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
 Chimp is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
