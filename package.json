@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.7.3",
+  "version": "0.7.11",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
@@ -26,7 +26,7 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "test": "jest -i"
+    "test": "jest -i && ./bin/chimp"
   },
   "main": "lib/chimp.js",
   "bin": {

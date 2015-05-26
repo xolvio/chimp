@@ -1,17 +1,18 @@
 # Chimp by Xolv.io
 
+[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
 Chimp is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
 Chai. It works as a standalone npm package for use in any project.
 
-If you are using Meteor, you should see
+If you are using Meteor, you should see [xolvio:cucumber](https://github.com/xolvio/meteor-cucumber/)
 
 Chimp can be used locally or configured to use [Simian](http://simian.io) and 
 [SauceLabs](https://saucelabs.com). See below for more details.
 
 ## Features
-
 - Write your feature specs and step definitions with [CucumberJS](https://github.com/cucumber/cucumber-js)
 - Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API
 - Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)
@@ -29,6 +30,8 @@ For CLI installation:
 ```bash
 npm install chimp -g
 ```
+
+You can also include chimp on a per-project basis by adding it to your `package.json` file.
 
 ### Usage
 
