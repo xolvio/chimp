@@ -10,11 +10,6 @@ git commit -m "$1"
 echo Patching npm version
 npm version patch
 
-echo Adding files to git again
-git add .
-echo Committing files to git again
-git commit -m "$1"
-
 echo Pushing the commits
 git push
 echo Pushing tags
