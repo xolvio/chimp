@@ -20,6 +20,7 @@ var argv = minimist(process.argv, {
     'watchTags': '@dev',
     'timeoutsAsyncScript': 10000,
     'waitForTimeout': 10000,
+    'screenshotsOnError': true,
     'screenshotsPath': '.',
     'serverHost': 'localhost'
   },
