@@ -1,3 +1,4 @@
+@cli
 Feature: Run BDD tests from the CLI
 
   As a developer
