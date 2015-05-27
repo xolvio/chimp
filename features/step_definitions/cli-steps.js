@@ -23,9 +23,9 @@ var myStepDefinitionsWrapper = function () {
     fs.outputFile(_getTempLocation(file), text, callback);
   });
 
-  this.When(/^I run cuke-monkey inside "([^"]*)"$/, function (directory, callback) {
+  this.When(/^I run chimp inside "([^"]*)"$/, function (directory, callback) {
 
-    var proc = spawn(path.join(process.env.PWD, 'bin/cuke-monkey'), [], {
+    var proc = spawn(path.join(process.env.PWD, 'bin/chimp'), [], {
       cwd: _getTempLocation(directory),
       stdio: null
     });

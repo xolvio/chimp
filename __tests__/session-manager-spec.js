@@ -33,13 +33,13 @@ describe('Session Manager', function () {
       expect(createSessionManager).toThrow('options.port is required');
     });
 
-    it('throws when options.browser is not passed', function () {
+    it('throws when options.browser and options.device is not passed', function () {
       var SessionManager = require('../lib/session-manager');
       var options = {port: 1234};
       var createSessionManager = function () {
         new SessionManager(options);
       };
-      expect(createSessionManager).toThrow('options.browser is required');
+      expect(createSessionManager).toThrow('[chimp][session-manager] options.browser or options.deviceName is required');
     });
 
   });
@@ -47,8 +47,8 @@ describe('Session Manager', function () {
   describe('Remote', function () {
 
     beforeEach(function () {
-      delete process.env['no-session-reuse'];
-      delete process.env['monkey.watch'];
+      delete process.env['chimp.noSessionReuse'];
+      delete process.env['chimp.watch'];
     });
 
     it('should delegate the webdriver remote call if using phantom', function () {
@@ -64,6 +64,9 @@ describe('Session Manager', function () {
       var sessions = [1234];
       sessionManager._getWebdriverSessions = jest.genMockFn().mockImpl(function (callback) {
         callback(sessions);
+      });
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
       });
 
       var options = {some: 'options'};
@@ -94,6 +97,9 @@ describe('Session Manager', function () {
       sessionManager._getWebdriverSessions = jest.genMockFn().mockImpl(function (callback) {
         callback(null, sessions);
       });
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
+      });
 
       var options = {some: 'options'};
       var callback = jest.genMockFn();
@@ -110,7 +116,7 @@ describe('Session Manager', function () {
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
 
-      process.env['monkey.watch'] = true;
+      process.env['chimp.watch'] = true;
       var browser = {requestHandler: {sessionID: 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
@@ -119,6 +125,9 @@ describe('Session Manager', function () {
       var sessions = [{id: 'session-id'}];
       sessionManager._getWebdriverSessions = jest.genMockFn().mockImplementation(function (callback) {
         callback(null, sessions);
+      });
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
       });
 
       var options = {some: 'options'};
@@ -139,7 +148,7 @@ describe('Session Manager', function () {
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
 
-      process.env['monkey.server'] = true;
+      process.env['chimp.server'] = true;
       var browser = {requestHandler: {sessionID: 'some-id'}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
@@ -148,6 +157,9 @@ describe('Session Manager', function () {
       var sessions = [{id: 'session-id'}];
       sessionManager._getWebdriverSessions = jest.genMockFn().mockImplementation(function (callback) {
         callback(null, sessions);
+      });
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
       });
 
       var options = {some: 'options'};
@@ -163,7 +175,7 @@ describe('Session Manager', function () {
 
     });
 
-    it('starts a new session when no-session-reuse is true when a session exists', function () {
+    it('starts a new session when noSessionReuse is true when a session exists', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
@@ -173,8 +185,12 @@ describe('Session Manager', function () {
         mockReturnValueOnce('return from remote2');
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
+      });
+
       var options = {some: 'options'};
-      process.env['no-session-reuse'] = true;
+      process.env['chimp.noSessionReuse'] = true;
       var callback = jest.genMockFn();
       sessionManager.remote(options, callback);
       sessionManager.remote(options, callback);
@@ -190,7 +206,7 @@ describe('Session Manager', function () {
 
     });
 
-    it('ignores respects no-session-reuse in watch mode', function () {
+    it('respects noSessionReuse in watch mode', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
@@ -200,9 +216,13 @@ describe('Session Manager', function () {
         mockReturnValueOnce('return from remote2');
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
+      });
+
       var options = {some: 'options'};
-      process.env['monkey.watch'] = true;
-      process.env['no-session-reuse'] = true;
+      process.env['chimp.watch'] = true;
+      process.env['chimp.noSessionReuse'] = true;
       var callback = jest.genMockFn();
       sessionManager.remote(options, callback);
       sessionManager.remote(options, callback);
@@ -227,9 +247,12 @@ describe('Session Manager', function () {
       sessionManager._getWebdriverSessions = jest.genMockFn().mockImplementation(function (callback) {
         callback(null, sessions);
       });
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function (browser, callback) {
+        callback();
+      });
 
       wd.remote = jest.genMockFn();
-      process.env['monkey.watch'] = true;
+      process.env['chimp.watch'] = true;
       sessionManager._monkeyPatchBrowserSessionManagement = jest.genMockFn();
 
       var options = {some: 'options'};
@@ -239,6 +262,79 @@ describe('Session Manager', function () {
       expect(sessionManager._monkeyPatchBrowserSessionManagement.mock.calls.length).toBe(1);
 
     });
+
+  });
+
+  describe('_waitForConnection', function () {
+    it('calls back when the browser returns a non error response', function () {
+
+      var SessionManager = require('../lib/session-manager');
+      var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
+
+      var browser = {
+        status: jest.genMockFn().mockImpl(function (callback) {
+          callback(null);
+        })
+      };
+
+      var callback = jest.genMockFn();
+      sessionManager._waitForConnection(browser, callback);
+
+      expect(callback.mock.calls.length).toBe(1);
+      expect(typeof callback.mock.calls[0][0]).toBe('undefined');
+
+    });
+
+    it('retries when the browser returns an ECONNREFUSED error response', function () {
+
+      var SessionManager = require('../lib/session-manager');
+      var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
+
+      var browser = {
+        status: jest.genMockFn().mockImpl(function (callback) {
+          callback({message: 'blah ECONNREFUSED blah'});
+        })
+      };
+
+      var callback = jest.genMockFn();
+      var __waitForConnection = sessionManager._waitForConnection;
+      sessionManager._waitForConnection = jest.genMockFn().mockImpl(function () {
+        if (sessionManager._waitForConnectionCalled) {
+          return;
+        }
+        sessionManager._waitForConnectionCalled = true;
+        __waitForConnection.apply(this, arguments);
+      });
+      sessionManager._waitForConnection(browser, callback);
+
+      jest.runAllTimers();
+
+      expect(sessionManager._waitForConnection.mock.calls.length).toBe(2);
+      expect(callback.mock.calls.length).toBe(0);
+
+    });
+
+    it('returns an error when the max retries is reached', function () {
+
+
+      var SessionManager = require('../lib/session-manager');
+      var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
+
+      var browser = {
+        status: jest.genMockFn().mockImpl(function (callback) {
+          callback({message: 'blah ECONNREFUSED blah'});
+        })
+      };
+
+      var callback = jest.genMockFn();
+      sessionManager.retry = 4;
+      sessionManager.maxRetries = 5;
+      sessionManager._waitForConnection(browser, callback);
+
+      expect(callback.mock.calls.length).toBe(1);
+      expect(callback.mock.calls[0][0]).toBe('[chimp][session-manager] timed out retrying to connect to selenium server');
+
+    })
 
   });
 

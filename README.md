@@ -1,23 +1,90 @@
-# Cuke Monkey
+# Chimp by Xolv.io
 
-[![Circle CI](https://circleci.com/gh/xolvio/cuke-monkey.svg?style=svg)](https://circleci.com/gh/xolvio/cuke-monkey)
+[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp) 
+[![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
-Cuke Monkey is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
-Chai. It works as a standalone npm package for use in any project, and also as as 
-Velocity-compatible Meteor package.
+Chimp is an end-to-end acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO, 
+Chai, Chai-as-promised and DDP - all working in seamless unison. 
 
-Cuke Monkey can be used locally or configured to use [Simian](http://simian.io) and 
-[SauceLabs](https://saucelabs.com). See below for more details.
 
-## Features
+optimized local development
+full continuous integration support
 
-- Write your feature specs and step definitions with [CucumberJS](https://github.com/cucumber/cucumber-js)
-- Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API for composable test executions
-- Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)
-- Leverage the power of PhantomJS, Selenium, SauceLabs for seamless integration between optimized local development
-and full continuous integration support.
+Works Locally with 0 configuration
+CircleCI, Codeship, Travis or any CI server
+[SauceLabs](https://saucelabs.com) 
+[Simian](http://simian.io) - Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
+[Meteor Velocity](https://github.com/xolvio/meteor-cucumber/)
+
+[CucumberJS](https://github.com/cucumber/cucumber-js)
+[WebdriverIO](http://webdriver.io/)
+[Chai](http://chaijs.com/)
+PhantomJS, 
+Selenium, 
+SauceLabs for seamless integration between 
+
 - Use promises everywhere
-- Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
+
+all CLI options from **CucumberJS** are available to you through **Chimp**.
+-r /features/file/etc'));
+--snippets
+--ddp=process.env.ROOT_URL
+--log=error
+--debug
+--screenshotsPath
+--coffee
+--tags=@dev
+--tags=~@ignore
+--format=
+--timeoutsAsyncScript
+--browser
+--host=process.env.HUB_HOST
+--port=process.env.HUB_PORT
+--user=process.env.HUB_USER
+--key=process.env.HUB_KEY
+--platform=process.env.HUB_PLATFORM
+--version=process.env.HUB_VERSION
+
+`HUB_HOST=ondemand.saucelabs.com | localhost (default)`
+`HUB_PORT=xxxx | 80 | 4444 (default)`
+`HUB_USER=dude`
+`HUB_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx`
+`HUB_PLATFORM='Windows 7' | 'OS X 10.8' | ANY (default)`
+`HUB_VERSION=35`
+
+`CUCUMBER_FORMAT=summary | json | progress | pretty (default)`
+`CUCUMBER_COFFEE_SNIPPETS=1`
+`CUCUMBER_TAGS=@mytag,@myOtherTag,~@notThisTag`
+`CUCUMBER_SCREENSHOTS_DIR=./tests/cucumber/.screenshots (default)`
+
+  long: ['require', 'format', 'progress', 'tags', 'help', 'strict', 'version', 'coffee', 'snippets'],
+  short: ['r', 'f', 't', 'h', 'S', 'i']
+
+`WD_LOG=command/debug/silent (default)`
+`WD_TIMEOUT_ASYNC_SCRIPT=10000 (default)`
+
+--deviceName | --browser
+
+--log=debug|info|error
+
+--phantom_w
+--phantom_h
+
+--jsonOutput
+
+waitForTimeout
+
+--watch
+watchTags : @dev
+
+--noSessionReuse
+
+--screenshotsPath
+
+--server
+serverHost
+serverPort
+
 
 ## Quick Start
 
@@ -25,23 +92,21 @@ and full continuous integration support.
 
 For CLI installation:
 ```bash
-npm install cuke-monkey -g
+npm install chimp -g
 ```
+
+You can also include chimp on a per-project basis by adding it to your `package.json` file.
 
 ### Usage
 
 Be sure to be inside a project that contains a `/features` directory and supporting files then:
 
 ```bash
-cuke-monkey
+chimp
 ```
 
-Cuke Monkey provides just enough native options to better facilitate the synergy between **CucumberJS**,
-**PhantomJS**, **Selenium**, **SauceLabs**, and **WebdriverIO**. However all other CLI options are
-passed through to their respective binaries. This means that all CLI options from **CucumberJS**,
-**PhantomJS**, and **Selenium** are available to you through **Cuke Monkey**.
 
-#### Cuke Monkey Options
+#### Chimp Options
 
 ##### path
 
@@ -51,8 +116,8 @@ The path to your local `CucumberJS` features directory.
 - **default**: `./features`
 - **example usage:**
 ```
-cuke-monkey --path='tests/acceptance/features'
-cuke-monkey --path='tests/features'
+chimp --path='tests/acceptance/features'
+chimp --path='tests/features'
 ```
 
 ##### browser
@@ -64,8 +129,8 @@ machine such as `chrome`, `firefox` or any browser available to SauceLabs.
 - **default**: `phantomjs`
 - **example usage**:
 ```
-cuke-monkey --browser=firefox // would use local firefox instance
-cuke-monkey --browser=chrome // would use local chrome instance
+chimp --browser=firefox // would use local firefox instance
+chimp --browser=chrome // would use local chrome instance
 ```
 - **notes**
   - Selenium comes bundled with a driver for `firefox`. For other browsers
@@ -81,7 +146,7 @@ The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore t
 - **default**: `localhost`
 - **example usage:**
 ```
-cuke-monkey --host=ondemand.saucelabs.com
+chimp --host=ondemand.saucelabs.com
 ```
 
 ##### port
@@ -93,7 +158,7 @@ The port that used in conjunction with your host. Ignore this if your using
 - **default**: `4444`
 - **example usage:**
 ```
-cuke-monkey --port=80
+chimp --port=80
 ```
 
 ##### user
@@ -104,7 +169,7 @@ The user credentials to send to SauceLabs or authenticated grid environment.
 - **default**: ``
 - **example usage:**
 ```
-cuke-monkey --user=eric
+chimp --user=eric
 ```
 
 ##### key
@@ -115,7 +180,7 @@ The accessKey to send to SauceLabs or authenticated grid environment.
 - **default**: ``
 - **example usage:**
 ```
-cuke-monkey --key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+chimp --key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
 ```
 
 ##### platform
@@ -128,8 +193,8 @@ is ignored. See [SauceLabs supported platforms](https://saucelabs.com/platforms)
 - **default**: `ANY`
 - **example usage**:
 ```
-cuke-monkey --platform='Windows 7'
-cuke-monkey --platform='OS X 10.8'
+chimp --platform='Windows 7'
+chimp --platform='OS X 10.8'
 ```
 
 Type: `String` Default: **ANY**
@@ -143,8 +208,8 @@ request a specific version of a `browser`.
 - **default**: `ANY`
 - **example usage**:
 ```
-cuke-monkey --browser='firefox' --version='35' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
-cuke-monkey --browser='chrome' --version='35' --remote='http://yourseleniumhub.com:4444/wd/hub'
+chimp --browser='firefox' --version='35' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
+chimp --browser='chrome' --version='35' --remote='http://yourseleniumhub.com:4444/wd/hub'
 ```
 
 ##### name
@@ -155,7 +220,7 @@ a test name. In SauceLabs for instance this will appear in your test rules dashb
 - **default**: `unknown`
 - **example usage**:
 ```
-cuke-monkey --name='Acceptance Tests' --browser='firefox' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
+chimp --name='Acceptance Tests' --browser='firefox' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
 ```
 
 ##### log
@@ -166,7 +231,7 @@ Whether or not to display debug information. Namely `Webdriver` commands.
 - **options**: `silent`, `command`
 - **example usage**:
 ```
-cuke-monkey --log=command
+chimp --log=command
 ```
 
 #### CucumberJS Options
@@ -176,31 +241,15 @@ parser contains a list of all the options.
 [Click here](https://github.com/cucumber/cucumber-js/blob/master/lib/cucumber/cli/argument_parser.js#L132)
 to see the source.
 
-#### PhantomJS Options
 
-[full list](http://phantomjs.org/api/command-line.html)
-
-#### Selenium CLI Options
-
-[full list](https://code.google.com/p/selenium/wiki/Grid2)
-
-
-## FAQ
 
 
 ## Contributing
-
-Fork the repo and issue a pull request
+Fork the repo and issue a pull request with a passing test.
 
 
 ## Credits
-
 This project is originally forked from [Eric Clifford](https://github.com/eclifford)'s excellent
-[Cuked](https://github.com/eclifford/cuked), and has been modified to work with Simian and Velocity.
+[Cuked](https://github.com/eclifford/cuked), and has been heavily tested and modified to work with 
+[Simian](http://simian.io) and [Meteor](https://github.com/xolvio/meteor-cucumber).
 Many thanks and all due Kudos go to Eric. In his words, he described the original project as:
-
-"Cuke Monkey is an alternative to monolithic testing frameworks that trap you into proprietary abstractions
-and API's. Cuke Monkey is built from the ground to synergize CucumberJS with the other industry standard
-micro-libraries you know and love."
-
-Xolv.io aims to maintain this vision for this project.
