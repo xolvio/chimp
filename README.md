@@ -1,26 +1,90 @@
 # Chimp by Xolv.io
 
-[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp) 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
-Chimp is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
-Chai. It works as a standalone npm package for use in any project.
+Chimp is an end-to-end acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO, 
+Chai, Chai-as-promised and DDP - all working in seamless unison. 
 
-If you are using Meteor, you should see [xolvio:cucumber](https://github.com/xolvio/meteor-cucumber/)
 
-Chimp can be used locally or configured to use [Simian](http://simian.io) and 
-[SauceLabs](https://saucelabs.com). See below for more details.
+optimized local development
+full continuous integration support
 
-## Features
-- Write your feature specs and step definitions with [CucumberJS](https://github.com/cucumber/cucumber-js)
-- Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API
-- Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)
-- Leverage the power of PhantomJS, Selenium, SauceLabs for seamless integration between optimized local development
-and full continuous integration support.
+Works Locally with 0 configuration
+CircleCI, Codeship, Travis or any CI server
+[SauceLabs](https://saucelabs.com) 
+[Simian](http://simian.io) - Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
+[Meteor Velocity](https://github.com/xolvio/meteor-cucumber/)
+
+[CucumberJS](https://github.com/cucumber/cucumber-js)
+[WebdriverIO](http://webdriver.io/)
+[Chai](http://chaijs.com/)
+PhantomJS, 
+Selenium, 
+SauceLabs for seamless integration between 
+
 - Use promises everywhere
-- DDP support for Meteor projects
-- Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
+
+all CLI options from **CucumberJS** are available to you through **Chimp**.
+-r /features/file/etc'));
+--snippets
+--ddp=process.env.ROOT_URL
+--log=error
+--debug
+--screenshotsPath
+--coffee
+--tags=@dev
+--tags=~@ignore
+--format=
+--timeoutsAsyncScript
+--browser
+--host=process.env.HUB_HOST
+--port=process.env.HUB_PORT
+--user=process.env.HUB_USER
+--key=process.env.HUB_KEY
+--platform=process.env.HUB_PLATFORM
+--version=process.env.HUB_VERSION
+
+`HUB_HOST=ondemand.saucelabs.com | localhost (default)`
+`HUB_PORT=xxxx | 80 | 4444 (default)`
+`HUB_USER=dude`
+`HUB_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx`
+`HUB_PLATFORM='Windows 7' | 'OS X 10.8' | ANY (default)`
+`HUB_VERSION=35`
+
+`CUCUMBER_FORMAT=summary | json | progress | pretty (default)`
+`CUCUMBER_COFFEE_SNIPPETS=1`
+`CUCUMBER_TAGS=@mytag,@myOtherTag,~@notThisTag`
+`CUCUMBER_SCREENSHOTS_DIR=./tests/cucumber/.screenshots (default)`
+
+  long: ['require', 'format', 'progress', 'tags', 'help', 'strict', 'version', 'coffee', 'snippets'],
+  short: ['r', 'f', 't', 'h', 'S', 'i']
+
+`WD_LOG=command/debug/silent (default)`
+`WD_TIMEOUT_ASYNC_SCRIPT=10000 (default)`
+
+--deviceName | --browser
+
+--log=debug|info|error
+
+--phantom_w
+--phantom_h
+
+--jsonOutput
+
+waitForTimeout
+
+--watch
+watchTags : @dev
+
+--noSessionReuse
+
+--screenshotsPath
+
+--server
+serverHost
+serverPort
+
 
 ## Quick Start
 
@@ -41,10 +105,6 @@ Be sure to be inside a project that contains a `/features` directory and support
 chimp
 ```
 
-Chimp provides just enough native options to better facilitate the synergy between **CucumberJS**,
-**PhantomJS**, **Selenium**, **SauceLabs**, and **WebdriverIO**. However all other CLI options are
-passed through to their respective binaries. This means that all CLI options from **CucumberJS**,
-**PhantomJS**, and **Selenium** are available to you through **Chimp**.
 
 #### Chimp Options
 
@@ -181,31 +241,15 @@ parser contains a list of all the options.
 [Click here](https://github.com/cucumber/cucumber-js/blob/master/lib/cucumber/cli/argument_parser.js#L132)
 to see the source.
 
-#### PhantomJS Options
 
-[full list](http://phantomjs.org/api/command-line.html)
-
-#### Selenium CLI Options
-
-[full list](https://code.google.com/p/selenium/wiki/Grid2)
-
-
-## FAQ
 
 
 ## Contributing
-
-Fork the repo and issue a pull request
+Fork the repo and issue a pull request with a passing test.
 
 
 ## Credits
-
 This project is originally forked from [Eric Clifford](https://github.com/eclifford)'s excellent
-[Cuked](https://github.com/eclifford/cuked), and has been modified to work with Simian and Velocity.
+[Cuked](https://github.com/eclifford/cuked), and has been heavily tested and modified to work with 
+[Simian](http://simian.io) and [Meteor](https://github.com/xolvio/meteor-cucumber).
 Many thanks and all due Kudos go to Eric. In his words, he described the original project as:
-
-"Chimp is an alternative to monolithic testing frameworks that trap you into proprietary abstractions
-and API's. Chimp is built from the ground to synergize CucumberJS with the other industry standard
-micro-libraries you know and love."
-
-Xolv.io aims to maintain this vision for this project.
