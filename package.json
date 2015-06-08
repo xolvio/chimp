@@ -52,7 +52,7 @@
     "fs-extra": "~0.17.0",
     "request": "2.55.0",
     "hapi": "8.4.0",
-    "chimp-widgets": "0.1.0"
+    "chimp-widgets": "0.2.0"
   },
   "devDependencies": {
     "jest-cli": "0.4.3"
