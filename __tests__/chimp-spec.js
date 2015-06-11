@@ -46,7 +46,47 @@ describe('Chimp', function () {
 
   });
 
+
   describe('init', function () {
+    it('executes npm install then calls selectMode when there are no errors', function () {
+
+      var chimp = new Chimp();
+
+      chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
+        return callback(null);
+      });
+
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = function () {};
+
+      chimp.init(callback);
+
+      expect(chimp.selectMode).toBeCalledWith(callback);
+
+    });
+
+    it('executes npm install then callback with error there is an errors', function () {
+
+      var chimp = new Chimp();
+
+      chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
+        return callback('errorzzz');
+      });
+
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = jest.genMockFunction();
+
+      chimp.init(callback);
+
+      expect(callback).toBeCalledWith('errorzzz');
+      expect(chimp.selectMode).not.toBeCalledWith();
+
+    });
+  });
+
+  describe('selectMode', function () {
 
     it('runs in single mode when no mode option is passed', function () {
 
@@ -58,7 +98,7 @@ describe('Chimp', function () {
       chimp.server = jest.genMockFunction();
       var callback = function () {};
 
-      chimp.init(callback);
+      chimp.selectMode(callback);
 
       expect(chimp.run).toBeCalledWith(callback);
       expect(chimp.run.mock.calls.length).toBe(1);
@@ -78,7 +118,7 @@ describe('Chimp', function () {
       chimp.watch = jest.genMockFunction();
       chimp.server = jest.genMockFunction();
 
-      chimp.init();
+      chimp.selectMode();
 
       expect(chimp.watch).toBeCalledWith();
       expect(chimp.watch.mock.calls.length).toBe(1);
@@ -97,7 +137,7 @@ describe('Chimp', function () {
       chimp.watch = jest.genMockFunction();
       chimp.server = jest.genMockFunction();
 
-      chimp.init();
+      chimp.selectMode();
 
       expect(chimp.server.mock.calls.length).toBe(1);
       expect(typeof chimp.server.mock.calls[0][0]).toBe('undefined');
