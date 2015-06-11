@@ -48,9 +48,34 @@ describe('Chimp', function () {
 
 
   describe('init', function () {
+
+    it('calls selectMode right away if it does not find package.json', function () {
+
+      var chimp = new Chimp();
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(false);
+
+      chimp.exec = jest.genMockFunction();
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = function () {};
+
+      chimp.init(callback);
+
+      expect(chimp.selectMode).toBeCalledWith(callback);
+      expect(chimp.exec).not.toBeCalled();
+
+      chimp.fs.existsSync = restore;
+
+    });
+
     it('executes npm install then calls selectMode when there are no errors', function () {
 
       var chimp = new Chimp();
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
 
       chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
         return callback(null);
@@ -64,11 +89,15 @@ describe('Chimp', function () {
 
       expect(chimp.selectMode).toBeCalledWith(callback);
 
+      chimp.fs.existsSync = restore;
     });
 
     it('executes npm install then callback with error there is an errors', function () {
 
       var chimp = new Chimp();
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
 
       chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
         return callback('errorzzz');
@@ -81,7 +110,9 @@ describe('Chimp', function () {
       chimp.init(callback);
 
       expect(callback).toBeCalledWith('errorzzz');
-      expect(chimp.selectMode).not.toBeCalledWith();
+      expect(chimp.selectMode).not.toBeCalled();
+
+      chimp.fs.existsSync = restore;
 
     });
   });
