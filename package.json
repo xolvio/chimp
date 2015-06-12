@@ -34,9 +34,9 @@
   },
   "dependencies": {
     "async": "~0.9.0",
-    "bluebird": "^2.9.24",
-    "chai": "~2.2.0",
-    "chai-as-promised": "~4.3.0",
+    "bluebird": "^2.9.27",
+    "chai": "~3.0.0",
+    "chai-as-promised": "~5.1.0",
     "cucumber": "xolvio/cucumber-js#cuke-monkey",
     "ddp": "xolvio/node-ddp-client#master",
     "freeport": "~1.0.4",
@@ -44,7 +44,7 @@
     "phantomjs-bin": "~1.0.1",
     "progress": "^1.1.8",
     "saucelabs": "~0.1.1",
-    "selenium-standalone": "^4.4.0",
+    "selenium-standalone": "^4.4.2",
     "webdriverio": "~2.4.5",
     "chokidar": "~1.0.1",
     "underscore": "~1.8.3",
@@ -55,6 +55,6 @@
     "chimp-widgets": "0.2.0"
   },
   "devDependencies": {
-    "jest-cli": "0.4.3"
+    "jest-cli": "0.4.12"
   }
 }
