@@ -22,7 +22,9 @@ var argv = minimist(process.argv, {
     'waitForTimeout': 10000,
     'screenshotsOnError': true,
     'screenshotsPath': '.',
-    'serverHost': 'localhost'
+    'serverHost': 'localhost',
+    'server': false,
+    'noSessionReuse': false
   },
   'boolean': true
 });
