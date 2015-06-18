@@ -2,14 +2,6 @@
 set -e
 npm test
 
-echo Adding files to git
-git add .
-echo Committing files to git
-git commit -m "$1"
-
-echo Patching npm version
-npm version patch
-
 echo Pushing the commits
 git push
 echo Pushing tags
