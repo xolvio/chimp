@@ -159,11 +159,14 @@ chimp --log=command
 Whether or not to save screenshots on errors.
 
 - **command**: `--screenshotsOnError`
-- **default**: `true`
+- **default**: `false (true for phantomjs)`
+- **options**: true, false
 - **example usage**:
 ```
+# Enable screenshots
+chimp --screenshotsOnError=true
 # Disable screenshots
-chimp --no-screenshotsOnError
+chimp --screenshotsOnError=false
 ```
 
 #### CucumberJS Options
