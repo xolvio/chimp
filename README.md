@@ -155,6 +155,17 @@ Whether or not to display debug information. Namely `Webdriver` commands.
 chimp --log=command
 ```
 
+##### screenshotsOnError
+Whether or not to save screenshots on errors.
+
+- **command**: `--screenshotsOnError`
+- **default**: `true`
+- **example usage**:
+```
+# Disable screenshots
+chimp --no-screenshotsOnError
+```
+
 #### CucumberJS Options
 
 Unfortunately the docs for CucumberJS don't list the CLI options, however the source for the argument
