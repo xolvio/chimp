@@ -37,7 +37,7 @@
     "bluebird": "^2.9.27",
     "chai": "~3.0.0",
     "chai-as-promised": "~5.1.0",
-    "cucumber": "xolvio/cucumber-js#cuke-monkey",
+    "cucumber": "^0.5.1",
     "ddp": "xolvio/node-ddp-client#master",
     "freeport": "~1.0.4",
     "minimist": "~1.1.0",
