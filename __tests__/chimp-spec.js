@@ -46,7 +46,78 @@ describe('Chimp', function () {
 
   });
 
+
   describe('init', function () {
+
+    it('calls selectMode right away if it does not find package.json', function () {
+
+      var chimp = new Chimp();
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(false);
+
+      chimp.exec = jest.genMockFunction();
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = function () {};
+
+      chimp.init(callback);
+
+      expect(chimp.selectMode).toBeCalledWith(callback);
+      expect(chimp.exec).not.toBeCalled();
+
+      chimp.fs.existsSync = restore;
+
+    });
+
+    it('executes npm install then calls selectMode when there are no errors', function () {
+
+      var chimp = new Chimp();
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
+
+      chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
+        return callback(null);
+      });
+
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = function () {};
+
+      chimp.init(callback);
+
+      expect(chimp.selectMode).toBeCalledWith(callback);
+
+      chimp.fs.existsSync = restore;
+    });
+
+    it('executes npm install then callback with error there is an errors', function () {
+
+      var chimp = new Chimp();
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
+
+      chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
+        return callback('errorzzz');
+      });
+
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = jest.genMockFunction();
+
+      chimp.init(callback);
+
+      expect(callback).toBeCalledWith('errorzzz');
+      expect(chimp.selectMode).not.toBeCalled();
+
+      chimp.fs.existsSync = restore;
+
+    });
+  });
+
+  describe('selectMode', function () {
 
     it('runs in single mode when no mode option is passed', function () {
 
@@ -58,7 +129,7 @@ describe('Chimp', function () {
       chimp.server = jest.genMockFunction();
       var callback = function () {};
 
-      chimp.init(callback);
+      chimp.selectMode(callback);
 
       expect(chimp.run).toBeCalledWith(callback);
       expect(chimp.run.mock.calls.length).toBe(1);
@@ -78,7 +149,7 @@ describe('Chimp', function () {
       chimp.watch = jest.genMockFunction();
       chimp.server = jest.genMockFunction();
 
-      chimp.init();
+      chimp.selectMode();
 
       expect(chimp.watch).toBeCalledWith();
       expect(chimp.watch.mock.calls.length).toBe(1);
@@ -97,7 +168,7 @@ describe('Chimp', function () {
       chimp.watch = jest.genMockFunction();
       chimp.server = jest.genMockFunction();
 
-      chimp.init();
+      chimp.selectMode();
 
       expect(chimp.server.mock.calls.length).toBe(1);
       expect(typeof chimp.server.mock.calls[0][0]).toBe('undefined');
@@ -289,7 +360,10 @@ describe('Chimp', function () {
       expect(freeport.mock.calls.length).toBe(0);
     });
 
-    it('calls a DDP endpoint with the server address on startup if ddp is passed', function () {
+    it('handshakes with a DDP endpoint with the server address on startup if ddp is passed', function () {
+
+      // TODO having some issues testing this. DDPClient is tricky to jest up
+
     });
 
     it('exposes the run and interrupt endpoints', function () {
@@ -349,7 +423,7 @@ describe('Chimp', function () {
       chimp.server();
       var getHandler = Hapi.instance.route.mock.calls[1][0].handler;
       var reply = jest.genMockFn();
-      var request = { params : {absolutePath : 'blah'}};
+      var request = {params: {absolutePath: 'blah'}};
       getHandler(request, reply);
 
       expect(chimp.options._[2]).toBe(request.params.absolutePath);

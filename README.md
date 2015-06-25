@@ -1,25 +1,11 @@
 # Chimp by Xolv.io
 
+[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp) 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
-Chimp is a BDD acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO and 
-Chai. It works as a standalone npm package for use in any project.
+Chimp is an end-to-end acceptance testing package that combines CucumberJS, PhantomJS, WebdriverIO, 
+Chai, Chai-as-promised and DDP - all working in seamless unison. 
 
-If you are using Meteor, you should see
-
-Chimp can be used locally or configured to use [Simian](http://simian.io) and 
-[SauceLabs](https://saucelabs.com). See below for more details.
-
-## Features
-
-- Write your feature specs and step definitions with [CucumberJS](https://github.com/cucumber/cucumber-js)
-- Use the powerful [WebdriverIO](http://webdriver.io/) fluent chain-able API
-- Write your assertions beautifully in a human readable format using the power of [Chai](http://chaijs.com/)
-- Leverage the power of PhantomJS, Selenium, SauceLabs for seamless integration between optimized local development
-and full continuous integration support.
-- Use promises everywhere
-- DDP support for Meteor projects
-- Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
 
 ## Quick Start
 
@@ -30,6 +16,8 @@ For CLI installation:
 npm install chimp -g
 ```
 
+You can also include chimp on a per-project basis by adding it to your `package.json` file.
+
 ### Usage
 
 Be sure to be inside a project that contains a `/features` directory and supporting files then:
@@ -38,10 +26,6 @@ Be sure to be inside a project that contains a `/features` directory and support
 chimp
 ```
 
-Chimp provides just enough native options to better facilitate the synergy between **CucumberJS**,
-**PhantomJS**, **Selenium**, **SauceLabs**, and **WebdriverIO**. However all other CLI options are
-passed through to their respective binaries. This means that all CLI options from **CucumberJS**,
-**PhantomJS**, and **Selenium** are available to you through **Chimp**.
 
 #### Chimp Options
 
@@ -171,6 +155,20 @@ Whether or not to display debug information. Namely `Webdriver` commands.
 chimp --log=command
 ```
 
+##### screenshotsOnError
+Whether or not to save screenshots on errors.
+
+- **command**: `--screenshotsOnError`
+- **default**: `false (true for phantomjs)`
+- **options**: true, false
+- **example usage**:
+```
+# Enable screenshots
+chimp --screenshotsOnError=true
+# Disable screenshots
+chimp --screenshotsOnError=false
+```
+
 #### CucumberJS Options
 
 Unfortunately the docs for CucumberJS don't list the CLI options, however the source for the argument
@@ -178,31 +176,15 @@ parser contains a list of all the options.
 [Click here](https://github.com/cucumber/cucumber-js/blob/master/lib/cucumber/cli/argument_parser.js#L132)
 to see the source.
 
-#### PhantomJS Options
 
-[full list](http://phantomjs.org/api/command-line.html)
-
-#### Selenium CLI Options
-
-[full list](https://code.google.com/p/selenium/wiki/Grid2)
-
-
-## FAQ
 
 
 ## Contributing
-
-Fork the repo and issue a pull request
+Fork the repo and issue a pull request with a passing test.
 
 
 ## Credits
-
 This project is originally forked from [Eric Clifford](https://github.com/eclifford)'s excellent
-[Cuked](https://github.com/eclifford/cuked), and has been modified to work with Simian and Velocity.
+[Cuked](https://github.com/eclifford/cuked), and has been heavily tested and modified to work with 
+[Simian](http://simian.io) and [Meteor](https://github.com/xolvio/meteor-cucumber).
 Many thanks and all due Kudos go to Eric. In his words, he described the original project as:
-
-"Chimp is an alternative to monolithic testing frameworks that trap you into proprietary abstractions
-and API's. Chimp is built from the ground to synergize CucumberJS with the other industry standard
-micro-libraries you know and love."
-
-Xolv.io aims to maintain this vision for this project.

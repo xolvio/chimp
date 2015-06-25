@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.7.3",
+  "version": "0.9.0",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
@@ -26,7 +26,7 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "test": "jest -i"
+    "test": "jest -i && ./bin/chimp && ./bin/chimp --browser=chrome --tags=~@cli --debug"
   },
   "main": "lib/chimp.js",
   "bin": {
@@ -34,17 +34,17 @@
   },
   "dependencies": {
     "async": "~0.9.0",
-    "bluebird": "^2.9.24",
-    "chai": "~2.2.0",
-    "chai-as-promised": "~4.3.0",
-    "cucumber": "xolvio/cucumber-js#cuke-monkey",
+    "bluebird": "^2.9.27",
+    "chai": "~3.0.0",
+    "chai-as-promised": "~5.1.0",
+    "cucumber": "^0.5.1",
     "ddp": "xolvio/node-ddp-client#master",
     "freeport": "~1.0.4",
     "minimist": "~1.1.0",
     "phantomjs-bin": "~1.0.1",
     "progress": "^1.1.8",
     "saucelabs": "~0.1.1",
-    "selenium-standalone": "^4.4.0",
+    "selenium-standalone": "^4.4.2",
     "webdriverio": "~2.4.5",
     "chokidar": "~1.0.1",
     "underscore": "~1.8.3",
@@ -52,9 +52,9 @@
     "fs-extra": "~0.17.0",
     "request": "2.55.0",
     "hapi": "8.4.0",
-    "chimp-widgets": "0.1.0"
+    "chimp-widgets": "0.2.0"
   },
   "devDependencies": {
-    "jest-cli": "0.4.3"
+    "jest-cli": "0.4.12"
   }
 }

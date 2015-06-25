@@ -47,7 +47,7 @@ describe('Session Manager', function () {
   describe('Remote', function () {
 
     beforeEach(function () {
-      delete process.env['no-session-reuse'];
+      delete process.env['chimp.noSessionReuse'];
       delete process.env['chimp.watch'];
     });
 
@@ -175,7 +175,7 @@ describe('Session Manager', function () {
 
     });
 
-    it('starts a new session when no-session-reuse is true when a session exists', function () {
+    it('starts a new session when noSessionReuse is true when a session exists', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
@@ -190,7 +190,7 @@ describe('Session Manager', function () {
       });
 
       var options = {some: 'options'};
-      process.env['no-session-reuse'] = true;
+      process.env['chimp.noSessionReuse'] = true;
       var callback = jest.genMockFn();
       sessionManager.remote(options, callback);
       sessionManager.remote(options, callback);
@@ -206,7 +206,7 @@ describe('Session Manager', function () {
 
     });
 
-    it('ignores respects no-session-reuse in watch mode', function () {
+    it('respects noSessionReuse in watch mode', function () {
 
       var wd = require('webdriverio');
       var SessionManager = require('../lib/session-manager');
@@ -222,7 +222,7 @@ describe('Session Manager', function () {
 
       var options = {some: 'options'};
       process.env['chimp.watch'] = true;
-      process.env['no-session-reuse'] = true;
+      process.env['chimp.noSessionReuse'] = true;
       var callback = jest.genMockFn();
       sessionManager.remote(options, callback);
       sessionManager.remote(options, callback);

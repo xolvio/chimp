@@ -1,7 +1,7 @@
 var myStepDefinitionsWrapper = function () {
 
-  var fs = require('fs-extra'),
-      path = require('path'),
+  var fs    = require('fs-extra'),
+      path  = require('path'),
       spawn = require('child_process').spawn;
 
   var TMP_DIR = 'tmp';
@@ -51,8 +51,52 @@ var myStepDefinitionsWrapper = function () {
 
   });
 
+  var context = this;
+  this.When(/^I run chimp inside "([^"]*)" in watch mode$/, function (directory, callback) {
+
+    var proc = spawn(path.join(process.env.PWD, 'bin/chimp'), ['--watch'], {
+      cwd: _getTempLocation(directory),
+      stdio: null
+    });
+    context.watchModeProc = proc;
+
+    proc.stdout.on('data', function onData (data) {
+      stdOutMessages.push(data.toString());
+
+      // wait test run to finish, since "x steps" is the last log message
+      if (data.toString().trim().match(/\d+ steps/)) {
+        proc.stdout.removeListener('data', onData);
+        callback();
+      }
+
+    });
+
+  });
+
+
+  this.When(/^I wait for the chimp to finish rerunning$/, function (callback) {
+
+    context.watchModeProc.stdout.on('data', function onData (data) {
+
+      stdOutMessages.push(data.toString());
+
+      // wait test run to finish, since "x steps" is the last log message
+      if (data.toString().trim().match(/\d+ steps/)) {
+        context.watchModeProc.stdout.removeListener('data', onData);
+        callback();
+      }
+
+    });
+
+  });
+
   this.Then(/^I see "([^"]*)" in the console$/, function (message, callback) {
-    if (stdOutMessages.join().indexOf(message) !== -1) {
+
+    // remove all the colors from the stdOutMessages
+    var colorsRegex = /\[\d+m|[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g;
+    var completeLog = _replaceAll(stdOutMessages.join('\n'), colorsRegex, '');
+
+    if (completeLog.indexOf(message) !== -1) {
       callback();
     } else {
       callback.fail(message + ' was not seen in the console log');
@@ -60,8 +104,11 @@ var myStepDefinitionsWrapper = function () {
 
   });
 
+  function _replaceAll (str, find, replace) {
+    return str.replace(find, replace);
+  }
 
-  function _getTempLocation(location) {
+  function _getTempLocation (location) {
     return path.join(process.env.PWD, TMP_DIR, location);
   }
 

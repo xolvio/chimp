@@ -19,14 +19,25 @@ var argv = minimist(process.argv, {
     'format': 'pretty',
     'watchTags': '@dev',
     'timeoutsAsyncScript': 10000,
+    'waitForTimeout': 10000,
+    'screenshotsOnError': null,
     'screenshotsPath': '.',
-    'serverHost': 'localhost'
+    'serverHost': 'localhost',
+    'server': false,
+    'noSessionReuse': false
   },
   'boolean': true
 });
 
 if (argv.deviceName) {
   argv.browser = '';
+}
+
+if (argv.screenshotsOnError === null) {
+  // For Chrome taking screenshots will focus the browser (haven't tested it with other browsers).
+  // For this reason we only enable screenshots for phantomjs by default.
+  // Because in phantomjs you don't get visual feedback from the browser directly when you develop.
+  argv.screenshotsOnError = (argv.browser === 'phantomjs');
 }
 
 try {
