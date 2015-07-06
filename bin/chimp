@@ -6,7 +6,7 @@ var Chimp   = require('../lib/chimp.js'),
 
 var argv = minimist(process.argv, {
   'default': {
-    'browser': 'phantomjs',
+    'browser': 'chrome',
     'platform': 'ANY',
     'name': '',
     'debug': false,
