@@ -1,4 +1,4 @@
-![Chimp by Xolv.io](https://raw.githubusercontent.com/xolvio/chimp/mega-docs/header.png "Chimp by Xolv.io")
+![Chimp by Xolv.io](./header.png?raw=true)
 
 [![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp) 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
