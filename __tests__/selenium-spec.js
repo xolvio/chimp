@@ -215,21 +215,24 @@ describe('Selenium', function () {
       it('kills the selenium child', function () {
         var Selenium = require('../lib/selenium');
         var selenium = new Selenium({port: '4444'});
+        var processHelper = require('../lib/process-helper');
         var seleniumChild = {
           pid: 1234
         };
         selenium.child = seleniumChild;
-        _kill = process.kill;
-        process.kill = jest.genMockFn();
 
         var callback = jest.genMockFunction();
         selenium.stop(callback);
 
-        expect(process.kill).toBeCalledWith(-1234, 'SIGINT');
-        expect(selenium.child).toBe(null);
-        expect(callback).toBeCalledWith(null);
+        expect(processHelper.kill.mock.calls.length).toBe(1);
+        expect(processHelper.kill.mock.calls[0][0]).toEqual({child: selenium.child, signal: 'SIGINT', prefix: 'selenium'});
 
-        process.kill = _kill;
+        // simulate the callback
+        processHelper.kill.mock.calls[0][1]('this', 'that');
+
+        expect(selenium.child).toBe(null);
+        expect(callback).toBeCalledWith('this', 'that');
+
       });
 
     });
