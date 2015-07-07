@@ -26,7 +26,7 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "test": "jest -i && ./bin/chimp && ./bin/chimp --browser=phantomjs --tags=~@cli"
+    "test": "jest -i && ./bin/chimp --tags=@cli --browser=phantomjs --debug && ./bin/chimp --tags=~@cli --debug && ./bin/chimp --browser=firefox --tags=~@cli --debug && ./bin/chimp --browser=phantomjs --tags=~@cli --debug"
   },
   "main": "lib/chimp.js",
   "bin": {
