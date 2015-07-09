@@ -309,15 +309,41 @@ to see the source.
 
 Webdriver Options:
 * `--timeoutsAsyncScript=10000`
-* `--browser=chrome (default) | firefox | safari | IE | phantomjs` - The browser to use. The available options are `phantomjs`, any browser on your local machine such as `chrome`, `firefox` or any browser available to SauceLabs.
-* `--host=ondemand.saucelabs.com | localhost (default)` - The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore this if your using `phantomjs` or local `selenium`.
-* `--port=4444 | random (default)` - The port that used in conjunction with your host. Ignore this if your using `phantomjs` or local `selenium`.
-* `--user=someone` - The user credentials to send to SauceLabs or authenticated grid environment.
-* `--key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx` - The accessKey to send to SauceLabs or authenticated grid environment.
-* `--platform='Windows 7' | 'OS X 10.8' | ANY (default)` - If your remote URL is a SauceLabs or Selenium Grid endpoint you may wish to request a specific platform to run your tests on. If running tests on your local machine this is ignored.
-* `--version=35` - If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to request a specific version of a `browser`.
+
+
+* `--browser=chrome (default) | firefox | safari | IE | phantomjs`
+
+  The browser to use. The available options are `phantomjs`, any browser on your local machine such as `chrome`, `firefox` or any browser available to SauceLabs.
+  
+* `--host=ondemand.saucelabs.com | localhost (default)`
+
+  The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore this if your using `phantomjs` or local `selenium`.
+  
+* `--port=4444 | random (default)` - 
+
+  The port that used in conjunction with your host. Ignore this if your using `phantomjs` or local `selenium`.
+
+* `--user=someone`
+
+  The user credentials to send to SauceLabs or authenticated grid environment.
+
+* `--key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx`
+
+  The accessKey to send to SauceLabs or authenticated grid environment.
+
+* `--platform='Windows 7' | 'OS X 10.8' | ANY (default)`
+
+  If your remote URL is a SauceLabs or Selenium Grid endpoint you may wish to request a specific platform to run your tests on. If running tests on your local machine this is ignored.
+
+* `--version=35`
+
+  If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to request a specific version of a `browser`.
+
 * `--log=command/debug/silent (default)`
-* `--name` If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to assign a test name. In SauceLabs for instance this will appear in your test rules dashboard.
+
+* `--name` 
+
+  If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to assign a test name. In SauceLabs for instance this will appear in your test rules dashboard.
 
 See also [SauceLabs supported platforms](https://saucelabs.com/platforms)
 
