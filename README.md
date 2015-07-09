@@ -167,31 +167,58 @@ This is a very brief overview of Cucumber and the Gherkin syntax. Be sure to che
 [further reading](#further-reading) section for additional learning resources on the wonderful
 subject of Behavior Driven Development (BDD).
 
+See Official docs here:
+* [Cucumber-js repository](https://github.com/cucumber/cucumber-js) 
+* [Cucumber Website](https://cucumber.io/)
+
 ######WebdriverIO
 
-######Selenium / PhantomJS
+TODO Key Concepts explanation
+
+See Official docs here: 
+* [WebdriverIO website](http://webdriver.io)
+* [WebdriverIO repository](https://github.com/webdriverio/webdriverio/)
+
+######Selenium / PhantomJS 
+
+TODO Key Concepts explanation
+
+See Official docs here:
+* [Selenium](http://www.seleniumhq.org)
+* [Selenium WebDriver](http://www.seleniumhq.org/projects/webdriver/)
+* [PhantomJS](http://phantomjs.org/)
+* [GhostDriver](https://github.com/detro/ghostdriver)
 
 ######Chai / Chai-as-promised
 
-######Chimp Widgets
-https://github.com/xolvio/chimp-widgets
- 
-####Architectural Overview
- 
- Chimp
+TODO Key Concepts explanation
 
-  # Chimp Run
+See Official docs here:
+* [Chai](https://github.com/domenic/chai-as-promised/)
+* [Chai-as-promised official page](https://github.com/domenic/chai-as-promised/)
+* [Chai-as-promised plug-in page](http://chaijs.com/plugins/chai-as-promised)
+
+######Chimp Widgets
+
+See Official docs here: 
+* [Chimp Widgets](https://github.com/xolvio/chimp-widgets)
+ 
+####Under the hood
+ 
+This is what Chimp does for you:
+
+It runs in one of these modes as instructed by you:
   
-    If Single
-      Run everything and cleanly kill all the processes when done
+    Single
+      Starts all servers, runs your specs and cleanly kills all the processes when done
       
-    If Watch mode
-      Watch feature/support files and manage process interruption and spec reruns
+    Watch mode
+      Watches feature/support files and manage process interruption, browser reuse and spec reruns
       
-    If Server mod
-      Listen for HTTP requests and run/interrupt/rerun 
+    Server mode
+      Listen for HTTP requests and exposes these endpoints run/interrupt/rerun 
       
-  # Browser Setup  
+This how chimp sets up the browser for WebdriverIO to use:  
   
     If PhantomJS is selected
       Contains a binary for all platforms (OSX/Linux/Windows)
@@ -204,7 +231,7 @@ https://github.com/xolvio/chimp-widgets
       Starts Selenium on a random port
         Manages selenium-server and browser child processes 
     
-  # Cucumber Run
+Runs CucumberJS as follows:
   
     Augments World object      
       Adds Chai & Chai-as-promised and configures them
@@ -220,23 +247,22 @@ https://github.com/xolvio/chimp-widgets
  
 ####Tutorial
  
- Create this file and save it under `./features/search.feature`
- ```gherkin
- Feature: Visitors can search the web
+Create this file and save it under `./features/search.feature`
+```gherkin
+Feature: Visitors can search the web
+
+ As a searcher
+ I want to find websites
+ So I can visit their homepage
+
+ @watch
+ Scenario: Users can find websites
+   Given I have navigated to Google
+   When I search for Xolv.io
+   Then I see a link to the Xolv.io website in the results
+```
  
-   As a searcher
-   I want to find websites
-   So I can visit their homepage
- 
-   @watch
-   Scenario: Users can find websites
-     Given I have navigated to Google
-     When I search for Xolv.io
-     Then I see a link to the Xolv.io website in the results
- ```
- 
- 
- 
+TODO: Complete this tutorial.
  
  
 ## Configure it
@@ -245,245 +271,35 @@ Chimp and the integrated packages are all configurable through the command-line.
 somewhat opinionated, it tries to be as flexible as possible for advanced users. Below are the 
 supported options.   
 
-#### Chimp
- 
-#### Cucumber
 
-#### WebdriverIO
-
-
-Full list of API
-http://www.webdriver.io/api.html
-
-You can see more info at the official [WebdriverIO](http://webdriver.io/) website.
- 
-#### Selenium
-
-#### PhantomJS
- 
- 
- 
-Chimp Server
-
- 
-- [SauceLabs](https://saucelabs.com) 
-- [Simian](http://simian.io) - Coming Soon: Send test results to Simian from your CI environment to enable a company-wide BDD practise
-- [Meteor Velocity](https://github.com/xolvio/meteor-cucumber/)
-- [CucumberJS](https://github.com/cucumber/cucumber-js)
-
-- [Chai](http://chaijs.com/)
-- PhantomJS
-- Selenium  
-- Chai-As-Promised
-
-
-All CLI options from **CucumberJS** are available to you through **Chimp**.
---r/--require
-/features/file/etc
-
---snippets
-
---ddp=process.env.ROOT_URL
---log=error
---debug
---screenshotsPath
---coffee
---tags=@dev
---tags=~@ignore
---f / format
---timeoutsAsyncScript
---browser
---host=process.env.HUB_HOST
---port=process.env.HUB_PORT
---user=process.env.HUB_USER
---key=process.env.HUB_KEY
---platform=process.env.HUB_PLATFORM
---version=process.env.HUB_VERSION
--
--`HUB_HOST=ondemand.saucelabs.com | localhost (default)`
--`HUB_PORT=xxxx | 80 | 4444 (default)`
--`HUB_USER=dude`
--`HUB_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx`
--`HUB_PLATFORM='Windows 7' | 'OS X 10.8' | ANY (default)`
--`HUB_VERSION=35`
--
--`CUCUMBER_FORMAT=summary | json | progress | pretty (default)`
--`CUCUMBER_COFFEE_SNIPPETS=1`
--`CUCUMBER_TAGS=@mytag,@myOtherTag,~@notThisTag`
--`CUCUMBER_SCREENSHOTS_DIR=./tests/cucumber/.screenshots (default)`
--
--  long: ['require', 'format', 'progress', 'tags', 'help', 'strict', 'version', 'coffee', 'snippets'],
--  short: ['r', 'f', 't', 'h', 'S', 'i']
--
--`WD_LOG=command/debug/silent (default)`
--`WD_TIMEOUT_ASYNC_SCRIPT=10000 (default)`
--
----deviceName | --browser
--
----log=debug|info|error
--
----phantom_w
----phantom_h
--
----jsonOutput
--
--waitForTimeout
--
----watch
--watchTags : @dev
--
----noSessionReuse
--
----screenshotsPath
--
----server
--serverHost
--serverPort
-
-
-#### Chimp Options
-
-##### path
-
-The path to your local `CucumberJS` features directory.
-
-- **command**: `--path`
-- **default**: `./features`
-- **example usage:**
-```
-chimp --path='tests/acceptance/features'
-chimp --path='tests/features'
-```
-
-##### browser
-
-The browser to use. The available options are `phantomjs`, any browser on your local
-machine such as `chrome`, `firefox` or any browser available to SauceLabs.
-
-- **command**: `--browser`
-- **default**: `phantomjs`
-- **example usage**:
-```
-chimp --browser=firefox // would use local firefox instance
-chimp --browser=chrome // would use local chrome instance
-```
-- **notes**
-  - Selenium comes bundled with a driver for `firefox`. For other browsers
-  you will have to download those drivers.
-  - [full list of 3rd party bindings](http://www.seleniumhq.org/download/)
-
-##### host
-
-The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore this if your using
-`phantomjs` or local `selenium`.
-
-- **command**: `--host`
-- **default**: `localhost`
-- **example usage:**
-```
-chimp --host=ondemand.saucelabs.com
-```
-
-##### port
-
-The port that used in conjunction with your host. Ignore this if your using
-`phantomjs` or local `selenium`.
-
-- **command**: `--port`
-- **default**: `4444`
-- **example usage:**
-```
-chimp --port=80
-```
-
-##### user
-
-The user credentials to send to SauceLabs or authenticated grid environment.
-
-- **command**: `--user`
-- **default**: ``
-- **example usage:**
-```
-chimp --user=eric
-```
-
-##### key
-
-The accessKey to send to SauceLabs or authenticated grid environment.
-
-- **command**: `--key`
-- **default**: ``
-- **example usage:**
-```
-chimp --key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
-```
-
-##### platform
-
-If your remote URL is a SauceLabs or Selenium Grid endpoint you may wish to request
-a specific platform to run your tests on. If running tests on your local machine this
-is ignored. See [SauceLabs supported platforms](https://saucelabs.com/platforms)
-
-- **command**: `--platform`
-- **default**: `ANY`
-- **example usage**:
-```
-chimp --platform='Windows 7'
-chimp --platform='OS X 10.8'
-```
-
-Type: `String` Default: **ANY**
-
-##### version
-
-If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to
-request a specific version of a `browser`.
-
-- **command**: `--version`
-- **default**: `ANY`
-- **example usage**:
-```
-chimp --browser='firefox' --version='35' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
-chimp --browser='chrome' --version='35' --remote='http://yourseleniumhub.com:4444/wd/hub'
-```
-
-##### name
-If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to assign
-a test name. In SauceLabs for instance this will appear in your test rules dashboard.
-
-- **command**: `--name`
-- **default**: `unknown`
-- **example usage**:
-```
-chimp --name='Acceptance Tests' --browser='firefox' --remote='http://user:key@ondemand.saucelabs.com/wd/hub'
-```
-
-##### log
-Whether or not to display debug information. Namely `Webdriver` commands.
-
-- **command**: `--log`
-- **default**: `silent`
-- **options**: `silent`, `command`
-- **example usage**:
-```
-chimp --log=command
-```
-
-##### screenshotsOnError
-Whether or not to save screenshots on errors.
-
-- **command**: `--screenshotsOnError`
-- **default**: `false (true for phantomjs)`
-- **options**: true, false
-- **example usage**:
-```
-# Enable screenshots
-chimp --screenshotsOnError=true
-# Disable screenshots
-chimp --screenshotsOnError=false
-```
-
-#### CucumberJS Options
+Chimp Options:
+* `--path=./features (default)` - The path to your local `CucumberJS` features directory
+* `--watch`
+* `--server`
+* `--serverHost`
+* `--serverPort`
+* `--screenshotsPath= . (default)`
+* `--watchTags=@dev,@watch (default)`
+* `--ddp=process.env.ROOT_URL`
+* `--deviceName`
+* `--phantom_w`
+* `--phantom_h`
+* `--jsonOutput`
+* `--waitForTimeout`
+* `--noSessionReuse`
+* `--screenshotsOnError=false (default) | true (default for phantomjs)`
+* `--screenshotsPath`
+  
+Cucumber Options:
+* `--require /someDirectory/maybeFileToo`
+* `--snippets=true (default) | false`
+* `--log=error`
+* `--coffee=true | false (default)`
+* `--tags=~@ignore (default)`
+* `--debug`
+* `--format`
+* `--progress`
+* `--strict`
 
 Unfortunately the docs for CucumberJS don't list the CLI options, however the source for the argument
 parser contains a list of all the options.
@@ -491,6 +307,19 @@ parser contains a list of all the options.
 to see the source.
 
 
+Webdriver Options:
+* `--timeoutsAsyncScript=10000`
+* `--browser=chrome (default) | firefox | safari | IE | phantomjs` - The browser to use. The available options are `phantomjs`, any browser on your local machine such as `chrome`, `firefox` or any browser available to SauceLabs.
+* `--host=ondemand.saucelabs.com | localhost (default)` - The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore this if your using `phantomjs` or local `selenium`.
+* `--port=4444 | random (default)` - The port that used in conjunction with your host. Ignore this if your using `phantomjs` or local `selenium`.
+* `--user=someone` - The user credentials to send to SauceLabs or authenticated grid environment.
+* `--key=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx` - The accessKey to send to SauceLabs or authenticated grid environment.
+* `--platform='Windows 7' | 'OS X 10.8' | ANY (default)` - If your remote URL is a SauceLabs or Selenium Grid endpoint you may wish to request a specific platform to run your tests on. If running tests on your local machine this is ignored.
+* `--version=35` - If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to request a specific version of a `browser`.
+* `--log=command/debug/silent (default)`
+* `--name` If using a **Selenium Grid** or Grid providers such as **SauceLabs** you may wish to assign a test name. In SauceLabs for instance this will appear in your test rules dashboard.
+
+See also [SauceLabs supported platforms](https://saucelabs.com/platforms)
 
 ## Further Reading
 
@@ -506,16 +335,12 @@ to see the source.
 * [Specification by Example](http://www.manning.com/adzic/) by Gojko Adzic (Use this code: cukes38sbe for 38% off)
 
 ####Official Resources
-* [Cucumber-js](https://github.com/cucumber/cucumber-js) repository
-* [Cucumber Official Website](https://cucumber.io/) website
 * [BDD Google Group](https://groups.google.com/forum/#!forum/behaviordrivendevelopment)
 * [Cucumber School](https://cukes.info/school)
 * [Cucumber Blog](https://cucumber.io/blog)
 
-
 ## Contributing
 Fork the repo, issue a pull request with passing tests.
-
 
 ## Credits
 This project was originally forked from [Eric Clifford](https://github.com/eclifford)'s excellent
