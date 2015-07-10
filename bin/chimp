@@ -6,7 +6,7 @@ var Chimp   = require('../lib/chimp.js'),
 
 var argv = minimist(process.argv, {
   'default': {
-    'browser': 'phantomjs',
+    'browser': 'chrome',
     'platform': 'ANY',
     'name': '',
     'debug': false,
@@ -17,7 +17,8 @@ var argv = minimist(process.argv, {
     'log': 'info',
     'snippets': true,
     'format': 'pretty',
-    'watchTags': '@dev',
+    'tags': '~@ignore',
+    'watchTags': '@dev,@watch',
     'timeoutsAsyncScript': 10000,
     'waitForTimeout': 10000,
     'screenshotsOnError': null,

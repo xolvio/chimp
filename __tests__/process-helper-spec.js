@@ -222,7 +222,7 @@ describe('process-helper', function () {
       expect(process.kill.mock.calls.length).toBe(4);
       expect(process.kill.mock.calls[0][0]).toEqual(1234);
       expect(process.kill.mock.calls[0][1]).toBe(0);
-      expect(typeof process.kill.mock.calls[1][1]).toBe('undefined');
+      expect(process.kill.mock.calls[1][1]).toBe('SIGTERM');
       expect(process.kill.mock.calls[2][0]).toEqual(1234);
       expect(process.kill.mock.calls[2][1]).toEqual(0);
       expect(process.kill.mock.calls[3][0]).toEqual(1234);

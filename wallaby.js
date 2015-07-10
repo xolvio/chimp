@@ -19,7 +19,7 @@ module.exports = function () {
       }
     },
 
-    testFramework: 'jest@0.4.3'
+    testFramework: 'jest'
 
     // Use bootstrap function
     //bootstrap: function (wallaby) {
