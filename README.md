@@ -271,36 +271,60 @@ Chimp and the integrated packages are all configurable through the command-line.
 somewhat opinionated, it tries to be as flexible as possible for advanced users. Below are the 
 supported options.   
 
-
 Chimp Options:
+  
 * `--path=./features (default)` - The path to your local `CucumberJS` features directory
+  
 * `--watch`
+  
 * `--server`
+  
 * `--serverHost`
+  
 * `--serverPort`
+  
 * `--screenshotsPath= . (default)`
+  
 * `--watchTags=@dev,@watch (default)`
+  
 * `--ddp=process.env.ROOT_URL`
+  
 * `--deviceName`
+  
 * `--phantom_w`
+  
 * `--phantom_h`
+  
 * `--jsonOutput`
+  
 * `--waitForTimeout`
+  
 * `--noSessionReuse`
+  
 * `--screenshotsOnError=false (default) | true (default for phantomjs)`
+  
 * `--screenshotsPath`
   
 Cucumber Options:
-* `--require /someDirectory/maybeFileToo`
-* `--snippets=true (default) | false`
-* `--log=error`
-* `--coffee=true | false (default)`
-* `--tags=~@ignore (default)`
-* `--debug`
-* `--format`
-* `--progress`
-* `--strict`
 
+* `--require /someDirectory/maybeFileToo`
+  
+* `--snippets=true (default) | false`
+  
+* `--log=error`
+  
+* `--coffee=true | false (default)`
+  
+* `--tags=~@ignore (default)`
+  
+* `--debug`
+  
+* `--format`
+  
+* `--progress`
+  
+* `--strict`
+  
 Unfortunately the docs for CucumberJS don't list the CLI options, however the source for the argument
 parser contains a list of all the options.
 [Click here](https://github.com/cucumber/cucumber-js/blob/master/lib/cucumber/cli/argument_parser.js#L132)
@@ -319,7 +343,7 @@ Webdriver Options:
 
   The host domain that points to your Selenium Grid or SauceLabs hub url. Ignore this if your using `phantomjs` or local `selenium`.
   
-* `--port=4444 | random (default)` - 
+* `--port=4444 | random (default)`
 
   The port that used in conjunction with your host. Ignore this if your using `phantomjs` or local `selenium`.
 
