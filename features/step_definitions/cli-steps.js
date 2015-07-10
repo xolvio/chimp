@@ -56,7 +56,8 @@ var myStepDefinitionsWrapper = function () {
 
     var proc = spawn(path.join(process.env.PWD, 'bin/chimp'), ['--watch'], {
       cwd: _getTempLocation(directory),
-      stdio: null
+      stdio: null,
+      detached: true
     });
     context.watchModeProc = proc;
 
@@ -66,6 +67,7 @@ var myStepDefinitionsWrapper = function () {
       // wait test run to finish, since "x steps" is the last log message
       if (data.toString().trim().match(/\d+ steps/)) {
         proc.stdout.removeListener('data', onData);
+        proc.kill('SIGINT');
         callback();
       }
 
