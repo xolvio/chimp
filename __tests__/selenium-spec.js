@@ -215,21 +215,32 @@ describe('Selenium', function () {
       it('kills the selenium child', function () {
         var Selenium = require('../lib/selenium');
         var selenium = new Selenium({port: '4444'});
+        var processHelper = require('../lib/process-helper');
         var seleniumChild = {
           pid: 1234
         };
         selenium.child = seleniumChild;
-        _kill = process.kill;
-        process.kill = jest.genMockFn();
+        selenium.sessionManager = {};
+        selenium.sessionManager.killCurrentSession = jest.genMockFunction();
+        selenium.sessionManager.killCurrentSession.mockImplementation(function (callback) {
+          callback(null);
+        });
 
         var callback = jest.genMockFunction();
         selenium.stop(callback);
 
-        expect(process.kill).toBeCalledWith(-1234, 'SIGINT');
-        expect(selenium.child).toBe(null);
-        expect(callback).toBeCalledWith(null);
+        expect(processHelper.kill.mock.calls.length).toBe(1);
+        expect(processHelper.kill.mock.calls[0][0]).toEqual({child: selenium.child, signal: 'SIGINT', prefix: 'selenium'});
 
-        process.kill = _kill;
+        // stop should also kill all sessions
+        expect(selenium.sessionManager.killCurrentSession.mock.calls.length).toEqual(1);
+
+        // simulate the callback
+        processHelper.kill.mock.calls[0][1]('this', 'that');
+
+        expect(selenium.child).toBe(null);
+        expect(callback).toBeCalledWith('this', 'that');
+
       });
 
     });
