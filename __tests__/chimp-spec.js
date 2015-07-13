@@ -400,7 +400,8 @@ describe('Chimp', function () {
 
       chimp.server();
       var getHandler = Hapi.instance.route.mock.calls[0][0].handler;
-      var reply = jest.genMockFn();
+      var headerMock = jest.genMockFn();
+      var reply = jest.genMockFn().mockReturnValue({header: headerMock});
       getHandler(null, reply);
 
       expect(reply.mock.calls[0][0]).toBe('cucumber results');
@@ -422,8 +423,9 @@ describe('Chimp', function () {
 
       chimp.server();
       var getHandler = Hapi.instance.route.mock.calls[1][0].handler;
-      var reply = jest.genMockFn();
       var request = {params: {absolutePath: 'blah'}};
+      var headerMock = jest.genMockFn();
+      var reply = jest.genMockFn().mockReturnValue({header: headerMock});
       getHandler(request, reply);
 
       expect(chimp.options._[2]).toBe(request.params.absolutePath);
