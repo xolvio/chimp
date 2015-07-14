@@ -2,4 +2,6 @@
 
 [![Chimp by Xolv.io](http://chimpjs.com/images/logo.svg)](http://chimpjs.com/) 
 
-###| [Introduction](http://chimpjs.com) | [Documentation](http://chimp.readme.io/docs) | [NPM Package](http://npmjs.com/package/chimp) | [Issues](https://github.com/xolvio/chimp/issues) |
+###| [Demo](http://chimpjs.com) | [Documentation](http://chimp.readme.io/docs) |
+
+Head over to one of the pages above for more details.
