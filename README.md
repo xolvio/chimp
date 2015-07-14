@@ -5,3 +5,8 @@
 ###| [Demo](http://chimpjs.com) | [Documentation](http://chimp.readme.io/docs) |
 
 Head over to one of the pages above for more details.
+
+## Installation
+```sh
+npm install chimp
+```
