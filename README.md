@@ -1,9 +1,10 @@
-![Chimp by Xolv.io](./header.png?raw=true)
-
-[![Join the chat at https://gitter.im/xolvio/chimp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp) 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp)
 
-[Read the Docs](http://chimp.readme.io)
+###| [Demo](http://chimpjs.com) | [Documentation](http://chimp.readme.io/docs) |  [Meteor Cucumber](http://github.com/xolvio/meteor-cucumber) | 
 
-## Contributing
-Fork the repo, issue a pull request with passing tests.
+Head over to one of the pages above for more details.
+
+## Installation
+```sh
+npm install chimp
+```
