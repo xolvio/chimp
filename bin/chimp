@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var Chimp   = require('../lib/chimp.js'),
+var Chimp    = require('../lib/chimp.js'),
     minimist = require('minimist'),
     freeport = require('freeport'),
     log      = require('../lib/log');
@@ -62,6 +62,9 @@ try {
 function startChimp (options) {
   var chimp = new Chimp(options);
   chimp.init(function (err) {
+    if (err) {
+      log.error('Error in chimp init', err);
+    }
     process.exit(err ? 2 : 0);
   });
 }

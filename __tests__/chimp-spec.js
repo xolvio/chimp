@@ -383,6 +383,10 @@ describe('Chimp', function () {
 
       expect(Hapi.instance.route.mock.calls[2][0].method).toBe('GET');
       expect(Hapi.instance.route.mock.calls[2][0].path).toBe('/interrupt');
+
+      expect(Hapi.instance.route.mock.calls[3][0].method).toBe('GET');
+      expect(Hapi.instance.route.mock.calls[3][0].path).toBe('/runAll');
+
     });
 
     it('returns cucumber results when run handler is called successfully', function () {
@@ -453,6 +457,27 @@ describe('Chimp', function () {
 
       expect(reply.mock.calls[0][0]).toBe('done');
 
+    });
+
+    it('returns cucumber results when runAll handler is called successfully', function () {
+
+      var Hapi = require('hapi');
+      var Chimp = require('../lib/chimp.js');
+      var chimp = new Chimp({serverHost: 'localhost', serverPort: 1234});
+
+      chimp.rerun = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback(null,
+          [null, [null, 'cucumber results']]
+        );
+      });
+
+      chimp.server();
+      var getHandler = Hapi.instance.route.mock.calls[3][0].handler;
+      var headerMock = jest.genMockFn();
+      var reply = jest.genMockFn().mockReturnValue({header: headerMock});
+      getHandler(null, reply);
+
+      expect(reply.mock.calls[0][0]).toBe('cucumber results');
     });
 
   });
