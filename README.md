@@ -22,4 +22,4 @@ You need to be sure you have the following installed run Chimp:
 Chimp will do the rest.
 
 ## Using Meteor?
-Check out our [xolvio:cucumber package](https://atmospherejs.com/xolvio/cucumber) which wraps Chimp and gives you an even smoother develooment experience.
+Check out our [xolvio:cucumber package](https://atmospherejs.com/xolvio/cucumber) which wraps Chimp and gives you an even smoother development experience.
