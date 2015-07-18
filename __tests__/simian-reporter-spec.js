@@ -8,7 +8,7 @@ describe('Simian reporter', function () {
 
     var SimianReporter = require('../lib/simian-reporter');
     var simianReporter = new SimianReporter({
-      simianHost: 'api.simian.io/v1.0/result',
+      simianResultEndPoint: 'api.simian.io/v1.0/result',
       simianAccessToken: 'secretToken'
     });
 
@@ -36,4 +36,34 @@ describe('Simian reporter', function () {
 
   });
 
+  it('shows the error to the user when Simian returns a non 200 response', function() {
+
+    var request = require('request');
+
+    var SimianReporter = require('../lib/simian-reporter');
+    var simianReporter = new SimianReporter({
+      simianAccessToken: 'secretToken'
+    });
+
+    spyOn(console, 'error');
+
+    var callback = jest.genMockFunction();
+    var result = {cucumber: 'response'};
+    var asyncChainResponse = [null, [null, [result]]];
+    simianReporter.report(asyncChainResponse, callback);
+
+
+    // calls back on a good response
+    var postCallback = request.post.mock.calls[0][1];
+    var response = {
+      statusCode: 401,
+      status: 'something',
+      error: 'terrible'
+    };
+    postCallback(null, response);
+    expect(callback.mock.calls.length).toBe(1);
+    expect(console.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', response.status, response.error);
+  });
+
 });
+

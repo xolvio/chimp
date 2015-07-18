@@ -586,8 +586,6 @@ describe('Chimp', function () {
       chimp.run(callback);
 
       expect(SimianReporter.instance.report.mock.calls.length).toBe(1);
-      console.log(SimianReporter.instance.report.mock.calls)
-      //expect(SimianReporter.instance.report.mock.calls[0][0]).toBe(results);
 
     });
 

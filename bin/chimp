@@ -26,7 +26,7 @@ var argv = minimist(process.argv, {
     'serverHost': 'localhost',
     'server': false,
     'noSessionReuse': false,
-    'simianHost': 'api.simian.io/v1.0/result',
+    'simianResultEndPoint': 'api.simian.io/v1.0/result',
     'simianAccessToken': false
   },
   'boolean': true
