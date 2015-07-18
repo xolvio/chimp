@@ -2,7 +2,7 @@
 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-This package allows you to do BDD using Cucumber and can run on any system. You write your automation in the language of the web. [Click here to see a demo](http://chimpjs.com).
+This package allows you to do BDD using Cucumber and can run on any system. You write your automation layer in Javascript (the language of the web). [Click here to see a demo](http://chimpjs.com).
 
 ## Installation
 ```sh
@@ -13,7 +13,7 @@ npm install chimp
 You can [read the full documentation here](http://chimp.readme.io/docs) on the beautiful Readme.io.
 
 ## Prerequisits
-You need to be sure you have the following installed run Chimp:
+You need to be sure you have the following installed:
 
 * Node & NPM
 * Java
