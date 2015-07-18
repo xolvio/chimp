@@ -13,7 +13,7 @@ npm install chimp
 You can [read the full documentation here](http://chimp.readme.io/docs) on the beautiful Readme.io.
 
 ## Prerequisits
-You need to be sure yo have the following installed run Chimp:
+You need to be sure you have the following installed run Chimp:
 
 * Node & NPM
 * Java
