@@ -56,13 +56,44 @@ describe('Simian reporter', function () {
     // calls back on a good response
     var postCallback = request.post.mock.calls[0][1];
     var response = {
-      statusCode: 401,
-      status: 'something',
-      error: 'terrible'
+      statusCode: 401
     };
-    postCallback(null, response);
+    var body = {
+      status: 'error',
+      error: 'invalid accessToken'
+    };
+    postCallback(null, response, body);
     expect(callback.mock.calls.length).toBe(1);
-    expect(console.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', response.status, response.error);
+    expect(console.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', body.error);
+  });
+
+  it('shows the error to the user when a request error happens before reaching the Simian API', function() {
+
+    var request = require('request');
+
+    var SimianReporter = require('../lib/simian-reporter');
+    var simianReporter = new SimianReporter({
+      simianAccessToken: 'secretToken'
+    });
+
+    spyOn(console, 'error');
+
+    var callback = jest.genMockFunction();
+    var result = {cucumber: 'response'};
+    var asyncChainResponse = [null, [null, [result]]];
+    simianReporter.report(asyncChainResponse, callback);
+
+
+    // calls back on a good response
+    var postCallback = request.post.mock.calls[0][1];
+    var error = new Error('network error');
+    var response = null;
+    var body = null;
+    postCallback(error, response, body);
+    expect(callback.mock.calls.length).toBe(1);
+    expect(console.error).toHaveBeenCalledWith(
+      '[chimp][simian-reporter]', 'Error while sending result to Simian:', error
+    );
   });
 
 });
