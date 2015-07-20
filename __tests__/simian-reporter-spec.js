@@ -13,20 +13,20 @@ describe('Simian reporter', function () {
     });
 
     var callback = jest.genMockFunction();
-    var result = {cucumber: 'response'};
-    var asyncChainResponse = [null, [null, [result]]];
+    var result = [{id: 'Use-browser-inside-steps'}];
+    var asyncChainResponse = [null, [null, [JSON.stringify(result)]]];
     simianReporter.report(asyncChainResponse, callback);
 
     expect(request.post.mock.calls.length).toBe(1);
 
     var postedObject = request.post.mock.calls[0][0];
 
-    expect(postedObject.headers).toEqual({'content-type': 'application/json'});
     expect(postedObject.url).toEqual('http://api.simian.io/v1.0/result?accessToken=secretToken');
-    expect(postedObject.body).toEqual(JSON.stringify({
+    expect(postedObject.json).toEqual(true);
+    expect(postedObject.body).toEqual({
       type: 'cucumber',
-      result: [result]
-    }));
+      result: result
+    });
 
 
     // calls back on a good response
@@ -48,8 +48,8 @@ describe('Simian reporter', function () {
     spyOn(console, 'error');
 
     var callback = jest.genMockFunction();
-    var result = {cucumber: 'response'};
-    var asyncChainResponse = [null, [null, [result]]];
+    var result = [{id: 'Use-browser-inside-steps'}];
+    var asyncChainResponse = [null, [null, [JSON.stringify(result)]]];
     simianReporter.report(asyncChainResponse, callback);
 
 
@@ -64,7 +64,7 @@ describe('Simian reporter', function () {
     };
     postCallback(null, response, body);
     expect(callback.mock.calls.length).toBe(1);
-    expect(console.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', body.error);
+    expect(console.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', 'invalid accessToken');
   });
 
   it('shows the error to the user when a request error happens before reaching the Simian API', function() {
@@ -79,8 +79,8 @@ describe('Simian reporter', function () {
     spyOn(console, 'error');
 
     var callback = jest.genMockFunction();
-    var result = {cucumber: 'response'};
-    var asyncChainResponse = [null, [null, [result]]];
+    var result = [{id: 'Use-browser-inside-steps'}];
+    var asyncChainResponse = [null, [null, [JSON.stringify(result)]]];
     simianReporter.report(asyncChainResponse, callback);
 
 
