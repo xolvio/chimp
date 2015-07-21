@@ -540,6 +540,55 @@ describe('Chimp', function () {
 
     });
 
+    it('passes the options to the simian reporter constructor', function () {
+
+      var SimianReporter = require('../lib/simian-reporter');
+
+      var Chimp = require('../lib/chimp.js');
+
+      var options = {simianAccessToken: 'present'};
+      var chimp = new Chimp(options);
+
+      chimp.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback();
+      });
+      chimp._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback();
+      });
+
+      var callback = jest.genMockFn();
+      chimp.run(callback);
+
+      expect(SimianReporter.mock.calls[0][0]).toBe(options);
+      expect(SimianReporter.mock.calls.length).toBe(1);
+
+    });
+
+    it('calls the simian reporter when the run is finished', function () {
+
+      jest.dontMock('../lib/simian-reporter');
+      var SimianReporter = require('../lib/simian-reporter');
+      SimianReporter.prototype.report = jest.genMockFn();
+
+      var Chimp = require('../lib/chimp.js');
+
+      var options = {simianAccessToken: 'present'};
+      var chimp = new Chimp(options);
+
+      chimp.interrupt = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback(null, 'hello');
+      });
+      chimp._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
+        return callback(null, 'hello');
+      });
+
+      var callback = jest.genMockFn();
+      chimp.run(callback);
+
+      expect(SimianReporter.instance.report.mock.calls.length).toBe(1);
+
+    });
+
   });
 
   describe('interrupt', function () {
