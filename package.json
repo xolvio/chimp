@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "BDD acceptance testing package combining CucumberJS, PhantomJS, WebdriverIO and Chai. Plays nicely with Simian and SauceLabs",
   "keywords": [
     "simian",
@@ -52,7 +52,8 @@
     "fs-extra": "~0.22.1",
     "request": "2.58.0",
     "hapi": "8.8.0",
-    "chimp-widgets": "0.2.0"
+    "chimp-widgets": "0.2.0",
+    "colors": "1.0.3"
   },
   "devDependencies": {
     "jest-cli": "0.4.15"
