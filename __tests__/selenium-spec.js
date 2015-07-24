@@ -222,19 +222,12 @@ describe('Selenium', function () {
         };
         selenium.child = seleniumChild;
         selenium.sessionManager = {};
-        selenium.sessionManager.killCurrentSession = jest.genMockFunction();
-        selenium.sessionManager.killCurrentSession.mockImplementation(function (callback) {
-          callback(null);
-        });
 
         var callback = jest.genMockFunction();
         selenium.stop(callback);
 
         expect(processHelper.kill.mock.calls.length).toBe(1);
         expect(processHelper.kill.mock.calls[0][0]).toEqual({child: selenium.child, signal: 'SIGINT', prefix: 'selenium'});
-
-        // stop should also kill all sessions
-        expect(selenium.sessionManager.killCurrentSession.mock.calls.length).toEqual(1);
 
         // simulate the callback
         processHelper.kill.mock.calls[0][1]('this', 'that');
