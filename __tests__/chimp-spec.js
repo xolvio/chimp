@@ -70,6 +70,28 @@ describe('Chimp', function () {
 
     });
 
+    it('does not executes npm install if the offline option is set', function () {
+
+      var chimp = new Chimp({offline: true});
+
+      var restore = chimp.fs.existsSync;
+      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
+
+      chimp.exec = jest.genMockFunction();
+
+      chimp.selectMode = jest.genMockFunction();
+      var callback = jest.genMockFunction();
+
+      chimp.init(callback);
+
+      expect(chimp.exec.mock.calls.length).toBe(0);
+      expect(chimp.selectMode.mock.calls.length).toBe(1);
+      expect(callback.mock.calls.length).toBe(0);
+
+      chimp.fs.existsSync = restore;
+
+    });
+
     it('executes npm install then calls selectMode when there are no errors', function () {
 
       var chimp = new Chimp();

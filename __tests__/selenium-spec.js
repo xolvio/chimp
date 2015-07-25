@@ -95,6 +95,19 @@ describe('Selenium', function () {
       expect(seleniumStandalone.install.mock.calls[0][1]).toBe(callback);
     });
 
+    it('does not run if chimp is offline mode', function () {
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444', offline: true});
+      var seleniumStandalone = require('selenium-standalone');
+
+      var callback = jest.genMockFn();
+
+      selenium.install(callback);
+
+      expect(seleniumStandalone.install).not.toBeCalled();
+      expect(callback.mock.calls.length).toBe(1);
+    });
+
   });
 
   describe('start', function () {
@@ -227,7 +240,11 @@ describe('Selenium', function () {
         selenium.stop(callback);
 
         expect(processHelper.kill.mock.calls.length).toBe(1);
-        expect(processHelper.kill.mock.calls[0][0]).toEqual({child: selenium.child, signal: 'SIGINT', prefix: 'selenium'});
+        expect(processHelper.kill.mock.calls[0][0]).toEqual({
+          child: selenium.child,
+          signal: 'SIGINT',
+          prefix: 'selenium'
+        });
 
         // simulate the callback
         processHelper.kill.mock.calls[0][1]('this', 'that');
