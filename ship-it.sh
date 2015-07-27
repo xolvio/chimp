@@ -3,9 +3,9 @@ set -e
 npm test
 
 echo Pushing the commits
-git push
+git push origin master
 echo Pushing tags
-git push --tags
+git push origin master --tags
 
 echo Publishing to NPM
 npm publish
