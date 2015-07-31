@@ -58,6 +58,6 @@
     "webdriverio": "~3.0.5"
   },
   "devDependencies": {
-    "jest-cli": "0.4.15"
+    "jest-cli": "^0.4.17"
   }
 }
