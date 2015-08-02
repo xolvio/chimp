@@ -43,7 +43,7 @@
     "colors": "1.0.3",
     "cucumber": "^0.5.2",
     "ddp": "xolvio/node-ddp-client#master",
-    "fibers": "^1.0.6",
+    "@xolvio/fibers": "^1.0.7",
     "freeport": "~1.0.5",
     "fs-extra": "~0.22.1",
     "hapi": "8.8.0",
