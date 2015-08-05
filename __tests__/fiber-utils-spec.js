@@ -1,6 +1,6 @@
 describe('fiber-utils', function () {
   jest.autoMockOff()
-  var Fiber = require('@xolvio/fibers');
+  var Fiber = require('fibers');
   var fiberUtils = require('../lib/fiber-utils');
   var _ = require('underscore');
   jest.autoMockOn()

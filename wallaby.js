@@ -19,13 +19,13 @@ module.exports = function () {
       }
     },
 
-    testFramework: 'jest'
+    testFramework: 'jest',
 
-    // Use bootstrap function
-    //bootstrap: function (wallaby) {
-    //  wallaby.testFramework.configure({
-    //    // https://facebook.github.io/jest/docs/api.html#config-options
-    //  });
-    //}
+    bootstrap: function (wallaby) {
+      var path = require('path');
+      var packageConfigPath = path.resolve(wallaby.localProjectDir, 'package.json');
+      var packageConfig = require(packageConfigPath);
+      wallaby.testFramework.configure(packageConfig.jest);
+    }
   };
 };
