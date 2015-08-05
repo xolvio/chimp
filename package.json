@@ -26,11 +26,14 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "test": "jest -i && ./bin/chimp --tags=@cli --browser=phantomjs --debug && ./bin/chimp --tags=~@cli --debug && ./bin/chimp --browser=firefox --tags=~@cli --debug && ./bin/chimp --browser=phantomjs --tags=~@cli --debug"
+    "test": "jest && ./bin/chimp --tags=@cli --browser=phantomjs --debug && ./bin/chimp --tags=~@cli --debug && ./bin/chimp --browser=firefox --tags=~@cli --debug && ./bin/chimp --browser=phantomjs --tags=~@cli --debug"
   },
   "main": "lib/chimp.js",
   "bin": {
     "chimp": "./bin/chimp"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "json", "node"]
   },
   "dependencies": {
     "async": "~0.9.0",
@@ -43,6 +46,7 @@
     "colors": "1.0.3",
     "cucumber": "^0.5.2",
     "ddp": "xolvio/node-ddp-client#master",
+    "fibers": "^1.0.6",
     "freeport": "~1.0.5",
     "fs-extra": "~0.22.1",
     "hapi": "8.8.0",
@@ -54,9 +58,10 @@
     "saucelabs": "~0.1.1",
     "selenium-standalone": "^4.5.3",
     "underscore": "~1.8.3",
-    "webdriverio": "~3.0.5"
+    "webdriverio": "^3.1.0",
+    "@xolvio/sync-webdriverio": "^3.1.0"
   },
   "devDependencies": {
-    "jest-cli": "0.4.15"
+    "jest-cli": "^0.4.18"
   }
 }
