@@ -10,7 +10,6 @@ var argv = minimist(process.argv, {
     'platform': 'ANY',
     'name': '',
     'debug': false,
-    'host': 'localhost',
     'path': 'features',
     'user': '',
     'key': '',
@@ -18,7 +17,7 @@ var argv = minimist(process.argv, {
     'snippets': true,
     'format': 'pretty',
     'tags': '~@ignore',
-    'watchTags': '@dev,@watch',
+    'watchTags': '@dev,@watch,@focus',
     'timeoutsAsyncScript': 10000,
     'waitForTimeout': 10000,
     'screenshotsOnError': null,
@@ -32,6 +31,10 @@ var argv = minimist(process.argv, {
   },
   'boolean': true
 });
+
+if (argv.host && argv.host.indexOf('sauce') !== -1) {
+  argv.noSessionReuse = true;
+}
 
 if (argv.deviceName) {
   argv.browser = '';
