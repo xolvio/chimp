@@ -1,11 +1,11 @@
 var myStepDefinitionsWrapper = function () {
 
   this.When(/^I visit "([^"]*)"$/, function (url) {
-    client.url(url);
+    browser.url(url);
   });
 
   this.Then(/^I see the title of "([^"]*)"$/, function (title) {
-    expect(getTitle()).to.equal(title);
+    expect(browser.getTitle()).to.equal(title);
   });
 
 };
