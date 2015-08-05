@@ -58,7 +58,8 @@
     "saucelabs": "~0.1.1",
     "selenium-standalone": "^4.5.3",
     "underscore": "~1.8.3",
-    "webdriverio": "~3.0.5"
+    "webdriverio": "^3.1.0",
+    "@xolvio/sync-webdriver": "^3.1.0"
   },
   "devDependencies": {
     "jest-cli": "^0.4.18"
