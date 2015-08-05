@@ -31,6 +31,10 @@ var argv = minimist(process.argv, {
   'boolean': true
 });
 
+if (argv.host && argv.host.indexOf('sauce') !== -1) {
+  argv.noSessionReuse = true;
+}
+
 if (argv.deviceName) {
   argv.browser = '';
 }
