@@ -2,6 +2,9 @@
 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+[![NPM](https://nodei.co/npm-dl/chimp.png?months=3&height=2)](https://nodei.co/npm/chimp/)
+[![NPM](https://nodei.co/npm/chimp.png?downloads=true)](https://nodei.co/npm/chimp/) 
+
 This package allows you to do BDD using [Cucumber](https://github.com/cucumber/cucumber-js) and can run on any system. You write your automation layer in JavaScript (the language of the web). [Click here to see a demo](http://chimpjs.com).
 
 ## Installation
