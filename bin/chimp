@@ -2,6 +2,7 @@
 var Chimp    = require('../lib/chimp.js'),
     minimist = require('minimist'),
     freeport = require('freeport'),
+    exit     = require('exit'),
     log      = require('../lib/log');
 
 var argv = minimist(process.argv, {
@@ -62,7 +63,7 @@ try {
 
 } catch (ex) {
   process.stderr.write(ex.stack + '\n');
-  process.exit(2);
+  exit(2);
 }
 
 function startChimp (options) {
@@ -71,6 +72,6 @@ function startChimp (options) {
     if (err) {
       log.error('Error in chimp init', err);
     }
-    process.exit(err ? 2 : 0);
+    exit(err ? 2 : 0);
   });
 }

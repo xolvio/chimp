@@ -51,6 +51,7 @@
     "colors": "1.0.3",
     "cucumber": "^0.5.2",
     "ddp": "xolvio/node-ddp-client#master",
+    "exit": "^0.1.2",
     "fibers": "^1.0.6",
     "freeport": "~1.0.5",
     "fs-extra": "~0.22.1",
