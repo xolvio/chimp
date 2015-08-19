@@ -118,7 +118,7 @@ describe('Session Manager', function () {
       var SessionManager = require('../lib/session-manager');
 
       process.env['chimp.watch'] = true;
-      var browser = {requestHandler: {sessionID: 'some-id'}};
+      var browser = {_original: {requestHandler: {sessionID: 'some-id'}}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
@@ -137,7 +137,7 @@ describe('Session Manager', function () {
 
 
       expect(callback.mock.calls[0][1]).toBe(browser);
-      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
+      expect(browser._original.requestHandler.sessionID).toBe(sessions[0].id);
 
       expect(wd.remote.mock.calls.length).toBe(1);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
@@ -150,7 +150,7 @@ describe('Session Manager', function () {
       var SessionManager = require('../lib/session-manager');
 
       process.env['chimp.server'] = true;
-      var browser = {requestHandler: {sessionID: 'some-id'}};
+      var browser = {_original: {requestHandler: {sessionID: 'some-id'}}};
       wd.remote = jest.genMockFn().mockReturnValue(browser);
 
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
@@ -169,7 +169,7 @@ describe('Session Manager', function () {
 
 
       expect(callback.mock.calls[0][1]).toBe(browser);
-      expect(browser.requestHandler.sessionID).toBe(sessions[0].id);
+      expect(browser._original.requestHandler.sessionID).toBe(sessions[0].id);
 
       expect(wd.remote.mock.calls.length).toBe(1);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
@@ -273,7 +273,7 @@ describe('Session Manager', function () {
       var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
 
       var browser = {
-        status: jest.genMockFn().mockImpl(function (callback) {
+        statusAsync: jest.genMockFn().mockImpl(function (callback) {
           callback(null);
         })
       };
@@ -292,7 +292,7 @@ describe('Session Manager', function () {
       var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
 
       var browser = {
-        status: jest.genMockFn().mockImpl(function (callback) {
+        statusAsync: jest.genMockFn().mockImpl(function (callback) {
           callback({message: 'blah ECONNREFUSED blah'});
         })
       };
@@ -322,7 +322,7 @@ describe('Session Manager', function () {
       var sessionManager = new SessionManager({port: 1234, browser: 'phantomjs'});
 
       var browser = {
-        status: jest.genMockFn().mockImpl(function (callback) {
+        statusAsync: jest.genMockFn().mockImpl(function (callback) {
           callback({message: 'blah ECONNREFUSED blah'});
         })
       };
