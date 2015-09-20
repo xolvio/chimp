@@ -54,7 +54,7 @@ describe('Session Manager', function () {
 
     it('should delegate the webdriver remote call if using phantom', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       wd.remote = jest.genMockFn().
@@ -87,7 +87,7 @@ describe('Session Manager', function () {
 
     it('should delegate the webdriver remote call if a session has not already started', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       wd.remote = jest.genMockFn().mockReturnValue('return from remote');
@@ -114,7 +114,7 @@ describe('Session Manager', function () {
 
     it('should reuse a session if one has already started in watch mode', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       process.env['chimp.watch'] = true;
@@ -146,7 +146,7 @@ describe('Session Manager', function () {
 
     it('should reuse a session if one has already started in server mode', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       process.env['chimp.server'] = true;
@@ -178,7 +178,7 @@ describe('Session Manager', function () {
 
     it('starts a new session when noSessionReuse is true when a session exists', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       wd.remote = jest.genMockFn().
@@ -209,7 +209,7 @@ describe('Session Manager', function () {
 
     it('respects noSessionReuse in watch mode', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
       wd.remote = jest.genMockFn().
@@ -241,7 +241,7 @@ describe('Session Manager', function () {
 
     it('should monkey patch the browser when reusing sessions in watch mode', function () {
 
-      var wd = require('@xolvio/sync-webdriverio');
+      var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
       var sessionManager = new SessionManager({port: 1234, browser: 'somebrowser'});
       var sessions = [];
