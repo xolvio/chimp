@@ -5,7 +5,7 @@ var myStepDefinitionsWrapper = function () {
   });
 
   this.Then(/^I see the title of "([^"]*)"$/, function (title) {
-    expect(browser.getTitle()).to.equal(title);
+    expect(browser.getTitle()).toEqual(title);
   });
 
 };
