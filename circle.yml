@@ -4,7 +4,7 @@ machine:
     version: oraclejdk8
 
   node:
-    version: 4.1.1
+    version: 0.10.38
 
 general:
 
@@ -36,13 +36,12 @@ dependencies:
     - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get install google-chrome-stable; fi
     - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then mkdir ~/_opt; tar -cvf ~/_opt/google-chrome.tar /opt/google/chrome/; fi
 
-    - node -v
-    - nvm use 4.1.1
+    # Cache npm deps
     - npm install
 
 test:
 
   override:
 
-    - npm test
+    # - npm test
     - bin/chimp
