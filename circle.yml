@@ -43,5 +43,5 @@ test:
 
   override:
 
-    # - npm test
+    - npm test
     - bin/chimp
