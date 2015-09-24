@@ -37,6 +37,7 @@ dependencies:
     - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then mkdir ~/_opt; tar -cvf ~/_opt/google-chrome.tar /opt/google/chrome/; fi
 
     - node -v
+    - nvm use 4.1.1
     - npm install
 
 test:
