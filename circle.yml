@@ -38,6 +38,7 @@ dependencies:
 
     # Cache npm deps
     - npm install
+    # Temporary workaround until Circle + Node 4.1.1 + Fibers play nicely together
     - npm install jest-cli@0.4.18
 
 test:
