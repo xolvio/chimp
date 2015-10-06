@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.16.4",
+  "version": "0.16.8",
   "description": "BDD acceptance testing package combining CucumberJS, Selenium, PhantomJS and WebdriverIO.",
   "keywords": [
     "simian",
@@ -49,7 +49,7 @@
     "colors": "1.1.2",
     "cucumber": "^0.5.3",
     "chimp-widgets": "0.2.0",
-    "ddp": "xolvio/node-ddp-client#master",
+    "xolvio-ddp": "0.11.1",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",
