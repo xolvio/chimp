@@ -1,12 +1,21 @@
 # Contributing
 
-## Running tests
+## Reporting a bug?
 
-You can use [Wallaby](http://wallabyjs.com/) if you own it or just run `npm test`.
+Thank you for taking the time to come here and report a bug! In order to get you the best help and
+so that you get a quick response, please consider this checklist for reporting a bug:
 
-## Release a new version
+* [ ] Provide an explanation of what you're expecting and what is actually happening
+* [ ] Attach the code that is causing the issue 
+* [ ] Attach console outputs
+* [ ] Run chimp with the `--debug` flag (Not applicable to Meteor, see below)
 
-* Update the documentation
-* Bump the version with `npm version <patch|minor|major>`.
-  Use the [Semantic versioning](http://semver.org/) conventions for bumping the version.
-* Publish the new release with: `./ship-it.sh`
+Please be sure to include any logs inside a fenced code block 
+[like this](https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks). This 
+makes it easier to read.
+
+#### Using Meteor?
+* [ ] Run Meteor with `VELOCITY_DEBUG=1 meteor`
+* [ ] Attach content of `.meteor/local/log/cucumber.log`
+* [ ] Attach content of `.meteor/versions` 
+* [ ] Attach content of `.meteor/packages`

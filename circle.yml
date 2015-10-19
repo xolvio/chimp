@@ -1,26 +1,20 @@
 machine:
-
   java:
     version: oraclejdk8
-
   node:
-    version: 0.10.38
+    version: 0.10.40
 
 general:
-
   branches:
-
     ignore:
       - gh-pages
 
 dependencies:
-
   cache_directories:
     - "~/.npm"
     - "~/_opt"
 
   override:
-
     # -- CACHE CHROME --
     # ...remove default ChromeDriver for safety
     - sudo rm -rf /usr/local/bin/chromedriver*
@@ -42,8 +36,6 @@ dependencies:
     - npm install jest-cli@0.4.18
 
 test:
-
   override:
-
     - npm test
     - bin/chimp
