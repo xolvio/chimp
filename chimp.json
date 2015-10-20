@@ -1,14 +1,11 @@
-// env vars will override command line args
-// command line args will override the options file
-// options file will override the defaults
 {
   "browser": "chrome",
   "platform": "ANY",
   "name": "",
   "debug": false,
   "path": "features",
-  "user": "", // or process.env.SAUCE_USERNAME
-  "key": "", //  or process.env.SAUCE_ACCESS_KEY
+  "user": "",
+  "key": "",
   "log": "info",
   "watchTags": "@dev,@watch,@focus",
   "timeoutsAsyncScript": 10000,
@@ -34,7 +31,7 @@
   "host": null,
   "offline": false,
   "noNpmInstall": false,
-  "ddp": false, // or process.env.ROOT_URL
+  "ddp": false,
   "seleniumDebug": false
   "debugCucumber": false,
   "debugBrkCucumber": false,
@@ -42,18 +39,55 @@
   "watch": false,
   "chai": false,
   "webdriverLogLevel": false,
-  // passed to cucumber
   "snippets": true,
   "format": "pretty",
   "tags": "~@ignore",
   "require": false,
   "progress": false,
   "strict": false,
-  "coffee": false
-  // TODO there are new cucumber cli options to add here
+  "coffee": false,
 
   "Meteor": {
+    "INSTALL_DEPENDENCIES": "",
+    "CUCUMBER_NODES": ""
+    "CUCUMBER_TAIL": "",
+    "DEBUG": "",
+    "CHIMP_PATH": "",
+    "PARENT_URL": "",
+    "VELOCITY_CI": "",
 
+    "CHIMP_NODE_OPTIONS": ""
+    "CUCUMBER_FEATURES": ""
+
+    "Duplicates Options Above": {
+      "CHIMP_OPTIONS": "",
+      "CUCUMBER_SERVER_PORT": "",
+      "CUCUMBER_SCREENSHOTS_DIR": "",
+      "CHIMP_DEBUG": "",
+      "CHAI": "",
+      "CHIMP_ASYNC": "",
+      "CHROME_BIN": "",
+      "CHROME_ARGS": "",
+      "CHIMP_OPTIONS": "",
+      "SCREENSHOTS_ON_ERROR": "",
+      "SAVE_SCREENSHOTS": "",
+      "CAPTURE_ALL_STEP_SCREENSHOTS": "",
+      "CUCUMBER_COFFEE_SNIPPETS": "",
+      "CUCUMBER_TAGS": "",
+      "CUCUMBER_FORMAT": "",
+      "SIMIAN_ACCESS_TOKEN": "",
+      "CUCUMBER_JSON_OUTPUT": "",
+      "WD_TIMEOUT_ASYNC_SCRIPT": "",
+      "SELENIUM_BROWSER": "",
+      "HUB_HOST": "",
+      "HUB_PORT": "",
+      "HUB_USER": "",
+      "HUB_KEY": "",
+      "HUB_PLATFORM": "",
+      "HUB_VERSION": "",
+      "CHIMP_OFFLINE": "",
+      "DEBUG_CUCUMBER": "",
+      "DEBUG_BRK_CUCUMBER": ""
+    }
   }
-
-};
+}

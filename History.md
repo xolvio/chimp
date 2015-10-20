@@ -1,3 +1,12 @@
+# vNext
+ 
+* Merges Chimp and meteor-cucumber codebases (Sam Hatoum) 
+* Adds user-defined world support (Sam Hatoum) 
+* Extracts setup of browser, ddp, assertion libraries and global logic to a helper (Sam Hatoum) 
+* Fixes memory hogging screenshot logic (Sam Hatoum) 
+* Extracts the DDP logic from the world and adds tests (Sam Hatoum) 
+* Pass through the specified host and consume in the session manager (Dane Harnett) 
+
 # 0.15.x - 0.18.x
 * Merged the Chimp & meteor-cucumber code and bumped meteor-cucumber to match Chimp's latest version
 
