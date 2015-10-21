@@ -52,7 +52,7 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
     }
   });
 
-  Meteor.startup(function () {
+  Velocity.startup(function () {
     Meteor.call('velocity/mirrors/request', {
       framework: FRAMEWORK_NAME,
       args: ['--raw-logs'],
