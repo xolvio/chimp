@@ -13,6 +13,7 @@ dependencies:
   cache_directories:
     - "~/.npm"
     - "~/_opt"
+    - "node_modules"
 
   override:
     # -- CACHE CHROME --
@@ -32,8 +33,9 @@ dependencies:
 
     # Cache npm deps
     - npm install
-    # Temporary workaround until Circle + Node 4.1.1 + Fibers play nicely together
-    - npm install jest-cli@0.4.18
+
+    # Cache Selenium & ChromeDriver
+    - ./node_modules/selenium-standalone/bin/selenium-standalone install
 
 test:
   override:
