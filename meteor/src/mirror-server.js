@@ -84,11 +84,13 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
     });
     var cursor = _velocityTestFiles.find({targetFramework: FRAMEWORK_NAME});
 
-    var rerunStrategy = process.env.VELOCITY_CI ? _.once : _.debounce;
-
     _velocityConnection.onReconnect = function () {
       DEBUG && console.log('[xolvio:cucumber] Connected to hub.');
-      var rerun = rerunStrategy(Meteor.bindEnvironment(_findAndRun), 600);
+      var rerun = Meteor.bindEnvironment(_findAndRun);
+      if (process.env.VELOCITY_CI) {
+        rerun = _.once(rerun);
+      }
+      rerun = _.debounce(rerun, 600);
       cursor.observe({
         added: rerun,
         removed: rerun,
