@@ -2,10 +2,7 @@
 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-[![NPM](https://nodei.co/npm-dl/chimp.png?months=3&height=2)](https://nodei.co/npm/chimp/)
-[![NPM](https://nodei.co/npm/chimp.png?downloads=true)](https://nodei.co/npm/chimp/) 
-
-This package allows you to easily write the automating code in BDD using [Cucumber](https://github.com/cucumber/cucumber-js). 
+ This package allows you to easily write the automating code in BDD using [Cucumber](https://github.com/cucumber/cucumber-js). 
 
 You can use chimp with any technology stack since it allows your to write your automation layer in JavaScript ( the language of the web.)
 
@@ -40,7 +37,7 @@ even smoother development experience.
 meteor add xolvio:cucumber
 ```
 
-# Get the Book
+## Get the Book
 To learn more about testing with Meteor, consider purchasing our book [The Meteor Testing Manual](http://www.meteortesting.com/?utm_source=Cucumber&utm_medium=banner&utm_campaign=Cucumber).
 
 [![](http://www.meteortesting.com/img/tmtm.gif)](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp)
