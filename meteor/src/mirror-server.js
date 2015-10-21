@@ -33,7 +33,7 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
       _chimpServerPort,
       _runningParallelTest;
 
-  Meteor.startup(_startChimp);
+  Velocity.startup(_startChimp);
 
 
 
