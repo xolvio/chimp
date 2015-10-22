@@ -1,9 +1,22 @@
-# vNext
+# 0.19.3
+
+* Renames widgets to chimpWidgets
+* Fixes memory hogging through screenshot capturing
+
+# 0.19.1 - 0.19.2
  
+* Fixes version issues between xolvio:cucumber and chimp
+
+# 0.19.0
+
+* Start tests in Velocity.startup (Jonas Aschenbrenner) 
+* Wait for tests before starting tests in CI (Jonas Aschenbrenner) 
+* Start mirror in Velocity.startup (Jonas Aschenbrenner) 
+* Generates history from git commits (Sam Hatoum) 
 * Merges Chimp and meteor-cucumber codebases (Sam Hatoum) 
 * Adds user-defined world support (Sam Hatoum) 
 * Extracts setup of browser, ddp, assertion libraries and global logic to a helper (Sam Hatoum) 
-* Fixes memory hogging screenshot logic (Sam Hatoum) 
+* Fixes memory hogging screeshot logic (Sam Hatoum) 
 * Extracts the DDP logic from the world and adds tests (Sam Hatoum) 
 * Pass through the specified host and consume in the session manager (Dane Harnett) 
 

@@ -11,16 +11,16 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
   var FRAMEWORK_NAME  = 'cucumber',
       FRAMEWORK_REGEX = '^tests/' + FRAMEWORK_NAME + '/((?!node_modules/).)+\\.(feature|js|coffee|litcoffee|coffee\\.md)$',
       SAMPLE_TESTS    = [{
-        contents: Assets.getText(path.join('src', 'sample-tests', 'feature.feature')),
+        contents: Assets.getText(path.join('meteor', 'src', 'sample-tests', 'feature.feature')),
         path: path.join(FRAMEWORK_NAME, 'features', 'sample.feature')
       }, {
-        contents: Assets.getText(path.join('src', 'sample-tests', 'steps.js')),
+        contents: Assets.getText(path.join('meteor', 'src', 'sample-tests', 'steps.js')),
         path: path.join(FRAMEWORK_NAME, 'features', 'step_definitions', 'sample_steps.js')
       }, {
-        contents: Assets.getText(path.join('src', 'sample-tests', 'fixture.js')),
+        contents: Assets.getText(path.join('meteor', 'src', 'sample-tests', 'fixture.js')),
         path: path.join(FRAMEWORK_NAME, 'fixtures', 'my_fixture.js')
       }, {
-        contents: Assets.getText(path.join('src', 'sample-tests', 'package.json')),
+        contents: Assets.getText(path.join('meteor', 'src', 'sample-tests', 'package.json')),
         path: path.join(FRAMEWORK_NAME, 'package.json')
       }];
 
