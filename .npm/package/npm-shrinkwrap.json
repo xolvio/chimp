@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "chimp": {
-      "version": "0.19.2",
+      "version": "0.19.3",
       "dependencies": {
         "async": {
           "version": "0.9.2"
@@ -324,7 +324,7 @@
                   }
                 },
                 "browser-resolve": {
-                  "version": "1.10.0",
+                  "version": "1.10.1",
                   "dependencies": {
                     "resolve": {
                       "version": "1.1.6"

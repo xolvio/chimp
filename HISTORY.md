@@ -1,3 +1,8 @@
+# 0.19.3
+
+* Renames widgets to chimpWidgets
+* Fixes memory hogging through screenshot capturing
+
 # 0.19.1 - 0.19.2
  
 * Fixes version issues between xolvio:cucumber and chimp

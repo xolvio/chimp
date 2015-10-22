@@ -2,7 +2,7 @@
 
   'use strict';
 
-  var chimpVersion = '0.19.2';
+  var chimpVersion = '0.19.3';
   var meteorChimpVersion = '_1';
 
   Package.describe({
