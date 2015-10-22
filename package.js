@@ -2,16 +2,19 @@
 
   'use strict';
 
+  var chimpVersion = '0.19.2';
+  var meteorChimpVersion = '_1';
+
   Package.describe({
     name: 'xolvio:cucumber',
     summary: 'CucumberJS for Velocity',
-    version: '0.18.0',
+    version: chimpVersion + meteorChimpVersion,
     git: 'https://github.com/xolvio/chimp.git',
     debugOnly: true
   });
 
   Npm.depends({
-    'chimp': '0.18.0',
+    'chimp': chimpVersion,
     'colors': '1.1.2',
     'fs-extra': '0.24.0',
     "tail-forever": "0.3.11",
@@ -25,7 +28,7 @@
     api.use([
       'underscore',
       'http',
-      'velocity:core@0.10.3',
+      'velocity:core@0.10.6',
       'velocity:shim@0.1.0',
       'simple:json-routes@1.0.3',
       'sanjo:long-running-child-process@1.1.3'

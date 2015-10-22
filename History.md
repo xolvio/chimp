@@ -1,3 +1,7 @@
+# 0.19.1 - 0.19.2
+ 
+* Fixes version issues between xolvio:cucumber and chimp
+
 # 0.19.0
 
 * Start tests in Velocity.startup (Jonas Aschenbrenner) 
