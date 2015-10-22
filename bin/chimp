@@ -23,6 +23,8 @@ var argv = minimist(process.argv, {
     'waitForTimeout': 10000,
     'screenshotsOnError': null,
     'screenshotsPath': '.',
+    "captureAllStepScreenshots": false,
+    "attachScreenshotsToReport": false,
     'serverHost': 'localhost',
     'server': false,
     'noSessionReuse': false,
