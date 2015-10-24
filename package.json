@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.19.3",
+  "version": "0.19.4",
   "description": "BDD acceptance testing package combining CucumberJS, Selenium, PhantomJS and WebdriverIO.",
   "keywords": [
     "simian",
@@ -26,7 +26,7 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "test": "jest && ./bin/chimp --tags=@cli --browser=phantomjs --debug && ./bin/chimp --tags=~@cli --debug && ./bin/chimp --browser=firefox --tags=~@cli --debug && ./bin/chimp --browser=phantomjs --tags=~@cli --debug"
+    "test": "./.scripts/run-tests.sh"
   },
   "main": "lib/chimp.js",
   "bin": {
