@@ -40,4 +40,3 @@ dependencies:
 test:
   override:
     - npm test
-    - bin/chimp
