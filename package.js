@@ -2,6 +2,13 @@
 
   'use strict';
 
+  /**
+   * This package.js file is used for Meteor package management
+   * http://docs.meteor.com/#/full/packagejs
+   *
+   * Not using Meteor?  Ignore this, and look at package.json
+   */
+
   var chimpVersion = '0.19.4';
   var meteorChimpVersion = '_1';
 
