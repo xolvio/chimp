@@ -31,7 +31,8 @@ var argv = minimist(process.argv, {
     'simianResultEndPoint': 'api.simian.io/v1.0/result',
     'simianAccessToken': false,
     'sync': true,
-    'mochaTimeout': 60000
+    'mochaTimeout': 60000,
+    'mochaReporter': 'spec'
   },
   'boolean': true
 });
@@ -66,7 +67,8 @@ function startChimp (options) {
   var chimp = new Chimp(options);
   chimp.init(function (err) {
     if (err) {
-      log.error('Error in chimp init', err);
+      log.error(err);
+      log.debug('Error in chimp init', err);
     }
     exit(err ? 2 : 0);
   });
