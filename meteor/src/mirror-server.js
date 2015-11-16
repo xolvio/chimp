@@ -16,22 +16,22 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
   var FRAMEWORK_NAME = 'cucumber';
   var WATCH_TAG = '@dev,@watch,@focus';
   var ENV_WHITELIST = [
-    'CAPTURE_ALL_STEP_SCREENSHOTS','CHAI','CHIMP_ASYNC',
-    'CHIMP_DEBUG','CHIMP_OFFLINE','CHIMP_OPTIONS',
-    'CHIMP_NODE_OPTIONS','CUCUMBER','CUCUMBER_COFFEE_SNIPPETS',
-    'CUCUMBER_FORMAT','CUCUMBER_JSON_OUTPUT','CUCUMBER_NODES',
-    'CUCUMBER_SCREENSHOTS_DIR','CUCUMBER_SERVER_PORT','CUCUMBER_TAGS',
-    'CUCUMBER_TAIL','DEBUG','DEBUG_BRK_CUCUMBER','DEBUG_CUCUMBER',
-    'FRAMEWORK','HANDSHAKE','HOST',
-    'HTTP_FORWARDED_COUNT','HUB_HOST','HUB_PLATFORM',
-    'HUB_PORT','HUB_USER','HUB_VERSION',
-    'INSTALL_DEPENDENCIES','IS_MIRROR','METEOR_PRINT_ON_LISTEN',
-    'MIRROR_PORT','MOBILE_DDP_URL','NODE_ENV',
-    'PARENT_URL','PORT','PWD',
-    'ROOT_URL','SAVE_SCREENSHOTS','SCREENSHOTS_ON_ERROR',
-    'SELENIUM_BROWSER','TMPDIR','VELOCITY',
-    'VELOCITY_CI','VELOCITY_DEBUG','VELOCITY_MAIN_APP_PATH',
-    'WD_TIMEOUT_ASYNC_SCRIPT','PATH'
+    'CAPTURE_ALL_STEP_SCREENSHOTS', 'CHAI', 'CHIMP_ASYNC',
+    'CHIMP_DEBUG', 'CHIMP_OFFLINE', 'CHIMP_OPTIONS',
+    'CHIMP_NODE_OPTIONS', 'CUCUMBER', 'CUCUMBER_COFFEE_SNIPPETS',
+    'CUCUMBER_FORMAT', 'CUCUMBER_JSON_OUTPUT', 'CUCUMBER_NODES',
+    'CUCUMBER_SCREENSHOTS_DIR', 'CUCUMBER_SERVER_PORT', 'CUCUMBER_TAGS',
+    'CUCUMBER_TAIL', 'DEBUG', 'DEBUG_BRK_CUCUMBER', 'DEBUG_CUCUMBER',
+    'FRAMEWORK', 'HANDSHAKE', 'HOST',
+    'HTTP_FORWARDED_COUNT', 'HUB_HOST', 'HUB_PLATFORM',
+    'HUB_PORT', 'HUB_USER', 'HUB_VERSION',
+    'INSTALL_DEPENDENCIES', 'IS_MIRROR', 'METEOR_PRINT_ON_LISTEN',
+    'MIRROR_PORT', 'MOBILE_DDP_URL', 'NODE_ENV',
+    'PARENT_URL', 'PORT', 'PWD',
+    'ROOT_URL', 'SAVE_SCREENSHOTS', 'SCREENSHOTS_ON_ERROR',
+    'SELENIUM_BROWSER', 'TMPDIR', 'VELOCITY',
+    'VELOCITY_CI', 'VELOCITY_DEBUG', 'VELOCITY_MAIN_APP_PATH',
+    'WD_TIMEOUT_ASYNC_SCRIPT', 'PATH'
   ];
   var BINARY = process.env.CHIMP_PATH || Npm.require('chimp').bin;
   if (
@@ -270,7 +270,7 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
       fs.chmodSync(BINARY, parseInt('555', 8));
       var nodePath = process.execPath;
       var nodeDir = path.dirname(nodePath);
-      var env = _.pick(_.clone(process.env), ENV_WHITELIST);
+      var env = process.env;
       // Expose the Meteor node binary path for the script that is run
       env.PATH = nodeDir + ':' + env.PATH;
       var spawnOptions = {
@@ -279,7 +279,11 @@ DEBUG = !!process.env.VELOCITY_DEBUG;
         env: env
       };
 
-      DEBUG && console.log('[xolvio:cucumber] Starting Chimp with', BINARY, args, spawnOptions);
+      DEBUG && console.log('[xolvio:cucumber] Starting Chimp with',
+        BINARY,
+        args,
+        spawnOptions.cwd,
+        _.pick(_.clone(process.env), ENV_WHITELIST));
 
       _chimpProc.spawn({
         command: nodePath,
