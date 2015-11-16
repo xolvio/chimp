@@ -2,7 +2,7 @@
 
 [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=svg)](https://circleci.com/gh/xolvio/chimp) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xolvio/chimp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
- This package allows you to easily write the automating code in BDD using [Cucumber](https://github.com/cucumber/cucumber-js). 
+ This package allows you to easily write the automating code in BDD using Cucumber.js or Mocha. 
 
 You can use chimp with any technology stack since it allows your to write your automation layer in JavaScript ( the language of the web.)
 
