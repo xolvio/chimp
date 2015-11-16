@@ -927,7 +927,7 @@ describe('Chimp', function () {
     });
 
     it('adds cucumber last', function () {
-      jest.dontMock('../lib/cucumber.js');
+      jest.dontMock('../lib/cucumberjs/cucumber.js');
 
       var Chimp = require('../lib/chimp.js');
       var options = {browser: 'phantomjs'};
