@@ -1,4 +1,9 @@
-# 0.19.3
+# 0.20.0
+
+* Adds support for Mocha e2e testing (instead of Cucumber)
+* Applies environment variable white listing only to the debug output
+
+# 0.19.3 - 0.19.5
 
 * Renames widgets to chimpWidgets
 * Fixes memory hogging through screenshot capturing

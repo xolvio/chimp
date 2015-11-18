@@ -2,7 +2,7 @@ machine:
   java:
     version: oraclejdk8
   node:
-    version: 4.2.1
+    version: 0.10.40
 
 general:
   branches:
@@ -42,6 +42,9 @@ dependencies:
 
     # Cache npm deps
     - npm install
+
+    # Temporary workaround until Circle + Node 4.2.1 + Fibers play nicely together
+    - npm install jest-cli@0.4.18
 
     # Cache Selenium & ChromeDriver
     - ./node_modules/selenium-standalone/bin/selenium-standalone install
