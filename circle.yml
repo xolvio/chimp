@@ -1,26 +1,22 @@
 machine:
-
   java:
     version: oraclejdk8
-
   node:
-    version: 0.10.38
+    version: 4.2.1
 
 general:
-
   branches:
-
     ignore:
       - gh-pages
 
 dependencies:
-
   cache_directories:
     - "~/.npm"
     - "~/_opt"
+    - "node_modules"
+    - "~/.meteor"
 
   override:
-
     # -- CACHE CHROME --
     # ...remove default ChromeDriver for safety
     - sudo rm -rf /usr/local/bin/chromedriver*
@@ -36,14 +32,20 @@ dependencies:
     - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get install google-chrome-stable; fi
     - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then mkdir ~/_opt; tar -cvf ~/_opt/google-chrome.tar /opt/google/chrome/; fi
 
+    # Restore meteor symlink when Meteor was restored from the cache
+    - if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+    # Download Meteor if isn't already installed via the cache
+    - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+
+    # Install Velocity CLI
+    - npm install -g velocity-cli
+
     # Cache npm deps
     - npm install
-    # Temporary workaround until Circle + Node 4.1.1 + Fibers play nicely together
-    - npm install jest-cli@0.4.18
+
+    # Cache Selenium & ChromeDriver
+    - ./node_modules/selenium-standalone/bin/selenium-standalone install
 
 test:
-
   override:
-
     - npm test
-    - bin/chimp

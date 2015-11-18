@@ -2,3 +2,5 @@
 tmp
 node_modules
 npm-debug.log
+.build*
+meteor/test-app/tests/cucumber/.screenshots
