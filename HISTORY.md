@@ -1,3 +1,12 @@
+# 0.20.2
+
+* Adds color to Mocha console report
+* Improves failure chimp logs
+
+# 0.20.1
+
+* Fixes missing self reference issue
+
 # 0.20.0
 
 * Adds support for Mocha e2e testing (instead of Cucumber)

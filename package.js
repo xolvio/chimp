@@ -9,7 +9,7 @@
    * Not using Meteor?  Ignore this, and look at package.json
    */
 
-  var chimpVersion = '0.20.0';
+  var chimpVersion = '0.20.2';
   var meteorChimpVersion = '_1';
 
   Package.describe({
