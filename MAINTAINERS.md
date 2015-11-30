@@ -9,7 +9,8 @@ You can use [Wallaby](http://wallabyjs.com/) if you own it or just run `npm test
 * Update the documentation
 * Bump the version with `npm version <patch|minor|major>`.
   Use the [Semantic versioning](http://semver.org/) conventions for bumping the version.
-* Publish the new release with: `./ship-it.sh`
+* Bump the version in package.js  
+* Publish the new release with: `.scripts/ship-it.sh`
 
 # For Meteor Chimp
 

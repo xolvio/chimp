@@ -59,11 +59,11 @@ ui@1.0.8
 underscore@1.0.4
 url@1.0.5
 velocity:chokidar@1.2.0_1
-velocity:core@0.10.6
+velocity:core@0.10.9
 velocity:html-reporter@0.9.1
 velocity:meteor-internals@1.1.0_7
 velocity:shim@0.1.0
 velocity:source-map-support@0.3.2_1
 webapp@1.2.3
 webapp-hashing@1.0.5
-xolvio:cucumber@0.20.0_1
+xolvio:cucumber@0.20.3_1
