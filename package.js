@@ -30,12 +30,12 @@
 
   Package.onUse(function (api) {
 
-    api.versionsFrom('METEOR@1.2.0.1');
+    api.versionsFrom('METEOR@1.2.1');
 
     api.use([
       'underscore',
       'http',
-      'velocity:core@0.10.6',
+      'velocity:core@0.10.9',
       'velocity:shim@0.1.0',
       'simple:json-routes@1.0.3',
       'sanjo:long-running-child-process@1.1.3'
