@@ -49,7 +49,7 @@
     "colors": "1.1.2",
     "cucumber": "^0.5.3",
     "chimp-widgets": "0.2.0",
-    "xolvio-ddp": "0.11.1",
+    "xolvio-ddp": "^0.11.2",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",

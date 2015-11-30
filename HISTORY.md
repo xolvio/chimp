@@ -1,3 +1,7 @@
+# NEXT
+
+* Fixes server.call method for the case when the first param is a falsy value
+
 # 0.20.2
 
 * Adds color to Mocha console report
