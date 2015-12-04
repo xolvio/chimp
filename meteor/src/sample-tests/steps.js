@@ -7,18 +7,18 @@ module.exports = function () {
   var url = require('url');
 
   this.Given(/^I am a new user$/, function () {
-    server.call('reset'); // server is a connection to the mirror
+    return this.server.call('reset'); // server is a connection to the mirror
   });
 
   this.When(/^I navigate to "([^"]*)"$/, function (relativePath) {
     // process.env.ROOT_URL always points to the mirror
-    client.url(url.resolve(process.env.ROOT_URL, relativePath));
+    browser.url(url.resolve(process.env.ROOT_URL, relativePath));
   });
 
   this.Then(/^I should see the title "([^"]*)"$/, function (expectedTitle) {
     // no callbacks, no promises, just simple synchronous code!
-    client.waitForExist('title');
-    expect(client.getTitle()).toEqual(expectedTitle); // using Jasmine's assertion library
+    browser.waitForExist('title');
+    expect(browser.getTitle()).toEqual(expectedTitle); // using Jasmine's assertion library
   });
 
 };
