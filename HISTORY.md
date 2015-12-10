@@ -1,5 +1,10 @@
 # NEXT
 
+# 0.21.0
+
+* Adds server.execute() for executing code on the Meteor server
+* Upgrades selenium, chrome-driver and IEDriver (#185)
+* Fixes issue with path ((#143)
 * Fixes server.call method for the case when the first param is a falsy value
 * Report the branch to the Simian result API
 
