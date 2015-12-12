@@ -2,7 +2,7 @@ machine:
   java:
     version: oraclejdk8
   node:
-    version: 0.10.40
+    version: 5.2.0
 
 general:
   branches:
@@ -25,9 +25,6 @@ dependencies:
 
     # Cache npm deps
     - npm install
-
-    # Temporary workaround until Circle + Node 4.2.1 + Fibers play nicely together
-    - npm install jest-cli@0.4.18
 
     # Cache Selenium & ChromeDriver
     - ./bin/chimp --path=bin # there are no tests in bin

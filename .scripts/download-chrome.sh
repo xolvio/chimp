@@ -1,9 +1,9 @@
 # ...remove default ChromeDriver for safety
-sudo rm -rf /usr/local/bin/chromedriver*
+sudo rm -rf /usr/local/bin/chromedriver* || true
 
 # ...update to the latest chrome if the version is v38x (TODO need a better grep)
 
-sudo rm /tmp/update-chrome || true
+sudo rm -rf /tmp/update-chrome || true
 
 /opt/google/chrome/chrome --version | grep '38' &> /dev/null
 
