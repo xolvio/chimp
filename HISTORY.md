@@ -1,5 +1,9 @@
 # NEXT
 
+# 0.22.0
+
+* Adds Meteor hot-code-push listener to the watcher so Chimp reruns after Meteor reloads 
+
 # 0.21.0
 
 * Adds server.execute() for executing code on the Meteor server
