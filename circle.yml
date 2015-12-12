@@ -37,9 +37,6 @@ dependencies:
     # Download Meteor if isn't already installed via the cache
     - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
-    # Install Velocity CLI
-    - npm install -g velocity-cli
-
     # Cache npm deps
     - npm install
 

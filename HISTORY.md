@@ -1,5 +1,7 @@
 # NEXT
 
+* Deprecates the xolvio:cucumber package in favor of Chimp 
+
 # 0.22.0
 
 * Adds Meteor hot-code-push listener to the watcher so Chimp reruns after Meteor reloads 

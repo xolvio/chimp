@@ -32,7 +32,7 @@
   "offline": false,
   "noNpmInstall": false,
   "ddp": false,
-  "seleniumDebug": false
+  "seleniumDebug": false,
   "debugCucumber": false,
   "debugBrkCucumber": false,
   "jsonOutput": false,
@@ -45,49 +45,5 @@
   "require": false,
   "progress": false,
   "strict": false,
-  "coffee": false,
-
-  "Meteor": {
-    "INSTALL_DEPENDENCIES": "",
-    "CUCUMBER_NODES": ""
-    "CUCUMBER_TAIL": "",
-    "DEBUG": "",
-    "CHIMP_PATH": "",
-    "PARENT_URL": "",
-    "VELOCITY_CI": "",
-
-    "CHIMP_NODE_OPTIONS": ""
-    "CUCUMBER_FEATURES": ""
-
-    "Duplicates Options Above": {
-      "CHIMP_OPTIONS": "",
-      "CUCUMBER_SERVER_PORT": "",
-      "CUCUMBER_SCREENSHOTS_DIR": "",
-      "CHIMP_DEBUG": "",
-      "CHAI": "",
-      "CHIMP_ASYNC": "",
-      "CHROME_BIN": "",
-      "CHROME_ARGS": "",
-      "CHIMP_OPTIONS": "",
-      "SCREENSHOTS_ON_ERROR": "",
-      "SAVE_SCREENSHOTS": "",
-      "CAPTURE_ALL_STEP_SCREENSHOTS": "",
-      "CUCUMBER_COFFEE_SNIPPETS": "",
-      "CUCUMBER_TAGS": "",
-      "CUCUMBER_FORMAT": "",
-      "SIMIAN_ACCESS_TOKEN": "",
-      "CUCUMBER_JSON_OUTPUT": "",
-      "WD_TIMEOUT_ASYNC_SCRIPT": "",
-      "SELENIUM_BROWSER": "",
-      "HUB_HOST": "",
-      "HUB_PORT": "",
-      "HUB_USER": "",
-      "HUB_KEY": "",
-      "HUB_PLATFORM": "",
-      "HUB_VERSION": "",
-      "CHIMP_OFFLINE": "",
-      "DEBUG_CUCUMBER": "",
-      "DEBUG_BRK_CUCUMBER": ""
-    }
-  }
+  "coffee": false
 }
