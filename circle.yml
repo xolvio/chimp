@@ -44,7 +44,7 @@ dependencies:
     - npm install jest-cli@0.4.18
 
     # Cache Selenium & ChromeDriver
-    - ./node_modules/selenium-standalone/bin/selenium-standalone install
+    - ./bin/chimp --path=bin # there are no tests in bin
 
 test:
   override:
