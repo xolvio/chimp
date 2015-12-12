@@ -1,6 +1,7 @@
 # NEXT
 
-* Deprecates the xolvio:cucumber package in favor of Chimp 
+* Deprecates the xolvio:cucumber package in favor of Chimp
+* Improves caching on circle
 
 # 0.22.0
 
