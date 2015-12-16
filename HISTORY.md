@@ -1,11 +1,12 @@
-# NEXT
+# 0.22.1
 
-* Deprecates the xolvio:cucumber package in favor of Chimp
-* Improves caching on circle
+* Fixes `client.debug()` not continuing when pressing ENTER
 
 # 0.22.0
 
 * Adds Meteor hot-code-push listener to the watcher so Chimp reruns after Meteor reloads 
+* Deprecates the xolvio:cucumber package in favor of Chimp
+* Improves caching on circle
 
 # 0.21.0
 
