@@ -17,7 +17,7 @@ Set an `@focus` tag in the spec title, save a file, Chimp reruns the spec until 
 ```sh
 npm install -g chimp
 ```
-Having trouble? See the full [documentation site](https://chimp.readme.io/docs/installation).
+Having trouble? See the [installation documentation](https://chimp.readme.io/docs/installation).
 
 ### Usage
 
@@ -29,7 +29,9 @@ You can also easily change the browser Chimp with `--browser`, e.g. `--browser=p
 
 ### Documentation
 
-You bet! Read the full [documentation site](http://chimp.readme.io/docs). Thank you to Readme.io for the OSS <3. 
+Read the full [documentation site](http://chimp.readme.io/docs). 
+
+*(Thank you to [Readme.io](Readme.io) for the OSS <3)*
 
 ## Additional Features
 
@@ -86,7 +88,7 @@ Chimp is PACKED with features that make your life easier. See the [documentation
 
 ## Using Meteor?
 
-Chimp comes with first-grade Meteor support out-of-the-box. You simply start Chimp like this:
+Chimp comes with first-grade Meteor support out-of-the-box, including hot-deploy detection that runs specs after your Meteor client or server restart. 
 
 ### Usage
 
