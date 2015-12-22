@@ -58,7 +58,7 @@ Chimp is tested on all the popular CI servers. We genuinely just want you to foc
 ###### Mocha or Cucumber.js (Jasmine soon)
 ![Test Frameworks](./images/test-frameworks.png?raw=true)
 
-Some developers love to do BDD using Cucumber, others love Jasmine and Mocha, so we decided to give you the choice between what we believe are the best in class for writing end-to-end and acceptance tests. 
+Some developers love Jasmine and Mocha, and some teams love to use Cucumber for BDD. We decided to give you the choice between the best in class test frameworks for writing end-to-end and acceptance tests. 
 
 ###### Client & Server
 
