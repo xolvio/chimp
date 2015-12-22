@@ -101,7 +101,7 @@ chimp --watch --ddp=http://localhost:3000
 On CI, can select the browser:
 ```sh
 # start your Meteor app first
-./bin/chimp --browser=firefox --ddp=http://localhost:3000
+chimp --browser=firefox --ddp=http://localhost:3000
 ```
 
 ## Get our Meteor Testing Book
