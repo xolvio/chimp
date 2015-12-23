@@ -33,7 +33,8 @@ var argv = minimist(process.argv, {
     'simianResultBranch': null,
     'sync': true,
     'mochaTimeout': 60000,
-    'mochaReporter': 'spec'
+    'mochaReporter': 'spec',
+    'mochaSlow' : 10000
   },
   'boolean': true
 });
