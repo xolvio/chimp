@@ -1,3 +1,12 @@
+# 0.22.2
+
+* Fixes multiple -r / --require options
+* Fixes a spec dependency problem
+* Increases Mocha slow timer to 10s for e2e tests
+* Removes xolvio:cucumber (RIP)
+* Updates npm request
+* Fixes the loading order from --path
+
 # 0.22.1
 
 * Fixes `client.debug()` not continuing when pressing ENTER
