@@ -1,6 +1,5 @@
 jest.dontMock('../lib/selenium');
 jest.dontMock('underscore');
-jest.dontMock('request');
 
 describe('Selenium', function () {
 
