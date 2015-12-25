@@ -23,6 +23,7 @@ var argv = minimist(process.argv, {
     'criticalSteps': false,
     'watchWithPolling': false,
     'timeoutsAsyncScript': 10000,
+    'timeoutsImplicitWait': 3000,
     'waitForTimeout': 10000,
     'screenshotsOnError': false,
     'screenshotsPath': '.',
