@@ -1,3 +1,8 @@
+# 0.23.0
+
+* Sets an implicit wait of 3 seconds
+* Adds support for critical runs
+
 # 0.22.3
 
 * Option `--simianRepositoryId` for passing repositoryId to Simian (#210)
