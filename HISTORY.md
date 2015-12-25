@@ -1,3 +1,7 @@
+# 0.22.3
+
+* Option `--simianRepositoryId` for passing repositoryId to Simian (#210)
+
 # 0.22.2
 
 * Fixes multiple -r / --require options
