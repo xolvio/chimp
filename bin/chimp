@@ -19,6 +19,8 @@ var argv = minimist(process.argv, {
     'format': 'pretty',
     'tags': '~@ignore',
     'watchTags': '@dev,@watch,@focus',
+    'criticalTag': '@critical',
+    'criticalSteps': false,
     'watchWithPolling': false,
     'timeoutsAsyncScript': 10000,
     'waitForTimeout': 10000,
