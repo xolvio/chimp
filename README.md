@@ -17,6 +17,9 @@ Set an `@focus` tag in the spec title, save a file, Chimp reruns the spec until 
 ```sh
 npm install -g chimp
 ```
+
+Be sure to checkout our [Automated Testing Best Practices](https://github.com/xolvio/automated-testing-best-practices) repository.
+
 Having trouble? See the [installation documentation](https://chimp.readme.io/docs/installation).
 
 ### Usage
@@ -89,6 +92,8 @@ Chimp is PACKED with features that make your life easier. See the [documentation
 ## Using Meteor?
 
 Chimp comes with first-grade Meteor support out-of-the-box, including hot-deploy detection that runs specs after your Meteor client or server restart. 
+
+Be sure to checkout our [Automated Testing Best Practices](https://github.com/xolvio/automated-testing-best-practices) repository which is written using Meteor.
 
 ### Usage
 
