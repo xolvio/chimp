@@ -39,7 +39,9 @@ var argv = minimist(process.argv, {
     'sync': true,
     'mochaTimeout': 60000,
     'mochaReporter': 'spec',
-    'mochaSlow' : 10000
+    'mochaSlow' : 10000,
+    'singleSnippetPerFile' : 0,
+    'recommendedFilenameSeparator': ' '
   },
   'boolean': true
 });
