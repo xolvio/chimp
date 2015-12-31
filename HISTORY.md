@@ -1,3 +1,8 @@
+# 0.24.0
+
+* Removes automatic npm install
+* Adds `singleSnippetPerFile` mode
+
 # 0.23.0
 
 * Sets an implicit wait of 3 seconds
