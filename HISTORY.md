@@ -1,3 +1,7 @@
+# 0.24.1
+
+* Improves `singleSnippetPerFile` mode tet
+
 # 0.24.0
 
 * Removes automatic npm install
