@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.19.4",
+  "version": "0.23.0",
   "description": "BDD acceptance testing package combining CucumberJS, Selenium, PhantomJS and WebdriverIO.",
   "keywords": [
     "simian",
@@ -45,27 +45,29 @@
     "chai": "~3.0.0",
     "chai-as-promised": "~5.1.0",
     "child-process-debug": "0.0.7",
+    "chimp-widgets": "0.2.0",
     "chokidar": "~1.0.6",
     "colors": "1.1.2",
     "cucumber": "^0.5.3",
-    "chimp-widgets": "0.2.0",
-    "xolvio-ddp": "0.11.1",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",
     "fs-extra": "~0.24.0",
+    "glob": "^6.0.1",
     "hapi": "8.8.0",
     "loglevel": "~1.4.0",
     "minimist": "~1.2.0",
+    "mocha": "2.3.4",
     "phantomjs-bin": "~1.0.1",
     "progress": "^1.1.8",
-    "request": "2.62.0",
+    "request": "2.67.0",
     "requestretry": "1.5.0",
     "saucelabs": "~0.1.1",
     "selenium-standalone": "^4.6.1",
     "underscore": "~1.8.3",
-    "xolvio-sync-webdriverio": "^4.0.5",
-    "xolvio-jasmine-expect": "^1.0.0"
+    "xolvio-ddp": "^0.12.0",
+    "xolvio-jasmine-expect": "^1.0.0",
+    "xolvio-sync-webdriverio": "^4.0.5"
   },
   "devDependencies": {
     "jest-cli": "^0.5.7"

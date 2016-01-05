@@ -1,9 +1,0 @@
-{
-  "name": "cucumber-tests",
-  "version": "1.0.0",
-  "description": "Dependencies for our Cucumber automation layer",
-  "private": true,
-  "dependencies": {
-    "underscore": "^1.8.3"
-  }
-}
