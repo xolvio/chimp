@@ -11,7 +11,3 @@ echo Running Chimp specs in Firefox
 ./bin/chimp --browser=firefox --tags=~@cli
 echo Running Chimp specs in Phantom
 ./bin/chimp --browser=phantomjs --tags=~@cli
-
-echo Running Meteor specs
-cd meteor/test-app
-velocity test-app --ci

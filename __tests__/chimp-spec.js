@@ -114,29 +114,6 @@ describe('Chimp', function () {
       chimp.fs.existsSync = restore;
     });
 
-    it('executes npm install then callback with error there is an errors', function () {
-
-      var chimp = new Chimp();
-
-      var restore = chimp.fs.existsSync;
-      chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
-
-      chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
-        return callback('errorzzz');
-      });
-
-
-      chimp.selectMode = jest.genMockFunction();
-      var callback = jest.genMockFunction();
-
-      chimp.init(callback);
-
-      expect(callback).toBeCalledWith('errorzzz');
-      expect(chimp.selectMode).not.toBeCalled();
-
-      chimp.fs.existsSync = restore;
-
-    });
   });
 
   describe('selectMode', function () {
@@ -927,7 +904,7 @@ describe('Chimp', function () {
     });
 
     it('adds cucumber last', function () {
-      jest.dontMock('../lib/cucumber.js');
+      jest.dontMock('../lib/cucumberjs/cucumber.js');
 
       var Chimp = require('../lib/chimp.js');
       var options = {browser: 'phantomjs'};

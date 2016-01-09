@@ -1,4 +1,63 @@
-# 0.19.3
+# 0.24.1
+
+* Improves `singleSnippetPerFile` mode tet
+
+# 0.24.0
+
+* Removes automatic npm install
+* Adds `singleSnippetPerFile` mode
+
+# 0.23.0
+
+* Sets an implicit wait of 3 seconds
+* Adds support for critical runs
+
+# 0.22.3
+
+* Option `--simianRepositoryId` for passing repositoryId to Simian (#210)
+
+# 0.22.2
+
+* Fixes multiple -r / --require options
+* Fixes a spec dependency problem
+* Increases Mocha slow timer to 10s for e2e tests
+* Removes xolvio:cucumber (RIP)
+* Updates npm request
+* Fixes the loading order from --path
+
+# 0.22.1
+
+* Fixes `client.debug()` not continuing when pressing ENTER
+
+# 0.22.0
+
+* Adds Meteor hot-code-push listener to the watcher so Chimp reruns after Meteor reloads 
+* Deprecates the xolvio:cucumber package in favor of Chimp
+* Improves caching on circle
+
+# 0.21.0
+
+* Adds server.execute() for executing code on the Meteor server
+* Upgrades selenium, chrome-driver and IEDriver (#185)
+* Fixes issue with path ((#143)
+* Fixes server.call method for the case when the first param is a falsy value
+* Report the branch to the Simian result API
+
+# 0.20.2
+
+* Adds color to Mocha console report
+* Improves failure chimp logs
+
+# 0.20.1
+
+* Fixes missing self reference issue
+
+# 0.20.0
+
+* Adds support for Mocha e2e testing (instead of Cucumber)
+* Applies environment variable white listing only to the debug output
+
+# 0.19.3 - 0.19.5
 
 * Renames widgets to chimpWidgets
 * Fixes memory hogging through screenshot capturing

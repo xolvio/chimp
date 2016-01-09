@@ -19,18 +19,29 @@ var argv = minimist(process.argv, {
     'format': 'pretty',
     'tags': '~@ignore',
     'watchTags': '@dev,@watch,@focus',
+    'criticalTag': '@critical',
+    'criticalSteps': false,
+    'watchWithPolling': false,
     'timeoutsAsyncScript': 10000,
+    'timeoutsImplicitWait': 3000,
     'waitForTimeout': 10000,
     'screenshotsOnError': false,
     'screenshotsPath': '.',
-    "captureAllStepScreenshots": false,
-    "attachScreenshotsToReport": false,
+    'captureAllStepScreenshots': false,
+    'attachScreenshotsToReport': false,
     'serverHost': 'localhost',
     'server': false,
     'noSessionReuse': false,
     'simianResultEndPoint': 'api.simian.io/v1.0/result',
     'simianAccessToken': false,
-    'sync': true
+    'simianResultBranch': null,
+    'simianRepositoryId': null,
+    'sync': true,
+    'mochaTimeout': 60000,
+    'mochaReporter': 'spec',
+    'mochaSlow' : 10000,
+    'singleSnippetPerFile' : 0,
+    'recommendedFilenameSeparator': ' '
   },
   'boolean': true
 });
@@ -65,7 +76,8 @@ function startChimp (options) {
   var chimp = new Chimp(options);
   chimp.init(function (err) {
     if (err) {
-      log.error('Error in chimp init', err);
+      log.error(err);
+      log.debug('Error in chimp init', err);
     }
     exit(err ? 2 : 0);
   });
