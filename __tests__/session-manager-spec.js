@@ -17,32 +17,6 @@ describe('Session Manager', function () {
       expect(sessionManager.options).toBe(options);
     });
 
-    it('throws when options is not passed', function () {
-      var SessionManager = require('../lib/session-manager');
-      var createSessionManager = function () {
-        new SessionManager();
-      };
-      expect(createSessionManager).toThrow('options is required');
-    });
-
-    it('throws when options.port is not passed', function () {
-      var SessionManager = require('../lib/session-manager');
-      var options = {};
-      var createSessionManager = function () {
-        new SessionManager({});
-      };
-      expect(createSessionManager).toThrow('options.port is required');
-    });
-
-    it('throws when options.browser and options.device is not passed', function () {
-      var SessionManager = require('../lib/session-manager');
-      var options = {port: 1234};
-      var createSessionManager = function () {
-        new SessionManager(options);
-      };
-      expect(createSessionManager).toThrow('[chimp][session-manager] options.browser or options.deviceName is required');
-    });
-
   });
 
   describe('Remote', function () {
