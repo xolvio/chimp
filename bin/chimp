@@ -37,6 +37,7 @@ var argv = minimist(process.argv, {
     'simianResultBranch': null,
     'simianRepositoryId': null,
     'sync': true,
+    'tunnelIdentifier' : null,
     'mochaTimeout': 60000,
     'mochaReporter': 'spec',
     'mochaSlow' : 10000,
