@@ -1,3 +1,7 @@
+# 0.25.1
+
+* Fixes BrowserStack local testing
+
 # 0.25.0
 
 * Addition of SessionFactory and BrowserStack and SauceLabs session managers (Derek Hamilton)
