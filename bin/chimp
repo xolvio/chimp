@@ -37,6 +37,7 @@ var argv = minimist(process.argv, {
     'simianResultBranch': null,
     'simianRepositoryId': null,
     'sync': true,
+    'tunnelIdentifier' : null,
     'mochaTimeout': 60000,
     'mochaReporter': 'spec',
     'mochaSlow' : 10000,
@@ -46,7 +47,7 @@ var argv = minimist(process.argv, {
   'boolean': true
 });
 
-if (argv.host && argv.host.indexOf('sauce') !== -1) {
+if (argv.host && (argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1)) {
   argv.noSessionReuse = true;
 }
 

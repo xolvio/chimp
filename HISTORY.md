@@ -1,3 +1,9 @@
+# 0.25.0
+
+* Addition of SessionFactory and BrowserStack and SauceLabs session managers (Derek Hamilton)
+* Changed chimp helper to configure the widget driver after loading the browser (Lewis Wright)
+* Adds the Tunnel Identifier (Sam Hatoum)
+
 # 0.24.1
 
 * Improves `singleSnippetPerFile` mode tet
