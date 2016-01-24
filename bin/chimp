@@ -3,46 +3,13 @@ var Chimp    = require('../lib/chimp.js'),
     minimist = require('minimist'),
     freeport = require('freeport'),
     exit     = require('exit'),
-    log      = require('../lib/log');
+    log      = require('../lib/log'),
+    fs       = require('fs');
+    _        = require('underscore');
+    path     = require('path');
 
 var argv = minimist(process.argv, {
-  'default': {
-    'browser': 'chrome',
-    'platform': 'ANY',
-    'name': '',
-    'debug': false,
-    'path': 'features',
-    'user': '',
-    'key': '',
-    'log': 'info',
-    'snippets': true,
-    'format': 'pretty',
-    'tags': '~@ignore',
-    'watchTags': '@dev,@watch,@focus',
-    'criticalTag': '@critical',
-    'criticalSteps': false,
-    'watchWithPolling': false,
-    'timeoutsAsyncScript': 10000,
-    'timeoutsImplicitWait': 3000,
-    'waitForTimeout': 10000,
-    'screenshotsOnError': false,
-    'screenshotsPath': '.',
-    'captureAllStepScreenshots': false,
-    'attachScreenshotsToReport': false,
-    'serverHost': 'localhost',
-    'server': false,
-    'noSessionReuse': false,
-    'simianResultEndPoint': 'api.simian.io/v1.0/result',
-    'simianAccessToken': false,
-    'simianResultBranch': null,
-    'simianRepositoryId': null,
-    'sync': true,
-    'mochaTimeout': 60000,
-    'mochaReporter': 'spec',
-    'mochaSlow' : 10000,
-    'singleSnippetPerFile' : 0,
-    'recommendedFilenameSeparator': ' '
-  },
+  'default': getOptions(),
   'boolean': true
 });
 
@@ -81,4 +48,27 @@ function startChimp (options) {
     }
     exit(err ? 2 : 0);
   });
+}
+
+function getOptions() {
+
+  var userOptionsFile;
+  if(process.argv[2] && process.argv[2].match(/chimp\.json$/)) {
+    userOptionsFile = path.resolve(process.env.PWD, process.argv[2]);
+    process.argv.splice(2, 1);
+    if (!fs.existsSync(userOptionsFile)) {
+      log.error(('[chimp] Could not find ' + process.argv[2]).red);
+      process.exit(1);
+    }
+  } else {
+    userOptionsFile = path.resolve(process.env.PWD, 'chimp.json');
+  }
+
+  var userOptions = {};
+  if (fs.existsSync(userOptionsFile)) {
+    userOptions = require(userOptionsFile);
+    log.debug('[chimp] loaded chimp.json');
+  }
+  var defaultOptions = require(path.resolve(__dirname, 'default.json'));
+  return _.defaults(userOptions, defaultOptions);
 }
