@@ -1,3 +1,7 @@
+# 0.26.0
+
+* Adds custom config file option
+
 # 0.25.1
 
 * Fixes BrowserStack local testing
