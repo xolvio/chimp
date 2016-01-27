@@ -64,7 +64,8 @@ describe('Session Manager', function () {
       var wd = require('xolvio-sync-webdriverio');
       var SessionManager = require('../lib/session-manager');
 
-      wd.remote = jest.genMockFn().mockReturnValue('return from remote');
+      var browser = {};
+      wd.remote = jest.genMockFn().mockReturnValue(browser);
 
       var sessionManager = new SessionManager({port: 1234, browser: 'something'});
 
@@ -80,7 +81,7 @@ describe('Session Manager', function () {
       var callback = jest.genMockFn();
       sessionManager.remote(options, callback);
 
-      expect(callback.mock.calls[0][1]).toBe('return from remote');
+      expect(callback.mock.calls[0][1]).toBe(browser);
       expect(wd.remote.mock.calls.length).toBe(1);
       expect(wd.remote.mock.calls[0][0]).toBe(options);
 

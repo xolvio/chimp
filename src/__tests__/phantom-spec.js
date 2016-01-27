@@ -116,7 +116,7 @@ describe('Phantom', function () {
 
   describe('stop', function () {
 
-    describe('kills the phantom child when phantom is running and sets the child to null', function () {
+    it('kills the phantom child when phantom is running and sets the child to null', function () {
 
       var processHelper = require('../lib/process-helper');
       var Phantom = require('../lib/phantom');
@@ -138,7 +138,7 @@ describe('Phantom', function () {
 
     });
 
-    describe('calls the callback immediately when phantom is not running', function () {
+    it('calls the callback immediately when phantom is not running', function () {
 
       var processHelper = require('../lib/process-helper');
       var Phantom = require('../lib/phantom');
@@ -158,7 +158,7 @@ describe('Phantom', function () {
 
     });
 
-    describe('calls the callback with an error if an error is encountered', function () {
+    it('calls the callback with an error if an error is encountered', function () {
       var processHelper = require('../lib/process-helper');
       var Phantom = require('../lib/phantom');
 

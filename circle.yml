@@ -18,10 +18,10 @@ dependencies:
 
   override:
     # Cache Chrome
-    - ./.scripts/download-chrome.sh
+    - ./scripts/download-chrome.sh
 
     # Cache Metoer
-    - ./.scripts/download-meteor.sh
+    - ./scripts/download-meteor.sh
 
     # Cache npm deps
     - npm install
@@ -31,4 +31,4 @@ dependencies:
 
 test:
   override:
-    - npm test
+    - npm testonly
