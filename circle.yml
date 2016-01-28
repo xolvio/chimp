@@ -31,4 +31,4 @@ dependencies:
 
 test:
   override:
-    - npm testonly
+    - npm run testonly
