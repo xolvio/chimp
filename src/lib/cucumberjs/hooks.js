@@ -95,8 +95,12 @@ module.exports = function () {
         reason.message += '\n' + hint;
       } else {
         log.error('[chimp][hooks] Reason:'.red);
-        log.error('[chimp][hooks]'.red, reason.type.red);
-        log.error('[chimp][hooks]'.red, reason.message.red);
+        if (reason.type) {
+          log.error('[chimp][hooks]'.red, reason.type.red);
+        }
+        if (reason.message) {
+          log.error('[chimp][hooks]'.red, reason.message.red);
+        }
       }
     } catch (e) {
       log.debug('[chimp][hooks] Could not provide error hint');
