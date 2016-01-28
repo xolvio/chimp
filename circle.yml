@@ -18,17 +18,17 @@ dependencies:
 
   override:
     # Cache Chrome
-    - ./.scripts/download-chrome.sh
+    - ./scripts/download-chrome.sh
 
     # Cache Metoer
-    - ./.scripts/download-meteor.sh
+    - ./scripts/download-meteor.sh
 
     # Cache npm deps
     - npm install
 
     # Cache Selenium & ChromeDriver
-    - ./bin/chimp --path=bin # there are no tests in bin
+    - ./dist/bin/chimp.js --path=bin # there are no tests in bin
 
 test:
   override:
-    - npm test
+    - npm run testonly
