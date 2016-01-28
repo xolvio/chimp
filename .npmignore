@@ -6,3 +6,5 @@
 .idea
 npm-debug.log
 src
+scripts
+tmp
