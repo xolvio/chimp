@@ -1,8 +1,23 @@
 # For NPM Chimp
 
+## ES2015
+
+* We use Babel to compile our ES2015 code to ES5.
+* The compiled ES5 code is in the `dist/` folder.
+* You can compile the code with `npm run prepublish`.
+  This is done automatically before you publish a release.
+
 ## Running tests
 
 You can use [Wallaby](http://wallabyjs.com/) if you own it or just run `npm test`.
+
+## Running Chimp
+
+The run script will compile the source code before running Chimp.
+
+```sh
+./scripts/run.js <CHIMP_ARGUMENTS>
+```
 
 ## Release a new version
 
