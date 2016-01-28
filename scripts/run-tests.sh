@@ -6,8 +6,8 @@ echo Running Chimp Unit tests
 jest
 
 echo Running Chimp specs in Chrome
-./bin/chimp --tags=~@cli
+./dist/bin/chimp.js --tags=~@cli
 echo Running Chimp specs in Firefox
-./bin/chimp --browser=firefox --tags=~@cli
+./dist/bin/chimp.js --browser=firefox --tags=~@cli
 echo Running Chimp specs in Phantom
-./bin/chimp --browser=phantomjs --tags=~@cli
+./dist/bin/chimp.js --browser=phantomjs --tags=~@cli
