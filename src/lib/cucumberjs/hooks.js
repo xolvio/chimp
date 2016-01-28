@@ -8,9 +8,9 @@ module.exports = function () {
     chimpHelper.setupBrowserAndDDP();
     chimpHelper.createGlobalAliases();
     log.debug('[chimp][hooks] Finished BeforeFeatures');
-    if (this.UserDefinedBeforeFeatures) {
+    if (global.UserDefinedBeforeFeatures) {
       log.debug('[chimp][hooks] User-defined BeforeFeatures found, calling');
-      global.UserDefinedBeforeFeatures.apply(this);
+      global.UserDefinedBeforeFeatures();
     } else {
       log.debug('[chimp][hooks] User-defined BeforeFeatures not found, finishing up');
     }
