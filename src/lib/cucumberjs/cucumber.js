@@ -231,7 +231,9 @@ Cucumber.prototype._conditionMessage = function (message) {
 };
 
 function _getExecOptions (options) {
-  var execOptions = ['node', path.resolve(__dirname, path.join('..', 'node_modules', '.bin', 'cucumber.js'))];
+  var execOptions = ['node', path.resolve(__dirname,
+    path.join('..', '..', '..', 'node_modules', '.bin', 'cucumber.js')
+  )];
 
   // XXX a feature may be defined at the start or end
   // XXX do other options also get passed with this command?
