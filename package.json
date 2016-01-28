@@ -34,7 +34,7 @@
   },
   "main": "index.js",
   "bin": {
-    "chimp": "./src/bin/chimp"
+    "chimp": "./dist/bin/chimp.js"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

@@ -27,7 +27,7 @@ dependencies:
     - npm install
 
     # Cache Selenium & ChromeDriver
-    - ./bin/chimp --path=bin # there are no tests in bin
+    - ./dist/bin/chimp --path=bin # there are no tests in bin
 
 test:
   override:
