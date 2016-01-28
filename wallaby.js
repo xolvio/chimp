@@ -41,10 +41,6 @@ module.exports = function (wallaby) {
       wallaby.testFramework.configure(jestConfig);
     },
 
-    workers: {
-      recycle: true
-    },
-
     debug: true
   };
 };

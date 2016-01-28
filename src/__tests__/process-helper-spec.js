@@ -49,15 +49,13 @@ describe('process-helper', function () {
 
     it('calls spawn with the binary and args and returns the child process', function () {
 
-      var processHelper = require('../lib/process-helper.js');
-
       var cp = require('child_process'),
           processHelper = require('../lib/process-helper.js');
 
       processHelper.logOutputs = jest.genMockFn();
 
       var child = {};
-      cp.spawn = jest.genMockFn().mockReturnValue(child);
+      spyOn(cp, 'spawn').and.returnValue(child);
 
       var options = {
         bin: '/someBinary',
@@ -65,9 +63,7 @@ describe('process-helper', function () {
       };
       var ret = processHelper.spawn(options);
 
-      expect(cp.spawn.mock.calls.length).toBe(1);
-      expect(cp.spawn.mock.calls[0][0]).toBe(options.bin);
-      expect(cp.spawn.mock.calls[0][1]).toBe(options.args);
+      expect(cp.spawn).toHaveBeenCalledWith(options.bin, options.args);
       expect(ret).toBe(child);
 
     });
@@ -80,7 +76,7 @@ describe('process-helper', function () {
       processHelper.logOutputs = jest.genMockFn();
 
       var child = {};
-      cp.spawn = jest.genMockFn().mockReturnValue(child);
+      spyOn(cp, 'spawn').and.returnValue(child);
 
       var options = {
         prefix: 'hey bear'

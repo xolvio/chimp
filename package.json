@@ -37,6 +37,7 @@
     "chimp": "./dist/bin/chimp.js"
   },
   "jest": {
+    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "moduleFileExtensions": [
       "js",
