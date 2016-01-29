@@ -1,9 +1,14 @@
 #!/usr/bin/env node
+
 var Chimp    = require('../lib/chimp.js'),
     minimist = require('minimist'),
     freeport = require('freeport'),
     exit     = require('exit'),
-    log      = require('../lib/log');
+    log      = require('../lib/log'),
+    path     = require('path');
+
+// Make babel plugins available to Cucumber
+process.env.NODE_PATH += ':' + path.resolve(__dirname, '../../node_modules');
 
 var argv = minimist(process.argv, {
   'default': {
@@ -41,7 +46,8 @@ var argv = minimist(process.argv, {
     'mochaReporter': 'spec',
     'mochaSlow' : 10000,
     'singleSnippetPerFile' : 0,
-    'recommendedFilenameSeparator': ' '
+    'recommendedFilenameSeparator': ' ',
+    'compiler': 'js:' + path.resolve(__dirname, '../lib/babel-register.js'),
   },
   'boolean': true
 });
