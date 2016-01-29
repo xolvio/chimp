@@ -16,4 +16,4 @@ dependencies:
 test:
   override:
     - npm run testonly:
-      parallel: true
+        parallel: true
