@@ -11,7 +11,7 @@ describe('Selenium', function () {
         new Selenium();
       };
 
-      expect(createSelenium).toThrow('options is required');
+      expect(createSelenium).toThrowError('options is required');
     });
 
     it('throws when options.port is not passed', function () {
@@ -21,7 +21,7 @@ describe('Selenium', function () {
         new Selenium(options);
       };
 
-      expect(createSelenium).toThrow('options.port is required');
+      expect(createSelenium).toThrowError('options.port is required');
     });
 
     it('converts options.port to a string', function () {

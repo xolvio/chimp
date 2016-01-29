@@ -19,7 +19,7 @@ describe('Session Factory', function () {
       var session = function () {
         new SessionFactory();
       };
-      expect(session).toThrow('options is required');
+      expect(session).toThrowError('options is required');
     });
 
     it('throws when options.port is not passed', function () {
@@ -28,7 +28,7 @@ describe('Session Factory', function () {
       var session = function () {
         new SessionFactory({});
       };
-      expect(session).toThrow('options.port is required');
+      expect(session).toThrowError('options.port is required');
     });
 
     it('throws when options.browser and options.device is not passed', function () {
@@ -37,7 +37,7 @@ describe('Session Factory', function () {
       var session = function () {
         new SessionFactory(options);
       };
-      expect(session).toThrow('[chimp][session-manager-factory] options.browser or options.deviceName is required');
+      expect(session).toThrowError('[chimp][session-manager-factory] options.browser or options.deviceName is required');
     });
 
     it('throws when options.user and options.key is not passed and not using localhost', function () {
@@ -46,7 +46,7 @@ describe('Session Factory', function () {
       var session = function () {
         new SessionFactory(options);
       };
-      expect(session).toThrow('[chimp][session-manager-factory] options.user and options.key are required');
+      expect(session).toThrowError('[chimp][session-manager-factory] options.user and options.key are required');
     });
 
   });

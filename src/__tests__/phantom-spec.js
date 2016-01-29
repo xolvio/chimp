@@ -12,7 +12,7 @@ describe('Phantom', function () {
         new Phantom();
       };
 
-      expect(createPhantom).toThrow('options is required');
+      expect(createPhantom).toThrowError('options is required');
     });
 
     it('throws when options.port is not passed', function () {
@@ -22,7 +22,7 @@ describe('Phantom', function () {
         new Phantom(options);
       };
 
-      expect(createPhantom).toThrow('options.port is required');
+      expect(createPhantom).toThrowError('options.port is required');
     });
 
   });

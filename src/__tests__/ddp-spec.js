@@ -38,7 +38,7 @@ describe('DDP Wrapper', function () {
       var thrower = function () {
         new DDP()._getUrl('blah.com');
       };
-      expect(thrower).toThrow('[chimp][ddp] DDP url must contain the protocol');
+      expect(thrower).toThrowError('[chimp][ddp] DDP url must contain the protocol');
     });
     it('parses http URLs', function () {
       var url = new DDP()._getUrl('http://somewhere:3000');
