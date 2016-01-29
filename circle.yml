@@ -14,14 +14,10 @@ dependencies:
     - "~/.npm"
     - "~/_opt"
     - "node_modules"
-    - "~/.meteor"
 
   override:
     # Cache Chrome
     - ./scripts/download-chrome.sh
-
-    # Cache Metoer
-    - ./scripts/download-meteor.sh
 
     # Cache npm deps
     - npm install
