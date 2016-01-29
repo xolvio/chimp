@@ -92,6 +92,6 @@
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-babel": "^3.0.0",
-    "jest-cli": "Sanjo/jest#cd70a26d"
+    "jest-cli": "Sanjo/jest#7c71094"
   }
 }
