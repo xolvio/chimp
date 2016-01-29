@@ -11,15 +11,13 @@ general:
 
 dependencies:
   cache_directories:
-    - "~/.npm"
     - "~/_opt"
-    - "node_modules"
 
   override:
     # Cache Chrome
     - ./scripts/download-chrome.sh
 
-    # Cache npm deps
+    # Install npm deps
     - npm install
 
     # Cache Selenium & ChromeDriver
