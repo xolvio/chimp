@@ -10,13 +10,7 @@ general:
       - gh-pages
 
 dependencies:
-  cache_directories:
-    - "~/_opt"
-
   override:
-    # Cache Chrome
-    - ./scripts/download-chrome.sh
-
     # Install npm deps
     - npm install
 
