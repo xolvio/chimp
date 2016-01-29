@@ -11,11 +11,7 @@ general:
 
 dependencies:
   override:
-    # Install npm deps
     - npm install
-
-    # Cache Selenium & ChromeDriver
-    - ./dist/bin/chimp.js --path=bin # there are no tests in bin
 
 test:
   override:
