@@ -3,4 +3,4 @@
 set -e
 
 npm run prepublish
-./dist/bin/chimp.js "$@"
+./bin/chimp.js "$@"

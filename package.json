@@ -34,7 +34,7 @@
   },
   "main": "index.js",
   "bin": {
-    "chimp": "./dist/bin/chimp.js"
+    "chimp": "./bin/chimp.js"
   },
   "jest": {
     "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",

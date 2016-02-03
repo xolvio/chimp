@@ -15,6 +15,6 @@ var run = function (runOnNodeIndex, name, command) {
 };
 
 run(0, 'Running Chimp Unit tests', './node_modules/.bin/jest');
-run(1, 'Running Chimp specs in Chrome', './dist/bin/chimp.js --tags=~@cli');
-run(2, 'Running Chimp specs in Firefox', './dist/bin/chimp.js --browser=firefox --tags=~@cli');
-run(3, 'Running Chimp specs in Phantom', './dist/bin/chimp.js --browser=phantomjs --tags=~@cli');
+run(1, 'Running Chimp specs in Chrome', './bin/chimp.js --tags=~@cli');
+run(2, 'Running Chimp specs in Firefox', './bin/chimp.js --browser=firefox --tags=~@cli');
+run(3, 'Running Chimp specs in Phantom', './bin/chimp.js --browser=phantomjs --tags=~@cli');
