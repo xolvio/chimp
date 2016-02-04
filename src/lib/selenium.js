@@ -59,7 +59,7 @@ Selenium.prototype.install = function (callback) {
   selenium.install({
     // check for more recent versions of selenium here:
     // http://selenium-release.storage.googleapis.com/index.html
-    version: '2.48.2',
+    version: '2.50.1',
     baseURL: 'http://selenium-release.storage.googleapis.com',
     drivers: {
       chrome: {
@@ -72,7 +72,7 @@ Selenium.prototype.install = function (callback) {
       ie: {
         // check for more recent versions of internet explorer driver here:
         // http://selenium-release.storage.googleapis.com/index.html
-        version: '2.48.0',
+        version: '2.50.0',
         arch: process.arch,
         baseURL: 'http://selenium-release.storage.googleapis.com'
       }

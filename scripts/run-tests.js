@@ -14,7 +14,12 @@ var run = function (runOnNodeIndex, name, command) {
   }
 };
 
-run(0, 'Running Chimp Unit tests', './node_modules/.bin/jest');
+var unitTestsCommand = './node_modules/.bin/jest';
+if (isCI) {
+  // Prevent exceeding the maximum RAM. Each worker needs ~385MB.
+  unitTestsCommand += ' --maxWorkers 4';
+}
+run(0, 'Running Chimp Unit tests', unitTestsCommand);
 run(1, 'Running Chimp specs in Chrome', './bin/chimp.js --tags=~@cli');
 run(2, 'Running Chimp specs in Firefox', './bin/chimp.js --browser=firefox --tags=~@cli');
 run(3, 'Running Chimp specs in Phantom', './bin/chimp.js --browser=phantomjs --tags=~@cli');

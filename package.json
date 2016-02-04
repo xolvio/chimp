@@ -81,7 +81,7 @@
     "request": "2.67.0",
     "requestretry": "1.5.0",
     "saucelabs": "~0.1.1",
-    "selenium-standalone": "^4.6.1",
+    "selenium-standalone": "^4.9.0",
     "underscore": "~1.8.3",
     "xolvio-ddp": "^0.12.0",
     "xolvio-jasmine-expect": "^1.0.0",
@@ -93,6 +93,7 @@
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-babel": "^3.0.0",
-    "jest-cli": "Sanjo/jest#7c71094"
+    "jest-cli": "Sanjo/jest#7c71094",
+    "shelljs": "^0.5.3"
   }
 }
