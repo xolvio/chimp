@@ -1,3 +1,8 @@
+# 0.26.0
+
+* ES2015 support for Cucumber step definitions
+* Fixes and updates selenium-standalone and IE driver
+
 # 0.25.1
 
 * Fixes BrowserStack local testing
