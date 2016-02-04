@@ -65,7 +65,7 @@ Selenium.prototype.install = function (callback) {
       chrome: {
         // check for more recent versions of chrome driver here:
         // http://chromedriver.storage.googleapis.com/index.html
-        version: '2.21',
+        version: '2.20',
         arch: process.arch,
         baseURL: 'http://chromedriver.storage.googleapis.com'
       },
