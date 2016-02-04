@@ -17,7 +17,7 @@ var run = function (runOnNodeIndex, name, command) {
 var unitTestsCommand = './node_modules/.bin/jest';
 if (isCI) {
   // Prevent exceeding the maximum RAM. Each worker need ~385MB.
-  unitTestsCommand += ' --maxWorkers 8';
+  unitTestsCommand += ' --maxWorkers 4';
 }
 run(0, 'Running Chimp Unit tests', unitTestsCommand);
 run(1, 'Running Chimp specs in Chrome', './bin/chimp.js --tags=~@cli');
