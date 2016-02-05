@@ -78,9 +78,14 @@ function Cli(argv) {
 
 function createIpcFormatter() {
   // add a json formatter that sends results over IPC
-  var ipcFormatter = new Cucumber.Listener.JsonFormatter();
-  ipcFormatter.log = function (results) {
-    process.send(results);
+  const ipcFormatter = new Cucumber.Listener.JsonFormatter();
+  const finish = ipcFormatter.finish;
+  ipcFormatter.finish = function sendResultToChimp(callback) {
+    finish.call(this, (error, result) => {
+      const results = this.getLogs();
+      process.send(results);
+      callback(error, result);
+    });
   };
   return ipcFormatter;
 }
@@ -89,7 +94,7 @@ function createIpcFormatter() {
 // This is a modified version of cucumber/bin/cucumber
 var argv = process.argv.slice(1);
 argv = argv.slice(argv.indexOf('node'));
-var cli = Cucumber.Cli(argv);
+var cli = Cli(argv);
 cli.run(function (succeeded) {
   var code = succeeded ? 0 : 2;
 
