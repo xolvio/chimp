@@ -13,8 +13,3 @@ so that you get a quick response, please consider this checklist for reporting a
 Please be sure to include any logs inside a fenced code block 
 [like this](https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks). This 
 makes it easier to read.
-
-#### Using Meteor?
-* [ ] Run Meteor with `VELOCITY_DEBUG=1 meteor`
-* [ ] Attach content of `.meteor/versions` 
-* [ ] Attach content of `.meteor/packages`

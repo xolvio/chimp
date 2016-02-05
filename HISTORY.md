@@ -1,6 +1,15 @@
-# 0.26.0
+# 0.27.0
 
 * Adds custom config file option
+
+# 0.26.0
+
+* Updates Cucumber.js to 0.9.4 from 0.5.3
+* ES2015 support for Cucumber step definitions
+* Fixes and updates selenium-standalone and IE driver
+* Fixes synchronous execution of custom WebDriver.io commands
+* Fixes `this` context in custom WebDriver.io commands and waitUntil conditions
+  to be the synchronous WebDriver.io remote (the same as global.browser)
 
 # 0.25.1
 

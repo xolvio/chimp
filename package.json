@@ -26,21 +26,38 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "test": "./.scripts/run-tests.sh"
+    "prepublish": ". ./scripts/prepublish.sh",
+    "lint": "eslint ./src",
+    "lintfix": "eslint ./src --fix",
+    "testonly": "node ./scripts/run-tests.js",
+    "test": "npm run lint && npm run testonly"
   },
-  "main": "lib/chimp.js",
+  "main": "index.js",
   "bin": {
-    "chimp": "./bin/chimp"
+    "chimp": "./bin/chimp.js"
   },
   "jest": {
+    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "moduleFileExtensions": [
       "js",
       "json",
       "node"
+    ],
+    "unmockedModulePathPatterns": [
+      "core-js/.*",
+      "babel-runtime/.*"
     ]
   },
   "dependencies": {
     "async": "~0.9.0",
+    "babel-core": "^6.4.5",
+    "babel-plugin-transform-runtime": "6.x.x",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "6.x.x",
+    "babel-preset-stage-2": "6.x.x",
+    "babel-register": "^6.4.3",
+    "babel-runtime": "6.x.x",
     "bluebird": "^2.9.33",
     "chai": "~3.0.0",
     "chai-as-promised": "~5.1.0",
@@ -48,7 +65,8 @@
     "chimp-widgets": "0.2.0",
     "chokidar": "~1.0.6",
     "colors": "1.1.2",
-    "cucumber": "^0.5.3",
+    "commander": "^2.9.0",
+    "cucumber": "xolvio/cucumber-js#v0.9.4-chimp",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",
@@ -63,13 +81,19 @@
     "request": "2.67.0",
     "requestretry": "1.5.0",
     "saucelabs": "~0.1.1",
-    "selenium-standalone": "^4.6.1",
+    "selenium-standalone": "^4.9.0",
     "underscore": "~1.8.3",
     "xolvio-ddp": "^0.12.0",
     "xolvio-jasmine-expect": "^1.0.0",
-    "xolvio-sync-webdriverio": "^4.0.5"
+    "xolvio-sync-webdriverio": "^4.0.7"
   },
   "devDependencies": {
-    "jest-cli": "^0.5.7"
+    "babel-cli": "6.x.x",
+    "babel-jest": "^6.0.1",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-babel": "^3.0.0",
+    "jest-cli": "Sanjo/jest#7c71094",
+    "shelljs": "^0.5.3"
   }
 }
