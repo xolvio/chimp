@@ -42,7 +42,7 @@ Read the full [documentation site](http://chimp.readme.io/docs).
 ## Additional Features
 
 ###### Synchronous Javascript
-![WebdriverIO](./images/wdio.png?raw=true)
+[![WebdriverIO](./images/wdio.png?raw=true)](http://webdriver.io/)
 
 We chose [WebdriverIO](http://webdriver.io) for it's awesome API and made it awesomer by converting it to a synchronous syntax: 
 
