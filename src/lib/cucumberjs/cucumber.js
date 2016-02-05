@@ -263,7 +263,7 @@ function _getExecOptions (options) {
   var allowedCucumberJsOptions = {
     long: [
       'version', 'backtrace', 'compiler', 'dry-run', 'fail-fast', 'format',
-      'no-colors', 'no-snippets', 'no-source',
+      'name', 'no-colors', 'no-snippets', 'no-source',
       'profile', 'require', 'snippet-syntax', 'strict', 'tags', 'help'
     ],
     short: ['v', 'b', 'd', 'f', 'p', 'r', 'S', 't']

@@ -21,16 +21,6 @@ function Cli(argv) {
     return memo;
   }
 
-  function getConfiguration() {
-    var program = getProgram();
-    program.parse(argv);
-    var profileArgs = Cucumber.Cli.ProfilesLoader.getArgs(program.profile);
-    argv.splice.apply(argv, [2, 0].concat(profileArgs));
-    program.parse(argv);
-    var configuration = Cucumber.Cli.Configuration(program.opts(), program.args);
-    return configuration;
-  }
-
   function getProgram () {
     var program = new Command(path.basename(argv[1]));
 
@@ -42,6 +32,7 @@ function Cli(argv) {
       .option('-d, --dry-run', 'invoke formatters without executing steps')
       .option('--fail-fast', 'abort the run on first failure')
       .option('-f, --format <TYPE[:PATH]>', 'specify the output format, optionally supply PATH to redirect formatter output (repeatable)', collect, ['pretty'])
+      .option('--name <REGEXP>', 'only execute the scenarios with name matching the expression (repeatable)', collect, [])
       .option('--no-colors', 'disable colors in formatter output')
       .option('--no-snippets', 'hide step definition snippets for pending steps')
       .option('--no-source', 'hide source uris')
@@ -56,6 +47,19 @@ function Cli(argv) {
     });
 
     return program;
+  }
+
+  function getConfiguration() {
+    var program = getProgram();
+    program.parse(argv);
+    var profileArgs = Cucumber.Cli.ProfilesLoader.getArgs(program.profile);
+    if (profileArgs.length > 0) {
+      var fullArgs = argv.slice(0, 2).concat(profileArgs).concat(argv.slice(2));
+      program = getProgram();
+      program.parse(fullArgs);
+    }
+    var configuration = Cucumber.Cli.Configuration(program.opts(), program.args);
+    return configuration;
   }
 
   var self = {
