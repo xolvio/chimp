@@ -3,6 +3,9 @@ var exit = require('exit');
 
 module.exports = function () {
   var screenshots = {};
+
+  this.setDefaultTimeout(60 * 1000);
+
   this.registerHandler('BeforeFeatures', function () {
     log.debug('[chimp][hooks] Starting BeforeFeatures');
     chimpHelper.setupBrowserAndDDP();
