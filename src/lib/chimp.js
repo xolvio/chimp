@@ -76,6 +76,7 @@ Chimp.prototype.init = function (callback) {
 
   try {
     this._initSimianResultBranch();
+    this._initSimianBuildNumber();
   } catch (error) {
     callback(error);
     return;
@@ -108,10 +109,26 @@ Chimp.prototype._initSimianResultBranch = function () {
         'You have not specified the branch that should be reported to Simian!' +
         ' Do this with the --simianResultBranch argument' +
         ' or the CI_BRANCH environment variable.'
-      )
+      );
     }
   }
-}
+};
+
+Chimp.prototype._initSimianBuildNumber = function _initSimianBuildNumber() {
+  // Automatically set the result branch for the common CI tools
+  if (this.options.simianAccessToken) {
+    if (process.env.CI_BUILD_NUMBER) {
+      // Codeship or custom
+      this.options.simianBuildNumber = process.env.CI_BUILD_NUMBER;
+    } else if (process.env.CIRCLE_BUILD_NUM) {
+      // CircleCI
+      this.options.simianBuildNumber = process.env.CIRCLE_BUILD_NUM;
+    } else if (process.env.TRAVIS_BUILD_NUMBER) {
+      // TravisCI
+      this.options.simianBuildNumber = process.env.TRAVIS_BUILD_NUMBER;
+    }
+  }
+};
 
 /**
  * Decides which mode to run and kicks it off
