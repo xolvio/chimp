@@ -45,7 +45,8 @@ describe('Simian reporter', function () {
       simianAccessToken: 'secretToken'
     });
 
-    spyOn(console, 'error');
+    const log = require('../lib/log');
+    spyOn(log, 'error');
 
     var callback = jest.genMockFunction();
     var result = [{id: 'Use-browser-inside-steps'}];
@@ -64,7 +65,7 @@ describe('Simian reporter', function () {
     };
     postCallback(null, response, body);
     expect(callback.mock.calls.length).toBe(1);
-    expect(console.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', 'invalid accessToken');
+    expect(log.error).toHaveBeenCalledWith('[chimp][simian-reporter] Error from Simian:', 'invalid accessToken');
   });
 
   it('shows the error to the user when a request error happens before reaching the Simian API', function() {
@@ -76,7 +77,8 @@ describe('Simian reporter', function () {
       simianAccessToken: 'secretToken'
     });
 
-    spyOn(console, 'error');
+    const log = require('../lib/log');
+    spyOn(log, 'error');
 
     var callback = jest.genMockFunction();
     var result = [{id: 'Use-browser-inside-steps'}];
@@ -91,7 +93,7 @@ describe('Simian reporter', function () {
     var body = null;
     postCallback(error, response, body);
     expect(callback.mock.calls.length).toBe(1);
-    expect(console.error).toHaveBeenCalledWith(
+    expect(log.error).toHaveBeenCalledWith(
       '[chimp][simian-reporter]', 'Error while sending result to Simian:', error
     );
   });
