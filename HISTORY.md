@@ -1,3 +1,8 @@
+# 0.27.0
+
+* Support for reporting multiple results for the same build to Simian.
+* Fixes getting JSON result from Cucumber (regression from 0.26.0).
+
 # 0.26.0
 
 * Updates Cucumber.js to 0.9.4 from 0.5.3
