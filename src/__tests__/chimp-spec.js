@@ -1,4 +1,5 @@
 jest.dontMock('../lib/chimp.js');
+jest.dontMock('../lib/boolean-helper');
 jest.dontMock('underscore');
 jest.dontMock('async');
 
