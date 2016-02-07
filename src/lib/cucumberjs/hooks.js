@@ -1,5 +1,6 @@
 const log = require('../log');
 const exit = require('exit');
+const _ = require('underscore');
 const booleanHelper = require('../boolean-helper');
 
 module.exports = function hooks() {
@@ -61,7 +62,7 @@ module.exports = function hooks() {
    * @param {Function} scenario
    */
   this.After((scenario) => { // eslint-disable-line new-cap
-    screenshots.forEach((element) => {
+    _.each(screenshots, (element) => {
       const decodedImage = new Buffer(element.png, 'base64').toString('binary');
       scenario.attach(decodedImage, 'image/png');
     });
