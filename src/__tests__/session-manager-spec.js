@@ -1,5 +1,6 @@
 jest.dontMock('underscore');
 jest.dontMock('../lib/session-manager');
+jest.dontMock('../lib/boolean-helper');
 
 //jest.dontMock('loglevel');
 //require('loglevel').setLevel('TRACE');

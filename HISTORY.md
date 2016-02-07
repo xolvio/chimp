@@ -1,3 +1,7 @@
+# Next
+
+* Adds custom config file option
+
 # 0.27.0
 
 * Support for reporting multiple results for the same build to Simian.

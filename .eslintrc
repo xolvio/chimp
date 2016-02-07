@@ -2,7 +2,11 @@
   "extends": "airbnb/base",
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "jasmine": true
+  },
+  "globals" : {
+    "jest": true
   },
   "rules": {
     "object-curly-spacing": 0,

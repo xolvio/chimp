@@ -1,19 +1,23 @@
-var log = require('../log');
-var exit = require('exit');
+const log = require('../log');
+const exit = require('exit');
+const _ = require('underscore');
+const booleanHelper = require('../boolean-helper');
 
-module.exports = function () {
-  var screenshots = {};
+module.exports = function hooks() {
+  const screenshots = {};
 
   this.setDefaultTimeout(60 * 1000);
 
-  this.registerHandler('BeforeFeatures', function () {
+  this.registerHandler('BeforeFeatures', () => {
     log.debug('[chimp][hooks] Starting BeforeFeatures');
-    chimpHelper.setupBrowserAndDDP();
-    chimpHelper.createGlobalAliases();
+    global.chimpHelper.setupBrowserAndDDP();
+    global.chimpHelper.createGlobalAliases();
     log.debug('[chimp][hooks] Finished BeforeFeatures');
+    // noinspection JSUnresolvedVariable
     if (global.UserDefinedBeforeFeatures) {
       log.debug('[chimp][hooks] User-defined BeforeFeatures found, calling');
-      global.UserDefinedBeforeFeatures();
+      // noinspection JSUnresolvedFunction
+      global.UserDefinedBeforeFeatures(); // eslint-disable-line new-cap
     } else {
       log.debug('[chimp][hooks] User-defined BeforeFeatures not found, finishing up');
     }
@@ -24,26 +28,30 @@ module.exports = function () {
    *
    * @param {Function} event
    */
-  var lastStep;
-  this.StepResult(function (event) {
-    var stepResult = event.getPayloadItem('stepResult');
+  let lastStep;
+  this.StepResult((event) => { // eslint-disable-line new-cap
+    const stepResult = event.getPayloadItem('stepResult');
     lastStep = stepResult.getStep();
-    if (process.env['chimp.captureAllStepScreenshots'] !== 'false' ||
-      (process.env['chimp.screenshotsOnError'] !== 'false' && !stepResult.isSuccessful())) {
+    if (!stepResult.isSuccessful() &&
+       (booleanHelper.isTruthy(process.env['chimp.captureAllStepScreenshots']) ||
+       booleanHelper.isTruthy(process.env['chimp.screenshotsOnError']))
+    ) {
       log.debug('[chimp][hooks] capturing screenshot');
-      if (process.env['chimp.attachScreenshotsToReport'] !== 'false') {
-        var screenshotId = lastStep.getUri() + ':' + lastStep.getLine();
+      if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToReport'])) {
+        const screenshotId = lastStep.getUri() + ':' + lastStep.getLine();
+        // noinspection JSUnresolvedFunction
         screenshots[screenshotId] = {
           keyword: lastStep.getKeyword(),
           name: lastStep.getName(),
           uri: lastStep.getUri(),
           line: lastStep.getLine(),
-          png: browser.screenshot().value
+          png: global.browser.screenshot().value,
         };
       }
-      if (process.env['chimp.saveScreenshots'] !== 'false') {
-        var affix = !stepResult.isSuccessful() ? ' (failed)' : '';
-        browser.captureSync(lastStep.getKeyword() + ' ' + lastStep.getName() + affix);
+      if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToDisk'])) {
+        const affix = !stepResult.isSuccessful() ? ' (failed)' : '';
+        // noinspection JSUnresolvedFunction
+        global.browser.captureSync(lastStep.getKeyword() + ' ' + lastStep.getName() + affix);
       }
     }
   });
@@ -53,11 +61,11 @@ module.exports = function () {
    *
    * @param {Function} scenario
    */
-  this.After(function (scenario) {
-    for (var i in screenshots) {
-      var decodedImage = new Buffer(screenshots[i].png, 'base64').toString('binary');
+  this.After((scenario) => { // eslint-disable-line new-cap
+    _.each(screenshots, (element) => {
+      const decodedImage = new Buffer(element.png, 'base64').toString('binary');
       scenario.attach(decodedImage, 'image/png');
-    }
+    });
   });
 
   /**
@@ -67,28 +75,28 @@ module.exports = function () {
    * @param {Function} event
    * @param {Function} callback
    */
-  this.registerHandler('AfterFeatures', function (event) {
+  this.registerHandler('AfterFeatures', () => {
     log.debug('[chimp][hooks] Starting AfterFeatures');
 
     if (process.env['chimp.browser'] !== 'phantomjs') {
       log.debug('[chimp][hooks] Ending browser session');
 
-      wrapAsync(global.sessionManager.killCurrentSession, global.sessionManager)();
+      global.wrapAsync(global.sessionManager.killCurrentSession, global.sessionManager)();
       log.debug('[chimp][hooks] Ended browser sessions');
     }
 
     log.debug('[chimp][hooks] Finished AfterFeatures');
   });
 
-  process.on('unhandledRejection', function (reason, promise) {
+  process.on('unhandledRejection', (reason, promise) => {
     log.error('[chimp] Detected an unhandledRejection.'.red);
 
     try {
       if (reason.type === 'CommandError' && reason.message === 'Promise never resolved with an truthy value') {
         reason.type += 'WebdriverIO CommandError (Promise never resolved with an truthy value)';
         reason.message = 'This usually happens when WebdriverIO assertions fail or timeout.';
-        var hint = 'HINT: Check the step AFTER [' + lastStep.getKeyword() + lastStep.getName() + ']';
-        var uri = lastStep.getUri();
+        let hint = 'HINT: Check the step AFTER [' + lastStep.getKeyword() + lastStep.getName() + ']';
+        let uri = lastStep.getUri();
         uri = uri.substring(process.cwd().length, uri.length);
         hint += ' (' + uri + ': >' + lastStep.getLine() + ')';
         log.error('[chimp][hooks] Reason:'.red);
@@ -114,17 +122,14 @@ module.exports = function () {
 
     process.send(JSON.stringify(reason));
     // Don't exit until the waitUntil uncaught promise bug is fixed in WebdriverIO
-    //exit(2);
+    // exit(2);
   });
 
-  process.on('SIGINT', function () {
+  process.on('SIGINT', () => {
     log.debug('[chimp][hooks] Received SIGINT process event, ending browser session');
-    global.browser.
-      endAsync().
-      then(function () {
-        log.debug('[chimp][hooks] ended browser session');
-        exit();
-      });
+    global.browser.endAsync().then(() => {
+      log.debug('[chimp][hooks] ended browser session');
+      exit();
+    });
   });
-
 };

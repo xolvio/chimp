@@ -1,56 +1,21 @@
 #!/usr/bin/env node
 
-var Chimp    = require('../lib/chimp.js'),
-    minimist = require('minimist'),
-    freeport = require('freeport'),
-    exit     = require('exit'),
-    log      = require('../lib/log'),
-    path     = require('path');
+var Chimp = require('../lib/chimp.js'),
+   minimist = require('minimist'),
+   freeport = require('freeport'),
+   exit = require('exit'),
+   log = require('../lib/log'),
+   fs = require('fs'),
+   _ = require('underscore'),
+   path = require('path'),
+   optionsLoader = require('../lib/options-loader');
 
 // Make babel plugins available to Cucumber
 process.env.NODE_PATH += ':' + path.resolve(__dirname, '../../node_modules');
 
 var argv = minimist(process.argv, {
-  'default': {
-    'browser': 'chrome',
-    'platform': 'ANY',
-    'name': '',
-    'debug': false,
-    'path': 'features',
-    'user': '',
-    'key': '',
-    'log': 'info',
-    'snippets': true,
-    'format': 'pretty',
-    'tags': '~@ignore',
-    'watchTags': '@dev,@watch,@focus',
-    'criticalTag': '@critical',
-    'criticalSteps': false,
-    'watchWithPolling': false,
-    'timeoutsAsyncScript': 10000,
-    'timeoutsImplicitWait': 3000,
-    'waitForTimeout': 10000,
-    'screenshotsOnError': false,
-    'screenshotsPath': '.',
-    'captureAllStepScreenshots': false,
-    'attachScreenshotsToReport': false,
-    'serverHost': 'localhost',
-    'server': false,
-    'noSessionReuse': false,
-    'simianResultEndPoint': 'api.simian.io/v1.0/result',
-    'simianAccessToken': false,
-    'simianResultBranch': null,
-    'simianRepositoryId': null,
-    'simianBuildNumber': null,
-    'sync': true,
-    'mochaTimeout': 60000,
-    'mochaReporter': 'spec',
-    'mochaSlow' : 10000,
-    'singleSnippetPerFile' : 0,
-    'recommendedFilenameSeparator': ' ',
-    'compiler': 'js:' + path.resolve(__dirname, '../lib/babel-register.js'),
-  },
-  'boolean': true
+  default: optionsLoader.getOptions(),
+  boolean: true
 });
 
 if (argv.host && (argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1)) {

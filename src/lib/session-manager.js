@@ -1,6 +1,7 @@
 var requestretry = require('requestretry'),
     request = require('request'),
-    log     = require('./log');
+    log     = require('./log'),
+    booleanHelper   = require('./boolean-helper');
 
 /**
  * SessionManager Constructor
@@ -12,17 +13,17 @@ function SessionManager (options) {
 
   log.debug('[chimp][session-manager] options are', options);
 
-  // if (!options) {
-  //   throw new Error('options is required');
-  // }
+   if (!options) {
+     throw new Error('options is required');
+   }
 
-  // if (!options.port) {
-  //   throw new Error('options.port is required');
-  // }
+   if (!options.port) {
+     throw new Error('options.port is required');
+   }
 
-  // if (!options.browser && !options.deviceName) {
-  //   throw new Error('[chimp][session-manager] options.browser or options.deviceName is required');
-  // }
+   if (!options.browser && !options.deviceName) {
+     throw new Error('[chimp][session-manager] options.browser or options.deviceName is required');
+   }
 
   this.options = options;
 
@@ -56,13 +57,13 @@ SessionManager.prototype.remote = function (webdriverOptions, callback) {
       return;
     }
 
-    if (process.env['chimp.noSessionReuse'] && process.env['chimp.noSessionReuse'] !== 'false') {
+    if (booleanHelper.isTruthy(process.env['chimp.noSessionReuse'])) {
       log.debug('[chimp][session-manager] noSessionReuse is true, not reusing a session');
       callback(null, browser);
       return;
     }
 
-    if (process.env['chimp.watch'] === 'false' && process.env['chimp.server'] === 'false') {
+    if (booleanHelper.isFalsey(process.env['chimp.watch']) && booleanHelper.isFalsey(process.env['chimp.server'])) {
       log.debug('[chimp][session-manager] watch mode is false, not reusing a session');
       callback(null, browser);
       return;

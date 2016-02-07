@@ -11,7 +11,8 @@ var async     = require('async'),
     fs        = require('fs'),
     Hapi      = require('hapi'),
     AutoupdateWatcher = require('./ddp-watcher'),
-    colors = require('colors');
+    colors = require('colors'),
+    booleanHelper = require('./boolean-helper');
 
 colors.enabled = true;
 var DEFAULT_COLOR = 'yellow';
@@ -89,15 +90,15 @@ Chimp.prototype._initSimianResultBranch = function () {
   if (this.options.simianAccessToken &&
     this.options.simianResultBranch === null
   ) {
-    if (process.env.CI_BRANCH) {
+    if (booleanHelper.isTruthy(process.env.CI_BRANCH)) {
       // Codeship or custom
       this.options.simianResultBranch = process.env.CI_BRANCH;
-    } else if (process.env.CIRCLE_BRANCH) {
+    } else if (booleanHelper.isTruthy(process.env.CIRCLE_BRANCH)) {
       // CircleCI
       this.options.simianResultBranch = process.env.CIRCLE_BRANCH;
-    } else if (process.env.TRAVIS_BRANCH) {
+    } else if (booleanHelper.isTruthy(process.env.TRAVIS_BRANCH)) {
       // TravisCI
-      if (process.env.TRAVIS_PULL_REQUEST === 'false') {
+      if (booleanHelper.isFalsey(process.env.TRAVIS_PULL_REQUEST)) {
         this.options.simianResultBranch = process.env.TRAVIS_BRANCH;
       } else {
         // Ignore the builds that simulate the pull request merge,
@@ -138,9 +139,9 @@ Chimp.prototype._initSimianBuildNumber = function _initSimianBuildNumber() {
  */
 Chimp.prototype.selectMode = function (callback) {
 
-  if (this.options.watch) {
+  if (booleanHelper.isTruthy(this.options.watch)) {
     this.watch();
-  } else if (this.options.server) {
+  } else if (booleanHelper.isTruthy(this.options.server)) {
     this.server();
   } else {
     this.run(callback);
@@ -168,11 +169,11 @@ Chimp.prototype.watch = function () {
   var self = this;
 
   // set cucumber tags to be watch based
-  if (!!self.options.watchTags) {
+  if (booleanHelper.isTruthy(self.options.watchTags)) {
     self.options.tags = self.options.watchTags;
   }
 
-  if (self.options.ddp) {
+  if (booleanHelper.isTruthy(self.options.ddp)) {
     var autoUpdateWatcher = new AutoupdateWatcher(self.options);
     autoUpdateWatcher.watch(function () {
       log.debug('[chimp] Meteor autoupdate detected');
@@ -243,7 +244,7 @@ Chimp.prototype._startServer = function (port) {
 
   log.info('[chimp] Chimp server is running on port', port, process.env['chimp.ddp']);
 
-  if (this.options.ddp) {
+  if (booleanHelper.isTruthy(this.options.ddp)) {
     this._handshakeOverDDP();
   }
 
@@ -489,13 +490,13 @@ Chimp.prototype._createProcesses = function () {
     processes.push(phantom);
   }
 
-  else if (!this.options.host) {
+  else if (booleanHelper.isFalsey(this.options.host)) {
     process.env['chimp.host'] = this.options.host = 'localhost';
     var selenium = new exports.Selenium(this.options);
     processes.push(selenium);
   }
 
-  if (this.options.mocha) {
+  if (booleanHelper.isTruthy(this.options.mocha)) {
     var mocha = new exports.Mocha(this.options);
     processes.push(mocha);
   } else {
@@ -503,7 +504,7 @@ Chimp.prototype._createProcesses = function () {
     processes.push(cucumber);
 
 
-    if (this.options.criticalSteps) {
+    if (booleanHelper.isTruthy(this.options.criticalSteps)) {
       var options = JSON.parse(JSON.stringify(this.options));
       options.tags = [options.tags, options.criticalTag];
       options.r = _.isArray(options.r) ? options.r : [options.r];

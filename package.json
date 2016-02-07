@@ -29,7 +29,8 @@
     "prepublish": ". ./scripts/prepublish.sh",
     "lint": "eslint ./src",
     "lintfix": "eslint ./src --fix",
-    "testonly": "node ./scripts/run-tests.js",
+    "start": "scripts/run.sh",
+    "testonly": "npm run-script prepublish && node ./scripts/run-tests.js",
     "test": "npm run lint && npm run testonly"
   },
   "main": "index.js",

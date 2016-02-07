@@ -2,6 +2,7 @@ var _              = require('underscore'),
     processHelper  = require('./process-helper.js'),
     selenium       = require('selenium-standalone'),
     SessionManager = require('./session-manager.js'),
+    booleanHelper   = require('./boolean-helper'),
     log            = require('./log');
 
 /**
@@ -16,11 +17,34 @@ function Selenium (options) {
     throw new Error('options is required');
   }
 
-  if (!options.port) {
+  if (booleanHelper.isFalsey(options.port)) {
     throw new Error('options.port is required');
   }
 
   this.options = _.clone(options);
+
+  this.seleniumStandaloneOptions = {
+    // check for more recent versions of selenium here:
+    // http://selenium-release.storage.googleapis.com/index.html
+    version: '2.50.1',
+    baseURL: 'http://selenium-release.storage.googleapis.com',
+    drivers: {
+      chrome: {
+        // check for more recent versions of chrome driver here:
+        // http://chromedriver.storage.googleapis.com/index.html
+        version: '2.20',
+        arch: process.arch,
+        baseURL: 'http://chromedriver.storage.googleapis.com'
+      },
+      ie: {
+        // check for more recent versions of internet explorer driver here:
+        // http://selenium-release.storage.googleapis.com/index.html
+        version: '2.50.0',
+        arch: process.arch,
+        baseURL: 'http://selenium-release.storage.googleapis.com'
+      }
+    }
+  };
 
   if (!this.options['clean-selenium-server']) {
     // poor-man's singleton is enough for our needs
@@ -51,34 +75,15 @@ Selenium.prototype.install = function (callback) {
   // XXX we need to check if the current versions are already installed before going to the web
 
   if (this.options.offline) {
+    log.debug('[chimp][selenium]', 'Offline mode enabled, Chimp will not attempt to install Selenium & Drivers');
     callback();
     return;
   }
 
   log.debug('[chimp][selenium]', 'Installing Selenium + drivers if needed');
-  selenium.install({
-    // check for more recent versions of selenium here:
-    // http://selenium-release.storage.googleapis.com/index.html
-    version: '2.50.1',
-    baseURL: 'http://selenium-release.storage.googleapis.com',
-    drivers: {
-      chrome: {
-        // check for more recent versions of chrome driver here:
-        // http://chromedriver.storage.googleapis.com/index.html
-        version: '2.20',
-        arch: process.arch,
-        baseURL: 'http://chromedriver.storage.googleapis.com'
-      },
-      ie: {
-        // check for more recent versions of internet explorer driver here:
-        // http://selenium-release.storage.googleapis.com/index.html
-        version: '2.50.0',
-        arch: process.arch,
-        baseURL: 'http://selenium-release.storage.googleapis.com'
-      }
-    },
-    progressCb: progressCb
-  }, callback);
+
+  this.seleniumStandaloneOptions.progressCb = progressCb;
+  selenium.install(this.seleniumStandaloneOptions, callback);
 
   function progressCb (total, progress, chunk) {
     if (firstProgress) {
@@ -124,23 +129,19 @@ Selenium.prototype.start = function (callback) {
       return;
     }
 
-    var seleniumOptions = {
-      seleniumArgs: [
-        '-port', port
-      ]
-    };
+    self.seleniumStandaloneOptions.seleniumArgs = ['-port', port];
 
     if (process.env['chimp.log'] === 'verbose' || process.env['chimp.log'] === 'debug') {
       self.options.seleniumDebug = true;
     }
 
     if (self.options.seleniumDebug) {
-      seleniumOptions.seleniumArgs.push('-debug');
+      self.seleniumStandaloneOptions.seleniumArgs.push('-debug');
     }
 
     log.debug('\n[chimp][selenium] hub can be seen at http://localhost:' + port + '/wd/hub');
 
-    selenium.start(seleniumOptions, function (error, seleniumChild) {
+    selenium.start(self.seleniumStandaloneOptions, function (error, seleniumChild) {
 
       self.child = seleniumChild;
 

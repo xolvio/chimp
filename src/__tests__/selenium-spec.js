@@ -1,4 +1,5 @@
 jest.dontMock('../lib/selenium');
+jest.dontMock('../lib/boolean-helper');
 jest.dontMock('underscore');
 
 describe('Selenium', function () {
