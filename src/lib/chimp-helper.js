@@ -12,11 +12,12 @@ var chai            = require('chai'),
     path            = require('path'),
     colors          = require('colors'),
     fs              = require('fs-extra'),
-    exit            = require('exit');
+    exit            = require('exit'),
+    booleanHelper   = require('./boolean-helper');
 
 var chimpHelper = {
   loadAssertionLibrary: function () {
-    if (!!process.env['chimp.chai'] && process.env['chimp.chai'] !== 'false') {
+    if (booleanHelper.isTruthy(process.env['chimp.chai'])) {
       log.debug('[chimp][helper] Using the chai-expect assertion library');
       chai.use(chaiAsPromised);
       chai.should();
@@ -37,13 +38,13 @@ var chimpHelper = {
     // give users access the request module
     global.request = request;
     _.extend(global, wrapAsyncObject(global, ['request'], {
-      syncByDefault: process.env['chimp.sync'] !== 'false'
+      syncByDefault: booleanHelper.isTruthy(process.env['chimp.sync'])
     }));
 
     // Give the user access to Promise functions. E.g. Promise.all.
     global.Promise = Promise;
 
-    if (process.env['chimp.ddp'] && process.env['chimp.ddp'] !== 'false') {
+    if (booleanHelper.isTruthy(process.env['chimp.ddp'])) {
       global.ddp = new DDP().connect();
     }
   },
@@ -62,14 +63,12 @@ var chimpHelper = {
 
   setupBrowserAndDDP: function () {
 
-    var self = this;
-
     var setupBrowser = function () {
       log.debug('[chimp][helper] getting browser');
       var customChimpConfigPath = path.resolve(process.cwd(), process.env['chimp.path'], 'chimp.js');
 
       var _translateLogLevel = function () {
-        if (!!process.env['chimp.webdriverLogLevel'] && process.env['chimp.webdriverLogLevel'] !== 'false') {
+        if (booleanHelper.isTruthy(process.env['chimp.webdriverLogLevel'])) {
           return process.env['chimp.webdriverLogLevel'];
         } else if (process.env['chimp.log'] === 'info' ||
           process.env['chimp.log'] === 'warn' ||
@@ -109,20 +108,20 @@ var chimpHelper = {
           port: process.env['chimp.port'],
           logLevel: _translateLogLevel(),
           screenshotPath: process.env['chimp.screenshotPath'],
-          sync: process.env['chimp.sync'] !== 'false'
+          sync: booleanHelper.isTruthy(process.env['chimp.sync'])
         };
 
         webdriverOptions.desiredCapabilities.chromeOptions = webdriverOptions.desiredCapabilities.chromeOptions || {};
-        if (process.env['chimp.chromeBin'] && process.env['chimp.chromeBin'] !== 'false') {
+        if (booleanHelper.isTruthy(process.env['chimp.chromeBin'])) {
           webdriverOptions.desiredCapabilities.chromeOptions.binary = process.env['chimp.chromeBin'];
         }
-        if (process.env['chimp.chromeArgs'] && process.env['chimp.chromeArgs'] !== 'false') {
+        if (booleanHelper.isTruthy(process.env['chimp.chromeArgs'])) {
           webdriverOptions.desiredCapabilities.chromeOptions.args = process.env['chimp.chromeArgs'].split(',');
-        } else if (process.env['chimp.chromeNoSandbox'] && process.env['chimp.chromeNoSandbox'] !== 'false') {
+        } else if (booleanHelper.isTruthy(process.env['chimp.chromeNoSandbox'])) {
           webdriverOptions.desiredCapabilities.chromeOptions.args = ['no-sandbox'];
         }
 
-        if (process.env['chimp.baseUrl'] && process.env['chimp.baseUrl'] !== 'false') {
+        if (booleanHelper.isTruthy(process.env['chimp.baseUrl'])) {
           webdriverOptions.baseUrl = process.env['chimp.baseUrl']
         }
         if (process.env['chimp.watch']) {

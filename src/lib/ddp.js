@@ -1,6 +1,7 @@
 var log       = require('./log'),
     URL       = require('url'),
     DDPClient = require('xolvio-ddp'),
+    booleanHelper   = require('./boolean-helper'),
     wrapAsyncObject = require('xolvio-sync-webdriverio').wrapAsyncObject;
 
 /**
@@ -20,7 +21,7 @@ DDP.prototype.connect = function () {
   return wrapAsyncObject(
     new DDPClient(options),
     ['connect', 'call', 'apply', 'callWithRandomSeed', 'subscribe'],
-    {syncByDefault: process.env['chimp.sync'] !== 'false'}
+    {syncByDefault: booleanHelper.isTruthy(process.env['chimp.sync'])}
   );
 };
 
