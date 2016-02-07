@@ -13,17 +13,17 @@ function SessionManager (options) {
 
   log.debug('[chimp][session-manager] options are', options);
 
-  // if (!options) {
-  //   throw new Error('options is required');
-  // }
+   if (!options) {
+     throw new Error('options is required');
+   }
 
-  // if (!options.port) {
-  //   throw new Error('options.port is required');
-  // }
+   if (!options.port) {
+     throw new Error('options.port is required');
+   }
 
-  // if (!options.browser && !options.deviceName) {
-  //   throw new Error('[chimp][session-manager] options.browser or options.deviceName is required');
-  // }
+   if (!options.browser && !options.deviceName) {
+     throw new Error('[chimp][session-manager] options.browser or options.deviceName is required');
+   }
 
   this.options = options;
 
