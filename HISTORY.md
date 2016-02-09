@@ -1,6 +1,7 @@
-# Next
+# 0.28.0
 
 * Adds custom config file option
+* Fixes missing global pending callback 
 
 # 0.27.0
 

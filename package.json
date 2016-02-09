@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "description": "Develop acceptance tests & end-to-end tests with realtime feedback.",
   "keywords": [
     "simian",
@@ -67,7 +67,7 @@
     "chokidar": "~1.0.6",
     "colors": "1.1.2",
     "commander": "^2.9.0",
-    "cucumber": "xolvio/cucumber-js#v0.9.4-chimp",
+    "cucumber": "xolvio/cucumber-js#v0.9.4-chimp.1",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",
