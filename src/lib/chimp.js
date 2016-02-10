@@ -500,19 +500,37 @@ Chimp.prototype._createProcesses = function () {
     var mocha = new exports.Mocha(this.options);
     processes.push(mocha);
   } else {
-    var cucumber = new exports.Cucumber(this.options);
-    processes.push(cucumber);
-
-
     if (booleanHelper.isTruthy(this.options.criticalSteps)) {
-      var options = JSON.parse(JSON.stringify(this.options));
+      // domain scenarios
+      if (booleanHelper.isTruthy(this.options.domainSteps)) {
+        const options = JSON.parse(JSON.stringify(this.options));
+        if (options.r) {
+          options.r = _.isArray(options.r) ? options.r : [options.r];
+        } else {
+          options.r = [];
+        }
+        const message = '\n[chimp] domain scenarios...';
+        options.r.push(options.domainSteps);
+        processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+        processes.push(new exports.Cucumber(options));
+        processes.push(new exports.Consoler(''));
+      }
+      // critical scenarios
+      const options = JSON.parse(JSON.stringify(this.options));
+      if (options.r) {
+        options.r = _.isArray(options.r) ? options.r : [options.r];
+      } else {
+        options.r = [];
+      }
       options.tags = [options.tags, options.criticalTag];
-      options.r = _.isArray(options.r) ? options.r : [options.r];
+      const message = '\n[chimp] critical scenarios...';
       options.r.push(options.criticalSteps);
-      var message = '\n[chimp] Running ' + options.criticalTag + ' scenarios...';
       processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
       processes.push(new exports.Cucumber(options));
       processes.push(new exports.Consoler(''));
+    } else {
+      const cucumber = new exports.Cucumber(this.options);
+      processes.push(cucumber);
     }
 
   }

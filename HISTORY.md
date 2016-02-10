@@ -1,3 +1,7 @@
+# 0.28.1
+
+* Adds `--domainSteps` for critical steps mode
+
 # 0.28.0
 
 * Adds custom config file option
