@@ -223,7 +223,9 @@ var chimpHelper = {
     try {
       setupBrowser();
       initBrowser();
-      setupDdp();
+      if (booleanHelper.isTruthy(process.env['chimp.ddp'])) {
+        setupDdp();
+      }
       configureChimpWidgetsDriver();
     } catch (error) {
       log.error('[chimp][helper] setupBrowserAndDDP had error');
