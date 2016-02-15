@@ -6,7 +6,8 @@
     "jasmine": true
   },
   "globals" : {
-    "jest": true
+    "jest": true,
+    "browser": true
   },
   "rules": {
     "object-curly-spacing": 0,
