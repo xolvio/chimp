@@ -1,3 +1,5 @@
+require('../babel-register');
+
 var Mocha = require('mocha'),
     fs    = require('fs'),
     path  = require('path'),
