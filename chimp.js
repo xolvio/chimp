@@ -2,7 +2,7 @@ module.exports = {
   // - - - - CHIMP - - - -
   watch: false,
   watchTags: '@focus',
-  offline: true,
+  offline: false,
 
   // - - - - CUCUMBER - - - -
   path: './features',
