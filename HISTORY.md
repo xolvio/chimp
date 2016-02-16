@@ -1,3 +1,7 @@
+# 0.29.0
+
+* ES2015 support for Mocha tests
+
 # 0.28.2
 
 * Fixes watchTags and DDP errors in Mocha
