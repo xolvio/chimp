@@ -1,8 +1,9 @@
-module.exports = {
-  isTruthy(variable) {
-    return variable && variable !== 'false' && variable !== '';
-  },
-  isFalsey(variable) {
-    return !variable || variable === 'false' || variable === '';
-  },
-};
+module.exports = {isFalsey, isTruthy};
+
+function isFalsey(variable) {
+  return !variable || variable === 'false' || variable === 'null' || variable === '';
+}
+
+function isTruthy(variable) {
+  return !isFalsey(variable);
+}
