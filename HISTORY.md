@@ -1,3 +1,9 @@
+# 0.30.0
+
+* Fixes ES2015 support when using NPM 3 (Node.js 5)
+* Fixes ES2015 support when using Windows
+* Support for passing arguments without an equal sign
+
 # 0.29.0
 
 * ES2015 support for Mocha tests
