@@ -8,14 +8,14 @@ module.exports = {
     let userOptionsFile;
     const processArgv = this._getProcessArgv();
     if (processArgv[2] && processArgv[2].match(/.*chimp.*\.js$/)) {
-      userOptionsFile = path.resolve(process.env.PWD, processArgv[2]);
+      userOptionsFile = path.resolve(process.cwd(), processArgv[2]);
       processArgv.splice(2, 1);
       if (!fs.existsSync(userOptionsFile)) {
         log.error(('[chimp] Could not find ' + processArgv[2]).red);
         this._exit(1);
       }
     } else {
-      userOptionsFile = path.resolve(process.env.PWD, 'chimp.js');
+      userOptionsFile = path.resolve(process.cwd(), 'chimp.js');
     }
 
     let userOptions = {};

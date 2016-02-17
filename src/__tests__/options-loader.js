@@ -8,7 +8,7 @@ describe('Options Loader', () => {
     const fs = require('fs');
 
     beforeEach(() => {
-      process.env.PWD = '/myFolder';
+      spyOn(process, 'cwd').and.returnValue('/myFolder');
       optionsLoader._exit = jest.genMockFn();
       optionsLoader._requireFile = jest.genMockFn();
     });

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 require('shelljs/global');
+var exec = require('./lib/exec');
 
 var nodeIndex = parseInt(env.CIRCLE_NODE_INDEX, 10);
 var isCI = !isNaN(nodeIndex);
@@ -20,9 +21,10 @@ if (isCI) {
   unitTestsCommand += ' --maxWorkers 4';
 }
 run(0, 'Running Chimp Unit tests', unitTestsCommand);
-run(0, 'Running Chimp Mocha specs in Chrome', './bin/chimp.js --mocha --path=tests');
-run(1, 'Running Chimp Cucumber specs in Chrome', './bin/chimp.js --tags=~@cli');
-run(2, 'Running Chimp Cucumber specs in Firefox', './bin/chimp.js --browser=firefox --tags=~@cli');
+run(0, 'Running Chimp Mocha specs in Chrome', 'node ./bin/chimp.js --mocha --path=tests');
+run(1, 'Running Chimp Cucumber specs in Chrome', 'node ./bin/chimp.js --tags=~@cli');
+run(2, 'Running Chimp Cucumber specs in Firefox',
+  'node ./bin/chimp.js --browser=firefox --tags=~@cli');
 run(3, 'Running Chimp Cucumber specs in Phantom',
-  './bin/chimp.js --browser=phantomjs --tags=~@cli'
+  'node ./bin/chimp.js --browser=phantomjs --tags=~@cli'
 );
