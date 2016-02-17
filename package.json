@@ -26,10 +26,10 @@
     "url": "https://github.com/xolvio/chimp/issues"
   },
   "scripts": {
-    "prepublish": ". ./scripts/prepublish.sh",
+    "prepublish": "node ./scripts/prepublish.js",
     "lint": "eslint ./src",
     "lintfix": "eslint ./src --fix",
-    "start": "scripts/run.sh",
+    "start": "node ./scripts/run.js",
     "testonly": "npm run-script prepublish && node ./scripts/run-tests.js",
     "test": "npm run lint && npm run testonly"
   },
@@ -95,6 +95,6 @@
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-babel": "^3.0.0",
     "jest-cli": "Sanjo/jest#7c71094",
-    "shelljs": "^0.5.3"
+    "shelljs": "^0.6.0"
   }
 }
