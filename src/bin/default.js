@@ -5,7 +5,7 @@ module.exports = {
   watch: false,
   watchTags: '@dev,@watch,@focus',
   watchWithPolling: false,
-  criticalSteps: false,
+  criticalSteps: null,
   criticalTag: '@critical',
   server: false,
   serverPort: 8060,
@@ -15,21 +15,17 @@ module.exports = {
 
   // - - - - CUCUMBER - - - -
   path: './features',
-  snippets: true,
   format: 'pretty',
   tags: '~@ignore',
   singleSnippetPerFile: true,
   recommendedFilenameSeparator: '_',
   chai: false,
-  progress: false,
-  strict: false,
-  coffee: false,
   screenshotsOnError: false,
   screenshotsPath: '.screenshots',
   captureAllStepScreenshots: true,
   saveScreenshotsToDisk: false,
   saveScreenshotsToReport: true,
-  jsonOutput: false,
+  jsonOutput: null,
   compiler: 'js:' + path.resolve(__dirname, '../lib/babel-register.js'),
 
   // - - - - SELENIUM  - - - -
@@ -38,23 +34,23 @@ module.exports = {
   name: '',
   user: '',
   key: '',
-  port: false,
-  host: false,
-  deviceName: false,
+  port: null,
+  host: null,
+  deviceName: null,
 
   // - - - - WEBDRIVER-IO  - - - -
-  baseUrl: false,
+  baseUrl: null,
   timeoutsAsyncScript: 10000,
   timeoutsImplicitWait: 3000,
   waitForTimeout: 10000,
-  chromeBin: false,
-  chromeArgs: false,
+  chromeBin: null,
+  chromeArgs: null,
   chromeNoSandbox: false,
 
   // - - - - SESSION-MANAGER  - - - -
   noSessionReuse: false,
   browserstackLocal: false,
-  tunnelIdentifier: false,
+  tunnelIdentifier: null,
 
   // - - - - SIMIAN  - - - -
   simianResultEndPoint: 'api.simian.io/v1.0/result',
@@ -79,10 +75,10 @@ module.exports = {
   // - - - - DEBUGGING  - - - -
   log: 'info',
   debug: false,
-  seleniumDebug: false,
-  webdriverLogLevel: false,
-  debugCucumber: false,
-  debugBrkCucumber: false,
-  debugMocha: false,
-  debugBrkMocha: false,
+  seleniumDebug: null,
+  webdriverLogLevel: null,
+  debugCucumber: null,
+  debugBrkCucumber: null,
+  debugMocha: null,
+  debugBrkMocha: null,
 };

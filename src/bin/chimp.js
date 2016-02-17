@@ -16,7 +16,41 @@ process.env.NODE_PATH += ':' + path.resolve(__dirname, '../../node_modules') +
 
 var argv = minimist(process.argv, {
   default: optionsLoader.getOptions(),
-  boolean: true
+  boolean: [
+    // - - - - CHIMP - - - -
+    'watch',
+    'watchWithPolling',
+    'server',
+    'sync',
+    'offline',
+
+    // - - - - CUCUMBER - - - -
+    'singleSnippetPerFile',
+    'chai',
+    'screenshotsOnError',
+    'captureAllStepScreenshots',
+    'saveScreenshotsToDisk',
+    'saveScreenshotsToReport',
+
+    // - - - - SELENIUM  - - - -
+
+    // - - - - WEBDRIVER-IO  - - - -
+    'chromeNoSandbox',
+
+    // - - - - SESSION-MANAGER  - - - -
+    'noSessionReuse',
+    'browserstackLocal',
+
+    // - - - - SIMIAN  - - - -
+
+    // - - - - MOCHA  - - - -
+    'mocha',
+
+    // - - - - METEOR  - - - -
+
+    // - - - - DEBUGGING  - - - -
+    'debug',
+  ],
 });
 
 if (argv.host && (argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1)) {
