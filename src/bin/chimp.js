@@ -11,8 +11,8 @@ var Chimp = require('../lib/chimp.js'),
    optionsLoader = require('../lib/options-loader');
 
 // Make babel plugins available to Cucumber and Mocha child processes
-process.env.NODE_PATH += ':' + path.resolve(__dirname, '../../node_modules') +
-   ':' + path.resolve(__dirname, '../../../../node_modules');
+process.env.NODE_PATH += path.delimiter + path.resolve(__dirname, '../../node_modules') +
+  path.delimiter + path.resolve(__dirname, '../../../../node_modules');
 
 var argv = minimist(process.argv, {
   default: optionsLoader.getOptions(),
