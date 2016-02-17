@@ -1,3 +1,11 @@
+# 0.29.0
+
+* ES2015 support for Mocha tests
+
+# 0.28.2
+
+* Fixes watchTags and DDP errors in Mocha
+
 # 0.28.1
 
 * Adds `--domainSteps` for critical steps mode

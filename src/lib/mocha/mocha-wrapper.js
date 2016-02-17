@@ -1,9 +1,12 @@
+require('../babel-register');
+
 var Mocha = require('mocha'),
     fs    = require('fs'),
     path  = require('path'),
     exit  = require('exit'),
     glob  = require('glob'),
-    ui    = require('./mocha-fiberized-ui');
+    ui    = require('./mocha-fiberized-ui'),
+    booleanHelper = require('../boolean-helper');
 
 var mochaOptions = {
   ui: 'fiberized-bdd-ui',
@@ -12,7 +15,7 @@ var mochaOptions = {
   reporter: process.env['chimp.mochaReporter']
 };
 
-if (process.env['chimp.watch']) {
+if (booleanHelper.isTruthy(process.env['chimp.watch'])) {
   mochaOptions.grep = new RegExp(process.env['chimp.watchTags'].replace(/,/g, '|'));
 }
 
