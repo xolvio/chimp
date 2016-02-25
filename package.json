@@ -63,7 +63,7 @@
     "request": "2.62.0",
     "requestretry": "1.5.0",
     "saucelabs": "~0.1.1",
-    "selenium-standalone": "4.7.1",
+    "selenium-standalone": "~4.9.0",
     "underscore": "~1.8.3",
     "xolvio-sync-webdriverio": "git://github.com/lgandecki/sync-webdriverio.git#multidriver", 
     "xolvio-jasmine-expect": "^1.0.0"
