@@ -139,11 +139,10 @@ var chimpHelper = {
         webdriverOptions.desiredCapabilities['tunnelIdentifier'] = process.env['chimp.tunnelIdentifier'];
         webdriverOptions.desiredCapabilities['browserstack.local'] = process.env['chimp.browserstackLocal'];
 
-        log.debug('[chimp][helper] webdriverOptions are ', (0, _stringify2.default)(webdriverOptions));
-
         if (process.env['CUCUMBER_BROWSERS']) {
           var options = _.clone(webdriverOptions);
           options.multiBrowser = true;
+	  webdriverOptions = {};
           var _browsersTotal = parseInt(process.env['CUCUMBER_BROWSERS']);
           for (var _browserIndex = 0; _browserIndex < _browsersTotal; _browserIndex++) {
             webdriverOptions['browser' + _browserIndex] = _.clone(options);
@@ -152,6 +151,7 @@ var chimpHelper = {
         } else {
           remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
         }
+	log.debug('[chimp][helper] webdriverOptions are ', (0, _stringify2.default)(webdriverOptions));
         global.browser = remoteSession(webdriverOptions);
       }
 
