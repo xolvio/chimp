@@ -191,9 +191,9 @@ var chimpHelper = {
       //browser.initSync();
       log.debug('[chimp][hooks] init browser callback');
 
-      if (browser.browsers) {
-        browser.browsers.forEach(function (singleBrowser) {
-          singleBrowser.initSync();
+      if (browser.instances) {
+        browser.instances.forEach(function (singleBrowser) {
+          //singleBrowser.initSync();
           initSingleBrowser(singleBrowser);
         });
       } else {
