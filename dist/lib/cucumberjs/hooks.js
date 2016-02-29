@@ -133,7 +133,6 @@ module.exports = function hooks() {
   });
 
   process.on('SIGINT', function () {
-    //TODO TheBrain here is how you end the session?
     log.debug('[chimp][hooks] Received SIGINT process event, ending browser session');
     global.browser.endAsync().then(function () {
       log.debug('[chimp][hooks] ended browser session');
