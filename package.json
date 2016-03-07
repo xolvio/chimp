@@ -33,7 +33,7 @@
     "testonly": "npm run-script prepublish && node ./scripts/run-tests.js",
     "test": "npm run lint && npm run testonly"
   },
-  "main": "index.js",
+  "main": "dist/lib/chimp.js",
   "bin": {
     "chimp": "./bin/chimp.js"
   },
