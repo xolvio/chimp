@@ -1,3 +1,104 @@
+# 0.30.0
+
+* Fixes ES2015 support when using NPM 3 (Node.js 5)
+* Fixes ES2015 support when using Windows
+* Support for passing arguments without an equal sign
+
+# 0.29.0
+
+* ES2015 support for Mocha tests
+
+# 0.28.2
+
+* Fixes watchTags and DDP errors in Mocha
+
+# 0.28.1
+
+* Adds `--domainSteps` for critical steps mode
+
+# 0.28.0
+
+* Adds custom config file option
+* Fixes missing global pending callback 
+
+# 0.27.0
+
+* Support for reporting multiple results for the same build to Simian.
+* Fixes getting JSON result from Cucumber (regression from 0.26.0).
+
+# 0.26.0
+
+* Updates Cucumber.js to 0.9.4 from 0.5.3
+* ES2015 support for Cucumber step definitions
+* Fixes and updates selenium-standalone and IE driver
+* Fixes synchronous execution of custom WebDriver.io commands
+* Fixes `this` context in custom WebDriver.io commands and waitUntil conditions
+  to be the synchronous WebDriver.io remote (the same as global.browser)
+
+# 0.25.1
+
+* Fixes BrowserStack local testing
+
+# 0.25.0
+
+* Addition of SessionFactory and BrowserStack and SauceLabs session managers (Derek Hamilton)
+* Changed chimp helper to configure the widget driver after loading the browser (Lewis Wright)
+* Adds the Tunnel Identifier (Sam Hatoum)
+
+# 0.24.1
+
+* Improves `singleSnippetPerFile` mode tet
+
+# 0.24.0
+
+* Removes automatic npm install
+* Adds `singleSnippetPerFile` mode
+
+# 0.23.0
+
+* Sets an implicit wait of 3 seconds
+* Adds support for critical runs
+
+# 0.22.3
+
+* Option `--simianRepositoryId` for passing repositoryId to Simian (#210)
+
+# 0.22.2
+
+* Fixes multiple -r / --require options
+* Fixes a spec dependency problem
+* Increases Mocha slow timer to 10s for e2e tests
+* Removes xolvio:cucumber (RIP)
+* Updates npm request
+* Fixes the loading order from --path
+
+# 0.22.1
+
+* Fixes `client.debug()` not continuing when pressing ENTER
+
+# 0.22.0
+
+* Adds Meteor hot-code-push listener to the watcher so Chimp reruns after Meteor reloads 
+* Deprecates the xolvio:cucumber package in favor of Chimp
+* Improves caching on circle
+
+# 0.21.0
+
+* Adds server.execute() for executing code on the Meteor server
+* Upgrades selenium, chrome-driver and IEDriver (#185)
+* Fixes issue with path ((#143)
+* Fixes server.call method for the case when the first param is a falsy value
+* Report the branch to the Simian result API
+
+# 0.20.2
+
+* Adds color to Mocha console report
+* Improves failure chimp logs
+
+# 0.20.1
+
+* Fixes missing self reference issue
+
 # 0.20.0
 
 * Adds support for Mocha e2e testing (instead of Cucumber)

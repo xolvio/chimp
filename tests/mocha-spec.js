@@ -1,9 +1,23 @@
-describe('Chimp Mocha', function() {
-  describe('Page title', function () {
-    it('should be set by the Meteor method @watch', function () {
-      server.call('updateTitle', 'My Title');
-      browser.url(process.env.ROOT_URL);
-      expect(browser.getText('h1')).to.equal('My Title');
+describe('Chimp Mocha', () => {
+  describe('Page title', () => {
+    it('should be set by the Meteor method @watch', () => {
+      browser.url('http://google.com');
+    });
+  });
+
+  describe('ES2015', function () {
+    it('is supported', function () {
+      const {a, b} = {a: 'foo', b: 'bar'};
+      const arrowFunc = (foo) => foo;
+      class Foo {
+        constructor() {}
+        foo() {}
+      }
+      var object = {
+        foo() {}
+      };
+      const templateString = `Foo`;
+      const [c, ,d] = [1,2,3];
     });
   });
 });

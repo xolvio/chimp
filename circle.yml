@@ -2,7 +2,7 @@ machine:
   java:
     version: oraclejdk8
   node:
-    version: 0.10.40
+    version: 4.2.6
 
 general:
   branches:
@@ -10,45 +10,10 @@ general:
       - gh-pages
 
 dependencies:
-  cache_directories:
-    - "~/.npm"
-    - "~/_opt"
-    - "node_modules"
-    - "~/.meteor"
-
   override:
-    # -- CACHE CHROME --
-    # ...remove default ChromeDriver for safety
-    - sudo rm -rf /usr/local/bin/chromedriver*
-    # ...update to the latest chrome if the version is v38x (TODO need a better grep)
-    - sudo rm /tmp/update-chrome || true
-    - /opt/google/chrome/chrome --version | grep '38' &> /dev/null; if [ $? == 0 ]; then echo UPDATE_CHROME > /tmp/update-chrome; fi
-    # ...check if we already have a tarred version and untar that
-    - if [ -e /tmp/update-chrome ] && [ -e ~/_opt/google-chrome.tar ]; then sudo tar -xvf ~/_opt/google-chrome.tar -C /; fi
-    # ...otherwise download chrome and tar it
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get update; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get install google-chrome-stable; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then mkdir ~/_opt; tar -cvf ~/_opt/google-chrome.tar /opt/google/chrome/; fi
-
-    # Restore meteor symlink when Meteor was restored from the cache
-    - if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
-    # Download Meteor if isn't already installed via the cache
-    - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
-
-    # Install Velocity CLI
-    - npm install -g velocity-cli
-
-    # Cache npm deps
     - npm install
-
-    # Temporary workaround until Circle + Node 4.2.1 + Fibers play nicely together
-    - npm install jest-cli@0.4.18
-
-    # Cache Selenium & ChromeDriver
-    - ./node_modules/selenium-standalone/bin/selenium-standalone install
 
 test:
   override:
-    - npm test
+    - npm run testonly:
+        parallel: true

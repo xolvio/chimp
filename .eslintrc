@@ -1,0 +1,16 @@
+{
+  "extends": "airbnb/base",
+  "env": {
+    "node": true,
+    "es6": true,
+    "jasmine": true
+  },
+  "globals" : {
+    "jest": true,
+    "browser": true
+  },
+  "rules": {
+    "object-curly-spacing": 0,
+    "no-use-before-define": [2, "nofunc"]
+  }
+}
