@@ -115,7 +115,7 @@ chimp --browser=firefox --ddp=http://localhost:3000
 ## Get our Meteor Testing Book
 To learn more about testing with Meteor, consider purchasing our book [The Meteor Testing Manual](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp).
 
-[![](http://www.meteortesting.com/img/tmtm.gif)](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp)
+[![](https://www.meteortesting.com/img/tmtm.gif)](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp)
 
 Your support helps us continue our work on Chimp.
 
@@ -123,3 +123,5 @@ Your support helps us continue our work on Chimp.
  
 Check our our [WhirlWind](https://github.com/xolvio/whirlwind) package that can bring a build time down from hours to 
 minutes!
+
+![](https://ga-beacon.appspot.com/UA-61850278-5/readme?pixel)
