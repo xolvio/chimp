@@ -162,7 +162,9 @@ var chimpHelper = {
         log.debug('[chimp][helper] saved screenshot to', ssPath);
       });
 
-      browser.timeoutsAsyncScriptSync(parseInt(process.env['chimp.timeoutsAsyncScript']));
+      if (parseInt(process.env['chimp.timeoutsAsyncScript']) > 0) {
+        browser.timeoutsAsyncScriptSync(parseInt(process.env['chimp.timeoutsAsyncScript']));
+      }
       log.debug('[chimp][helper] set timeoutsAsyncScript');
 
       if (process.env['chimp.browser'] === 'phantomjs') {
