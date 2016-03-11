@@ -115,8 +115,6 @@ chimp --browser=firefox --ddp=http://localhost:3000
 ## Get our Meteor Testing Book
 To learn more about testing with Meteor, consider purchasing our book [The Meteor Testing Manual](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp).
 
-[![](https://www.meteortesting.com/img/tmtm-l.png)](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp)
-
 Your support helps us continue our work on Chimp.
 
 ## Need Faster Builds?
