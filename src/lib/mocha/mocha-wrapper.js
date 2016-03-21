@@ -23,17 +23,14 @@ var mocha = new Mocha(mochaOptions);
 
 mocha.addFile(path.join(path.resolve(__dirname, path.join('mocha-helper.js'))));
 
-var customMochaHelperPath = path.resolve(process.cwd(), process.env['chimp.path'], 'mocha-helper.js');
-
-if (fs.existsSync(customMochaHelperPath)) {
-  mocha.addFile(customMochaHelperPath);
-}
-
 // Add each .js file to the mocha instance
 var testDir = process.env['chimp.path'];
 glob.sync(path.join(testDir, '**')).filter(function (file) {
   // Only keep the .js files
   return file.substr(-3) === '.js';
+}).sort(function (file) {
+  // Include support files before anything elase
+  return file.includes('/support/') ? -1 : 0;
 }).forEach(function (file) {
   mocha.addFile(file);
 });
