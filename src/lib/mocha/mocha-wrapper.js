@@ -28,6 +28,9 @@ var testDir = process.env['chimp.path'];
 glob.sync(path.join(testDir, '**')).filter(function (file) {
   // Only keep the .js files
   return file.substr(-3) === '.js';
+}).sort(function (file) {
+  // Include support files before anything elase
+  return file.includes('/support/') ? -1 : 0;
 }).forEach(function (file) {
   mocha.addFile(file);
 });
