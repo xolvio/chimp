@@ -86,7 +86,7 @@
     "underscore": "~1.8.3",
     "xolvio-ddp": "^0.12.0",
     "xolvio-jasmine-expect": "^1.0.0",
-    "xolvio-sync-webdriverio": "^4.1.0"
+    "xolvio-sync-webdriverio": "^5.0.0-rc.1"
   },
   "devDependencies": {
     "babel-cli": "6.x.x",
