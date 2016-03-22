@@ -340,21 +340,22 @@ Chimp.prototype.run = function (callback) {
 
   var self = this;
 
-  async.series([self.interrupt.bind(self), self._startProcesses.bind(self), self.interrupt.bind(self)], function (err, res) {
+  async.series([self.interrupt.bind(self), self._startProcesses.bind(self), self.interrupt.bind(self)], function (error, result) {
 
-    if (err) {
-      log.debug('[chimp] run complete with errors', err);
+    if (error) {
+      log.debug('[chimp] run complete with errors', error);
     } else {
       log.debug('[chimp] run complete');
     }
 
     if (self.options.simianAccessToken && self.options.simianResultBranch !== false) {
+      var jsonCucumberResult = result && result[1] && result[1][1] ? JSON.parse(result[1][1]) : [];
       var simianReporter = new exports.SimianReporter(self.options);
-      simianReporter.report(res, function () {
-        callback(err, res);
+      simianReporter.report(jsonCucumberResult, function () {
+        callback(error, result);
       });
     } else {
-      callback(err, res);
+      callback(error, result);
     }
   });
 };

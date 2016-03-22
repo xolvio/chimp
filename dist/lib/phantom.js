@@ -1,6 +1,6 @@
 'use strict';
 
-var phantomjs = require('phantomjs-bin'),
+var phantomjs = require('phantomjs-prebuilt'),
     processHelper = require('./process-helper.js'),
     log = require('./log');
 

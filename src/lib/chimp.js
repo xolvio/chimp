@@ -352,12 +352,11 @@ Chimp.prototype.run = function (callback) {
     [
       self.interrupt.bind(self),
       self._startProcesses.bind(self),
-      self.interrupt.bind(self)
+      self.interrupt.bind(self),
     ],
-    function (err, res) {
-
-      if (err) {
-        log.debug('[chimp] run complete with errors', err);
+    function (error, result) {
+      if (error) {
+        log.debug('[chimp] run complete with errors', error);
       } else {
         log.debug('[chimp] run complete');
       }
@@ -365,12 +364,14 @@ Chimp.prototype.run = function (callback) {
       if (self.options.simianAccessToken &&
         self.options.simianResultBranch !== false
       ) {
-        var simianReporter = new exports.SimianReporter(self.options);
-        simianReporter.report(res, function () {
-          callback(err, res);
+        const jsonCucumberResult = result && result[1] && result[1][1] ?
+          JSON.parse(result[1][1]) : [];
+        const simianReporter = new exports.SimianReporter(self.options);
+        simianReporter.report(jsonCucumberResult, () => {
+          callback(error, result);
         });
       } else {
-        callback(err, res);
+        callback(error, result);
       }
     }
   );
