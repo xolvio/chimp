@@ -32,11 +32,18 @@ SimianReporter.prototype.report = function report(result, callback) {
     callback(result);
     return;
   }
+  
+  let parsed = result[1][1];
+  try {
+    parsed = JSON.parse(result[1][1]);
+  } catch(e) {
+    log.error('[chimp][simian-reporter]', 'not able to parse result');
+  }
 
   const data = {
     type: 'cucumber',
     branch: this.options.simianResultBranch,
-    result: JSON.parse(result[1][1]),
+    result: parsed,
   };
   if (this.options.simianBuildNumber) {
     data.buildNumber = parseInt(this.options.simianBuildNumber, 10);
