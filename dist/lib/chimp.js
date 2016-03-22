@@ -29,6 +29,7 @@ var DEFAULT_COLOR = 'yellow';
  * Internals
  */
 exports.Mocha = require('./mocha/mocha.js');
+exports.Jasmine = require('./jasmine/jasmine.js');
 exports.Cucumber = require('./cucumberjs/cucumber.js');
 exports.Phantom = require('./phantom.js');
 exports.Consoler = require('./consoler.js');
@@ -477,6 +478,9 @@ Chimp.prototype._createProcesses = function () {
   if (booleanHelper.isTruthy(this.options.mocha)) {
     var mocha = new exports.Mocha(this.options);
     processes.push(mocha);
+  } else if (booleanHelper.isTruthy(this.options.jasmine)) {
+    var jasmine = new exports.Jasmine(this.options);
+    processes.push(jasmine);
   } else {
     if (booleanHelper.isTruthy(this.options.criticalSteps)) {
       // domain scenarios

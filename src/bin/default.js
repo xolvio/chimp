@@ -65,6 +65,9 @@ module.exports = {
   mochaReporter: 'spec',
   mochaSlow: 10000,
 
+  // - - - - JASMINE  - - - -
+  jasmine: false,
+
   // - - - - METEOR  - - - -
   ddp: false,
 
