@@ -1,4 +1,4 @@
-var phantomjs     = require('phantomjs-prebuilt'),
+var phantomjs     = require('phantomjs-bin'),
     processHelper = require('./process-helper.js'),
     log           = require('./log');
 

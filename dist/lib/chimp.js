@@ -341,7 +341,6 @@ Chimp.prototype.run = function (callback) {
   var self = this;
 
   async.series([self.interrupt.bind(self), self._startProcesses.bind(self), self.interrupt.bind(self)], function (error, result) {
-
     if (error) {
       log.debug('[chimp] run complete with errors', error);
     } else {
