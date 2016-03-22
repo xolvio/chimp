@@ -1,3 +1,8 @@
+# 0.30.1
+
+* Better Appium support (195ad5a)
+* Fixes Simian reporting error when no specs were executed
+
 # 0.30.0
 
 * Fixes ES2015 support when using NPM 3 (Node.js 5)
