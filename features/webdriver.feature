@@ -12,4 +12,4 @@ Feature: Use browser inside steps
   @not-watch
   Scenario: Visit Github
     When  I visit "http://www.github.com"
-    Then  I see the title of "GitHub · Where software is built"
+    Then  I see the title of "How people build software · GitHub"
