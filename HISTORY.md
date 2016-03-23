@@ -21,6 +21,7 @@
       * that can be configured via the webdriverio API
         * [timeoutsAsyncScript](http://webdriver.io/api/protocol/timeoutsAsyncScript.html)
         * [timeoutsImplicitWait](http://webdriver.io/api/protocol/timeoutsImplicitWait.html)
+* Use ia32 architecture for Internet Explorer
 * Fix: Output cucumber hook errors to the console
 * Fix: Saving screenshots
 * Fix: Use https:// for downloading selenium drivers (fixes #291)

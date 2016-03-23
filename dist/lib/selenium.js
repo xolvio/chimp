@@ -48,7 +48,7 @@ function Selenium(options) {
         // check for more recent versions of internet explorer driver here:
         // http://selenium-release.storage.googleapis.com/index.html
         version: '2.50.0',
-        arch: process.arch,
+        arch: 'ia32',
         baseURL: 'https://selenium-release.storage.googleapis.com'
       }
     }
