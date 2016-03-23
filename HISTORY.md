@@ -1,3 +1,9 @@
+# 0.31.0
+
+* Updates Webdriver.io to 3.4.0
+* Fix: Output cucumber hook errors to the console
+* Fix: Saving screenshots
+
 # 0.30.1
 
 * Better Appium support (195ad5a)
