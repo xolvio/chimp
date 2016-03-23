@@ -1,6 +1,27 @@
 # 0.31.0
 
 * Updates Webdriver.io to 3.4.0
+* Support for all webdriverio options in config
+* __Breaking change__: Removed the feature
+  where you could do a custom initialization of webdriver via a chimp.js file.
+  Pass the webdriverio options via the config file instead.
+* __Breaking change__: Moved webdriverio specific options under the webdriverio config key.
+  All options that are documented (here)[http://webdriver.io/guide/getstarted/configuration.html] are supported.
+    * Moved options:
+      * baseUrl --> webdriverio.baseUrl
+      * waitForTimeout -> webdriverio.waitforTimeout
+      * webdriverLogLevel -> webdriverio.logLevel
+    * Removed options:
+      * that can be configured via desiredCapabilities now
+        * chromeBin
+        * chromeArgs
+        * chromeNoSandbox
+        * browserstackLocal
+        * tunnelIdentifier
+      * that can be configured via the webdriverio API
+        * [timeoutsAsyncScript](http://webdriver.io/api/protocol/timeoutsAsyncScript.html)
+        * [timeoutsImplicitWait](http://webdriver.io/api/protocol/timeoutsImplicitWait.html)
+      
 * Fix: Output cucumber hook errors to the console
 * Fix: Saving screenshots
 
