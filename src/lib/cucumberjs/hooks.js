@@ -89,7 +89,7 @@ module.exports = function hooks() {
   });
 
   process.on('unhandledRejection', (reason, promise) => {
-    log.error('[chimp] Detected an unhandledRejection.'.red);
+    log.error('[chimp] Detected an unhandledRejection:'.red);
 
     try {
       if (reason.type === 'CommandError' && reason.message === 'Promise never resolved with an truthy value') {
@@ -105,13 +105,7 @@ module.exports = function hooks() {
         log.error(hint.yellow);
         reason.message += '\n' + hint;
       } else {
-        log.error('[chimp][hooks] Reason:'.red);
-        if (reason.type) {
-          log.error('[chimp][hooks]'.red, reason.type.red);
-        }
-        if (reason.message) {
-          log.error('[chimp][hooks]'.red, reason.message.red);
-        }
+        log.error('[chimp][hooks]'.red, reason.stack);
       }
     } catch (e) {
       log.debug('[chimp][hooks] Could not provide error hint');
