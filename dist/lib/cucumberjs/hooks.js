@@ -36,7 +36,7 @@ module.exports = function hooks() {
    *
    * @param {Function} event
    */
-  var lastStep = undefined;
+  var lastStep = void 0;
   this.StepResult(function (event) {
     // eslint-disable-line new-cap
     var stepResult = event.getPayloadItem('stepResult');

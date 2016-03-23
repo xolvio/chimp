@@ -139,6 +139,7 @@ var chimpHelper = {
 		if (process.env['CUCUMBER_BROWSERS']) {
 			var options = _.clone(webdriverOptions);
 			options.multiBrowser = true;
+            webdriverOptions = {};
           	var _browsersTotal = parseInt(process.env['CUCUMBER_BROWSERS']);
           	for (var _browserIndex = 0; _browserIndex < _browsersTotal; _browserIndex++) {
             	webdriverOptions['browser' + _browserIndex] = _.clone(options);
@@ -185,12 +186,10 @@ var chimpHelper = {
     var initBrowser = function () {
       log.debug('[chimp][hooks] init browser');
       var browser = global.browser;
-      //browser.initSync();
       log.debug('[chimp][hooks] init browser callback');
 
-      if (browser.browsers) {
-        browser.browsers.forEach(function(singleBrowser) {
-          singleBrowser.initSync()
+      if (browser.instances) {
+        browser.instances.forEach(function(singleBrowser) {
           initSingleBrowser(singleBrowser)
         });
       }
