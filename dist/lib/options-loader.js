@@ -7,7 +7,7 @@ var log = require('./log');
 
 module.exports = {
   getOptions: function getOptions() {
-    var userOptionsFile = undefined;
+    var userOptionsFile = void 0;
     var processArgv = this._getProcessArgv();
     if (processArgv[2] && processArgv[2].match(/.*chimp.*\.js$/)) {
       userOptionsFile = path.resolve(process.cwd(), processArgv[2]);
