@@ -68,6 +68,7 @@
     "colors": "1.1.2",
     "commander": "^2.9.0",
     "cucumber": "xolvio/cucumber-js#v0.9.4-chimp.3",
+    "deepmerge": "^0.2.10",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",
