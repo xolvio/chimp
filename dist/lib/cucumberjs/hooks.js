@@ -31,17 +31,21 @@ module.exports = function hooks() {
       }
   });
 
+  function shouldTakeScreenshot(stepResult) {
+    return booleanHelper.isTruthy(process.env['chimp.captureAllStepScreenshots']) || stepResult.getStatus() !== 'passed' && booleanHelper.isTruthy(process.env['chimp.screenshotsOnError']);
+  }
+
   /**
    * Capture screenshots either for erroneous / all steps
    *
    * @param {Function} event
    */
-  var lastStep = undefined;
+  var lastStep = void 0;
   this.StepResult(function (event) {
     // eslint-disable-line new-cap
     var stepResult = event.getPayloadItem('stepResult');
     lastStep = stepResult.getStep();
-    if (!stepResult.isSuccessful() && (booleanHelper.isTruthy(process.env['chimp.captureAllStepScreenshots']) || booleanHelper.isTruthy(process.env['chimp.screenshotsOnError']))) {
+    if (shouldTakeScreenshot(stepResult)) {
       log.debug('[chimp][hooks] capturing screenshot');
       if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToReport'])) {
         var screenshotId = lastStep.getUri() + ':' + lastStep.getLine();
@@ -55,7 +59,7 @@ module.exports = function hooks() {
         };
       }
       if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToDisk'])) {
-        var affix = !stepResult.isSuccessful() ? ' (failed)' : '';
+        var affix = stepResult.getStatus() !== 'passed' ? ' (failed)' : '';
         // noinspection JSUnresolvedFunction
         global.browser.captureSync(lastStep.getKeyword() + ' ' + lastStep.getName() + affix);
       }
