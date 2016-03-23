@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const _ = require('underscore');
 const log = require('./log');
+import merge from 'deepmerge';
 
 module.exports = {
   getOptions() {
@@ -24,7 +24,7 @@ module.exports = {
       log.debug('[chimp] loaded', userOptionsFile);
     }
     const defaultOptions = this._requireFile(this._getDefaultConfigFilePath());
-    const options = _.defaults(userOptions, defaultOptions);
+    const options = merge(defaultOptions, userOptions);
     log.debug('[chimp] Chimp options are', options);
     return options;
   },
