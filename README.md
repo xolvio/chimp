@@ -145,4 +145,4 @@ Your support helps us continue our work on Chimp.
 Check our our [WhirlWind](https://github.com/xolvio/whirlwind) package that can bring a build time down from hours to 
 minutes!
 
-![](https://ga-beacon-xolvio.appspot.com/UA-61850278-5/chimp/readme?pixel)
+![Analytics](https://ga-beacon-xolvio.appspot.com/UA-61850278-5/chimp/readme?pixel)
