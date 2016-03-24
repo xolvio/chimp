@@ -93,7 +93,10 @@ SessionManager.prototype.remote = function (webdriverOptions, callback) {
 SessionManager.prototype._waitForConnection = function (browser, callback) {
   log.debug('[chimp][session-manager] checking connection to selenium server');
   var self = this;
-  browser.statusAsync(function (err) {
+  browser.statusAsync().then(function () {
+    log.debug('[chimp][session-manager] Connection to the to selenium server verified');
+    callback();
+  }, function (err) {
     if (err && /ECONNREFUSED/.test(err.message)) {
       if (++self.retry === self.maxRetries) {
         callback('[chimp][session-manager] timed out retrying to connect to selenium server');
