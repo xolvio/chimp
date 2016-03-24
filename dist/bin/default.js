@@ -42,7 +42,7 @@ module.exports = {
   key: '',
   port: null,
   host: null,
-  deviceName: null,
+  // deviceName: null,
 
   // - - - - WEBDRIVER-IO  - - - -
   webdriverio: {

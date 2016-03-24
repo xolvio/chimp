@@ -1,3 +1,8 @@
+# 0.31.1
+
+* Fixes default option value for deviceName.
+  So webdriverio no longer defaults to mobile mode.
+
 # 0.31.0
 
 * Updates Webdriver.io to 3.4.0
