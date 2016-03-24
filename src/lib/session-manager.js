@@ -95,20 +95,26 @@ SessionManager.prototype.remote = function (webdriverOptions, callback) {
 SessionManager.prototype._waitForConnection = function(browser, callback) {
   log.debug('[chimp][session-manager] checking connection to selenium server');
   var self = this;
-  browser.statusAsync(function (err) {
-    if (err && /ECONNREFUSED/.test(err.message)) {
-      if (++self.retry === self.maxRetries) {
-        callback('[chimp][session-manager] timed out retrying to connect to selenium server');
-      }
-      log.debug('[chimp][session-manager] could not connect to the server, retrying', '(' + self.retry + '/' + self.maxRetries + ')');
-      setTimeout(function() {
-        self._waitForConnection(browser, callback);
-      }, self.retryDelay);
-    } else {
+  browser.statusAsync().then(
+    () => {
       log.debug('[chimp][session-manager] Connection to the to selenium server verified');
       callback();
+    },
+    (err) => {
+      if (err && /ECONNREFUSED/.test(err.message)) {
+        if (++self.retry === self.maxRetries) {
+          callback('[chimp][session-manager] timed out retrying to connect to selenium server');
+        }
+        log.debug('[chimp][session-manager] could not connect to the server, retrying', '(' + self.retry + '/' + self.maxRetries + ')');
+        setTimeout(function() {
+          self._waitForConnection(browser, callback);
+        }, self.retryDelay);
+      } else {
+        log.debug('[chimp][session-manager] Connection to the to selenium server verified');
+        callback();
+      }
     }
-  });
+  );
 };
 
 
