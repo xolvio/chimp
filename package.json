@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.30.1",
+  "version": "0.31.1",
   "description": "Develop acceptance tests & end-to-end tests with realtime feedback.",
   "keywords": [
     "simian",
@@ -33,7 +33,7 @@
     "testonly": "npm run-script prepublish && node ./scripts/run-tests.js",
     "test": "npm run lint && npm run testonly"
   },
-  "main": "index.js",
+  "main": "dist/lib/chimp.js",
   "bin": {
     "chimp": "./bin/chimp.js"
   },
@@ -67,7 +67,8 @@
     "chokidar": "~1.0.6",
     "colors": "1.1.2",
     "commander": "^2.9.0",
-    "cucumber": "xolvio/cucumber-js#v0.9.4-chimp.2",
+    "cucumber": "xolvio/cucumber-js#v0.9.4-chimp.3",
+    "deepmerge": "^0.2.10",
     "exit": "^0.1.2",
     "fibers": "^1.0.7",
     "freeport": "~1.0.5",

@@ -5,7 +5,7 @@
 An awesome developer-centric experience to writing tests with **realtime feedback** using Mocha or Cucumber.js (Jasmine soon).
 
 ![Chimp by Xolv.io](./images/header.png?raw=true)
- 
+
 Chimp can be used with *any technology stack* as it allows your to write your test automation in the language of the web: JavaScript.
 
 ### Realtime feedback?
@@ -15,7 +15,7 @@ Traditionally only available for unit testing, and now you can get super fast fe
 
 Set an `@focus` tag in the spec title, save a file, Chimp reruns the spec until you make it pass. 
 
-### Installation
+### Installation as cli
 
 ```sh
 npm install -g chimp
@@ -25,13 +25,36 @@ Be sure to checkout our [Automated Testing Best Practices](https://github.com/xo
 
 Having trouble? See the [installation documentation](https://chimp.readme.io/docs/installation).
 
-### Usage
+### Usage as cli
 
 For development mode, you can use the watch mode:
 ```sh
 chimp --watch
 ```
 You can also easily change the browser Chimp with `--browser`, e.g. `--browser=phantomjs`
+
+### Installation as gulp/grunt module
+
+```sh
+npm install chimp
+```
+
+### Usage in a gulp task
+
+```sh
+let Chimp = require('chimp');
+let options = require('./my/config/for/chimp');
+options['_'] = [
+	'/my/path/to/node',
+	'/my/path/to/my/project/node_modules/chimp/bin/chimp.js'
+];
+let chimp = new Chimp(options);
+chimp.run(function (err, res) {
+	console.log('CHIMP RES:',res);
+	console.log('CHIMP ERR:',err);
+	//next action after chimp finish
+});
+```
 
 ### Documentation
 
@@ -71,7 +94,7 @@ Some developers love Jasmine and Mocha, and some teams love to use Cucumber for 
 End-to-end and acceptance testing often require you to setup data on the server and reset state between specs. 
 
 Using our synchronous version of the [request module](https://www.npmjs.com/package/request#request-options-callback), you can call your server to reset your system or setup data like this:
-  
+
 ```javascript
 var userId = request({
   url: 'http://localhost:3000/fixtures/createUser'
@@ -118,8 +141,8 @@ To learn more about testing with Meteor, consider purchasing our book [The Meteo
 Your support helps us continue our work on Chimp.
 
 ## Need Faster Builds?
- 
+
 Check our our [WhirlWind](https://github.com/xolvio/whirlwind) package that can bring a build time down from hours to 
 minutes!
 
-![](https://ga-beacon-xolvio.appspot.com/UA-61850278-5/readme?pixel)
+![Analytics](https://ga-beacon-xolvio.appspot.com/UA-61850278-5/chimp/readme?pixel)

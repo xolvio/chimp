@@ -53,7 +53,7 @@ var Cucumber = function () {
         silent: true
       };
 
-      var port = undefined;
+      var port = void 0;
       if (booleanHelper.isTruthy(this.options.debugCucumber)) {
         port = parseInt(this.options.debugCucumber, 10);
         if (port > 1) {
