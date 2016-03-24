@@ -1,3 +1,7 @@
+# NEXT
+
+* Breaking change: The webdriverio async API no longer supports callbacks, only promises.
+
 # 0.31.1
 
 * Fixes default option value for deviceName.
