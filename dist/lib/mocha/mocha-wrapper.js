@@ -1,5 +1,13 @@
 'use strict';
 
+var _environmentVariableParsers = require('../environment-variable-parsers');
+
+var _escapeRegExp = require('../utils/escape-reg-exp');
+
+var _escapeRegExp2 = _interopRequireDefault(_escapeRegExp);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 require('../babel-register');
 
 var Mocha = require('mocha'),
@@ -7,8 +15,7 @@ var Mocha = require('mocha'),
     path = require('path'),
     exit = require('exit'),
     glob = require('glob'),
-    ui = require('./mocha-fiberized-ui'),
-    booleanHelper = require('../boolean-helper');
+    ui = require('./mocha-fiberized-ui');
 
 var mochaOptions = {
   ui: 'fiberized-bdd-ui',
@@ -17,8 +24,8 @@ var mochaOptions = {
   reporter: process.env['chimp.mochaReporter']
 };
 
-if (booleanHelper.isTruthy(process.env['chimp.watch'])) {
-  mochaOptions.grep = new RegExp(process.env['chimp.watchTags'].replace(/,/g, '|'));
+if ((0, _environmentVariableParsers.parseBoolean)(process.env['chimp.watch'])) {
+  mochaOptions.grep = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|'));
 }
 
 var mocha = new Mocha(mochaOptions);

@@ -8,22 +8,56 @@ var _fibers = require('fibers');
 
 var _fibers2 = _interopRequireDefault(_fibers);
 
+var _environmentVariableParsers = require('../environment-variable-parsers');
+
+var _escapeRegExp = require('../utils/escape-reg-exp');
+
+var _escapeRegExp2 = _interopRequireDefault(_escapeRegExp);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('../babel-register');
 
 new _fibers2.default(function runJasmineInFiber() {
+  var testsDir = process.env['chimp.path'];
+  process.chdir(testsDir);
+
+  var specFilter = '';
+  if ((0, _environmentVariableParsers.parseBoolean)(process.env['chimp.watch'])) {
+    // Only run specs with a watch tag in watch mode
+    specFilter = (0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|');
+    console.log('specFilter', specFilter);
+  }
+
   var Jasmine = require('jasmine');
   var jasmine = new Jasmine();
 
-  var testsDir = process.env['chimp.path'];
-  jasmine.loadConfig({
-    spec_dir: testsDir,
-    spec_files: ['**/*.@(js|jsx)', '!support/**/*.@(js|jsx)'],
-    helpers: [_path2.default.relative(testsDir, _path2.default.resolve(__dirname, 'jasmine-helpers.js')), 'support/**/*.@(js|jsx)']
-  });
-  jasmine.configureDefaultReporter({
-    showColors: true
-  });
-  jasmine.execute();
+  jasmine.loadConfig(getJasmineConfig());
+  jasmine.configureDefaultReporter(JSON.parse(process.env['chimp.jasmineReporterConfig']));
+  jasmine.execute(null, specFilter);
 }).run();
+
+function getJasmineConfig() {
+  var jasmineConfig = JSON.parse(process.env['chimp.jasmineConfig']);
+
+  if (jasmineConfig.specDir) {
+    if (!jasmineConfig.spec_dir) {
+      jasmineConfig.spec_dir = jasmineConfig.specDir;
+    }
+    delete jasmineConfig.specDir;
+  }
+
+  if (jasmineConfig.specFiles) {
+    if (!jasmineConfig.spec_files) {
+      jasmineConfig.spec_files = jasmineConfig.specFiles;
+    }
+    delete jasmineConfig.specFiles;
+  }
+
+  if (!jasmineConfig.helpers) {
+    jasmineConfig.helpers = [];
+  }
+  jasmineConfig.helpers.unshift(_path2.default.relative(jasmineConfig.spec_dir, _path2.default.resolve(__dirname, 'jasmine-helpers.js')));
+
+  return jasmineConfig;
+}
