@@ -8,9 +8,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 module.exports = {
   // - - - - CHIMP - - - -
-  tags: '~@ignore',
   watch: false,
-  watchTags: '@dev,@watch,@focus',
+  // @focus is recommended to use. @dev and @watch are deprecated.
+  watchTags: '@focus,@dev,@watch',
   watchWithPolling: false,
   criticalSteps: null,
   criticalTag: '@critical',
@@ -23,6 +23,7 @@ module.exports = {
   // - - - - CUCUMBER - - - -
   path: './features',
   format: 'pretty',
+  tags: '~@ignore',
   singleSnippetPerFile: true,
   recommendedFilenameSeparator: '_',
   chai: false,

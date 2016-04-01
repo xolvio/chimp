@@ -4,6 +4,7 @@ import path from 'path';
 import Fiber from 'fibers';
 import {parseBoolean, parseString } from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
+import fiberizeJasmineApi from './jasmine-fiberized-api';
 
 new Fiber(function runJasmineInFiber() {
   const testsDir = process.env['chimp.path'];
@@ -17,6 +18,7 @@ new Fiber(function runJasmineInFiber() {
 
   const Jasmine = require('jasmine');
   const jasmine = new Jasmine();
+  fiberizeJasmineApi(global);
 
   jasmine.loadConfig(getJasmineConfig());
   jasmine.configureDefaultReporter(
