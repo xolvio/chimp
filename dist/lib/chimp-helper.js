@@ -4,6 +4,16 @@ var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _deepmerge = require('deepmerge');
+
+var _deepmerge2 = _interopRequireDefault(_deepmerge);
+
+var _environmentVariableParsers = require('./environment-variable-parsers');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var chai = require('chai'),
@@ -22,6 +32,7 @@ var chai = require('chai'),
     fs = require('fs-extra'),
     exit = require('exit'),
     booleanHelper = require('./boolean-helper');
+
 
 var chimpHelper = {
   loadAssertionLibrary: function loadAssertionLibrary() {
@@ -73,74 +84,37 @@ var chimpHelper = {
 
     var setupBrowser = function setupBrowser() {
       log.debug('[chimp][helper] getting browser');
-      var customChimpConfigPath = path.resolve(process.cwd(), process.env['chimp.path'], 'chimp.js');
 
-      var _translateLogLevel = function _translateLogLevel() {
-        if (booleanHelper.isTruthy(process.env['chimp.webdriverLogLevel'])) {
-          return process.env['chimp.webdriverLogLevel'];
-        } else if (process.env['chimp.log'] === 'info' || process.env['chimp.log'] === 'warn' || process.env['chimp.log'] === 'error') {
-          return 'silent';
-        } else {
-          return process.env['chimp.log'];
-        }
-      };
-
-      global.sessionManager = new SessionFactory({
-        host: process.env['chimp.host'],
-        port: process.env['chimp.port'],
-        user: process.env['chimp.user'],
-        key: process.env['chimp.key'],
-        browser: process.env['chimp.browser'],
-        deviceName: process.env['chimp.deviceName']
+      var webdriverioConfigOptions = JSON.parse(process.env['chimp.webdriverio']);
+      var webdriverioOptions = (0, _deepmerge2.default)(webdriverioConfigOptions, {
+        desiredCapabilities: {
+          browserName: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.browser']),
+          platform: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.platform']),
+          name: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.name']),
+          version: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.version']),
+          deviceName: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.deviceName'])
+        },
+        user: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.user'] || process.env.SAUCE_USERNAME),
+        key: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.key'] || process.env.SAUCE_ACCESS_KEY),
+        host: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.host']),
+        port: (0, _environmentVariableParsers.parseNullableInteger)(process.env['chimp.port']),
+        logLevel: booleanHelper.isTruthy(process.env['chimp.debug']) ? 'verbose' : webdriverioConfigOptions.logLevel,
+        sync: (0, _environmentVariableParsers.parseBoolean)(process.env['chimp.sync'])
       });
 
-      if (fs.existsSync(customChimpConfigPath)) {
-        var customChimpConfigurator = wrapAsync(require(customChimpConfigPath));
-        global.browser = customChimpConfigurator(global.sessionManager);
-      } else {
-        log.debug('[chimp][helper] custom chimp.js not found, loading defaults');
-        var webdriverOptions = {
-          waitforTimeout: parseInt(process.env['chimp.waitForTimeout']),
-          timeoutsImplicitWait: parseInt(process.env['chimp.timeoutsImplicitWait']),
-          desiredCapabilities: {
-            browserName: process.env['chimp.browser'],
-            platform: process.env['chimp.platform'],
-            name: process.env['chimp.name'],
-            version: process.env['chimp.version']
-          },
-          user: process.env['chimp.user'] || process.env.SAUCE_USERNAME,
-          key: process.env['chimp.key'] || process.env.SAUCE_ACCESS_KEY,
-          host: process.env['chimp.host'],
-          port: process.env['chimp.port'],
-          logLevel: _translateLogLevel(),
-          screenshotPath: process.env['chimp.screenshotPath'],
-          sync: booleanHelper.isTruthy(process.env['chimp.sync'])
-        };
+      global.sessionManager = new SessionFactory((0, _assign2.default)(_.pick(webdriverioOptions, 'host', 'port', 'user', 'key'), {
+        browser: webdriverioOptions.desiredCapabilities.browserName,
+        deviceName: webdriverioOptions.desiredCapabilities.deviceName
+      }));
 
-        webdriverOptions.desiredCapabilities.chromeOptions = webdriverOptions.desiredCapabilities.chromeOptions || {};
-        if (booleanHelper.isTruthy(process.env['chimp.chromeBin'])) {
-          webdriverOptions.desiredCapabilities.chromeOptions.binary = process.env['chimp.chromeBin'];
-        }
-        if (booleanHelper.isTruthy(process.env['chimp.chromeArgs'])) {
-          webdriverOptions.desiredCapabilities.chromeOptions.args = process.env['chimp.chromeArgs'].split(',');
-        } else if (booleanHelper.isTruthy(process.env['chimp.chromeNoSandbox'])) {
-          webdriverOptions.desiredCapabilities.chromeOptions.args = ['no-sandbox'];
-        }
-
-        if (booleanHelper.isTruthy(process.env['chimp.baseUrl'])) {
-          webdriverOptions.baseUrl = process.env['chimp.baseUrl'];
-        }
-        if (process.env['chimp.watch']) {
-          webdriverOptions.desiredCapabilities.applicationCacheEnabled = false;
-        }
-        webdriverOptions.desiredCapabilities['tunnelIdentifier'] = process.env['chimp.tunnelIdentifier'];
-        webdriverOptions.desiredCapabilities['browserstack.local'] = process.env['chimp.browserstackLocal'];
-
-        log.debug('[chimp][helper] webdriverOptions are ', (0, _stringify2.default)(webdriverOptions));
-
-        var remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
-        global.browser = remoteSession(webdriverOptions);
+      if (booleanHelper.isTruthy(process.env['chimp.watch'])) {
+        webdriverioOptions.desiredCapabilities.applicationCacheEnabled = false;
       }
+
+      log.debug('[chimp][helper] webdriverioOptions are ', (0, _stringify2.default)(webdriverioOptions));
+
+      var remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
+      global.browser = remoteSession(webdriverioOptions);
 
       chaiAsPromised.transferPromiseness = global.browser.transferPromiseness;
     };
@@ -161,9 +135,6 @@ var chimpHelper = {
         this.saveScreenshot(ssPath, false);
         log.debug('[chimp][helper] saved screenshot to', ssPath);
       });
-
-      browser.timeoutsAsyncScriptSync(parseInt(process.env['chimp.timeoutsAsyncScript']));
-      log.debug('[chimp][helper] set timeoutsAsyncScript');
 
       if (process.env['chimp.browser'] === 'phantomjs') {
         browser.setViewportSizeSync({

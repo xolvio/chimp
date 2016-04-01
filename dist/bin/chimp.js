@@ -26,10 +26,9 @@ var argv = minimist(process.argv, {
   // - - - - SELENIUM  - - - -
 
   // - - - - WEBDRIVER-IO  - - - -
-  'chromeNoSandbox',
 
   // - - - - SESSION-MANAGER  - - - -
-  'noSessionReuse', 'browserstackLocal',
+  'noSessionReuse',
 
   // - - - - SIMIAN  - - - -
 

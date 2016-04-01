@@ -61,7 +61,9 @@ function Chimp (options) {
   // store all cli parameters in env hash
   for (var option in options) {
     // Note: Environment variables are always strings.
-    process.env['chimp.' + option] = options[option];
+    process.env['chimp.' + option] = _.isObject(options[option]) ?
+      JSON.stringify(options[option]) :
+      String(options[option]);
   }
 
   this._handleMeteorInterrupt();

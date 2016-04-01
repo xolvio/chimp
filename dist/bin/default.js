@@ -42,21 +42,25 @@ module.exports = {
   key: '',
   port: null,
   host: null,
-  deviceName: null,
+  // deviceName: null,
 
   // - - - - WEBDRIVER-IO  - - - -
-  baseUrl: null,
-  timeoutsAsyncScript: 10000,
-  timeoutsImplicitWait: 3000,
-  waitForTimeout: 10000,
-  chromeBin: null,
-  chromeArgs: null,
-  chromeNoSandbox: false,
+  webdriverio: {
+    desiredCapabilities: {},
+    logLevel: 'silent',
+    // logOutput: null,
+    host: '127.0.0.1',
+    port: 4444,
+    path: '/wd/hub',
+    baseUrl: null,
+    coloredLogs: true,
+    screenshotPath: null,
+    waitforTimeout: 500,
+    waitforInterval: 250
+  },
 
   // - - - - SESSION-MANAGER  - - - -
   noSessionReuse: false,
-  browserstackLocal: false,
-  tunnelIdentifier: null,
 
   // - - - - SIMIAN  - - - -
   simianResultEndPoint: 'api.simian.io/v1.0/result',
@@ -85,7 +89,6 @@ module.exports = {
   log: 'info',
   debug: false,
   seleniumDebug: null,
-  webdriverLogLevel: null,
   debugCucumber: null,
   debugBrkCucumber: null,
   debugMocha: null,
