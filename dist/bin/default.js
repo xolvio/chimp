@@ -8,6 +8,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 module.exports = {
   // - - - - CHIMP - - - -
+  tags: '~@ignore',
   watch: false,
   watchTags: '@dev,@watch,@focus',
   watchWithPolling: false,
@@ -22,7 +23,6 @@ module.exports = {
   // - - - - CUCUMBER - - - -
   path: './features',
   format: 'pretty',
-  tags: '~@ignore',
   singleSnippetPerFile: true,
   recommendedFilenameSeparator: '_',
   chai: false,
@@ -77,6 +77,17 @@ module.exports = {
 
   // - - - - JASMINE  - - - -
   jasmine: false,
+  jasmineConfig: {
+    specDir: '.',
+    specFiles: ['**/*@(_spec|-spec|Spec).@(js|jsx)'],
+    helpers: ['support/**/*.@(js|jsx)'],
+    stopSpecOnExpectationFailure: false,
+    random: false
+  },
+  jasmineReporterConfig: {
+    // This options are passed to jasmine.configureDefaultReporter(...)
+    // See: http://jasmine.github.io/2.4/node.html#section-Reporters
+  },
 
   // - - - - METEOR  - - - -
   ddp: false,
