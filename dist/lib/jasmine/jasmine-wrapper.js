@@ -26,19 +26,24 @@ new _fibers2.default(function runJasmineInFiber() {
   var testsDir = process.env['chimp.path'];
   process.chdir(testsDir);
 
-  var specFilter = '';
-  if ((0, _environmentVariableParsers.parseBoolean)(process.env['chimp.watch'])) {
-    // Only run specs with a watch tag in watch mode
-    specFilter = (0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|');
-  }
-
   var Jasmine = require('jasmine');
   var jasmine = new Jasmine();
+
+  if ((0, _environmentVariableParsers.parseBoolean)(process.env['chimp.watch'])) {
+    (function () {
+      // Only run specs with a watch tag in watch mode
+      var specFilterRegExp = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|'));
+      jasmine.env.specFilter = function shouldRunSpec(spec) {
+        return specFilterRegExp.test(spec.getFullName());
+      };
+    })();
+  }
+
   (0, _jasmineFiberizedApi2.default)(global);
 
   jasmine.loadConfig(getJasmineConfig());
   jasmine.configureDefaultReporter(JSON.parse(process.env['chimp.jasmineReporterConfig']));
-  jasmine.execute(null, specFilter);
+  jasmine.execute();
 }).run();
 
 function getJasmineConfig() {
