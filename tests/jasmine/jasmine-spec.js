@@ -1,7 +1,8 @@
-describe('Chimp Mocha', () => {
+describe('Chimp Jasmine', () => {
   describe('Page title', () => {
-    it('should be set by the Meteor method @watch', () => {
+    it('should be set by the Meteor method', () => {
       browser.url('http://google.com');
+      expect(browser.getTitle()).toBe('Google');
     });
   });
 

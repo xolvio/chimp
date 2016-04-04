@@ -18,7 +18,7 @@ var path = require('path'),
 
 function Mocha(options) {
   this.options = options;
-  this.mochaChild = null;
+  this.child = null;
 }
 
 /**
@@ -63,20 +63,20 @@ Mocha.prototype.start = function (callback) {
     }
   }
 
-  self.mochaChild = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), ['--color'], opts);
+  self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), ['--color'], opts);
 
-  self.mochaChild.stdout.pipe(process.stdout);
-  self.mochaChild.stderr.pipe(process.stderr);
+  self.child.stdout.pipe(process.stdout);
+  self.child.stderr.pipe(process.stderr);
 
   var result = null;
-  self.mochaChild.on('message', function (res) {
+  self.child.on('message', function (res) {
     log.debug('[chimp][mocha] Received message from Mocha child. Result:', res);
     result = res;
   });
 
-  self.mochaChild.on('close', function (code) {
+  self.child.on('close', function (code) {
     log.debug('[chimp][mocha] Closed with code', code);
-    if (!self.mochaChild.stopping) {
+    if (!self.child.stopping) {
       log.debug('[chimp][mocha] Mocha not in a stopping state');
       callback(code !== 0 ? 'Mocha failed' : null, result);
     }
@@ -89,19 +89,19 @@ Mocha.prototype.interrupt = function (callback) {
 
   var self = this;
 
-  if (!self.mochaChild) {
+  if (!self.child) {
     log.debug('[chimp][mocha] no child to interrupt');
     return callback();
   }
-  self.mochaChild.stopping = true;
+  self.child.stopping = true;
 
   var options = {
-    child: self.mochaChild,
+    child: self.child,
     prefix: 'mocha'
   };
 
   processHelper.kill(options, function (err, res) {
-    self.mochaChild = null;
+    self.child = null;
     if (callback) {
       callback(err, res);
     }

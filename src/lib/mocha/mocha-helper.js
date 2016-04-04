@@ -12,7 +12,7 @@ before(function () {
 after(function () {
   if (process.env['chimp.browser'] !== 'phantomjs') {
     log.debug('[chimp][mocha-helper] Ending browser session');
-    wrapAsync(global.sessionManager.killCurrentSession, global.sessionManager)();
+    global.wrapAsync(global.sessionManager.killCurrentSession, global.sessionManager)();
     log.debug('[chimp][mocha-helper] Ended browser sessions');
   }
 });

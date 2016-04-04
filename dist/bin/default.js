@@ -9,7 +9,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = {
   // - - - - CHIMP - - - -
   watch: false,
-  watchTags: '@dev,@watch,@focus',
+  // @focus is recommended to use. @dev and @watch are deprecated.
+  watchTags: '@focus,@dev,@watch',
   watchWithPolling: false,
   criticalSteps: null,
   criticalTag: '@critical',
@@ -74,6 +75,20 @@ module.exports = {
   mochaTimeout: 60000,
   mochaReporter: 'spec',
   mochaSlow: 10000,
+
+  // - - - - JASMINE  - - - -
+  jasmine: false,
+  jasmineConfig: {
+    specDir: '.',
+    specFiles: ['**/*@(_spec|-spec|Spec).@(js|jsx)'],
+    helpers: ['support/**/*.@(js|jsx)'],
+    stopSpecOnExpectationFailure: false,
+    random: false
+  },
+  jasmineReporterConfig: {
+    // This options are passed to jasmine.configureDefaultReporter(...)
+    // See: http://jasmine.github.io/2.4/node.html#section-Reporters
+  },
 
   // - - - - METEOR  - - - -
   ddp: false,
