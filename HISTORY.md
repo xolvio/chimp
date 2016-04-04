@@ -1,6 +1,12 @@
-# NEXT
+# 0.32.0
 
-* Breaking change: The webdriverio async API no longer supports callbacks, only promises.
+* Feature: Support for Jasmine
+  * [Getting started with Jasmine](https://chimp.readme.io/docs/getting-started-jasmine)
+  * [Jasmine support](https://chimp.readme.io/v1.0/docs/jasmine-support)
+* Upgrade: WebDriver.io 4 is now used.
+  * Breaking change: The webdriverio async API no longer supports callbacks, only promises.
+* Fix: Take only screenshots of errors to disk by default.
+* Change: Set timeoutsImplicitWait to 3 seconds by default
 
 # 0.31.1
 
