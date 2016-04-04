@@ -25,6 +25,9 @@ module.exports = {
   screenshotsPath: '.screenshots',
   captureAllStepScreenshots: false,
   saveScreenshotsToDisk: true,
+  // Note: With a large viewport size and captureAllStepScreenshots enabled,
+  // you may run out of memory. Use browser.setViewportSize to make the
+  // viewport size smaller.
   saveScreenshotsToReport: false,
   jsonOutput: null,
   compiler: 'js:' + path.resolve(__dirname, '../lib/babel-register.js'),
