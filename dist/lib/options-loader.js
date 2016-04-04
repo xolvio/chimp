@@ -1,8 +1,8 @@
 'use strict';
 
-var _deepmerge = require('deepmerge');
+var _deepExtend = require('deep-extend');
 
-var _deepmerge2 = _interopRequireDefault(_deepmerge);
+var _deepExtend2 = _interopRequireDefault(_deepExtend);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32,7 +32,7 @@ module.exports = {
       log.debug('[chimp] loaded', userOptionsFile);
     }
     var defaultOptions = this._requireFile(this._getDefaultConfigFilePath());
-    var options = (0, _deepmerge2.default)(defaultOptions, userOptions);
+    var options = (0, _deepExtend2.default)(defaultOptions, userOptions);
     log.debug('[chimp] Chimp options are', options);
     return options;
   },

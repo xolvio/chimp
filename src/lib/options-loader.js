@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const log = require('./log');
-import merge from 'deepmerge';
+import merge from 'deep-extend';
 
 module.exports = {
   getOptions() {

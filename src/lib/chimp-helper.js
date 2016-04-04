@@ -14,7 +14,7 @@ var chai            = require('chai'),
     fs              = require('fs-extra'),
     exit            = require('exit'),
     booleanHelper   = require('./boolean-helper');
-import merge from 'deepmerge';
+import merge from 'deep-extend';
 import {
   parseNullableString,
   parseNullableInteger,
