@@ -5,8 +5,10 @@ var Mocha = require('mocha'),
     path  = require('path'),
     exit  = require('exit'),
     glob  = require('glob'),
-    ui    = require('./mocha-fiberized-ui'),
-    booleanHelper = require('../boolean-helper');
+    ui    = require('./mocha-fiberized-ui');
+
+import {parseBoolean, parseString } from '../environment-variable-parsers';
+import escapeRegExp from '../utils/escape-reg-exp';
 
 var mochaOptions = {
   ui: 'fiberized-bdd-ui',
@@ -15,8 +17,10 @@ var mochaOptions = {
   reporter: process.env['chimp.mochaReporter']
 };
 
-if (booleanHelper.isTruthy(process.env['chimp.watch'])) {
-  mochaOptions.grep = new RegExp(process.env['chimp.watchTags'].replace(/,/g, '|'));
+if (parseBoolean(process.env['chimp.watch'])) {
+  mochaOptions.grep = new RegExp(
+    parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|')
+  );
 }
 
 var mocha = new Mocha(mochaOptions);

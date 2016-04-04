@@ -5,30 +5,9 @@
 var Mocha = require('mocha'),
     bdd   = Mocha.interfaces.bdd,
     _     = require('underscore'),
-    Fiber = require('fibers'),
     util  = require('util');
 
-// Wrap a function in a fiber.  Correctly handles expected presence of
-// done callback
-function fiberize (fn) {
-  return function (done) {
-    var self = this;
-    Fiber(function () {
-      try {
-        if (fn.length == 1) {
-          fn.call(self, done);
-        } else {
-          fn.call(self);
-          done();
-        }
-      } catch (e) {
-        process.nextTick(function () {
-          throw(e);
-        });
-      }
-    }).run();
-  };
-}
+import {fiberize} from '../utils/fiberize';
 
 // A copy of bdd interface, but wrapping everything in fibers
 module.exports = Mocha.interfaces['fiberized-bdd-ui'] = function (suite) {
