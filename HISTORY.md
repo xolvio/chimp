@@ -1,3 +1,13 @@
+# 0.33.0
+
+* Feature: Adds `jasmine.addSpecFilter` API for adding custom spec filters.
+
+# 0.32.1
+
+* Fix: Overwrite options with array values completely
+       instead of merging the default array value and the user array value.
+* Fix: Multiple watch tags with Jasmine
+
 # 0.32.0
 
 * Feature: Support for Jasmine

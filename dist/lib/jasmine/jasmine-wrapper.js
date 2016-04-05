@@ -8,6 +8,10 @@ var _fibers = require('fibers');
 
 var _fibers2 = _interopRequireDefault(_fibers);
 
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
 var _environmentVariableParsers = require('../environment-variable-parsers');
 
 var _escapeRegExp = require('../utils/escape-reg-exp');
@@ -29,13 +33,25 @@ new _fibers2.default(function runJasmineInFiber() {
   var Jasmine = require('jasmine');
   var jasmine = new Jasmine();
 
+  // Capability to add multiple spec filters
+  var specFilters = [];
+  jasmine.env.specFilter = function shouldRunSpec(spec) {
+    return _underscore2.default.every(specFilters, function (specFilter) {
+      return specFilter(spec);
+    });
+  };
+
+  jasmine.jasmine.addSpecFilter = function addSpecFilter(filterFn) {
+    specFilters.push(filterFn);
+  };
+
   if ((0, _environmentVariableParsers.parseBoolean)(process.env['chimp.watch'])) {
     (function () {
       // Only run specs with a watch tag in watch mode
-      var specFilterRegExp = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|'));
-      jasmine.env.specFilter = function shouldRunSpec(spec) {
-        return specFilterRegExp.test(spec.getFullName());
-      };
+      var watchedSpecRegExp = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|'));
+      jasmine.env.addSpecFilter(function (spec) {
+        return watchedSpecRegExp.test(spec.getFullName());
+      });
     })();
   }
 
