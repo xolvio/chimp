@@ -1,3 +1,7 @@
+# 0.33.1
+
+* Fixes jasmine watch mode
+
 # 0.33.0
 
 * Feature: Adds `jasmine.addSpecFilter` API for adding custom spec filters.

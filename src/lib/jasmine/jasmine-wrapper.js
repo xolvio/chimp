@@ -29,7 +29,7 @@ new Fiber(function runJasmineInFiber() {
     const watchedSpecRegExp = new RegExp(
       parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|')
     );
-    jasmine.env.addSpecFilter((spec) => watchedSpecRegExp.test(spec.getFullName()));
+    jasmine.jasmine.addSpecFilter((spec) => watchedSpecRegExp.test(spec.getFullName()));
   }
 
   fiberizeJasmineApi(global);
