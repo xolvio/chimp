@@ -49,7 +49,7 @@ new _fibers2.default(function runJasmineInFiber() {
     (function () {
       // Only run specs with a watch tag in watch mode
       var watchedSpecRegExp = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|'));
-      jasmine.env.addSpecFilter(function (spec) {
+      jasmine.jasmine.addSpecFilter(function (spec) {
         return watchedSpecRegExp.test(spec.getFullName());
       });
     })();
