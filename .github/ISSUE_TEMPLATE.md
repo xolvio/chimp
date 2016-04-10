@@ -18,4 +18,4 @@
 
 #####  Console / Log Output
 
-(Upload long logs to Gist[https://gist.github.com/] and link it here)
+(Upload long logs to [Gist](https://gist.github.com/) and link it here)
