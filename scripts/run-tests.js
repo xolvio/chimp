@@ -21,7 +21,8 @@ if (isCI) {
   unitTestsCommand += ' --maxWorkers 4';
 }
 run(0, 'Running Chimp Unit tests', unitTestsCommand);
-run(0, 'Running Chimp Mocha specs in Chrome', 'node ./bin/chimp.js --mocha --path=tests');
+run(0, 'Running Chimp Mocha specs in Chrome', 'node ./bin/chimp.js --mocha --path=tests/mocha');
+run(0, 'Running Chimp Jasmine specs in Chrome', 'node ./bin/chimp.js --jasmine --path=tests/jasmine');
 run(1, 'Running Chimp Cucumber specs in Chrome', 'node ./bin/chimp.js --tags=~@cli');
 run(2, 'Running Chimp Cucumber specs in Firefox',
   'node ./bin/chimp.js --browser=firefox --tags=~@cli');

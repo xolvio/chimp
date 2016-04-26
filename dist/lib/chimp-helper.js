@@ -8,9 +8,9 @@ var _assign = require('babel-runtime/core-js/object/assign');
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _deepmerge = require('deepmerge');
+var _deepExtend = require('deep-extend');
 
-var _deepmerge2 = _interopRequireDefault(_deepmerge);
+var _deepExtend2 = _interopRequireDefault(_deepExtend);
 
 var _environmentVariableParsers = require('./environment-variable-parsers');
 
@@ -87,7 +87,7 @@ var chimpHelper = {
       log.debug('[chimp][helper] getting browser');
 
       var webdriverioConfigOptions = JSON.parse(process.env['chimp.webdriverio']);
-      var webdriverioOptions = (0, _deepmerge2.default)(webdriverioConfigOptions, {
+      var webdriverioOptions = (0, _deepExtend2.default)(webdriverioConfigOptions, {
         desiredCapabilities: {
           browserName: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.browser']),
           platform: (0, _environmentVariableParsers.parseNullableString)(process.env['chimp.platform']),

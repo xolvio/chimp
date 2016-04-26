@@ -29,6 +29,7 @@ var DEFAULT_COLOR = 'yellow';
  * Internals
  */
 exports.Mocha = require('./mocha/mocha.js');
+exports.Jasmine = require('./jasmine/jasmine.js');
 exports.Cucumber = require('./cucumberjs/cucumber.js');
 exports.Phantom = require('./phantom.js');
 exports.Consoler = require('./consoler.js');
@@ -68,7 +69,7 @@ function Chimp(options) {
   // store all cli parameters in env hash
   for (var option in options) {
     // Note: Environment variables are always strings.
-    process.env['chimp.' + option] = options[option];
+    process.env['chimp.' + option] = _.isObject(options[option]) ? (0, _stringify2.default)(options[option]) : String(options[option]);
   }
 
   this._handleMeteorInterrupt();
@@ -340,21 +341,21 @@ Chimp.prototype.run = function (callback) {
 
   var self = this;
 
-  async.series([self.interrupt.bind(self), self._startProcesses.bind(self), self.interrupt.bind(self)], function (err, res) {
-
-    if (err) {
-      log.debug('[chimp] run complete with errors', err);
+  async.series([self.interrupt.bind(self), self._startProcesses.bind(self), self.interrupt.bind(self)], function (error, result) {
+    if (error) {
+      log.debug('[chimp] run complete with errors', error);
     } else {
       log.debug('[chimp] run complete');
     }
 
     if (self.options.simianAccessToken && self.options.simianResultBranch !== false) {
+      var jsonCucumberResult = result && result[1] && result[1][1] ? JSON.parse(result[1][1]) : [];
       var simianReporter = new exports.SimianReporter(self.options);
-      simianReporter.report(res, function () {
-        callback(err, res);
+      simianReporter.report(jsonCucumberResult, function () {
+        callback(error, result);
       });
     } else {
-      callback(err, res);
+      callback(error, result);
     }
   });
 };
@@ -477,6 +478,9 @@ Chimp.prototype._createProcesses = function () {
   if (booleanHelper.isTruthy(this.options.mocha)) {
     var mocha = new exports.Mocha(this.options);
     processes.push(mocha);
+  } else if (booleanHelper.isTruthy(this.options.jasmine)) {
+    var jasmine = new exports.Jasmine(this.options);
+    processes.push(jasmine);
   } else {
     if (booleanHelper.isTruthy(this.options.criticalSteps)) {
       // domain scenarios

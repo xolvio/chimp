@@ -14,7 +14,7 @@ var path          = require('path'),
  * @api public
  */
 
-function Mocha (options) {
+function Jasmine(options) {
   this.options = options;
   this.child = null;
 }
@@ -26,16 +26,16 @@ function Mocha (options) {
  * @api public
  */
 
-Mocha.prototype.start = function (callback) {
+Jasmine.prototype.start = function (callback) {
 
   var self = this;
   if (glob.sync(self.options.path).length === 0) {
-    log.info('[chimp][mocha] Directory', self.options.path, 'does not exist. Not running');
+    log.info('[chimp][jasmine] Directory', self.options.path, 'does not exist. Not running');
     callback();
     return;
   }
 
-  log.debug('[chimp][mocha] Running...');
+  log.debug('[chimp][jasmine] Running...');
 
   var opts = {
     env: process.env,
@@ -43,8 +43,8 @@ Mocha.prototype.start = function (callback) {
   };
 
   var port;
-  if (this.options.debugMocha) {
-    port = parseInt(this.options.debugMocha);
+  if (this.options.debugJasmine) {
+    port = parseInt(this.options.debugJasmine);
     if (port > 1) {
       opts.execArgv = ['--debug=' + port];
     } else {
@@ -61,44 +61,42 @@ Mocha.prototype.start = function (callback) {
     }
   }
 
-  self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), [
-    '--color'
-  ], opts);
+  self.child = cp.fork(path.join(__dirname, 'jasmine-wrapper.js'), [], opts);
 
   self.child.stdout.pipe(process.stdout);
   self.child.stderr.pipe(process.stderr);
 
   var result = null;
   self.child.on('message', function (res) {
-    log.debug('[chimp][mocha] Received message from Mocha child. Result:', res);
+    log.debug('[chimp][jasmine] Received message from Jasmine child. Result:', res);
     result = res;
   });
 
   self.child.on('close', function (code) {
-    log.debug('[chimp][mocha] Closed with code', code);
+    log.debug('[chimp][jasmine] Closed with code', code);
     if (!self.child.stopping) {
-      log.debug('[chimp][mocha] Mocha not in a stopping state');
-      callback(code !== 0 ? 'Mocha failed' : null, result);
+      log.debug('[chimp][jasmine] Jasmine not in a stopping state');
+      callback(code !== 0 ? 'Jasmine failed' : null, result);
     }
   });
 
 };
 
-Mocha.prototype.interrupt = function (callback) {
+Jasmine.prototype.interrupt = function (callback) {
 
-  log.debug('[chimp][mocha] interrupting mocha');
+  log.debug('[chimp][jasmine] interrupting jasmine');
 
   var self = this;
 
   if (!self.child) {
-    log.debug('[chimp][mocha] no child to interrupt');
+    log.debug('[chimp][jasmine] no child to interrupt');
     return callback();
   }
   self.child.stopping = true;
 
   var options = {
     child: self.child,
-    prefix: 'mocha'
+    prefix: 'jasmine'
   };
 
   processHelper.kill(options, function (err, res) {
@@ -110,4 +108,4 @@ Mocha.prototype.interrupt = function (callback) {
 
 };
 
-module.exports = Mocha;
+module.exports = Jasmine;

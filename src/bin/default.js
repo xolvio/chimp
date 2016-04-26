@@ -3,7 +3,8 @@ import path from 'path';
 module.exports = {
   // - - - - CHIMP - - - -
   watch: false,
-  watchTags: '@dev,@watch,@focus',
+  // @focus is recommended to use. @dev and @watch are deprecated.
+  watchTags: '@focus,@dev,@watch',
   watchWithPolling: false,
   criticalSteps: null,
   criticalTag: '@critical',
@@ -20,11 +21,14 @@ module.exports = {
   singleSnippetPerFile: true,
   recommendedFilenameSeparator: '_',
   chai: false,
-  screenshotsOnError: false,
+  screenshotsOnError: true,
   screenshotsPath: '.screenshots',
-  captureAllStepScreenshots: true,
-  saveScreenshotsToDisk: false,
-  saveScreenshotsToReport: true,
+  captureAllStepScreenshots: false,
+  saveScreenshotsToDisk: true,
+  // Note: With a large viewport size and captureAllStepScreenshots enabled,
+  // you may run out of memory. Use browser.setViewportSize to make the
+  // viewport size smaller.
+  saveScreenshotsToReport: false,
   jsonOutput: null,
   compiler: 'js:' + path.resolve(__dirname, '../lib/babel-register.js'),
 
@@ -36,21 +40,25 @@ module.exports = {
   key: '',
   port: null,
   host: null,
-  deviceName: null,
+  // deviceName: null,
 
   // - - - - WEBDRIVER-IO  - - - -
-  baseUrl: null,
-  timeoutsAsyncScript: 10000,
-  timeoutsImplicitWait: 3000,
-  waitForTimeout: 10000,
-  chromeBin: null,
-  chromeArgs: null,
-  chromeNoSandbox: false,
+  webdriverio: {
+    desiredCapabilities: {},
+    logLevel: 'silent',
+    // logOutput: null,
+    host: '127.0.0.1',
+    port: 4444,
+    path: '/wd/hub',
+    baseUrl: null,
+    coloredLogs: true,
+    screenshotPath: null,
+    waitforTimeout: 500,
+    waitforInterval: 250,
+  },
 
   // - - - - SESSION-MANAGER  - - - -
   noSessionReuse: false,
-  browserstackLocal: false,
-  tunnelIdentifier: null,
 
   // - - - - SIMIAN  - - - -
   simianResultEndPoint: 'api.simian.io/v1.0/result',
@@ -65,6 +73,24 @@ module.exports = {
   mochaReporter: 'spec',
   mochaSlow: 10000,
 
+  // - - - - JASMINE  - - - -
+  jasmine: false,
+  jasmineConfig: {
+    specDir: '.',
+    specFiles: [
+      '**/*@(_spec|-spec|Spec).@(js|jsx)',
+    ],
+    helpers: [
+      'support/**/*.@(js|jsx)',
+    ],
+    stopSpecOnExpectationFailure: false,
+    random: false,
+  },
+  jasmineReporterConfig: {
+    // This options are passed to jasmine.configureDefaultReporter(...)
+    // See: http://jasmine.github.io/2.4/node.html#section-Reporters
+  },
+
   // - - - - METEOR  - - - -
   ddp: false,
 
@@ -76,7 +102,6 @@ module.exports = {
   log: 'info',
   debug: false,
   seleniumDebug: null,
-  webdriverLogLevel: null,
   debugCucumber: null,
   debugBrkCucumber: null,
   debugMocha: null,

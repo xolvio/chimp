@@ -14,7 +14,7 @@ function SimianReporter(options) {
   SimianReporter.instance = this;
 }
 
-SimianReporter.prototype.report = function report(result, callback) {
+SimianReporter.prototype.report = function report(jsonCucumberResult, callback) {
   const query = {
     accessToken: this.options.simianAccessToken,
   };
@@ -27,16 +27,10 @@ SimianReporter.prototype.report = function report(result, callback) {
     query,
   });
 
-  if (!result.length) {
-    log.error('[chimp][simian-reporter]', result);
-    callback(result);
-    return;
-  }
-
   const data = {
     type: 'cucumber',
     branch: this.options.simianResultBranch,
-    result: JSON.parse(result[1][1]),
+    result: jsonCucumberResult,
   };
   if (this.options.simianBuildNumber) {
     data.buildNumber = parseInt(this.options.simianBuildNumber, 10);

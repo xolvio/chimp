@@ -20,6 +20,7 @@ module.exports = function hooks() {
     log.debug('[chimp][hooks] Starting BeforeFeatures');
     global.chimpHelper.setupBrowserAndDDP();
     global.chimpHelper.createGlobalAliases();
+    browser.timeoutsImplicitWaitSync(3000);
     log.debug('[chimp][hooks] Finished BeforeFeatures');
     // noinspection JSUnresolvedVariable
     if (global.UserDefinedBeforeFeatures) {
@@ -31,6 +32,10 @@ module.exports = function hooks() {
       }
   });
 
+  function shouldTakeScreenshot(stepResult) {
+    return booleanHelper.isTruthy(process.env['chimp.captureAllStepScreenshots']) || stepResult.getStatus() !== 'passed' && booleanHelper.isTruthy(process.env['chimp.screenshotsOnError']);
+  }
+
   /**
    * Capture screenshots either for erroneous / all steps
    *
@@ -41,7 +46,7 @@ module.exports = function hooks() {
     // eslint-disable-line new-cap
     var stepResult = event.getPayloadItem('stepResult');
     lastStep = stepResult.getStep();
-    if (!stepResult.isSuccessful() && (booleanHelper.isTruthy(process.env['chimp.captureAllStepScreenshots']) || booleanHelper.isTruthy(process.env['chimp.screenshotsOnError']))) {
+    if (shouldTakeScreenshot(stepResult)) {
       log.debug('[chimp][hooks] capturing screenshot');
       if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToReport'])) {
         var screenshotId = lastStep.getUri() + ':' + lastStep.getLine();
@@ -55,7 +60,7 @@ module.exports = function hooks() {
         };
       }
       if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToDisk'])) {
-        var affix = !stepResult.isSuccessful() ? ' (failed)' : '';
+        var affix = stepResult.getStatus() !== 'passed' ? ' (failed)' : '';
         // noinspection JSUnresolvedFunction
         global.browser.captureSync(lastStep.getKeyword() + ' ' + lastStep.getName() + affix);
       }
@@ -96,7 +101,7 @@ module.exports = function hooks() {
   });
 
   process.on('unhandledRejection', function (reason, promise) {
-    log.error('[chimp] Detected an unhandledRejection.'.red);
+    log.error('[chimp] Detected an unhandledRejection:'.red);
 
     try {
       if (reason.type === 'CommandError' && reason.message === 'Promise never resolved with an truthy value') {
@@ -112,13 +117,7 @@ module.exports = function hooks() {
         log.error(hint.yellow);
         reason.message += '\n' + hint;
       } else {
-        log.error('[chimp][hooks] Reason:'.red);
-        if (reason.type) {
-          log.error('[chimp][hooks]'.red, reason.type.red);
-        }
-        if (reason.message) {
-          log.error('[chimp][hooks]'.red, reason.message.red);
-        }
+        log.error('[chimp][hooks]'.red, reason.stack);
       }
     } catch (e) {
       log.debug('[chimp][hooks] Could not provide error hint');

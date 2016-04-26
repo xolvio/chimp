@@ -579,7 +579,7 @@ describe('Chimp', function () {
         return callback(null, 'hello');
       });
       chimp._startProcesses = jest.genMockFunction().mockImplementation(function (callback) {
-        return callback(null, 'hello');
+        return callback(null, [undefined, '[]']);
       });
 
       var callback = jest.genMockFn();

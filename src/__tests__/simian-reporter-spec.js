@@ -14,8 +14,7 @@ describe('Simian reporter', function () {
 
     var callback = jest.genMockFunction();
     var result = [{id: 'Use-browser-inside-steps'}];
-    var asyncChainResponse = [null, [null, [JSON.stringify(result)]]];
-    simianReporter.report(asyncChainResponse, callback);
+    simianReporter.report(result, callback);
 
     expect(request.post.mock.calls.length).toBe(1);
 
@@ -50,8 +49,7 @@ describe('Simian reporter', function () {
 
     var callback = jest.genMockFunction();
     var result = [{id: 'Use-browser-inside-steps'}];
-    var asyncChainResponse = [null, [null, [JSON.stringify(result)]]];
-    simianReporter.report(asyncChainResponse, callback);
+    simianReporter.report(result, callback);
 
 
     // calls back on a good response
@@ -82,8 +80,7 @@ describe('Simian reporter', function () {
 
     var callback = jest.genMockFunction();
     var result = [{id: 'Use-browser-inside-steps'}];
-    var asyncChainResponse = [null, [null, [JSON.stringify(result)]]];
-    simianReporter.report(asyncChainResponse, callback);
+    simianReporter.report(result, callback);
 
 
     // calls back on a good response

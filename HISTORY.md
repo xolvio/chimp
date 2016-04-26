@@ -1,3 +1,65 @@
+# 0.33.1
+
+* Fixes jasmine watch mode
+
+# 0.33.0
+
+* Feature: Adds `jasmine.addSpecFilter` API for adding custom spec filters.
+
+# 0.32.1
+
+* Fix: Overwrite options with array values completely
+       instead of merging the default array value and the user array value.
+* Fix: Multiple watch tags with Jasmine
+
+# 0.32.0
+
+* Feature: Support for Jasmine
+  * [Getting started with Jasmine](https://chimp.readme.io/docs/getting-started-jasmine)
+  * [Jasmine support](https://chimp.readme.io/v1.0/docs/jasmine-support)
+* Upgrade: WebDriver.io 4 is now used.
+  * Breaking change: The webdriverio async API no longer supports callbacks, only promises.
+* Fix: Take only screenshots of errors to disk by default.
+* Change: Set timeoutsImplicitWait to 3 seconds by default
+
+# 0.31.1
+
+* Fixes default option value for deviceName.
+  So webdriverio no longer defaults to mobile mode.
+
+# 0.31.0
+
+* Updates Webdriver.io to 3.4.0
+* Support for all webdriverio options in config
+* __Breaking change__: Removed the feature
+  where you could do a custom initialization of webdriver via a chimp.js file.
+  Pass the webdriverio options via the config file instead.
+* __Breaking change__: Moved webdriverio specific options under the webdriverio config key.
+  All options that are documented (here)[http://webdriver.io/guide/getstarted/configuration.html] are supported.
+    * Moved options:
+      * baseUrl --> webdriverio.baseUrl
+      * waitForTimeout -> webdriverio.waitforTimeout
+      * webdriverLogLevel -> webdriverio.logLevel
+    * Removed options:
+      * that can be configured via desiredCapabilities now
+        * chromeBin
+        * chromeArgs
+        * chromeNoSandbox
+        * browserstackLocal
+        * tunnelIdentifier
+      * that can be configured via the webdriverio API
+        * [timeoutsAsyncScript](http://webdriver.io/api/protocol/timeoutsAsyncScript.html)
+        * [timeoutsImplicitWait](http://webdriver.io/api/protocol/timeoutsImplicitWait.html)
+* Use ia32 architecture for Internet Explorer
+* Fix: Output cucumber hook errors to the console
+* Fix: Saving screenshots
+* Fix: Use https:// for downloading selenium drivers (fixes #291)
+
+# 0.30.1
+
+* Better Appium support (195ad5a)
+* Fixes Simian reporting error when no specs were executed
+
 # 0.30.0
 
 * Fixes ES2015 support when using NPM 3 (Node.js 5)

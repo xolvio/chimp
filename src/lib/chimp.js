@@ -21,6 +21,7 @@ var DEFAULT_COLOR = 'yellow';
  * Internals
  */
 exports.Mocha = require('./mocha/mocha.js');
+exports.Jasmine = require('./jasmine/jasmine.js');
 exports.Cucumber = require('./cucumberjs/cucumber.js');
 exports.Phantom = require('./phantom.js');
 exports.Consoler = require('./consoler.js');
@@ -60,7 +61,9 @@ function Chimp (options) {
   // store all cli parameters in env hash
   for (var option in options) {
     // Note: Environment variables are always strings.
-    process.env['chimp.' + option] = options[option];
+    process.env['chimp.' + option] = _.isObject(options[option]) ?
+      JSON.stringify(options[option]) :
+      String(options[option]);
   }
 
   this._handleMeteorInterrupt();
@@ -352,12 +355,11 @@ Chimp.prototype.run = function (callback) {
     [
       self.interrupt.bind(self),
       self._startProcesses.bind(self),
-      self.interrupt.bind(self)
+      self.interrupt.bind(self),
     ],
-    function (err, res) {
-
-      if (err) {
-        log.debug('[chimp] run complete with errors', err);
+    function (error, result) {
+      if (error) {
+        log.debug('[chimp] run complete with errors', error);
       } else {
         log.debug('[chimp] run complete');
       }
@@ -365,12 +367,14 @@ Chimp.prototype.run = function (callback) {
       if (self.options.simianAccessToken &&
         self.options.simianResultBranch !== false
       ) {
-        var simianReporter = new exports.SimianReporter(self.options);
-        simianReporter.report(res, function () {
-          callback(err, res);
+        const jsonCucumberResult = result && result[1] && result[1][1] ?
+          JSON.parse(result[1][1]) : [];
+        const simianReporter = new exports.SimianReporter(self.options);
+        simianReporter.report(jsonCucumberResult, () => {
+          callback(error, result);
         });
       } else {
-        callback(err, res);
+        callback(error, result);
       }
     }
   );
@@ -499,6 +503,9 @@ Chimp.prototype._createProcesses = function () {
   if (booleanHelper.isTruthy(this.options.mocha)) {
     var mocha = new exports.Mocha(this.options);
     processes.push(mocha);
+  } else if (booleanHelper.isTruthy(this.options.jasmine)) {
+    const jasmine = new exports.Jasmine(this.options);
+    processes.push(jasmine);
   } else {
     if (booleanHelper.isTruthy(this.options.criticalSteps)) {
       // domain scenarios

@@ -1,9 +1,15 @@
 'use strict';
 
+var _deepExtend = require('deep-extend');
+
+var _deepExtend2 = _interopRequireDefault(_deepExtend);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var path = require('path');
 var fs = require('fs');
-var _ = require('underscore');
 var log = require('./log');
+
 
 module.exports = {
   getOptions: function getOptions() {
@@ -26,7 +32,7 @@ module.exports = {
       log.debug('[chimp] loaded', userOptionsFile);
     }
     var defaultOptions = this._requireFile(this._getDefaultConfigFilePath());
-    var options = _.defaults(userOptions, defaultOptions);
+    var options = (0, _deepExtend2.default)(defaultOptions, userOptions);
     log.debug('[chimp] Chimp options are', options);
     return options;
   },

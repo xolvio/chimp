@@ -1,15 +1,21 @@
-* What component is this issue related to (eg The JSON report):
+#####  Expected behaviour
 
-* Expected behaviour 
 
-* Actual behaviour:
 
-* Steps to reproduce the problem (preferably a reproducable repository):
+#####  Actual behaviour
 
-* Version of Chimp, Node and Operating System:
 
-* Console / Log Output:
-```
-Be sure to place the log output inside a triple back-tick block like this, so it's easy to read.
-If the console log does not contain enough information, please run with --debug
-```
+
+##### Steps to reproduce the problem
+
+(Preferably a repository and easy reproduction steps)
+
+#####  Used version
+
+* Chimp: 
+* Node.js:
+* Operation system: 
+
+#####  Console / Log Output
+
+(Upload long logs to [Gist](https://gist.github.com/) and link it here)

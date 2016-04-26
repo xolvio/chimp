@@ -14,12 +14,11 @@ var chai            = require('chai'),
     fs              = require('fs-extra'),
     exit            = require('exit'),
     booleanHelper   = require('./boolean-helper');
-import merge from 'deepmerge';
+import merge from 'deep-extend';
 import {
     parseNullableString,
     parseNullableInteger,
-    parseBoolean
-} from './environment-variable-parsers';
+    parseBoolean } from './environment-variable-parsers';
 
 var chimpHelper = {
   loadAssertionLibrary: function () {
@@ -124,7 +123,6 @@ var chimpHelper = {
         remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
         global.browser = remoteSession(webdriverioOptions);
       }
-
 
       chaiAsPromised.transferPromiseness = global.browser.transferPromiseness;
     };
