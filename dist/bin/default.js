@@ -4,6 +4,8 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _ci = require('../lib/ci');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -27,7 +29,7 @@ module.exports = {
   singleSnippetPerFile: true,
   recommendedFilenameSeparator: '_',
   chai: false,
-  screenshotsOnError: true,
+  screenshotsOnError: (0, _ci.isCI)(),
   screenshotsPath: '.screenshots',
   captureAllStepScreenshots: false,
   saveScreenshotsToDisk: true,
