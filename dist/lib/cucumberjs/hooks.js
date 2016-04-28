@@ -20,7 +20,6 @@ module.exports = function hooks() {
     log.debug('[chimp][hooks] Starting BeforeFeatures');
     global.chimpHelper.setupBrowserAndDDP();
     global.chimpHelper.createGlobalAliases();
-    browser.timeoutsImplicitWaitSync(3000);
     log.debug('[chimp][hooks] Finished BeforeFeatures');
     // noinspection JSUnresolvedVariable
     if (global.UserDefinedBeforeFeatures) {

@@ -1,4 +1,5 @@
 import path from 'path';
+import {isCI} from '../lib/ci';
 
 module.exports = {
   // - - - - CHIMP - - - -
@@ -21,7 +22,7 @@ module.exports = {
   singleSnippetPerFile: true,
   recommendedFilenameSeparator: '_',
   chai: false,
-  screenshotsOnError: true,
+  screenshotsOnError: isCI(),
   screenshotsPath: '.screenshots',
   captureAllStepScreenshots: false,
   saveScreenshotsToDisk: true,

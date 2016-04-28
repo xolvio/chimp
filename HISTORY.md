@@ -1,3 +1,12 @@
+# 0.34.0
+
+* Only take screenshots on errors in CI environment
+  (when CI environment variable is set to a truthy value) (fixes #344).
+  This fixes the problem that Chrome focuses when an error happens.
+* Use timeoutsImplicitWait default of 0 again (fixes #348, fixes #330).
+  Because the implicit wait will always wait the full 3000 seconds when the element
+  has not been found initially. It has no concept of a retry interval as assumed.
+
 # 0.33.1
 
 * Fixes jasmine watch mode
