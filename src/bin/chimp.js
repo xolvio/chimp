@@ -51,7 +51,7 @@ var argv = minimist(process.argv, {
   ],
 });
 
-if (argv.host && (argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1)) {
+if (argv.host && ((argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1) || argv.host.indexOf('testingbot') !== -1)) {
   argv.noSessionReuse = true;
 }
 
