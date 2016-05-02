@@ -32,14 +32,20 @@ var mocha = new Mocha(mochaOptions);
 
 mocha.addFile(path.join(path.resolve(__dirname, path.join('mocha-helper.js'))));
 
-// Add each .js file to the mocha instance
-var testDir = process.env['chimp.path'];
-glob.sync(path.join(testDir, '**')).filter(function (file) {
-  // Only keep the .js files
-  return file.substr(-3) === '.js';
-}).forEach(function (file) {
-  mocha.addFile(file);
-});
+if (process.argv.length > 3) {
+  process.argv.splice(3).forEach(function (spec) {
+    mocha.addFile(spec);
+  });
+} else {
+  // Add each .js file to the mocha instance
+  var testDir = process.env['chimp.path'];
+  glob.sync(path.join(testDir, '**')).filter(function (file) {
+    // Only keep the .js files
+    return file.substr(-3) === '.js';
+  }).forEach(function (file) {
+    mocha.addFile(file);
+  });
+}
 
 try {
   // Run the tests.

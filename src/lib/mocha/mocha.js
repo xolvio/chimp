@@ -61,9 +61,15 @@ Mocha.prototype.start = function (callback) {
     }
   }
 
-  self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), [
-    '--color'
-  ], opts);
+  let _specs = [];
+  if (this.options._.length > 2) {
+    _specs = this.options._.slice(2);
+  }
+
+  self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), _.union(
+      ['--color'],
+      _specs
+  ), opts);
 
   self.child.stdout.pipe(process.stdout);
   self.child.stderr.pipe(process.stderr);
