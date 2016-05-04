@@ -1,8 +1,7 @@
 # Chimp.js [![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/xolvio/chimp) [![Gitter](https://img.shields.io/gitter/room/xolvio/chimp.svg)](https://gitter.im/xolvio/chimp) [![npm Version](https://img.shields.io/npm/dm/chimp.svg)](https://www.npmjs.com/package/chimp) [![Code Climate](https://codeclimate.com/github/xolvio/chimp/badges/gpa.svg)](https://codeclimate.com/github/xolvio/chimp) [![License](https://img.shields.io/npm/l/chimp.svg)](https://www.npmjs.com/package/chimp)
 
 
-
-An awesome developer-centric experience to writing tests with **realtime feedback** using Mocha or Cucumber.js (Jasmine soon).
+An awesome developer-centric experience to writing tests with **realtime feedback** using Mocha, Jasmine or Cucumber.js.
 
 ![Chimp by Xolv.io](./images/header.png?raw=true)
 
@@ -84,7 +83,7 @@ No callback-hell or confusing assertions with promises, just easy-to-read synchr
 
 Chimp is tested on all the popular CI servers. We genuinely just want you to focus on writing tests and let us deal with all the boring bits!
 
-###### Mocha or Cucumber.js (Jasmine soon)
+###### Mocha, Jasmine or Cucumber.js
 ![Test Frameworks](./images/test-frameworks.png?raw=true)
 
 Some developers love Jasmine and Mocha, and some teams love to use Cucumber for BDD. We decided to give you the choice between the best in class test frameworks for writing end-to-end and acceptance tests. 
