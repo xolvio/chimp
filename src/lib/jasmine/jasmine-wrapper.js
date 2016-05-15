@@ -5,6 +5,7 @@ import Fiber from 'fibers';
 import _ from 'underscore';
 import {parseBoolean, parseString } from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
+import runHook from '../utils/run-hook';
 import fiberizeJasmineApi from './jasmine-fiberized-api';
 
 new Fiber(function runJasmineInFiber() {
@@ -38,6 +39,7 @@ new Fiber(function runJasmineInFiber() {
   jasmine.configureDefaultReporter(
     JSON.parse(process.env['chimp.jasmineReporterConfig'])
   );
+  runHook('jasmine', 'setup', jasmine);
   jasmine.execute();
 }).run();
 
