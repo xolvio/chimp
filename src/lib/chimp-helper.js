@@ -15,7 +15,6 @@ var chai            = require('chai'),
     exit            = require('exit'),
     booleanHelper   = require('./boolean-helper');
 import merge from 'deep-extend';
-import runHook from './utils/run-hook';
 import {
   parseNullableString,
   parseNullableInteger,
@@ -135,8 +134,6 @@ var chimpHelper = {
           height: process.env['chimp.phantom_h']?parseInt(process.env['chimp.phantom_h']):1024
         });
       }
-
-      runHook('webdriverio', 'setup', browser);
     };
 
     var addServerExecute = function () {
