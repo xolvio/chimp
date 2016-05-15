@@ -41,6 +41,7 @@ new Fiber(function runJasmineInFiber() {
   );
   runHook('jasmine', 'setup', jasmine);
   jasmine.execute();
+  runHook('jasmine', 'teardown', jasmine);
 }).run();
 
 

@@ -9,6 +9,7 @@ var Mocha = require('mocha'),
 
 import {parseBoolean, parseString } from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
+import runHook from '../utils/run-hook';
 
 var mochaOptions = {
   ui: 'fiberized-bdd-ui',
@@ -37,8 +38,12 @@ glob.sync(path.join(testDir, '**')).filter(function (file) {
 });
 
 try {
-// Run the tests.
+  // Run the setup hook if it exits
+  runHook('mocha', 'setup', mocha);
+
+  // Run the tests.
   mocha.run(function (failures) {
+    runHook('mocha', 'teardown', mocha);
     exit(failures);
   });
 } catch (e) {
