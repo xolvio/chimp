@@ -38,7 +38,6 @@ glob.sync(path.join(testDir, '**')).filter(function (file) {
 });
 
 try {
-  // Run the setup hook if it exits
   runHook('mocha', 'setup', mocha);
 
   // Run the tests.

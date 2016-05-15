@@ -67,6 +67,7 @@ var chimpHelper = {
   },
 
   setupBrowserAndDDP: function () {
+
     var setupBrowser = function () {
       log.debug('[chimp][helper] getting browser');
 
