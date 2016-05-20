@@ -1,7 +1,8 @@
 var requestretry = require('requestretry'),
     request = require('request'),
     log     = require('./log'),
-    booleanHelper   = require('./boolean-helper');
+    booleanHelper   = require('./boolean-helper'),
+    parseBoolean = require('./environment-variable-parsers').parseBoolean;
 
 /**
  * SessionManager Constructor
@@ -42,13 +43,13 @@ SessionManager.prototype.webdriver = require('xolvio-sync-webdriverio');
  *
  * @api public
  */
-SessionManager.prototype.remote = function (webdriverOptions, callback) {
 
+SessionManager.prototype._configureRemote = function(webdriverOptions, remote, callback) {
   var self = this;
 
   log.debug('[chimp][session-manager] creating webdriver remote ');
-  var browser = this.webdriver.remote(webdriverOptions);
 
+  var browser = remote(webdriverOptions);
   function decideReuse () {
 
     if (self.options.browser === 'phantomjs') {
@@ -89,6 +90,14 @@ SessionManager.prototype.remote = function (webdriverOptions, callback) {
 
   this._waitForConnection(browser, decideReuse);
 
+};
+
+SessionManager.prototype.multiremote = function(webdriverOptions, callback) {
+  this._configureRemote(webdriverOptions, this.webdriver.multiremote, callback);
+};
+
+SessionManager.prototype.remote = function (webdriverOptions, callback) {
+  this._configureRemote(webdriverOptions, this.webdriver.remote, callback);
 };
 
 
@@ -218,8 +227,8 @@ SessionManager.prototype.killCurrentSession = function (callback) {
     return;
   }
 
-
-  if (process.env['chimp.watch'] === 'true' || process.env['chimp.server'] === 'true') {
+  if ((parseBoolean(process.env['chimp.watch']) || parseBoolean(process.env['chimp.server']))
+    && !parseBoolean(process.env['forceSessionKill'])) {
     log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
     callback();
     return;
@@ -231,19 +240,19 @@ SessionManager.prototype.killCurrentSession = function (callback) {
   this._getWebdriverSessions(function(err, sessions) {
 
     if (sessions.length) {
-      // XXX this currently only works for one open session at a time
-      var sessionId = sessions[0].id;
+      sessions.forEach(function(session) {
+        var sessionId = session.id;
+        log.debug('[chimp][session-manager]', 'deleting wd session', sessionId);
 
-      log.debug('[chimp][session-manager]', 'deleting wd session', sessionId);
-
-      request.del(wdHubSession + '/' + sessionId, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          log.debug('[chimp][session-manager]', 'received data', body);
-          callback();
-        } else {
-          log.error('[chimp][session-manager]', 'received error', error);
-          callback(error);
-        }
+        request.del(wdHubSession + '/' + sessionId, function(error, response, body) {
+          if (!error && response.statusCode == 200) {
+            log.debug('[chimp][session-manager]', 'received data', body);
+            callback();
+          } else {
+            log.error('[chimp][session-manager]', 'received error', error);
+            callback(error);
+          }
+        });
       });
     } else {
       callback(null);

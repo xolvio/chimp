@@ -56,6 +56,7 @@ var chimpHelper = {
 
   configureWidgets: function () {
     // CHIMP WIDGETS
+    widgets.driver.api = global.browser;
     global.chimpWidgets = widgets;
   },
 
@@ -105,17 +106,29 @@ var chimpHelper = {
       }
 
       log.debug('[chimp][helper] webdriverioOptions are ', JSON.stringify(webdriverioOptions));
+      let remoteSession;
+      if (parseNullableInteger(process.env['CUCUMBER_BROWSERS'])) {
+        var options = _.clone(webdriverioOptions);
+        options.multiBrowser = true;
+        const multiremoteWebdriverIoOptions = {};
+        var _browsersTotal = parseNullableInteger(process.env['CUCUMBER_BROWSERS']);
+        for (var _browserIndex = 0; _browserIndex < _browsersTotal; _browserIndex++) {
+          multiremoteWebdriverIoOptions['browser' + _browserIndex] = _.clone(options);
+        }
+        remoteSession = wrapAsync(global.sessionManager.multiremote, global.sessionManager);
+        global.browser = remoteSession(multiremoteWebdriverIoOptions);
 
-      const remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
-      global.browser = remoteSession(webdriverioOptions);
+      }
+      else {
+        remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
+        global.browser = remoteSession(webdriverioOptions);
+      }
 
       chaiAsPromised.transferPromiseness = global.browser.transferPromiseness;
     };
 
-    var initBrowser = function () {
+    var initSingleBrowser = function (browser) {
       log.debug('[chimp][helper] init browser');
-      var browser = global.browser;
-      browser.initSync();
       log.debug('[chimp][helper] init browser callback');
 
       browser.screenshotsCount = 0;
@@ -135,6 +148,23 @@ var chimpHelper = {
           height: process.env['chimp.phantom_h']?parseInt(process.env['chimp.phantom_h']):1024
         });
       }
+    }
+
+    var initBrowser = function () {
+      log.debug('[chimp][hooks] init browser');
+      var browser = global.browser;
+      log.debug('[chimp][hooks] init browser callback');
+
+      if (browser.instances) {
+        browser.instances.forEach(function(singleBrowser) {
+          initSingleBrowser(singleBrowser)
+        });
+      }
+      else {
+        browser.initSync();
+        initSingleBrowser(browser);
+      }
+
     };
 
     var addServerExecute = function () {

@@ -70,6 +70,7 @@ var chimpHelper = {
 
   configureWidgets: function configureWidgets() {
     // CHIMP WIDGETS
+    widgets.driver.api = global.browser;
     global.chimpWidgets = widgets;
   },
 
@@ -112,17 +113,28 @@ var chimpHelper = {
       }
 
       log.debug('[chimp][helper] webdriverioOptions are ', (0, _stringify2.default)(webdriverioOptions));
-
-      var remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
-      global.browser = remoteSession(webdriverioOptions);
+      var remoteSession = void 0;
+      if ((0, _environmentVariableParsers.parseNullableInteger)(process.env['CUCUMBER_BROWSERS'])) {
+        var options = _.clone(webdriverioOptions);
+        options.multiBrowser = true;
+        var multiremoteWebdriverIoOptions = {};
+        var _browsersTotal = (0, _environmentVariableParsers.parseNullableInteger)(process.env['CUCUMBER_BROWSERS']);
+        for (var _browserIndex = 0; _browserIndex < _browsersTotal; _browserIndex++) {
+          multiremoteWebdriverIoOptions['browser' + _browserIndex] = _.clone(options);
+        }
+        remoteSession = wrapAsync(global.sessionManager.multiremote, global.sessionManager);
+        global.browser = remoteSession(multiremoteWebdriverIoOptions);
+      } else {
+        remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
+        global.browser = remoteSession(webdriverioOptions);
+      }
 
       chaiAsPromised.transferPromiseness = global.browser.transferPromiseness;
     };
 
-    var initBrowser = function initBrowser() {
+    var initSingleBrowser = function initSingleBrowser(browser) {
       log.debug('[chimp][helper] init browser');
-      var browser = global.browser;
-      browser.initSync();
+      //browser.initSync();
       log.debug('[chimp][helper] init browser callback');
 
       browser.screenshotsCount = 0;
@@ -141,6 +153,21 @@ var chimpHelper = {
           width: process.env['chimp.phantom_w'] ? parseInt(process.env['chimp.phantom_w']) : 1280,
           height: process.env['chimp.phantom_h'] ? parseInt(process.env['chimp.phantom_h']) : 1024
         });
+      }
+    };
+
+    var initBrowser = function initBrowser() {
+      log.debug('[chimp][hooks] init browser');
+      var browser = global.browser;
+      log.debug('[chimp][hooks] init browser callback');
+
+      if (browser.instances) {
+        browser.instances.forEach(function (singleBrowser) {
+          initSingleBrowser(singleBrowser);
+        });
+      } else {
+        browser.initSync();
+        initSingleBrowser(browser);
       }
     };
 
