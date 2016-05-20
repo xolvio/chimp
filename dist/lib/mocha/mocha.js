@@ -70,6 +70,7 @@ Mocha.prototype.start = function (callback) {
 
   self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), _.union(['--color'], _specs), opts);
 
+  process.stdin.pipe(this.child.stdin);
   self.child.stdout.pipe(process.stdout);
   self.child.stderr.pipe(process.stderr);
 
