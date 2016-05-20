@@ -226,12 +226,12 @@ SessionManager.prototype.killCurrentSession = function (callback) {
     return;
   }
 
-    if ((process.env['chimp.watch'] === 'true' || process.env['chimp.server'] === 'true')
-      && !process.env['forceSessionKill']) {
-      log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
-      callback();
-      return;
-    }
+  if ((process.env['chimp.watch'] === 'true' || process.env['chimp.server'] === 'true')
+    && !process.env['forceSessionKill']) {
+    log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
+    callback();
+    return;
+  }
 
 
   var wdHubSession = 'http://' + this.options.host + ':' + this.options.port + '/wd/hub/session';
