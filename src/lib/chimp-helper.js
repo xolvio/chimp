@@ -16,9 +16,9 @@ var chai            = require('chai'),
     booleanHelper   = require('./boolean-helper');
 import merge from 'deep-extend';
 import {
-    parseNullableString,
-    parseNullableInteger,
-    parseBoolean } from './environment-variable-parsers';
+  parseNullableString,
+  parseNullableInteger,
+  parseBoolean } from './environment-variable-parsers';
 
 var chimpHelper = {
   loadAssertionLibrary: function () {
@@ -74,31 +74,31 @@ var chimpHelper = {
 
       const webdriverioConfigOptions = JSON.parse(process.env['chimp.webdriverio']);
       const webdriverioOptions = merge(
-          webdriverioConfigOptions,
-          {
-            desiredCapabilities: {
-              browserName: parseNullableString(process.env['chimp.browser']),
-              platform: parseNullableString(process.env['chimp.platform']),
-              name: parseNullableString(process.env['chimp.name']),
-              version: parseNullableString(process.env['chimp.version']),
-              deviceName: parseNullableString(process.env['chimp.deviceName']),
-            },
-            user: parseNullableString(process.env['chimp.user'] || process.env.SAUCE_USERNAME),
-            key: parseNullableString(process.env['chimp.key'] || process.env.SAUCE_ACCESS_KEY),
-            host: parseNullableString(process.env['chimp.host']),
-            port: parseNullableInteger(process.env['chimp.port']),
-            logLevel: booleanHelper.isTruthy(process.env['chimp.debug']) ?
-                'verbose' : webdriverioConfigOptions.logLevel,
-            sync: parseBoolean(process.env['chimp.sync']),
-          }
+        webdriverioConfigOptions,
+        {
+          desiredCapabilities: {
+            browserName: parseNullableString(process.env['chimp.browser']),
+            platform: parseNullableString(process.env['chimp.platform']),
+            name: parseNullableString(process.env['chimp.name']),
+            version: parseNullableString(process.env['chimp.version']),
+            deviceName: parseNullableString(process.env['chimp.deviceName']),
+          },
+          user: parseNullableString(process.env['chimp.user'] || process.env.SAUCE_USERNAME),
+          key: parseNullableString(process.env['chimp.key'] || process.env.SAUCE_ACCESS_KEY),
+          host: parseNullableString(process.env['chimp.host']),
+          port: parseNullableInteger(process.env['chimp.port']),
+          logLevel: booleanHelper.isTruthy(process.env['chimp.debug']) ?
+            'verbose' : webdriverioConfigOptions.logLevel,
+          sync: parseBoolean(process.env['chimp.sync']),
+        }
       );
 
       global.sessionManager = new SessionFactory(Object.assign(
-          _.pick(webdriverioOptions, 'host', 'port', 'user', 'key'),
-          {
-            browser: webdriverioOptions.desiredCapabilities.browserName,
-            deviceName: webdriverioOptions.desiredCapabilities.deviceName,
-          }
+        _.pick(webdriverioOptions, 'host', 'port', 'user', 'key'),
+        {
+          browser: webdriverioOptions.desiredCapabilities.browserName,
+          deviceName: webdriverioOptions.desiredCapabilities.deviceName,
+        }
       ));
 
       if (booleanHelper.isTruthy(process.env['chimp.watch'])) {
@@ -129,7 +129,6 @@ var chimpHelper = {
 
     var initSingleBrowser = function (browser) {
       log.debug('[chimp][helper] init browser');
-      //browser.initSync();
       log.debug('[chimp][helper] init browser callback');
 
       browser.screenshotsCount = 0;

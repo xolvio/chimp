@@ -77,8 +77,6 @@ SessionManager.prototype._configureRemote = function(webdriverOptions, remote, c
       if (sessions.length !== 0) {
         log.debug('[chimp][session-manager] Found an open selenium sessions, reusing session', sessions[0].id);
         browser._original.requestHandler.sessionID = sessions[0].id;
-
-        //browser.browsers[index]._original.requestHandler.sessionID = sessions[index].id
       } else {
         log.debug('[chimp][session-manager] Did not find any open selenium sessions, not reusing a session');
       }
@@ -96,8 +94,6 @@ SessionManager.prototype._configureRemote = function(webdriverOptions, remote, c
 SessionManager.prototype.multiremote = function(webdriverOptions, callback) {
   this._configureRemote(webdriverOptions, this.webdriver.multiremote, callback);
 };
-
-
 
 SessionManager.prototype.remote = function (webdriverOptions, callback) {
   this._configureRemote(webdriverOptions, this.webdriver.remote, callback);
@@ -230,13 +226,11 @@ SessionManager.prototype.killCurrentSession = function (callback) {
     return;
   }
 
-  console.log("process.env sessionKill", process.env['forceSessionKill']);
-
     if ((process.env['chimp.watch'] === 'true' || process.env['chimp.server'] === 'true')
-        && !process.env['forceSessionKill']) {
-        log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
-        callback();
-        return;
+      && !process.env['forceSessionKill']) {
+      log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
+      callback();
+      return;
     }
 
 
