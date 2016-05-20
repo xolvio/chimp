@@ -1,7 +1,8 @@
 var requestretry = require('requestretry'),
     request = require('request'),
     log     = require('./log'),
-    booleanHelper   = require('./boolean-helper');
+    booleanHelper   = require('./boolean-helper'),
+    parseBoolean = require('./environment-variable-parsers').parseBoolean;
 
 /**
  * SessionManager Constructor
@@ -226,8 +227,8 @@ SessionManager.prototype.killCurrentSession = function (callback) {
     return;
   }
 
-  if ((process.env['chimp.watch'] === 'true' || process.env['chimp.server'] === 'true')
-    && !process.env['forceSessionKill']) {
+  if ((parseBoolean(process.env['chimp.watch']) || parseBoolean(process.env['chimp.server']))
+    && !parseBoolean(process.env['forceSessionKill'])) {
     log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
     callback();
     return;
