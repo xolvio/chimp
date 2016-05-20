@@ -1,3 +1,8 @@
+# 0.34.1
+
+* Fix (#351): When the browser.debug() statement is hit I expect
+  to continue the test by pressing [ENTER] in the console window.
+
 # 0.34.0
 
 * Only take screenshots on errors in CI environment
