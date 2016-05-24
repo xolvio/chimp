@@ -20,6 +20,6 @@
 
 (Upload long logs to [Gist](https://gist.github.com/) and link it here)
 
-
 <!-- please leave the content below this line as it helps others find help -->
+------- 
 *Join our Slack [xolv.io/community](xolv.io/community) #chimp channel, where you can find help and help others.*
