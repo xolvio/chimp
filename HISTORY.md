@@ -1,3 +1,7 @@
+# 0.35.0
+
+* Feature: Support for multibrowser testing
+
 # 0.34.1
 
 * Fix (#351): When the browser.debug() statement is hit I expect

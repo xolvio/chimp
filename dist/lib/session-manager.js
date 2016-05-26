@@ -3,7 +3,8 @@
 var requestretry = require('requestretry'),
     request = require('request'),
     log = require('./log'),
-    booleanHelper = require('./boolean-helper');
+    booleanHelper = require('./boolean-helper'),
+    parseBoolean = require('./environment-variable-parsers').parseBoolean;
 
 /**
  * SessionManager Constructor
@@ -78,11 +79,9 @@ SessionManager.prototype._configureRemote = function (webdriverOptions, remote, 
       if (sessions.length !== 0) {
         log.debug('[chimp][session-manager] Found an open selenium sessions, reusing session', sessions[0].id);
         browser._original.requestHandler.sessionID = sessions[0].id;
-
-        //browser.browsers[index]._original.requestHandler.sessionID = sessions[index].id
       } else {
-          log.debug('[chimp][session-manager] Did not find any open selenium sessions, not reusing a session');
-        }
+        log.debug('[chimp][session-manager] Did not find any open selenium sessions, not reusing a session');
+      }
 
       browser = self._monkeyPatchBrowserSessionManagement(browser, sessions);
       callback(null, browser);
@@ -220,9 +219,7 @@ SessionManager.prototype.killCurrentSession = function (callback) {
     return;
   }
 
-  console.log("process.env sessionKill", process.env['forceSessionKill']);
-
-  if ((process.env['chimp.watch'] === 'true' || process.env['chimp.server'] === 'true') && !process.env['forceSessionKill']) {
+  if ((parseBoolean(process.env['chimp.watch']) || parseBoolean(process.env['chimp.server'])) && !parseBoolean(process.env['forceSessionKill'])) {
     log.debug('[chimp][session-manager] watch / server mode are true, not killing session');
     callback();
     return;

@@ -134,7 +134,6 @@ var chimpHelper = {
 
     var initSingleBrowser = function initSingleBrowser(browser) {
       log.debug('[chimp][helper] init browser');
-      //browser.initSync();
       log.debug('[chimp][helper] init browser callback');
 
       browser.screenshotsCount = 0;
