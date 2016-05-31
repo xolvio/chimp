@@ -69,6 +69,8 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
+  // mochaTags only works when watch is false (disabled)
+  // mochaTags: ''
   // 'path: './tests',
   mochaTimeout: 60000,
   mochaReporter: 'spec',
