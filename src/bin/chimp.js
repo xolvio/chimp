@@ -8,7 +8,8 @@ var Chimp = require('../lib/chimp.js'),
    fs = require('fs'),
    _ = require('underscore'),
    path = require('path'),
-   optionsLoader = require('../lib/options-loader');
+   optionsLoader = require('../lib/options-loader'),
+    pkg = require('../../package.json');
 
 // Make babel plugins available to Cucumber and Mocha child processes
 process.env.NODE_PATH += path.delimiter + path.resolve(__dirname, '../../node_modules') +
@@ -50,6 +51,11 @@ var argv = minimist(process.argv, {
     'debug',
   ],
 });
+
+if (argv.v || argv.version) {
+  console.log(pkg.version);
+  return;
+}
 
 if (argv.host && ((argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1) || argv.host.indexOf('testingbot') !== -1)) {
   argv.noSessionReuse = true;
