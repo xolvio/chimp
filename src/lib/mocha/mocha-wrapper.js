@@ -21,6 +21,10 @@ if (parseBoolean(process.env['chimp.watch'])) {
   mochaOptions.grep = new RegExp(
     parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|')
   );
+} else {
+  mochaOptions.grep = new RegExp(
+    parseString(process.env['chimp.mochaTags']).split(',').map(escapeRegExp).join('|')
+  );
 }
 
 var mocha = new Mocha(mochaOptions);
