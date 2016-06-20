@@ -45,7 +45,8 @@ if (argv.host && (argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browse
   argv.noSessionReuse = true;
 }
 
-if (argv.deviceName) {
+//browser and deviceName are required to run tests on mobile browsers chrome/safari on iOS/Android
+if (argv.deviceName && !argv.browser) {
   argv.browser = '';
 }
 
