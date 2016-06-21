@@ -41,7 +41,7 @@ Phantom.prototype.start = function (callback) {
   }
 
   this.child = processHelper.start({
-    bin: phantomjs.path,
+    bin: process.env['chimp.phantom_path'] || phantomjs.path,
     prefix: 'phantom',
     args: ['--webdriver', port, '--ignore-ssl-errors', ignoreSSLErrors],
     waitForMessage: /GhostDriver - Main - running on port/,
