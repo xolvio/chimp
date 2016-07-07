@@ -54,7 +54,7 @@ var argv = minimist(process.argv, {
 
 if (argv.v || argv.version) {
   console.log(pkg.version);
-  return;
+  process.exit();
 }
 
 if (argv.host && ((argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1) || argv.host.indexOf('testingbot') !== -1)) {
