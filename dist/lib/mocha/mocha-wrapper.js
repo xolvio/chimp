@@ -26,6 +26,8 @@ var mochaOptions = {
 
 if ((0, _environmentVariableParsers.parseBoolean)(process.env['chimp.watch'])) {
   mochaOptions.grep = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.watchTags']).split(',').map(_escapeRegExp2.default).join('|'));
+} else {
+  mochaOptions.grep = new RegExp((0, _environmentVariableParsers.parseString)(process.env['chimp.mochaTags']).split(',').map(_escapeRegExp2.default).join('|'));
 }
 
 var mocha = new Mocha(mochaOptions);
