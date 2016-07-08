@@ -54,35 +54,34 @@ var argv = minimist(process.argv, {
 
 if (argv.v || argv.version) {
   console.log(pkg.version);
-  return;
-}
-
-if (argv.host && ((argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1) || argv.host.indexOf('testingbot') !== -1)) {
-  argv.noSessionReuse = true;
-}
-
-if (argv.deviceName) {
-  argv.browser = '';
-}
-
-try {
-  if (!argv.port) {
-    freeport(function (error, port) {
-      if (error) {
-        throw error;
-      }
-      argv.port = port;
-      startChimp(argv);
-    });
-  } else {
-    startChimp(argv)
+} else {
+  if (argv.host && ((argv.host.indexOf('sauce') !== -1 || argv.host.indexOf('browserstack') !== -1) ||
+    argv.host.indexOf('testingbot') !== -1)) {
+    argv.noSessionReuse = true;
   }
 
-} catch (ex) {
-  process.stderr.write(ex.stack + '\n');
-  exit(2);
-}
+  if (argv.deviceName) {
+    argv.browser = '';
+  }
 
+  try {
+    if (!argv.port) {
+      freeport(function (error, port) {
+        if (error) {
+          throw error;
+        }
+        argv.port = port;
+        startChimp(argv);
+      });
+    } else {
+      startChimp(argv)
+    }
+
+  } catch (ex) {
+    process.stderr.write(ex.stack + '\n');
+    exit(2);
+  }
+}
 function startChimp (options) {
   var chimp = new Chimp(options);
   chimp.init(function (err) {

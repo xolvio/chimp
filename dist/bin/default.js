@@ -76,6 +76,8 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
+  // mochaTags only works when watch is false (disabled)
+  mochaTags: '',
   // 'path: './tests',
   mochaTimeout: 60000,
   mochaReporter: 'spec',
@@ -101,7 +103,6 @@ module.exports = {
   // - - - - PHANTOM  - - - -
   phantom_w: 1280,
   phantom_h: 1024,
-  phantom_ignoreSSLErrors: false,
 
   // - - - - DEBUGGING  - - - -
   log: 'info',
