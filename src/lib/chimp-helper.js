@@ -33,6 +33,7 @@ var chimpHelper = {
     } else {
       log.debug('[chimp][helper] Using the jasmine-expect assertion library');
       global.expect = require('xolvio-jasmine-expect').expect;
+      global.jasmine = require('xolvio-jasmine-expect');
     }
   },
 
