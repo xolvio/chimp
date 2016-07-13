@@ -57,6 +57,7 @@ function Chimp (options) {
   this.isInterrupting = false;
   this.exec = require('child_process').exec;
   this.fs = fs;
+  this.testRunnerRunOrder = [];
 
   // store all cli parameters in env hash
   for (var option in options) {
@@ -357,7 +358,7 @@ Chimp.prototype.run = function (callback) {
       return []
     }
 
-    let jsonResult = [];
+    let jsonResult = '[]';
     _.any(['domain', 'critical', 'generic'], (type) => {
       let _testRunner = _.findWhere(self.testRunnerRunOrder, {name: 'cucumber', type });
       if (_testRunner) {
@@ -474,7 +475,6 @@ Chimp.prototype._startProcesses = function (callback) {
 
   var self = this;
 
-  self.testRunnerRunOrder = [];
   self.processes = self._createProcesses();
 
 
