@@ -7,6 +7,8 @@ module.exports = {
   // - - - - CUCUMBER - - - -
   path: './features',
 
+  jsonOutput: 'output.json',
+
   // '- - - - DEBUGGING  - - - -
   log: 'info',
   debug: false,
