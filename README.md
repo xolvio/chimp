@@ -48,7 +48,7 @@ let Chimp = require('chimp');
 let options = require('./my/config/for/chimp');
 options['_'] = [
 	'/my/path/to/node',
-	'/my/path/to/my/project/node_modules/chimp/bin/chimp.js'
+	'/my/path/to/my/project/node_modules/.bin/chimp.js'
 ];
 let chimp = new Chimp(options);
 chimp.run(function (err, res) {
