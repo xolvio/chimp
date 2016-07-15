@@ -184,7 +184,7 @@ class Cucumber {
         if (trimmedLine.indexOf('node.js:') !== -1) {
           return;
         }
-
+        _conditionOutput
         // for stack trace lines
         if (trimmedLine.indexOf('at') === 0) {
           // that contain a path to a source file in the features directory
@@ -272,7 +272,6 @@ class Cucumber {
     });
 
     log.debug('[chimp][cucumber] Cucumber exec options are: ', execOptions);
-    console.log('[chimp][cucumber] Cucumber exec options are: ', execOptions);
     return execOptions;
   }
 
