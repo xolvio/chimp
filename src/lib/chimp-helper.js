@@ -229,7 +229,6 @@ var chimpHelper = {
   },
 
   init: function () {
-    this.configureWidgets();
     this.setupGlobals();
     this.createGlobalAliases();
   }
