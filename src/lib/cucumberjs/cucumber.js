@@ -253,14 +253,14 @@ class Cucumber {
       if (_.contains(allowedCucumberJsOptions.long, optionName)) {
         _.forEach(optionValues, (optionValue) => {
           execOptions.push('--' + optionName);
-          if (optionName !== 'strict') {
+          if (['dry-run', 'fail-fast', 'no-colors', 'no-snippets', 'no-source', 'strict'].indexOf(optionName) === -1) {
             execOptions.push(optionValue.toString());
           }
         });
       } else if (_.contains(allowedCucumberJsOptions.short, optionName)) {
         _.forEach(optionValues, (optionValue) => {
           execOptions.push('-' + optionName);
-          if (optionName !== 'S') {
+          if (['d', 'S'].indexOf(optionName) === -1) {
             execOptions.push(optionValue.toString());
           }
         });
@@ -272,6 +272,7 @@ class Cucumber {
     });
 
     log.debug('[chimp][cucumber] Cucumber exec options are: ', execOptions);
+    console.log('[chimp][cucumber] Cucumber exec options are: ', execOptions);
     return execOptions;
   }
 

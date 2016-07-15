@@ -58,6 +58,30 @@ module.exports = {
     waitforInterval: 250,
   },
 
+  // - - - - SELENIUM-STANDALONE
+  seleniumStandaloneOptions: {
+    // check for more recent versions of selenium here:
+    // http://selenium-release.storage.googleapis.com/index.html
+    version: '2.53.1',
+    baseURL: 'https://selenium-release.storage.googleapis.com',
+    drivers: {
+      chrome: {
+        // check for more recent versions of chrome driver here:
+        // http://chromedriver.storage.googleapis.com/index.html
+        version: '2.22',
+        arch: process.arch,
+        baseURL: 'https://chromedriver.storage.googleapis.com'
+      },
+      ie: {
+        // check for more recent versions of internet explorer driver here:
+        // http://selenium-release.storage.googleapis.com/index.html
+        version: '2.50.0',
+        arch: 'ia32',
+        baseURL: 'https://selenium-release.storage.googleapis.com'
+      }
+    }
+  },
+
   // - - - - SESSION-MANAGER  - - - -
   noSessionReuse: false,
 
@@ -69,8 +93,9 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
-  // mochaTags only works when watch is false (disabled)
+  // mochaTags and mochaGrep only work when watch is false (disabled)
   mochaTags: '',
+  mochaGrep: null,
   // 'path: './tests',
   mochaTimeout: 60000,
   mochaReporter: 'spec',

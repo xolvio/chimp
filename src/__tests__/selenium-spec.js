@@ -76,7 +76,10 @@ describe('Selenium', function () {
 
     it('installs selenium', function () {
       var Selenium = require('../lib/selenium');
-      var selenium = new Selenium({port: '4444'});
+      var selenium = new Selenium({
+        port: '4444',
+        seleniumStandaloneOptions: {},
+      });
       var seleniumStandalone = require('selenium-standalone');
 
       selenium.install();
@@ -86,7 +89,10 @@ describe('Selenium', function () {
 
     it('passes callback to selenium-standalone call', function () {
       var Selenium = require('../lib/selenium');
-      var selenium = new Selenium({port: '4444'});
+      var selenium = new Selenium({
+        port: '4444',
+        seleniumStandaloneOptions: {},
+      });
       var seleniumStandalone = require('selenium-standalone');
       var callback = function () {};
 
@@ -115,7 +121,10 @@ describe('Selenium', function () {
     it('uses options.port to start selenium', function () {
       var Selenium = require('../lib/selenium');
       var port = '4444';
-      var selenium = new Selenium({port: port});
+      var selenium = new Selenium({
+        port: '4444',
+        seleniumStandaloneOptions: {},
+      });
       var seleniumStandalone = require('selenium-standalone');
       selenium.install = jest.genMockFunction();
       selenium.install.mockImplementation(function (callback) {
@@ -130,7 +139,10 @@ describe('Selenium', function () {
 
     it('sets this.child to the selenium child process', function () {
       var Selenium = require('../lib/selenium');
-      var selenium = new Selenium({port: '4444'});
+      var selenium = new Selenium({
+        port: '4444',
+        seleniumStandaloneOptions: {},
+      });
       var seleniumStandalone = require('selenium-standalone');
       selenium.install = jest.genMockFunction();
       selenium.install.mockImplementation(function (callback) {
@@ -154,7 +166,10 @@ describe('Selenium', function () {
     it('calls the callback with null when selenium has been started successfully', function () {
 
       var Selenium = require('../lib/selenium');
-      var selenium = new Selenium({port: '4444'});
+      var selenium = new Selenium({
+        port: '4444',
+        seleniumStandaloneOptions: {},
+      });
       var seleniumStandalone = require('selenium-standalone');
       selenium.install = jest.genMockFunction();
       selenium.install.mockImplementation(function (callback) {
@@ -179,7 +194,10 @@ describe('Selenium', function () {
     it('calls the callback with the error when selenium fails to start', function () {
 
       var Selenium = require('../lib/selenium');
-      var selenium = new Selenium({port: '4444'});
+      var selenium = new Selenium({
+        port: '4444',
+        seleniumStandaloneOptions: {},
+      });
       var seleniumStandalone = require('selenium-standalone');
       selenium.install = jest.genMockFunction();
       selenium.install.mockImplementation(function (callback) {
