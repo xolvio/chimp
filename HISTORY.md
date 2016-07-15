@@ -1,3 +1,18 @@
+# 0.37.1
+
+* Fixes Cucumber.js error conditioning
+
+# 0.37.0
+
+* Adds mochaGrep field
+* Extracts the selenium-standalone options
+* Allows custom Phantom-bin path
+* Lots of bug fixes
+
+# 0.36.0
+
+* Simian fixes
+
 # 0.35.0
 
 * Feature: Support for multibrowser testing
