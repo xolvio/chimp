@@ -8,7 +8,6 @@ var chai = require('chai'),
   wrapAsync = require('xolvio-sync-webdriverio').wrapAsync,
   wrapAsyncObject = require('xolvio-sync-webdriverio').wrapAsyncObject,
   SessionFactory = require('./session-factory'),
-  widgets = require('chimp-widgets'),
   path = require('path'),
   colors = require('colors'),
   fs = require('fs-extra'),
@@ -52,12 +51,6 @@ var chimpHelper = {
     if (booleanHelper.isTruthy(process.env['chimp.ddp'])) {
       global.ddp = new DDP().connect();
     }
-  },
-
-  configureWidgets: function () {
-    // CHIMP WIDGETS
-    widgets.driver.api = global.browser;
-    global.chimpWidgets = widgets;
   },
 
   createGlobalAliases: function () {

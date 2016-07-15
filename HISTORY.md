@@ -1,3 +1,7 @@
+# Next
+
+* Removes Chimp widgets in favor of WebdriverIO's [page objects](https://github.com/webdriverio/webdriverio/tree/master/examples/pageobject)
+
 # 0.38.0
 
 * Updated to PhantomJS 2
