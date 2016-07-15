@@ -32,6 +32,7 @@ module.exports = {
   saveScreenshotsToReport: false,
   jsonOutput: null,
   compiler: 'js:' + path.resolve(__dirname, '../lib/babel-register.js'),
+  conditionOutput: true,
 
   // - - - - SELENIUM  - - - -
   browser: 'chrome',

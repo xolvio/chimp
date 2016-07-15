@@ -57,9 +57,14 @@ class Cucumber {
     this.cucumberChild = cp.fork(path.join(__dirname, 'cucumber-wrapper.js'), args, opts);
     process.stdin.pipe(this.cucumberChild.stdin);
 
-    this.cucumberChild.stdout.on('data', (data) => {
-      this._conditionMessage(data.toString());
-    });
+    console.log('this.options.conditionOutput', this.options.conditionOutput)
+    if (booleanHelper.isTruthy(this.options.conditionOutput)) {
+      this.cucumberChild.stdout.on('data', (data) => {
+        this._conditionMessage(data.toString());
+      });
+    } else {
+      this.cucumberChild.stdout.pipe(process.stdout);
+    }
 
     this.cucumberChild.stderr.pipe(process.stderr);
 
@@ -178,19 +183,14 @@ class Cucumber {
       _.each(message.split('\n'), (line) => {
         const trimmedLine = line.trim();
         const relativePathLine = line.replace(basePathParent + path.sep, '');
-
         // filter out some known unnecessary lines
         // console.error('[' + line + ']');
-        if (trimmedLine.indexOf('node.js:') !== -1) {
+        if (trimmedLine.indexOf('node_modules') !== -1) {
           return;
         }
-        _conditionOutput
         // for stack trace lines
         if (trimmedLine.indexOf('at') === 0) {
-          // that contain a path to a source file in the features directory
-          if (trimmedLine.indexOf(basePath) !== -1) {
-            msg += relativePathLine.yellow + '\n';
-          }
+          msg += relativePathLine.yellow + '\n';
         } else {
           // or other lines that start with a tab (cucumber repeats errors at the end)
           if (line.indexOf(TAB) !== -1) {
@@ -210,7 +210,7 @@ class Cucumber {
 
   _getExecOptions(options) {
     const execOptions = ['node', path.resolve(__dirname,
-       path.join('..', '..', '..', 'node_modules', '.bin', 'cucumber.js')
+      path.join('..', '..', '..', 'node_modules', '.bin', 'cucumber.js')
     )];
 
     // XXX a feature may be defined at the start or end
@@ -265,7 +265,7 @@ class Cucumber {
           }
         });
       } else if (_.last(optionValues) === false &&
-         _.contains(allowedCucumberJsOptions.long, 'no-' + optionName)
+        _.contains(allowedCucumberJsOptions.long, 'no-' + optionName)
       ) {
         execOptions.push('--no-' + optionName);
       }
