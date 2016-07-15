@@ -21,7 +21,7 @@ function Cli(argv) {
     return memo;
   }
 
-  function getProgram () {
+  function getProgram() {
     var program = new Command(path.basename(argv[1]));
 
     program
@@ -42,7 +42,7 @@ function Cli(argv) {
       .option('-S, --strict', 'fail if there are any undefined or pending steps')
       .option('-t, --tags <EXPRESSION>', 'only execute the features or scenarios with tags matching the expression (repeatable)', collect, []);
 
-    program.on('--help', function(){
+    program.on('--help', function () {
       console.log('  For more details please visit https://github.com/cucumber/cucumber-js#cli\n');
     });
 
@@ -65,7 +65,7 @@ function Cli(argv) {
   var self = {
     run: function run(callback) {
       var configuration = getConfiguration();
-      var runtime    = Cucumber.Runtime(configuration);
+      var runtime = Cucumber.Runtime(configuration);
       var formatters = [createIpcFormatter()].concat(configuration.getFormatters());
       formatters.forEach(function (formatter) {
         runtime.attachListener(formatter);

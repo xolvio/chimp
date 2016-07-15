@@ -5,7 +5,7 @@ module.exports = function () {
   chimpHelper.loadAssertionLibrary();
 
   var UserWorld = this.World;
-  this.World = function World () {
+  this.World = function World() {
     this.browser = global.browser;
     this.driver = global.browser;
     this.client = global.browser;

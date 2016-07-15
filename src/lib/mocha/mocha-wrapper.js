@@ -52,6 +52,6 @@ try {
     exit(failures);
   });
 } catch (e) {
-  throw(e);
+  throw (e);
 }
 

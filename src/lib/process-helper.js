@@ -1,5 +1,5 @@
-var cp  = require('child_process'),
-    log = require('./log');
+var cp = require('child_process'),
+  log = require('./log');
 
 module.exports = {
 
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   waitForMessage: function (options, child, callback) {
-    child.stdout.on('data', function onData (data) {
+    child.stdout.on('data', function onData(data) {
       if (data.toString().match(options.waitForMessage)) {
         child.stdout.removeListener('data', onData);
         log.debug('[chimp][' + options.prefix + ']', 'started successfully');
@@ -67,10 +67,10 @@ module.exports = {
       return callback();
     }
 
-    var delay        = 300,
-        totalRetries = 10,
-        retries      = totalRetries * (1000 / delay),
-        attempt      = 0;
+    var delay = 300,
+      totalRetries = 10,
+      retries = totalRetries * (1000 / delay),
+      attempt = 0;
 
     var waitForProcessToDie = setInterval(function () {
       try {

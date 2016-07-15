@@ -3,9 +3,9 @@
 // A copy of bdd interface, but beforeEach, afterEach, before, after,
 // and it methods all run within fibers.
 var Mocha = require('mocha'),
-    bdd   = Mocha.interfaces.bdd,
-    _     = require('underscore'),
-    util  = require('util');
+  bdd = Mocha.interfaces.bdd,
+  _ = require('underscore'),
+  util = require('util');
 
 import {fiberize} from '../utils/fiberize';
 

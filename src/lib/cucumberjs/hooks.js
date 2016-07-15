@@ -60,7 +60,7 @@ module.exports = function hooks() {
         var _fileName = lastStep.getKeyword() + ' ' + lastStep.getName() + affix;
         if (global.browser.instances) {
           global.browser.instances.forEach(function (instance, index) {
-            instance.captureSync(_fileName + '_browser_' + index)
+            instance.captureSync(_fileName + '_browser_' + index);
           });
         } else {
           global.browser.captureSync(_fileName);

@@ -1,15 +1,15 @@
-var log       = require('./log'),
-    URL       = require('url'),
-    DDPClient = require('xolvio-ddp'),
-    booleanHelper   = require('./boolean-helper'),
-    wrapAsyncObject = require('xolvio-sync-webdriverio').wrapAsyncObject;
+var log = require('./log'),
+  URL = require('url'),
+  DDPClient = require('xolvio-ddp'),
+  booleanHelper = require('./boolean-helper'),
+  wrapAsyncObject = require('xolvio-sync-webdriverio').wrapAsyncObject;
 
 /**
  * DDP Constructor
  *
  * @api public
  */
-function DDP () {
+function DDP() {
   log.debug('[chimp][ddp] creating DDP wrapper');
   process.env.ROOT_URL = process.env.ROOT_URL || process.env['chimp.ddp'];
   this.url = this._getUrl(process.env.ROOT_URL);

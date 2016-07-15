@@ -1,8 +1,8 @@
 var requestretry = require('requestretry'),
-    request = require('request'),
-    log     = require('./log'),
-    booleanHelper   = require('./boolean-helper'),
-    parseBoolean = require('./environment-variable-parsers').parseBoolean;
+  request = require('request'),
+  log = require('./log'),
+  booleanHelper = require('./boolean-helper'),
+  parseBoolean = require('./environment-variable-parsers').parseBoolean;
 
 /**
  * SessionManager Constructor
@@ -10,19 +10,19 @@ var requestretry = require('requestretry'),
  * @param {Object} options
  * @api public
  */
-function SessionManager (options) {
+function SessionManager(options) {
 
   log.debug('[chimp][session-manager] options are', options);
 
-   if (!options) {
+  if (!options) {
      throw new Error('options is required');
    }
 
-   if (!options.port) {
+  if (!options.port) {
      throw new Error('options.port is required');
    }
 
-   if (!options.browser && !options.deviceName) {
+  if (!options.browser && !options.deviceName) {
      throw new Error('[chimp][session-manager] options.browser or options.deviceName is required');
    }
 
@@ -44,13 +44,13 @@ SessionManager.prototype.webdriver = require('xolvio-sync-webdriverio');
  * @api public
  */
 
-SessionManager.prototype._configureRemote = function(webdriverOptions, remote, callback) {
+SessionManager.prototype._configureRemote = function (webdriverOptions, remote, callback) {
   var self = this;
 
   log.debug('[chimp][session-manager] creating webdriver remote ');
 
   var browser = remote(webdriverOptions);
-  function decideReuse () {
+  function decideReuse() {
 
     if (self.options.browser === 'phantomjs') {
       log.debug('[chimp][session-manager] browser is phantomjs, not reusing a session');
@@ -92,7 +92,7 @@ SessionManager.prototype._configureRemote = function(webdriverOptions, remote, c
 
 };
 
-SessionManager.prototype.multiremote = function(webdriverOptions, callback) {
+SessionManager.prototype.multiremote = function (webdriverOptions, callback) {
   this._configureRemote(webdriverOptions, this.webdriver.multiremote, callback);
 };
 
@@ -101,7 +101,7 @@ SessionManager.prototype.remote = function (webdriverOptions, callback) {
 };
 
 
-SessionManager.prototype._waitForConnection = function(browser, callback) {
+SessionManager.prototype._waitForConnection = function (browser, callback) {
   log.debug('[chimp][session-manager] checking connection to selenium server');
   var self = this;
   browser.statusAsync().then(
@@ -115,7 +115,7 @@ SessionManager.prototype._waitForConnection = function(browser, callback) {
           callback('[chimp][session-manager] timed out retrying to connect to selenium server');
         }
         log.debug('[chimp][session-manager] could not connect to the server, retrying', '(' + self.retry + '/' + self.maxRetries + ')');
-        setTimeout(function() {
+        setTimeout(function () {
           self._waitForConnection(browser, callback);
         }, self.retryDelay);
       } else {
@@ -152,7 +152,7 @@ SessionManager.prototype._monkeyPatchBrowserSessionManagement = function (browse
         log.debug('[chimp][session-manager]', 'initializing browser');
         return init.apply(this, arguments);
       }
-    }
+    };
   };
 
   browser._initAsync = browser.initAsync;
@@ -170,7 +170,7 @@ SessionManager.prototype._monkeyPatchBrowserSessionManagement = function (browse
 
   browser.end = callbacker.bind(browser);
   browser.endSync = browser.end;
-  browser.endAsync = browser.end
+  browser.endAsync = browser.end;
 
   browser.endAll = callbacker.bind(browser);
   browser.endAllSync = browser.endAll;
@@ -196,7 +196,7 @@ SessionManager.prototype._getWebdriverSessions = function (callback) {
     retryDelay: 500,
     retryStrategy: requestretry.RetryStrategies.HTTPOrNetworkError
   }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       log.debug('[chimp][session-manager]', 'received data', body);
       callback(null, JSON.parse(body).value);
     } else {
@@ -237,15 +237,15 @@ SessionManager.prototype.killCurrentSession = function (callback) {
 
   var wdHubSession = 'http://' + this.options.host + ':' + this.options.port + '/wd/hub/session';
 
-  this._getWebdriverSessions(function(err, sessions) {
+  this._getWebdriverSessions(function (err, sessions) {
 
     if (sessions.length) {
-      sessions.forEach(function(session) {
+      sessions.forEach(function (session) {
         var sessionId = session.id;
         log.debug('[chimp][session-manager]', 'deleting wd session', sessionId);
 
-        request.del(wdHubSession + '/' + sessionId, function(error, response, body) {
-          if (!error && response.statusCode == 200) {
+        request.del(wdHubSession + '/' + sessionId, function (error, response, body) {
+          if (!error && response.statusCode === 200) {
             log.debug('[chimp][session-manager]', 'received data', body);
             callback();
           } else {

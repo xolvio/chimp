@@ -1,5 +1,5 @@
 var request = require('request'),
-    log     = require('./log');
+  log = require('./log');
 
 /**
  * SessionManager Constructor
@@ -7,7 +7,7 @@ var request = require('request'),
  * @param {Object} options
  * @api public
  */
-function TestingBotSessionManager (options) {
+function TestingBotSessionManager(options) {
 
   log.debug('[chimp][testingbot-session-manager] options are', options);
 
@@ -53,7 +53,7 @@ TestingBotSessionManager.prototype._getJobs = function (callback) {
   log.debug('[chimp][testingbot-session-manager]', 'requesting sessions from', hub);
 
   request(hub, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       log.debug('[chimp][testingbot-session-manager]', 'received data', body);
       callback(null, JSON.parse(body));
     } else {
@@ -70,7 +70,7 @@ TestingBotSessionManager.prototype._getJobs = function (callback) {
  */
 TestingBotSessionManager.prototype.killCurrentSession = function (callback) {
 
-  this._getJobs(function(err, jobs) {
+  this._getJobs(function (err, jobs) {
     if (jobs && jobs.length) {
       var job = jobs[0];
 
@@ -82,7 +82,7 @@ TestingBotSessionManager.prototype.killCurrentSession = function (callback) {
       };
 
       request(options, function (error, response) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           log.debug('[chimp][testingbot-session-manager]', 'stopped session');
           callback();
         } else {
@@ -101,7 +101,7 @@ TestingBotSessionManager.prototype.killCurrentSession = function (callback) {
       };
 
       request(options, function (error, response) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           log.debug('[chimp][testingbot-session-manager]', 'updated session to passing state');
           callback();
         } else {

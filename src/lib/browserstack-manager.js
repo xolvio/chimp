@@ -1,5 +1,5 @@
 var request = require('request'),
-    log     = require('./log');
+  log = require('./log');
 
 /**
  * SessionManager Constructor
@@ -7,7 +7,7 @@ var request = require('request'),
  * @param {Object} options
  * @api public
  */
-function BrowserStackSessionManager (options) {
+function BrowserStackSessionManager(options) {
 
   log.debug('[chimp][browserstack-session-manager] options are', options);
 
@@ -54,7 +54,7 @@ BrowserStackSessionManager.prototype._getBuilds = function (callback) {
   log.debug('[chimp][browserstack-session-manager]', 'requesting builds from', hub);
 
   request(hub, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       log.debug('[chimp][browserstack-session-manager]', 'received data', body);
       callback(null, JSON.parse(body));
     } else {
@@ -75,7 +75,7 @@ BrowserStackSessionManager.prototype._getSessions = function (buildId, callback)
   log.debug('[chimp][browserstack-session-manager]', 'requesting sessions from', hub);
 
   request(hub, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       log.debug('[chimp][browserstack-session-manager]', 'received data', body);
       callback(null, JSON.parse(body));
     } else {
@@ -92,23 +92,23 @@ BrowserStackSessionManager.prototype._getSessions = function (buildId, callback)
  */
 BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
 
-  this._getBuilds(function(err, builds) {
+  this._getBuilds(function (err, builds) {
     if (builds && builds.length) {
       log.debug('[chimp][browserstack-session-manager]', builds, builds[0]);
       var buildId = builds[0].automation_build.hashed_id;
     }
-    if (buildId !== "") {
-      this._getSessions(buildId, function(err, sessions) {
+    if (buildId !== '') {
+      this._getSessions(buildId, function (err, sessions) {
         if (sessions && sessions.length) {
           var options = {
             url: this.options.browserStackUrl + '/automate/sessions/' + sessions[0].automation_session.hashed_id + '.json',
             method: 'PUT',
             json: true,
-            body: { status: "completed" }
+            body: { status: 'completed' }
           };
 
           request(options, function (error, response) {
-            if (!error && response.statusCode == 200) {
+            if (!error && response.statusCode === 200) {
               log.debug('[chimp][browserstack-session-manager]', 'stopped session');
               callback();
             } else {

@@ -50,7 +50,7 @@ describe('process-helper', function () {
     it('calls spawn with the binary and args and returns the child process', function () {
 
       var cp = require('child_process'),
-          processHelper = require('../lib/process-helper.js');
+        processHelper = require('../lib/process-helper.js');
 
       processHelper.logOutputs = jest.genMockFn();
 
@@ -71,7 +71,7 @@ describe('process-helper', function () {
     it('logs the outputs of the child process', function () {
 
       var cp = require('child_process'),
-          processHelper = require('../lib/process-helper.js');
+        processHelper = require('../lib/process-helper.js');
 
       processHelper.logOutputs = jest.genMockFn();
 
@@ -96,7 +96,7 @@ describe('process-helper', function () {
     it('logs the output of the child process stderr events', function () {
 
       var log = require('../lib/log.js'),
-          processHelper = require('../lib/process-helper.js');
+        processHelper = require('../lib/process-helper.js');
 
       var child = {
         stdout: {
@@ -202,7 +202,7 @@ describe('process-helper', function () {
         // subsequent calls are checking if the process exists
         // it takes 3 calls to go through all the execution paths for this SUT
         if (process.kill.mock.calls.length === 4) {
-          throw({code: 'ESRCH'});
+          throw ({code: 'ESRCH'});
         }
       });
 

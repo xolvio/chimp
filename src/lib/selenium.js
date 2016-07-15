@@ -1,9 +1,9 @@
-var _              = require('underscore'),
-    processHelper  = require('./process-helper.js'),
-    selenium       = require('selenium-standalone'),
-    SessionManager = require('./session-manager.js'),
-    booleanHelper   = require('./boolean-helper'),
-    log            = require('./log');
+var _ = require('underscore'),
+  processHelper = require('./process-helper.js'),
+  selenium = require('selenium-standalone'),
+  SessionManager = require('./session-manager.js'),
+  booleanHelper = require('./boolean-helper'),
+  log = require('./log');
 
 /**
  * Selenium Constructor
@@ -11,7 +11,7 @@ var _              = require('underscore'),
  * @param {Object} options
  * @api public
  */
-function Selenium (options) {
+function Selenium(options) {
 
   if (!options) {
     throw new Error('options is required');
@@ -64,7 +64,7 @@ Selenium.prototype.install = function (callback) {
   this.seleniumStandaloneOptions.progressCb = progressCb;
   selenium.install(this.seleniumStandaloneOptions, callback);
 
-  function progressCb (total, progress, chunk) {
+  function progressCb(total, progress, chunk) {
     if (firstProgress) {
       firstProgress = false;
     }
@@ -160,14 +160,14 @@ Selenium.prototype.stop = function (callback) {
 
     log.debug('[chimp][selenium] killing active session');
 
-      var options = {
+    var options = {
         child: self.child,
         prefix: 'selenium',
         signal: 'SIGINT'
       };
 
-      log.debug('[chimp][selenium] stopping process');
-      processHelper.kill(options, function (err, res) {
+    log.debug('[chimp][selenium] stopping process');
+    processHelper.kill(options, function (err, res) {
         self.child = null;
         callback(err, res);
       });

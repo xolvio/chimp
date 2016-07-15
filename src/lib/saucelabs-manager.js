@@ -1,5 +1,5 @@
 var request = require('request'),
-    log     = require('./log');
+  log = require('./log');
 
 /**
  * SessionManager Constructor
@@ -7,7 +7,7 @@ var request = require('request'),
  * @param {Object} options
  * @api public
  */
-function SauceLabsSessionManager (options) {
+function SauceLabsSessionManager(options) {
 
   log.debug('[chimp][saucelabs-session-manager] options are', options);
 
@@ -54,7 +54,7 @@ SauceLabsSessionManager.prototype._getJobs = function (callback) {
   log.debug('[chimp][saucelabs-session-manager]', 'requesting sessions from', hub);
 
   request(hub, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       log.debug('[chimp][saucelabs-session-manager]', 'received data', body);
       callback(null, JSON.parse(body));
     } else {
@@ -71,7 +71,7 @@ SauceLabsSessionManager.prototype._getJobs = function (callback) {
  */
 SauceLabsSessionManager.prototype.killCurrentSession = function (callback) {
 
-  this._getJobs(function(err, jobs) {
+  this._getJobs(function (err, jobs) {
     if (jobs && jobs.length) {
       var job = jobs[0];
 
@@ -83,7 +83,7 @@ SauceLabsSessionManager.prototype.killCurrentSession = function (callback) {
       };
 
       request(options, function (error, response) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           log.debug('[chimp][saucelabs-session-manager]', 'stopped session');
           callback();
         } else {
@@ -102,7 +102,7 @@ SauceLabsSessionManager.prototype.killCurrentSession = function (callback) {
       };
 
       request(options, function (error, response) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           log.debug('[chimp][saucelabs-session-manager]', 'updated session to passing state');
           callback();
         } else {

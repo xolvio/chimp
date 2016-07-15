@@ -57,7 +57,6 @@ class Cucumber {
     this.cucumberChild = cp.fork(path.join(__dirname, 'cucumber-wrapper.js'), args, opts);
     process.stdin.pipe(this.cucumberChild.stdin);
 
-    console.log('this.options.conditionOutput', this.options.conditionOutput)
     if (booleanHelper.isTruthy(this.options.conditionOutput)) {
       this.cucumberChild.stdout.on('data', (data) => {
         this._conditionMessage(data.toString());

@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 var Chimp = require('../lib/chimp.js'),
-   minimist = require('minimist'),
-   freeport = require('freeport'),
-   exit = require('exit'),
-   log = require('../lib/log'),
-   fs = require('fs'),
-   _ = require('underscore'),
-   path = require('path'),
-   optionsLoader = require('../lib/options-loader'),
-   packageJson = require('../../package.json');
+  minimist = require('minimist'),
+  freeport = require('freeport'),
+  exit = require('exit'),
+  log = require('../lib/log'),
+  fs = require('fs'),
+  _ = require('underscore'),
+  path = require('path'),
+  optionsLoader = require('../lib/options-loader'),
+  packageJson = require('../../package.json');
 
 // Make babel plugins available to Cucumber and Mocha child processes
 process.env.NODE_PATH += path.delimiter + path.resolve(__dirname, '../../node_modules') +
@@ -75,7 +75,7 @@ try {
       startChimp(argv);
     });
   } else {
-    startChimp(argv)
+    startChimp(argv);
   }
 
 } catch (ex) {

@@ -7,7 +7,7 @@ export function fiberize(fn) {
     const self = this;
     Fiber(function () {
       try {
-        if (fn.length == 1) {
+        if (fn.length === 1) {
           fn.call(self, done);
         } else {
           fn.call(self);
@@ -15,7 +15,7 @@ export function fiberize(fn) {
         }
       } catch (e) {
         process.nextTick(function () {
-          throw(e);
+          throw (e);
         });
       }
     }).run();

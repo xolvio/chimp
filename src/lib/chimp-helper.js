@@ -1,19 +1,19 @@
-var chai            = require('chai'),
-    chaiAsPromised  = require('chai-as-promised'),
-    log             = require('./log'),
-    DDP             = require('./ddp'),
-    request         = require('request'),
-    Promise         = require('bluebird'),
-    _               = require('underscore'),
-    wrapAsync       = require('xolvio-sync-webdriverio').wrapAsync,
-    wrapAsyncObject = require('xolvio-sync-webdriverio').wrapAsyncObject,
-    SessionFactory  = require('./session-factory'),
-    widgets         = require('chimp-widgets'),
-    path            = require('path'),
-    colors          = require('colors'),
-    fs              = require('fs-extra'),
-    exit            = require('exit'),
-    booleanHelper   = require('./boolean-helper');
+var chai = require('chai'),
+  chaiAsPromised = require('chai-as-promised'),
+  log = require('./log'),
+  DDP = require('./ddp'),
+  request = require('request'),
+  Promise = require('bluebird'),
+  _ = require('underscore'),
+  wrapAsync = require('xolvio-sync-webdriverio').wrapAsync,
+  wrapAsyncObject = require('xolvio-sync-webdriverio').wrapAsyncObject,
+  SessionFactory = require('./session-factory'),
+  widgets = require('chimp-widgets'),
+  path = require('path'),
+  colors = require('colors'),
+  fs = require('fs-extra'),
+  exit = require('exit'),
+  booleanHelper = require('./boolean-helper');
 import merge from 'deep-extend';
 import {
   parseNullableString,
@@ -144,11 +144,11 @@ var chimpHelper = {
 
       if (process.env['chimp.browser'] === 'phantomjs') {
         browser.setViewportSizeSync({
-          width: process.env['chimp.phantom_w']?parseInt(process.env['chimp.phantom_w']):1280,
-          height: process.env['chimp.phantom_h']?parseInt(process.env['chimp.phantom_h']):1024
+          width: process.env['chimp.phantom_w'] ? parseInt(process.env['chimp.phantom_w']):1280,
+          height: process.env['chimp.phantom_h'] ? parseInt(process.env['chimp.phantom_h']):1024
         });
       }
-    }
+    };
 
     var initBrowser = function () {
       log.debug('[chimp][hooks] init browser');
@@ -156,8 +156,8 @@ var chimpHelper = {
       log.debug('[chimp][hooks] init browser callback');
 
       if (browser.instances) {
-        browser.instances.forEach(function(singleBrowser) {
-          initSingleBrowser(singleBrowser)
+        browser.instances.forEach(function (singleBrowser) {
+          initSingleBrowser(singleBrowser);
         });
       }
       else {
@@ -216,7 +216,7 @@ var chimpHelper = {
       }
     };
 
-    var configureChimpWidgetsDriver = function() {
+    var configureChimpWidgetsDriver = function () {
       widgets.driver.api = global.browser;
     };
 

@@ -1,9 +1,9 @@
 // taken from https://github.com/timbotnik/meteor-autoupdate-watcher
 
 var DDPClient = require('xolvio-ddp'),
-   _ = require('underscore'),
-   URL       = require('url'),
-   log = require('./log');
+  _ = require('underscore'),
+  URL = require('url'),
+  log = require('./log');
 
 var AutoupdateWatcher = function (options) {
   this.options = options;
