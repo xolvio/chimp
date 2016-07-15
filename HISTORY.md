@@ -1,3 +1,8 @@
+# 0.38.0
+
+* Updated to PhantomJS 2
+* Updates Mocha to 2.53
+
 # 0.37.1
 
 * Fixes Cucumber.js error conditioning
