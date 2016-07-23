@@ -108,8 +108,10 @@ Selenium.prototype.start = function (callback) {
       return;
     }
 
-    const seleniumArgs = self.seleniumStandaloneOptions.seleniumArgs || [];
-    self.seleniumStandaloneOptions.seleniumArgs = seleniumArgs.concat('-port', port);
+    if (!self.seleniumStandaloneOptions.seleniumArgs) {
+      self.seleniumStandaloneOptions.seleniumArgs = [];
+    }
+    self.seleniumStandaloneOptions.seleniumArgs.push('-port', port);
 
     if (process.env['chimp.log'] === 'verbose' || process.env['chimp.log'] === 'debug') {
       self.options.seleniumDebug = true;
