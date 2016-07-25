@@ -137,6 +137,26 @@ describe('Selenium', function () {
       expect(seleniumStandalone.start.mock.calls[0][0].seleniumArgs).toEqual(['-port', port]);
     });
 
+    it('retains pre-existing options.seleniumArgs when starting selenium', function () {
+      var Selenium = require('../lib/selenium');
+      var port = '4444';
+      var opt = '-some-option=True';
+      var selenium = new Selenium({
+        port,
+        seleniumStandaloneOptions: {seleniumArgs: [opt]},
+      });
+      var seleniumStandalone = require('selenium-standalone');
+      selenium.install = jest.genMockFunction();
+      selenium.install.mockImplementation(function (callback) {
+        callback(null);
+      });
+
+      var callback = function () {};
+      selenium.start(callback);
+
+      expect(seleniumStandalone.start.mock.calls[0][0].seleniumArgs).toEqual([opt, '-port', port]);
+    });
+
     it('sets this.child to the selenium child process', function () {
       var Selenium = require('../lib/selenium');
       var selenium = new Selenium({
