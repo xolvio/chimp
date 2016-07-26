@@ -7,7 +7,7 @@ var Mocha = require('mocha'),
   glob = require('glob'),
   ui = require('./mocha-fiberized-ui');
 
-import {parseBoolean, parseString} from '../environment-variable-parsers';
+import {parseBoolean, parseNullableString, parseString} from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 var mochaOptions = {
@@ -17,10 +17,12 @@ var mochaOptions = {
   reporter: process.env['chimp.mochaReporter']
 };
 
+var mochaGrep = parseNullableString(process.env['chimp.mochaGrep']);
+
 if (parseBoolean(process.env['chimp.watch'])) {
   mochaOptions.grep = new RegExp(parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|'));
-} else if (process.env['chimp.mochaGrep']) {
-  mochaOptions.grep = process.env['chimp.mochaGrep'];
+} else if (mochaGrep) {
+  mochaOptions.grep = mochaGrep;
 } else {
   mochaOptions.grep = new RegExp(
     parseString(process.env['chimp.mochaTags']).split(',').map(escapeRegExp).join('|')
@@ -54,4 +56,3 @@ try {
 } catch (e) {
   throw (e);
 }
-
