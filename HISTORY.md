@@ -1,6 +1,19 @@
-# Next
+# 0.39.1
 
-* Removes Chimp widgets in favor of WebdriverIO's [page objects](https://github.com/webdriverio/webdriverio/tree/master/examples/pageobject)
+* Fixing issue #430 (Duc Tri Le)
+
+
+# 0.39.0
+
+* Nicer approach to setting the args (Joe Farro) 
+* allow seleniumStandaloneOptions.seleniumArgs to be set - fixes #428 (Joe Farro) 
+* use the newest current version of node for circle testing (lgandecki) 
+* getting rid of the remains of chimp widgets (lgandecki) 
+* updated version of cucumberjs (lgandecki) 
+* Removes chimp-widgets. Fixes #333 (Sam Hatoum)  
+* updating node-fibers version (Greg Parsons) 
+* updating circle node version (Greg Parsons) 
+* updating packages relying on fs (Greg Parsons) 
 
 # 0.38.0
 
