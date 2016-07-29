@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.39.2",
+  "version": "0.39.3",
   "description": "Develop acceptance tests & end-to-end tests with realtime feedback.",
   "keywords": [
     "simian",
@@ -101,5 +101,7 @@
     "jest-cli": "Sanjo/jest#7c71094",
     "shelljs": "^0.6.0"
   },
-  "bundledDependencies" : ["cucumber"]
+  "bundledDependencies": [
+    "cucumber"
+  ]
 }
