@@ -1,3 +1,7 @@
+# 0.39.3
+
+* Make Cucumber.js a bundledDependency (Sam Hatoum) 
+
 # 0.39.1
 
 * Fixing issue #430 (Duc Tri Le)
