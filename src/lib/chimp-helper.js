@@ -73,7 +73,7 @@ var chimpHelper = {
             browserName: parseNullableString(process.env['chimp.browser']),
             platform: parseNullableString(process.env['chimp.platform']),
             name: parseNullableString(process.env['chimp.name']),
-            version: parseNullableString(process.env['chimp.version']),
+            version: parseNullableString(process.env['chimp.browserVersion']),
             deviceName: parseNullableString(process.env['chimp.deviceName']),
           },
           user: parseNullableString(process.env['chimp.user'] || process.env.SAUCE_USERNAME),
