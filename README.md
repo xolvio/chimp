@@ -117,6 +117,12 @@ var privateSetting = server.execute(function(settingKey) {
 ###### Lots more
 Chimp is PACKED with features that make your life easier. See the [documentation site](http://chimp.readme.io/docs) for more details.
 
+See the [default Chimp configuration file](https://github.com/xolvio/chimp/blob/master/src/bin/default.js) for the available options, or run
+
+```
+chimp --help
+```
+
 ## Using Meteor?
 
 Chimp comes with first-grade Meteor support out-of-the-box, including hot-deploy detection that runs specs after your Meteor client or server restart. 
