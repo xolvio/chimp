@@ -1,3 +1,7 @@
+# 0.39.4
+
+* updated to use 1.2.2 version of cucumberjs (Łukasz Gandecki)
+
 # 0.39.3
 
 * Make Cucumber.js a bundledDependency (Sam Hatoum) 
