@@ -1,3 +1,7 @@
+# 0.39.4
+
+* Updated to 1.2.2 version of xolvio/cucumber (lgandecki) 
+
 # 0.39.3
 
 * Make Cucumber.js a bundledDependency (Sam Hatoum) 
