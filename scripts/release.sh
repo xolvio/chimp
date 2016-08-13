@@ -47,5 +47,6 @@ cat ./tempHistory.md > ./HISTORY.md
 rm ./commits.md
 rm ./tempHistory.md
 
+git add ./HISTORY.md
 git push
 git push --tags
