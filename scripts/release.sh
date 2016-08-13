@@ -32,7 +32,6 @@ case $semvar in
 esac
 currentVersion=`node -e "console.log(require('$scriptDir/../package.json').version)"`
 
-git checkout master
 ./node_modules/.bin/git-release-notes v$currentVersion..master ./scripts/release-notes.ejs >> ./commits.md
 
 npm version $semvar
