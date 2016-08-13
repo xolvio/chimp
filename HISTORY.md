@@ -1,3 +1,7 @@
+# 0.40.4
+
+* No need to checkout (Sam Hatoum) 
+
 # 0.40.1
 
 * Fixes history file not being commited (Sam Hatoum) 
