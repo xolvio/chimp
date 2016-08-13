@@ -1,3 +1,8 @@
+# 0.40.0
+
+* Update HISTORY.md (Sam Hatoum) 
+* Automatically writes the commit history to the HISTORY.md file (Sam Hatoum) 
+
 # 0.39.4
 
 * Updated to 1.2.2 version of xolvio/cucumber (lgandecki) 
