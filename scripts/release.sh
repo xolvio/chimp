@@ -48,5 +48,6 @@ rm ./commits.md
 rm ./tempHistory.md
 
 git add .
+git commit -m "Adds the release notes for v$newVersion"
 git push
 git push --tags
