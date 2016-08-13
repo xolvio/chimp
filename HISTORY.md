@@ -1,3 +1,8 @@
+# 0.40.1
+
+* Fixes history file not being commited (Sam Hatoum) 
+* Automatically writes the commit history to the HISTORY.md file (Sam Hatoum) 
+
 # 0.40.0
 
 * Update HISTORY.md (Sam Hatoum) 
