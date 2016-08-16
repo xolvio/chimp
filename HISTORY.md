@@ -1,3 +1,21 @@
+# 0.40.4
+
+* No need to checkout (Sam Hatoum) 
+
+# 0.40.1
+
+* Fixes history file not being commited (Sam Hatoum) 
+* Automatically writes the commit history to the HISTORY.md file (Sam Hatoum) 
+
+# 0.40.0
+
+* Update HISTORY.md (Sam Hatoum) 
+* Automatically writes the commit history to the HISTORY.md file (Sam Hatoum) 
+
+# 0.39.4
+
+* Updated to 1.2.2 version of xolvio/cucumber (lgandecki) 
+
 # 0.39.3
 
 * Make Cucumber.js a bundledDependency (Sam Hatoum) 
