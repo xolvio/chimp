@@ -1,3 +1,28 @@
+<!-- 
+* * * READ THIS BEFORE YOU FILE THIS ISSUE * * * 
+Chimp is a test runner that combines multiple tools to make end-to-end testing easy. As such, you should seek help for the specific tools at the right channels.
+
+* - - BROWSER AUTOMATION RELATED ISSUES
+Please try to get your queries answered with the Webdriver.io team first. Here are some useful links:
+- gitter.im/webdriverio/webdriverio
+- github.com/webdriverio/webdriverio/issues
+- webdriver.io/api.html
+
+* - - CUCUMBER SYNTAX & USAGE ISSUES
+Please try to get your queries answered with the Cucumber team first. Here are some useful links:
+- gitter.im/cucumber/cucumber-js
+- github.com/cucumber/cucumber-js/issues
+- cucumber.io/docs/reference/javascript
+- github.com/cucumber/cucumber-js#help--support
+
+* - - ANY THING ELSE
+
+Please post your issues below and make sure you follow the instructions below. If you do not, we may not respond for a very long time! We want to help, so help us help you by being thorough. 
+
+Thanks :)
+
+Your friends @ xolv.io
+-->
 #####  Expected behaviour
 
 
