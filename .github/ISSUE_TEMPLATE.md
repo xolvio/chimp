@@ -8,6 +8,11 @@ Please try to get your queries answered with the Webdriver.io team first. Here a
 - github.com/webdriverio/webdriverio/issues
 - webdriver.io/api.html
 
+* - - SELENIUM RELATED ISSUES
+Try to get selenium-standalone working WIHTOUT CHIMP. So follow the instructions and issues on these pages:
+- github.com/vvo/selenium-standalone#command-line-interface
+- github.com/vvo/selenium-standalone/issues
+
 * - - CUCUMBER SYNTAX & USAGE ISSUES
 Please try to get your queries answered with the Cucumber team first. Here are some useful links:
 - gitter.im/cucumber/cucumber-js
