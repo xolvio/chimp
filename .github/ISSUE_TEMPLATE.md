@@ -15,13 +15,14 @@ Please try to get your queries answered with the Cucumber team first. Here are s
 - cucumber.io/docs/reference/javascript
 - github.com/cucumber/cucumber-js#help--support
 
-* - - ANY THING ELSE
-
+* - - SOMETHING ELSE
 Please post your issues below and make sure you follow the instructions below. If you do not, we may not respond for a very long time! We want to help, so help us help you by being thorough. 
 
 Thanks :)
 
 Your friends @ xolv.io
+
+(feel free to remove this whole comment block before you post)
 -->
 #####  Expected behaviour
 
