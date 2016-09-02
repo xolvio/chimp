@@ -13,10 +13,8 @@ export function fiberize(fn) {
           fn.call(self);
           done();
         }
-      } catch (e) {
-        process.nextTick(function () {
-          throw (e);
-        });
+      } catch (error) {
+        done(error);
       }
     }).run();
   };
