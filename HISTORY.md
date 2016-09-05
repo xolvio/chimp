@@ -1,3 +1,18 @@
+# 0.40.5
+
+* Update fibers - support for Node v6.5.0 (Daniel Bayerlein) 
+* Update fiberize util function (lucetius) 
+* Add backtrace option value to cucumber exec option (lucetius) 
+* Use updated version of cucumber with support for global pending (lucetius) 
+* Update ISSUE_TEMPLATE.md (Sam Hatoum) 
+* Update ISSUE_TEMPLATE.md (Sam Hatoum) 
+* Update ISSUE_TEMPLATE.md (Sam Hatoum) 
+* Fix deprecated usage of cucumber hooks (Jez Stephens) 
+* Update README.md (Sam Hatoum) 
+* Update README.md (Sam Hatoum) 
+* Adds the release notes for v0.40.4 (Sam Hatoum) 
+* change the selenium version parameter to browserVersion (dankelleher) 
+
 # 0.40.4
 
 * No need to checkout (Sam Hatoum) 
