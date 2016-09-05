@@ -252,14 +252,14 @@ class Cucumber {
       if (_.contains(allowedCucumberJsOptions.long, optionName)) {
         _.forEach(optionValues, (optionValue) => {
           execOptions.push('--' + optionName);
-          if (['dry-run', 'fail-fast', 'no-colors', 'no-snippets', 'no-source', 'strict'].indexOf(optionName) === -1) {
+          if (['dry-run', 'fail-fast', 'no-colors', 'no-snippets', 'no-source', 'strict', 'backtrace'].indexOf(optionName) === -1) {
             execOptions.push(optionValue.toString());
           }
         });
       } else if (_.contains(allowedCucumberJsOptions.short, optionName)) {
         _.forEach(optionValues, (optionValue) => {
           execOptions.push('-' + optionName);
-          if (['d', 'S'].indexOf(optionName) === -1) {
+          if (['d', 'S', 'b'].indexOf(optionName) === -1) {
             execOptions.push(optionValue.toString());
           }
         });
