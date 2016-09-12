@@ -183,7 +183,7 @@ Selenium.prototype.stop = function (callback) {
 
 Selenium.prototype.interrupt = function (callback) {
   log.debug('[chimp][selenium] interrupt called');
-  if (!!this.options['clean-selenium-server']) {
+  if (!this.options['watch'] || !!this.options['clean-selenium-server']) {
     this.stop(callback);
   } else {
     log.debug('[chimp][selenium] interrupt is not killing selenium because ' +
