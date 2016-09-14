@@ -6,7 +6,7 @@ const booleanHelper = require('../boolean-helper');
 module.exports = function hooks() {
   const screenshots = {};
 
-  this.setDefaultTimeout(60 * 1000);
+  this.setDefaultTimeout(240 * 1000);
 
   this.registerHandler('BeforeFeatures', () => {
     log.debug('[chimp][hooks] Starting BeforeFeatures');
