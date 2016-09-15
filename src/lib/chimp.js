@@ -166,8 +166,23 @@ Chimp.prototype.watch = function () {
     usePolling: this.options.watchWithPolling
   });
 
+  var watch = [];
+
   if (process.env['chimp.watchSource']) {
-    watcher.add(process.env['chimp.watchSource']);
+    watch = process.env['chimp.watchSource'].split(',');
+  }
+
+  if (process.env['chimp.e2eSteps']) {
+    watch.push(process.env['chimp.e2eSteps']);
+  }
+
+  if (process.env['chimp.domainSteps']) {
+    watch.push(process.env['chimp.domainSteps']);
+  }
+
+  if (watch.length > 0) {
+    log.debug('[chimp] watching these directories:', watch);
+    watch.push(watch);
   }
 
   var self = this;
@@ -188,7 +203,11 @@ Chimp.prototype.watch = function () {
   // wait for initial file scan to complete
   watcher.on('ready', function () {
 
-    log.info('[chimp] Watching features with tagged with', self.options.watchTags);
+    var watched = [];
+    if (self.options.watchTags) {
+      watched.push(self.options.watchTags.split(','));
+    }
+    log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
 
     // start watching
     watcher.on('all', function (event, path) {
@@ -359,7 +378,7 @@ Chimp.prototype.run = function (callback) {
     }
 
     let jsonResult = '[]';
-    _.any(['domain', 'critical', 'generic'], (type) => {
+    _.any(['domain', 'e2e', 'generic'], (type) => {
       let _testRunner = _.findWhere(self.testRunnerRunOrder, {name: 'cucumber', type });
       if (_testRunner) {
         jsonResult = result[startProcessesIndex][_testRunner.index];
@@ -531,7 +550,7 @@ Chimp.prototype._createProcesses = function () {
     const jasmine = new exports.Jasmine(this.options);
     processes.push(jasmine);
   } else {
-    if (booleanHelper.isTruthy(this.options.criticalSteps)) {
+    if (booleanHelper.isTruthy(this.options.e2eSteps) || booleanHelper.isTruthy(this.options.domainSteps)) {
       // domain scenarios
       if (booleanHelper.isTruthy(this.options.domainSteps)) {
         const options = JSON.parse(JSON.stringify(this.options));
@@ -542,26 +561,40 @@ Chimp.prototype._createProcesses = function () {
         }
         const message = '\n[chimp] domain scenarios...';
         options.r.push(options.domainSteps);
+
+        if (booleanHelper.isTruthy(options.fullDomain)) {
+          delete options.tags;
+        }
+
         processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
         processes.push(new exports.Cucumber(options));
         addTestRunnerToRunOrder('cucumber', 'domain');
         processes.push(new exports.Consoler(''));
       }
-      // critical scenarios
-      const options = JSON.parse(JSON.stringify(this.options));
-      if (options.r) {
-        options.r = _.isArray(options.r) ? options.r : [options.r];
-      } else {
-        options.r = [];
+      if (booleanHelper.isTruthy(this.options.e2eSteps)) {
+        // e2e scenarios
+        const options = JSON.parse(JSON.stringify(this.options));
+        if (options.r) {
+          options.r = _.isArray(options.r) ? options.r : [options.r];
+        } else {
+          options.r = [];
+        }
+
+        options.tags = options.tags.split(',');
+        options.tags.push(options.e2eTags);
+        options.tags = options.tags.join();
+
+        const message = `\n[chimp] ${options.e2eTags} scenarios ...`;
+        options.r.push(options.e2eSteps);
+        processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+        processes.push(new exports.Cucumber(options));
+        addTestRunnerToRunOrder('cucumber', 'e2e');
+        processes.push(new exports.Consoler(''));
       }
-      options.tags = [options.tags, options.criticalTag];
-      const message = '\n[chimp] critical scenarios...';
-      options.r.push(options.criticalSteps);
-      processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
-      processes.push(new exports.Cucumber(options));
-      addTestRunnerToRunOrder('cucumber', 'critical');
-      processes.push(new exports.Consoler(''));
-    } else {
+    }
+
+
+    else {
       const cucumber = new exports.Cucumber(this.options);
       processes.push(cucumber);
       addTestRunnerToRunOrder('cucumber', 'generic');
