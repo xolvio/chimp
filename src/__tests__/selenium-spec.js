@@ -314,7 +314,23 @@ describe('Selenium', function () {
 
   describe('interrupt', function () {
 
-    it('should return immediately by default', function () {
+    it('should return immediately in watch mode', function () {
+
+      var Selenium = require('../lib/selenium');
+      var selenium = new Selenium({port: '4444', watch: true});
+
+      var callback = jest.genMockFunction();
+
+      selenium.stop = jest.genMockFn();
+
+      selenium.interrupt(callback);
+
+      expect(callback).toBeCalledWith(null);
+      expect(selenium.stop.mock.calls.length).toBe(0);
+
+    });
+
+    it('should call kill when not in watch mode', function () {
 
       var Selenium = require('../lib/selenium');
       var selenium = new Selenium({port: '4444'});
@@ -325,8 +341,8 @@ describe('Selenium', function () {
 
       selenium.interrupt(callback);
 
-      expect(callback).toBeCalledWith(null);
-      expect(selenium.stop.mock.calls.length).toBe(0);
+      expect(selenium.stop.mock.calls.length).toBe(1);
+      expect(selenium.stop.mock.calls.length).toBe(1);
 
     });
 
