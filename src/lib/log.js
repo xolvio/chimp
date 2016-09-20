@@ -8,7 +8,8 @@ var argv = minimist(process.argv, {
     }, 'boolean': true
 }) || [];
 
-var debug = process.env['chimp.debug'] === 'true' ? true :
+var debug = !!process.env.DEBUG ||
+  process.env['chimp.debug'] === 'true' ? true :
   process.env['chimp.debug'] === 'false' ? false :
   process.env['chimp.debug'] || argv.debug;
 
