@@ -58,6 +58,7 @@ describe('Chimp', function () {
       var restore = chimp.fs.existsSync;
       chimp.fs.existsSync = jest.genMockFn().mockReturnValue(false);
 
+      chimp.informUser = jest.genMockFunction();
       chimp.exec = jest.genMockFunction();
 
       chimp.selectMode = jest.genMockFunction();
@@ -79,6 +80,7 @@ describe('Chimp', function () {
       var restore = chimp.fs.existsSync;
       chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
 
+      chimp.informUser = jest.genMockFunction();
       chimp.exec = jest.genMockFunction();
 
       chimp.selectMode = jest.genMockFunction();
@@ -101,6 +103,7 @@ describe('Chimp', function () {
       var restore = chimp.fs.existsSync;
       chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
 
+      chimp.informUser = jest.genMockFunction();
       chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
         return callback(null);
       });

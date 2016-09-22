@@ -16,6 +16,7 @@ module.exports = {
   serverHost: 'localhost',
   sync: true,
   offline: false,
+  showXolvioMessages: true,
 
   // - - - - CUCUMBER - - - -
   path: './features',

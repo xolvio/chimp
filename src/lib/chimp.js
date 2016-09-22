@@ -79,6 +79,8 @@ function Chimp(options) {
 Chimp.prototype.init = function (callback) {
   var self = this;
 
+  this.informUser();
+
   try {
     this._initSimianResultBranch();
     this._initSimianBuildNumber();
@@ -88,6 +90,24 @@ Chimp.prototype.init = function (callback) {
   }
   self.selectMode(callback);
 };
+
+Chimp.prototype.informUser = function () {
+
+  if (this.options.showXolvioMessages) {
+    log.info('\nMaster Chimp and become a testing Ninja! Check out our course: '.green + 'http://bit.ly/2btQaFu\n'.blue.underline);
+  }
+
+  if (booleanHelper.isTruthy(this.options.criticalSteps)) {
+    this.options.e2eSteps = this.options.criticalSteps;
+    log.warn('[chimp] Please use e2eSteps instead of criticalSteps. criticalSteps is now deprecated.'.red);
+  }
+
+  if (booleanHelper.isTruthy(this.options.criticalTag)) {
+    this.options.e2eTags = this.options.criticalTag;
+    log.warn('[chimp] Please use e2eTags instead of criticalTag. criticalTag is now deprecated.'.red);
+  }
+};
+
 
 Chimp.prototype._initSimianResultBranch = function () {
   // Automatically set the result branch for the common CI tools
