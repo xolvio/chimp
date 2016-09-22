@@ -69,7 +69,7 @@
     "chokidar": "~1.6.0",
     "colors": "1.1.2",
     "commander": "^2.9.0",
-    "cucumber": "xolvio/cucumber-js#v1.2.2-chimp.2",
+    "cucumber": "xolvio/cucumber-js#v1.3.0-chimp.1",
     "deep-extend": "^0.4.1",
     "exit": "^0.1.2",
     "fibers": "^1.0.14",
