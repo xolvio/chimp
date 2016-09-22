@@ -1,3 +1,7 @@
+# 0.41.1
+* Update selenium-standalone to the latest version (Sam Hatoum) 
+* Add Xolvio messages to users (Sam Hatoum)
+
 # 0.41.0
 * Use phantomjs-prebuilt from the Medium team (Sam Hatoum) 
 * Updates Cucumber to 1.3.0-chimp.1 (fixes 432) (Sam Hatoum) 
