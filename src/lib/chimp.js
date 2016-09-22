@@ -160,32 +160,28 @@ Chimp.prototype.selectMode = function (callback) {
  */
 Chimp.prototype.watch = function () {
 
-  var watcher = chokidar.watch(this.options.path, {
+  var self = this;
+
+  var watchDirectories = [];
+  if (self.options.watchSource) {
+    watchDirectories = (self.options.watchSource.split(','));
+  }
+
+  if (self.options.e2eSteps) {
+    watchDirectories.push(self.options.e2eSteps);
+  }
+
+  if (self.options.domainSteps) {
+    watchDirectories.push(self.options.domainSteps);
+  }
+
+  watchDirectories.push(self.options.path);
+
+  var watcher = chokidar.watch(watchDirectories, {
     ignored: /[\/\\](\.|node_modules)/,
     persistent: true,
     usePolling: this.options.watchWithPolling
   });
-
-  var watch = [];
-
-  if (process.env['chimp.watchSource']) {
-    watch = process.env['chimp.watchSource'].split(',');
-  }
-
-  if (process.env['chimp.e2eSteps']) {
-    watch.push(process.env['chimp.e2eSteps']);
-  }
-
-  if (process.env['chimp.domainSteps']) {
-    watch.push(process.env['chimp.domainSteps']);
-  }
-
-  if (watch.length > 0) {
-    log.debug('[chimp] watching these directories:', watch);
-    watch.push(watch);
-  }
-
-  var self = this;
 
   // set cucumber tags to be watch based
   if (booleanHelper.isTruthy(self.options.watchTags)) {
@@ -201,7 +197,7 @@ Chimp.prototype.watch = function () {
   }
 
   // wait for initial file scan to complete
-  watcher.on('ready', function () {
+  watcher.once('ready', function () {
 
     var watched = [];
     if (self.options.watchTags) {
@@ -367,19 +363,19 @@ Chimp.prototype._setupRoutes = function (server) {
  */
 Chimp.prototype.run = function (callback) {
 
-  log.info('\n[chimp] Running...'[DEFAULT_COLOR]);
+  log.info(`\n[chimp] Running...`[DEFAULT_COLOR]);
 
   var self = this;
 
   function getJsonCucumberResults(result) {
     const startProcessesIndex = 1;
-    if (!result || !result[startProcessesIndex] ) {
+    if (!result || !result[startProcessesIndex]) {
       return [];
     }
 
     let jsonResult = '[]';
     _.any(['domain', 'e2e', 'generic'], (type) => {
-      let _testRunner = _.findWhere(self.testRunnerRunOrder, {name: 'cucumber', type });
+      let _testRunner = _.findWhere(self.testRunnerRunOrder, {name: 'cucumber', type});
       if (_testRunner) {
         jsonResult = result[startProcessesIndex][_testRunner.index];
         return true;
@@ -531,16 +527,18 @@ Chimp.prototype._createProcesses = function () {
     self.testRunnerRunOrder.push({name, type, index: processes.length - 1});
   };
 
-  if (this.options.browser === 'phantomjs') {
-    process.env['chimp.host'] = this.options.host = 'localhost';
-    var phantom = new exports.Phantom(this.options);
-    processes.push(phantom);
-  }
+  if (!this.options.domainOnly) {
+    if (this.options.browser === 'phantomjs') {
+      process.env['chimp.host'] = this.options.host = 'localhost';
+      var phantom = new exports.Phantom(this.options);
+      processes.push(phantom);
+    }
 
-  else if (booleanHelper.isFalsey(this.options.host)) {
-    process.env['chimp.host'] = this.options.host = 'localhost';
-    var selenium = new exports.Selenium(this.options);
-    processes.push(selenium);
+    else if (booleanHelper.isFalsey(this.options.host)) {
+      process.env['chimp.host'] = this.options.host = 'localhost';
+      var selenium = new exports.Selenium(this.options);
+      processes.push(selenium);
+    }
   }
 
   if (booleanHelper.isTruthy(this.options.mocha)) {
@@ -566,7 +564,9 @@ Chimp.prototype._createProcesses = function () {
           delete options.tags;
         }
 
-        processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+        if (!this.options.domainOnly) {
+          processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+        }
         processes.push(new exports.Cucumber(options));
         addTestRunnerToRunOrder('cucumber', 'domain');
         processes.push(new exports.Consoler(''));

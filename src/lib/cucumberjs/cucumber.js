@@ -227,8 +227,10 @@ class Cucumber {
     execOptions.push(path.resolve(__dirname, path.join('../chimp-helper.js')));
     execOptions.push('-r');
     execOptions.push(path.resolve(__dirname, path.join('world.js')));
-    execOptions.push('-r');
-    execOptions.push(path.resolve(__dirname, path.join('hooks.js')));
+    if (!options.domainOnly) {
+      execOptions.push('-r');
+      execOptions.push(path.resolve(__dirname, path.join('hooks.js')));
+    }
 
     if (!options.r && !options.require) {
       execOptions.push('-r');

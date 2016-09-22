@@ -8,6 +8,7 @@ module.exports = {
   domainSteps: null,
   e2eSteps: null,
   fullDomain: false,
+  domainOnly: false,
   e2eTags: '@e2e',
   watchWithPolling: false,
   server: false,

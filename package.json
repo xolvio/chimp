@@ -66,7 +66,7 @@
     "chai": "~3.0.0",
     "chai-as-promised": "~5.1.0",
     "child-process-debug": "0.0.7",
-    "chokidar": "~1.5.1",
+    "chokidar": "~1.6.0",
     "colors": "1.1.2",
     "commander": "^2.9.0",
     "cucumber": "xolvio/cucumber-js#v1.2.2-chimp.2",
