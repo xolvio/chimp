@@ -1,3 +1,21 @@
+# 0.41.0
+* Use phantomjs-prebuilt from the Medium team (Sam Hatoum) 
+* Updates Cucumber to 1.3.0-chimp.1 (fixes 432) (Sam Hatoum) 
+* Rewrite of the Domain vs E2E runs (Sam Hatoum) 
+* Fixes DEBUG parsing (Sam Hatoum) 
+
+# 0.40.7
+
+* Fix automocking of wrappy library (Sam Hatoum) 
+* Fix hanging selenium in non-watch mode (Sam Hatoum) 
+* Fix  debug logging when running Chimp programmatically (Sam Hatoum) 
+* Fix hanging selenium in non-watch mode (Sam Hatoum) 
+
+# 0.40.6
+
+* Stop piping stdin as it messes with Gulp and is not needed (Sam Hatoum) 
+* Adds the release notes for v0.40.5 (Sam Hatoum) 
+
 # 0.40.5
 
 * Update fibers - support for Node v6.5.0 (Daniel Bayerlein) 
