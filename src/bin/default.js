@@ -125,6 +125,7 @@ module.exports = {
 
   // - - - - METEOR  - - - -
   ddp: false,
+  serverExecuteTimeout: 10000,
 
   // - - - - PHANTOM  - - - -
   phantom_w: 1280,
