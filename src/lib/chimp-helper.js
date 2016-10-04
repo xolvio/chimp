@@ -164,7 +164,7 @@ var chimpHelper = {
       global.ddp.execute = function (func) {
         var args = Array.prototype.slice.call(arguments, 1);
         var result;
-        var timeout = process.env['chimp.serverExecuteTimeout'] ? parseInt(process.env['chimp.serverExecuteTimeout']) : 5000;
+        var timeout = process.env['chimp.serverExecuteTimeout'] ? parseInt(process.env['chimp.serverExecuteTimeout']) : 10000;
         setTimeout(function() {
           if (!result) {
             throw new Error('[chimp] server.execute timeout after ' + timeout + 'ms');
