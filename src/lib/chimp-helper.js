@@ -193,15 +193,17 @@ var chimpHelper = {
           addServerExecute();
           log.debug('[chimp][helper] connecting via DDP had no error');
         } catch (error) {
+          let errorMessage = error;
           if (_.isObject(error)) {
             if (error.code === 'ECONNREFUSED') {
-              throw new Error('[chimp][helper] Cannot connect to Meteor. Please check if your application is up and running on ' + error.address + ' port ' + error.port);
-            } else {
-              log.error('[chimp][helper] connecting via DDP error', error.code);
+
+              log.error('[chimp][helper] Cannot connect to Meteor. Please check if your application is up and running on ' + error.address + ' port ' + error.port);
+              // throw new Error(error)
             }
-          } else {
-            log.error('[chimp][helper] connecting via DDP error', error);
+            errorMessage = error.code;
           }
+          log.error('[chimp][helper] connecting via DDP error', errorMessage);
+          exit(2);
         }
       } else {
         var noDdp = function () {

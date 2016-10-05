@@ -88,7 +88,7 @@
     "saucelabs": "~0.1.1",
     "selenium-standalone": "^5.7.1",
     "underscore": "~1.8.3",
-    "xolvio-ddp": "xolvio/node-ddp-client#socketErrorHandling",
+    "xolvio-ddp": "^0.12.0",
     "xolvio-jasmine-expect": "^1.0.0",
     "xolvio-sync-webdriverio": "^5.1.0"
   },
