@@ -4,16 +4,19 @@ import {isCI} from '../lib/ci';
 module.exports = {
   // - - - - CHIMP - - - -
   watch: false,
-  // @focus is recommended to use. @dev and @watch are deprecated.
-  watchTags: '@focus,@dev,@watch',
+  watchTags: '@watch,@focus',
+  domainSteps: null,
+  e2eSteps: null,
+  fullDomain: false,
+  domainOnly: false,
+  e2eTags: '@e2e',
   watchWithPolling: false,
-  criticalSteps: null,
-  criticalTag: '@critical',
   server: false,
   serverPort: 8060,
   serverHost: 'localhost',
   sync: true,
   offline: false,
+  showXolvioMessages: true,
 
   // - - - - CUCUMBER - - - -
   path: './features',

@@ -79,6 +79,8 @@ function Chimp(options) {
 Chimp.prototype.init = function (callback) {
   var self = this;
 
+  this.informUser();
+
   try {
     this._initSimianResultBranch();
     this._initSimianBuildNumber();
@@ -88,6 +90,24 @@ Chimp.prototype.init = function (callback) {
   }
   self.selectMode(callback);
 };
+
+Chimp.prototype.informUser = function () {
+
+  if (this.options.showXolvioMessages) {
+    log.info('\nMaster Chimp and become a testing Ninja! Check out our course: '.green + 'http://bit.ly/2btQaFu\n'.blue.underline);
+  }
+
+  if (booleanHelper.isTruthy(this.options.criticalSteps)) {
+    this.options.e2eSteps = this.options.criticalSteps;
+    log.warn('[chimp] Please use e2eSteps instead of criticalSteps. criticalSteps is now deprecated.'.red);
+  }
+
+  if (booleanHelper.isTruthy(this.options.criticalTag)) {
+    this.options.e2eTags = this.options.criticalTag;
+    log.warn('[chimp] Please use e2eTags instead of criticalTag. criticalTag is now deprecated.'.red);
+  }
+};
+
 
 Chimp.prototype._initSimianResultBranch = function () {
   // Automatically set the result branch for the common CI tools
@@ -160,17 +180,28 @@ Chimp.prototype.selectMode = function (callback) {
  */
 Chimp.prototype.watch = function () {
 
-  var watcher = chokidar.watch(this.options.path, {
+  var self = this;
+
+  var watchDirectories = [];
+  if (self.options.watchSource) {
+    watchDirectories = (self.options.watchSource.split(','));
+  }
+
+  if (self.options.e2eSteps) {
+    watchDirectories.push(self.options.e2eSteps);
+  }
+
+  if (self.options.domainSteps) {
+    watchDirectories.push(self.options.domainSteps);
+  }
+
+  watchDirectories.push(self.options.path);
+
+  var watcher = chokidar.watch(watchDirectories, {
     ignored: /[\/\\](\.|node_modules)/,
     persistent: true,
     usePolling: this.options.watchWithPolling
   });
-
-  if (process.env['chimp.watchSource']) {
-    watcher.add(process.env['chimp.watchSource']);
-  }
-
-  var self = this;
 
   // set cucumber tags to be watch based
   if (booleanHelper.isTruthy(self.options.watchTags)) {
@@ -186,9 +217,13 @@ Chimp.prototype.watch = function () {
   }
 
   // wait for initial file scan to complete
-  watcher.on('ready', function () {
+  watcher.once('ready', function () {
 
-    log.info('[chimp] Watching features with tagged with', self.options.watchTags);
+    var watched = [];
+    if (self.options.watchTags) {
+      watched.push(self.options.watchTags.split(','));
+    }
+    log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
 
     // start watching
     watcher.on('all', function (event, path) {
@@ -348,19 +383,19 @@ Chimp.prototype._setupRoutes = function (server) {
  */
 Chimp.prototype.run = function (callback) {
 
-  log.info('\n[chimp] Running...'[DEFAULT_COLOR]);
+  log.info(`\n[chimp] Running...`[DEFAULT_COLOR]);
 
   var self = this;
 
   function getJsonCucumberResults(result) {
     const startProcessesIndex = 1;
-    if (!result || !result[startProcessesIndex] ) {
+    if (!result || !result[startProcessesIndex]) {
       return [];
     }
 
     let jsonResult = '[]';
-    _.any(['domain', 'critical', 'generic'], (type) => {
-      let _testRunner = _.findWhere(self.testRunnerRunOrder, {name: 'cucumber', type });
+    _.any(['domain', 'e2e', 'generic'], (type) => {
+      let _testRunner = _.findWhere(self.testRunnerRunOrder, {name: 'cucumber', type});
       if (_testRunner) {
         jsonResult = result[startProcessesIndex][_testRunner.index];
         return true;
@@ -512,16 +547,18 @@ Chimp.prototype._createProcesses = function () {
     self.testRunnerRunOrder.push({name, type, index: processes.length - 1});
   };
 
-  if (this.options.browser === 'phantomjs') {
-    process.env['chimp.host'] = this.options.host = 'localhost';
-    var phantom = new exports.Phantom(this.options);
-    processes.push(phantom);
-  }
+  if (!this.options.domainOnly) {
+    if (this.options.browser === 'phantomjs') {
+      process.env['chimp.host'] = this.options.host = 'localhost';
+      var phantom = new exports.Phantom(this.options);
+      processes.push(phantom);
+    }
 
-  else if (booleanHelper.isFalsey(this.options.host)) {
-    process.env['chimp.host'] = this.options.host = 'localhost';
-    var selenium = new exports.Selenium(this.options);
-    processes.push(selenium);
+    else if (booleanHelper.isFalsey(this.options.host)) {
+      process.env['chimp.host'] = this.options.host = 'localhost';
+      var selenium = new exports.Selenium(this.options);
+      processes.push(selenium);
+    }
   }
 
   if (booleanHelper.isTruthy(this.options.mocha)) {
@@ -531,7 +568,7 @@ Chimp.prototype._createProcesses = function () {
     const jasmine = new exports.Jasmine(this.options);
     processes.push(jasmine);
   } else {
-    if (booleanHelper.isTruthy(this.options.criticalSteps)) {
+    if (booleanHelper.isTruthy(this.options.e2eSteps) || booleanHelper.isTruthy(this.options.domainSteps)) {
       // domain scenarios
       if (booleanHelper.isTruthy(this.options.domainSteps)) {
         const options = JSON.parse(JSON.stringify(this.options));
@@ -542,26 +579,42 @@ Chimp.prototype._createProcesses = function () {
         }
         const message = '\n[chimp] domain scenarios...';
         options.r.push(options.domainSteps);
-        processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+
+        if (booleanHelper.isTruthy(options.fullDomain)) {
+          delete options.tags;
+        }
+
+        if (!this.options.domainOnly) {
+          processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+        }
         processes.push(new exports.Cucumber(options));
         addTestRunnerToRunOrder('cucumber', 'domain');
         processes.push(new exports.Consoler(''));
       }
-      // critical scenarios
-      const options = JSON.parse(JSON.stringify(this.options));
-      if (options.r) {
-        options.r = _.isArray(options.r) ? options.r : [options.r];
-      } else {
-        options.r = [];
+      if (booleanHelper.isTruthy(this.options.e2eSteps)) {
+        // e2e scenarios
+        const options = JSON.parse(JSON.stringify(this.options));
+        if (options.r) {
+          options.r = _.isArray(options.r) ? options.r : [options.r];
+        } else {
+          options.r = [];
+        }
+
+        options.tags = options.tags.split(',');
+        options.tags.push(options.e2eTags);
+        options.tags = options.tags.join();
+
+        const message = `\n[chimp] ${options.e2eTags} scenarios ...`;
+        options.r.push(options.e2eSteps);
+        processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
+        processes.push(new exports.Cucumber(options));
+        addTestRunnerToRunOrder('cucumber', 'e2e');
+        processes.push(new exports.Consoler(''));
       }
-      options.tags = [options.tags, options.criticalTag];
-      const message = '\n[chimp] critical scenarios...';
-      options.r.push(options.criticalSteps);
-      processes.push(new exports.Consoler(message[DEFAULT_COLOR]));
-      processes.push(new exports.Cucumber(options));
-      addTestRunnerToRunOrder('cucumber', 'critical');
-      processes.push(new exports.Consoler(''));
-    } else {
+    }
+
+
+    else {
       const cucumber = new exports.Cucumber(this.options);
       processes.push(cucumber);
       addTestRunnerToRunOrder('cucumber', 'generic');
