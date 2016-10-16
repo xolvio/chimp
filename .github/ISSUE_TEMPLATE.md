@@ -42,12 +42,12 @@ Please put long code snips in a [Gist](https://gist.github.com/) and provide a l
 
 #####  Version & tools:
 
-* Chimp command line used: <!-- The exact command you used -->
-* Chimp config file: <!-- Please provide a Gist if you use a config file -->
-* Chimp: <!-- type `chimp -v` -->
-* Node.js: <!-- *type `chimp -v` -->
-* Java: <!-- *type `java -version`* -->
-* Operation system: <!-- *type `uname -v`* -->
+* Chimp command line used: *The exact command you used*
+* Chimp config file: *Please provide a Gist if you use a config file*
+* Chimp: *type `chimp -v`*
+* Node.js: *type `chimp -v`*
+* Java: *type `java -version`*
+* Operation system: *type `uname -v`*
 
 #####  Console / Log Output
 
