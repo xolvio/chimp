@@ -45,7 +45,7 @@ Please put long code snips in a [Gist](https://gist.github.com/) and provide a l
 * Chimp command line used: *The exact command you used*
 * Chimp config file: *Please provide a Gist if you use a config file*
 * Chimp: *type `chimp -v`*
-* Node.js: *type `chimp -v`*
+* Node.js: *type `node -v`*
 * Java: *type `java -version`*
 * Operation system: *type `uname -v`*
 
