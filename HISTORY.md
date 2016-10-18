@@ -1,3 +1,14 @@
+# 0.41.2
+
+* Removes duplicate circle config (Sam Hatoum) 
+* increase chromedriver (Maxim Chouinard) 
+* Update ISSUE_TEMPLATE.md (Sam Hatoum) 
+* Update ISSUE_TEMPLATE.md (Sam Hatoum) 
+* Update ISSUE_TEMPLATE.md (Sam Hatoum) 
+* reverted request to a previous version. 2.74.0 doesn&#39;t install on node v4 (lgandecki) 
+* Update README.md (Sam Hatoum) 
+* Fix for 2 vulnerable dependency paths (Snyk Community) 
+
 # 0.41.1
 * Update selenium-standalone to the latest version (Sam Hatoum) 
 * Add Xolvio messages to users (Sam Hatoum)
