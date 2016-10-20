@@ -182,6 +182,7 @@ Support us with a monthly donation and help us continue our activities. [[Become
 
 ## Community
 **Slack:** Join our Slack xolv.io/community #chimp channel, where you can find help and help others.
+
 **Gitter:** https://gitter.im/xolvio/chimp
 
 ## Sponsors
