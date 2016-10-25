@@ -83,7 +83,7 @@ module.exports = {
         arch: 'ia32',
         baseURL: 'https://selenium-release.storage.googleapis.com'
       },
-     firefox: {
+      firefox: {
         // check for more recent versions of gecko  driver here:
         // https://github.com/mozilla/geckodriver/releases
         version: '0.11.1',
