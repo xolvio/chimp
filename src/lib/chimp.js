@@ -24,6 +24,7 @@ exports.Mocha = require('./mocha/mocha.js');
 exports.Jasmine = require('./jasmine/jasmine.js');
 exports.Cucumber = require('./cucumberjs/cucumber.js');
 exports.Phantom = require('./phantom.js');
+exports.Chromedriver = require('./chromedriver.js');
 exports.Consoler = require('./consoler.js');
 exports.Selenium = require('./selenium.js');
 exports.SimianReporter = require('./simian-reporter.js');
@@ -552,6 +553,12 @@ Chimp.prototype._createProcesses = function () {
       process.env['chimp.host'] = this.options.host = 'localhost';
       var phantom = new exports.Phantom(this.options);
       processes.push(phantom);
+    }
+
+    else if (this.options.browser === 'chromedriver') {
+        process.env['chimp.host'] = this.options.host = 'localhost';
+        var chromedriver = new exports.Chromedriver(this.options);
+        processes.push(chromedriver);
     }
 
     else if (booleanHelper.isFalsey(this.options.host)) {
