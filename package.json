@@ -25,7 +25,11 @@
   "bugs": {
     "url": "https://github.com/xolvio/chimp/issues"
   },
+  "watch": {
+    "prepublish": "src/{lib,bin}/**/*.js"
+  },
   "scripts": {
+    "watch": "npm-watch",
     "prepublish": "node ./scripts/prepublish.js",
     "lint": "eslint ./src",
     "lintfix": "eslint ./src --fix",
@@ -101,6 +105,7 @@
     "eslint-plugin-babel": "^3.0.0",
     "git-release-notes": "0.0.2",
     "jest-cli": "Sanjo/jest#7c71094",
+    "npm-watch": "^0.1.6",
     "shelljs": "^0.6.0"
   },
   "bundledDependencies": [
