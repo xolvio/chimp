@@ -2,15 +2,7 @@ machine:
   java:
     version: oraclejdk8
   node:
-    version: 6.3.0 
-
-
-dependencies:
-  cache_directories:
-    - "node_modules"
-    - "~/.npm"
-    - "~/_opt"
-
+    version: 6.3.0
 
 general:
   branches:
