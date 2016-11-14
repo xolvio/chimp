@@ -20,9 +20,7 @@ Set an `@focus` tag in the spec title, save a file, Chimp reruns the spec until 
 ### Want to be a Chimp Ninja?
 Checkout our new book where you can learn how to can use Chimp across the Full Stack from React to Node.JS, Mocha, Meteor and more.
 
-[![Quality Faster](http://d9hhrg4mnvzow.cloudfront.net/quality.xolv.io/54591755-qualityfasterbook-commas_0ci0em0ci0em000000.png)](http://quality.xolv.io/?utm_source=XolvOSS&utm_medium=OSSGitHub&utm_content=ChimpGitHubReadme&utm_campaign=QFLaunch)
-
-Quality, Faster. By Sam Hatoum, creator of Chimp.
+[Quality Faster](http://quality.xolv.io/?utm_source=XolvOSS&utm_medium=OSSGitHub&utm_content=ChimpGitHubReadme&utm_campaign=QFLaunch) by Sam Hatoum, creator of Chimp.
 
 ### Installation as cli
 
@@ -144,16 +142,6 @@ On CI, can select the browser:
 chimp --browser=firefox --ddp=http://localhost:3000
 ```
 
-## Get our Meteor Testing Book
-To learn more about testing with Meteor, consider purchasing our book [The Meteor Testing Manual](http://www.meteortesting.com/?utm_source=GitHubChimp&utm_medium=banner&utm_campaign=Chimp).
-
-Your support helps us continue our work on Chimp.
-
-## Need Faster Builds?
-
-Check our our [WhirlWind](https://github.com/xolvio/whirlwind) package that can bring a build time down from hours to 
-minutes!
-
 ![Analytics](https://ga-beacon-xolvio.appspot.com/UA-61850278-5/chimp/readme?pixel)
 
 
@@ -192,6 +180,10 @@ Support us with a monthly donation and help us continue our activities. [[Become
 <a href="https://opencollective.com/chimp/backer/28/website" target="_blank"><img src="https://opencollective.com/chimp/backer/28/avatar.svg"></a>
 <a href="https://opencollective.com/chimp/backer/29/website" target="_blank"><img src="https://opencollective.com/chimp/backer/29/avatar.svg"></a>
 
+## Community
+**Slack:** Join our Slack [xolv.io/community](http://community.xolv.io) #chimp channel, where you can find help and help others.
+
+**Gitter:** https://gitter.im/xolvio/chimp
 
 ## Sponsors
 
