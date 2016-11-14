@@ -58,6 +58,12 @@ SessionManager.prototype._configureRemote = function (webdriverOptions, remote, 
       return;
     }
 
+    if (self.options.browser === 'chromedriver') {
+      log.debug('[chimp][session-manager] browser is chromedriver, not reusing a session');
+      callback(null, browser);
+      return;
+    }
+
     if (booleanHelper.isTruthy(process.env['chimp.noSessionReuse'])) {
       log.debug('[chimp][session-manager] noSessionReuse is true, not reusing a session');
       callback(null, browser);
