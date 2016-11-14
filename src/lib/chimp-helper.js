@@ -154,7 +154,6 @@ var chimpHelper = {
         });
       }
       else {
-        browser.initSync();
         initSingleBrowser(browser);
       }
 
