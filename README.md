@@ -180,6 +180,10 @@ Support us with a monthly donation and help us continue our activities. [[Become
 <a href="https://opencollective.com/chimp/backer/28/website" target="_blank"><img src="https://opencollective.com/chimp/backer/28/avatar.svg"></a>
 <a href="https://opencollective.com/chimp/backer/29/website" target="_blank"><img src="https://opencollective.com/chimp/backer/29/avatar.svg"></a>
 
+## Community
+**Slack:** Join our Slack [xolv.io/community](http://community.xolv.io) #chimp channel, where you can find help and help others.
+
+**Gitter:** https://gitter.im/xolvio/chimp
 
 ## Sponsors
 

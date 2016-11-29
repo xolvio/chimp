@@ -132,10 +132,12 @@ module.exports = {
 
   // - - - - METEOR  - - - -
   ddp: false,
+  serverExecuteTimeout: 10000,
 
   // - - - - PHANTOM  - - - -
   phantom_w: 1280,
   phantom_h: 1024,
+  phantom_ignoreSSLErrors: false,
 
   // - - - - DEBUGGING  - - - -
   log: 'info',

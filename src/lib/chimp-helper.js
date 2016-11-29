@@ -154,7 +154,6 @@ var chimpHelper = {
         });
       }
       else {
-        browser.initSync();
         initSingleBrowser(browser);
       }
 
@@ -164,6 +163,12 @@ var chimpHelper = {
       global.ddp.execute = function (func) {
         var args = Array.prototype.slice.call(arguments, 1);
         var result;
+        var timeout = parseInt(process.env['chimp.serverExecuteTimeout']) || 10000;
+        setTimeout(function() {
+          if (!result) {
+            throw new Error('[chimp] server.execute timeout after ' + timeout + 'ms');
+          }
+        }, timeout);
         try {
           result = server.call('xolvio/backdoor', func.toString(), args);
         } catch (exception) {
@@ -193,7 +198,16 @@ var chimpHelper = {
           addServerExecute();
           log.debug('[chimp][helper] connecting via DDP had no error');
         } catch (error) {
-          log.error('[chimp][helper] connecting via DDP error', error);
+          let errorMessage = error;
+          if (_.isObject(error)) {
+            if (error.code === 'ECONNREFUSED') {
+              log.error('[chimp][helper] Cannot connect to Meteor. Please check if your application is up and running on ' + error.address + ' port ' + error.port);
+            }
+            errorMessage = error.code;
+          }
+          log.error('[chimp][helper] connecting via DDP error', errorMessage);
+          global.browser.endSync();
+          process.exit(1);
         }
       } else {
         var noDdp = function () {
