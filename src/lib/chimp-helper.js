@@ -150,10 +150,12 @@ var chimpHelper = {
 
       if (browser.instances) {
         browser.instances.forEach(function (singleBrowser) {
+          singleBrowser.initSync();
           initSingleBrowser(singleBrowser);
         });
       }
       else {
+        browser.initSync();
         initSingleBrowser(browser);
       }
 

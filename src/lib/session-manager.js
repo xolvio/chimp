@@ -161,26 +161,39 @@ SessionManager.prototype._monkeyPatchBrowserSessionManagement = function (browse
     };
   };
 
-  browser._initAsync = browser.initAsync;
-  browser.initAsync = initWrapperFactory(browser.initAsync);
-  browser._initSync = browser.initSync;
-  browser.initSync = initWrapperFactory(browser.initSync);
-  browser._init = browser.init;
-  if (browser._init === browser._initSync) {
-    browser.init = browser.initSync;
-  } else if (browser._init === browser._initAsync) {
-    browser.init = browser.initAsync;
-  } else {
-    throw new Error('browser.init has already been overwritten by something else.');
+  var updateBrowserObject = function (browserObject) {
+    browserObject._initAsync = browserObject.initAsync;
+    browserObject.initAsync = initWrapperFactory(browserObject.initAsync);
+    browserObject._initSync = browserObject.initSync;
+    browserObject.initSync = initWrapperFactory(browserObject.initSync);
+    browserObject._init = browserObject.init;
+    if (browserObject._init === browserObject._initSync) {
+      browserObject.init = browserObject.initSync;
+    } else if (browserObject._init === browserObject._initAsync) {
+      browserObject.init = browserObject.initAsync;
+    } else {
+      throw new Error('browserObject.init has already been overwritten by something else.');
+    }
+
+    browserObject.end = callbacker.bind(browserObject);
+    browserObject.endSync = browserObject.end;
+    browserObject.endAsync = browserObject.end;
+
+    browserObject.endAll = callbacker.bind(browserObject);
+    browserObject.endAllSync = browserObject.endAll;
+    browserObject.endAllAsync = browserObject.endAll;
+
+    return browserObject;
+  };
+
+  if (browser.instances) {
+    browser.instances.forEach(function (singleBrowser) {
+      singleBrowser = updateBrowserObject(singleBrowser);
+    });
   }
-
-  browser.end = callbacker.bind(browser);
-  browser.endSync = browser.end;
-  browser.endAsync = browser.end;
-
-  browser.endAll = callbacker.bind(browser);
-  browser.endAllSync = browser.endAll;
-  browser.endAllAsync = browser.endAll;
+  else {
+    browser = updateBrowserObject(browser);
+  }
 
   return browser;
 };
