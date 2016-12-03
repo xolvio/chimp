@@ -556,6 +556,8 @@ Chimp.prototype._createProcesses = function () {
     }
 
     else if (this.options.browser === 'chromedriver') {
+        // rewrite the browser to be chrome since chromedriver is not a valid browser
+        process.env['chimp.browser'] = this.options.browser = 'chrome';
         process.env['chimp.host'] = this.options.host = 'localhost';
         var chromedriver = new exports.Chromedriver(this.options);
         processes.push(chromedriver);
