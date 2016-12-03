@@ -12,8 +12,6 @@ var requestretry = require('requestretry'),
  */
 function SessionManager(options) {
 
-  log.debug('[chimp][session-manager] options are', options);
-
   if (!options) {
      throw new Error('options is required');
    }
@@ -32,7 +30,7 @@ function SessionManager(options) {
   this.retryDelay = 3000;
   this.retry = 0;
 
-  log.debug('[chimp][session-manager] created a new SessionManager', options);
+  log.debug('[chimp][session-manager] created a new SessionManager');
 
 }
 
