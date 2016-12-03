@@ -1,7 +1,6 @@
 var _ = require('underscore'),
   processHelper = require('./process-helper.js'),
   selenium = require('selenium-standalone'),
-  SessionManager = require('./session-manager.js'),
   booleanHelper = require('./boolean-helper'),
   log = require('./log');
 
@@ -37,7 +36,6 @@ function Selenium(options) {
 
   this.options.port = String(options.port);
   this.child = null;
-  this.sessionManager = null;
 }
 
 /**
@@ -141,13 +139,6 @@ Selenium.prototype.start = function (callback) {
         self.stop(function () {
           log.debug('[chimp][selenium] process exit event stop complete');
         });
-      });
-
-      self.sessionManager = new SessionManager({
-        host: process.env['chimp.host'],
-        port: process.env['chimp.port'],
-        browser: process.env['chimp.browser'],
-        deviceName: process.env['chimp.deviceName']
       });
 
       callback(null);
