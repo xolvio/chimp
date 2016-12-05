@@ -107,6 +107,14 @@ Chimp.prototype.informUser = function () {
     this.options.e2eTags = this.options.criticalTag;
     log.warn('[chimp] Please use e2eTags instead of criticalTag. criticalTag is now deprecated.'.red);
   }
+
+  if (booleanHelper.isTruthy(this.options.mochaTags)
+    || booleanHelper.isTruthy(this.options.mochaGrep)
+    || booleanHelper.isTruthy(this.options.mochaTimeout)
+    || booleanHelper.isTruthy(this.options.mochaReporter)
+    || booleanHelper.isTruthy(this.options.mochaSlow)) {
+    log.warn('[chimp] mochaXYZ style configs are now deprecated. Please use a mochaConfig object.'.red);
+  }
 };
 
 
