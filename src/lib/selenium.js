@@ -49,8 +49,6 @@ Selenium.prototype.install = function (callback) {
   var bar;
   var firstProgress = true;
 
-  // XXX we need to check if the current versions are already installed before going to the web
-
   if (this.options.offline) {
     log.debug('[chimp][selenium]', 'Offline mode enabled, Chimp will not attempt to install Selenium & Drivers');
     callback();
@@ -60,7 +58,19 @@ Selenium.prototype.install = function (callback) {
   log.debug('[chimp][selenium]', 'Installing Selenium + drivers if needed');
 
   this.seleniumStandaloneOptions.progressCb = progressCb;
-  selenium.install(this.seleniumStandaloneOptions, callback);
+
+  selenium.install(this.seleniumStandaloneOptions, function(e, r) {
+    if (e && e.message.match(/Error: getaddrinfo ENOTFOUND/)) {
+      log.debug('[chimp][selenium]', e.message);
+      log.info('[chimp][selenium] Detected a connection error in selenium-standalone. Are you offline?');
+      log.info('[chimp][selenium] Consider using the --offline option to explicitly skip installing Selenium & drivers.');
+      log.info('[chimp][selenium] Attempting to continue...');
+      callback(null, r);
+    } else {
+      callback(e, r);
+    }
+
+  });
 
   function progressCb(total, progress, chunk) {
     if (firstProgress) {
