@@ -548,6 +548,14 @@ Chimp.prototype._createProcesses = function () {
     self.testRunnerRunOrder.push({name, type, index: processes.length - 1});
   };
 
+  const userHasNotProvidedSeleniumHost = function() {
+    return booleanHelper.isFalsey(self.options.host);
+  };
+
+  const userHasProvidedBrowser = function() {
+    return booleanHelper.isTruthy(self.options.browser);
+  };
+
   if (!this.options.domainOnly) {
     if (this.options.browser === 'phantomjs') {
       process.env['chimp.host'] = this.options.host = 'localhost';
@@ -555,16 +563,18 @@ Chimp.prototype._createProcesses = function () {
       processes.push(phantom);
     }
 
-    else if (this.options.browser === 'chromedriver') {
-        process.env['chimp.host'] = this.options.host = 'localhost';
-        var chromedriver = new exports.Chromedriver(this.options);
-        processes.push(chromedriver);
-    }
-
-    else if (booleanHelper.isFalsey(this.options.host)) {
+    else if (userHasProvidedBrowser() && userHasNotProvidedSeleniumHost()) {
       process.env['chimp.host'] = this.options.host = 'localhost';
       var selenium = new exports.Selenium(this.options);
       processes.push(selenium);
+    }
+
+    else if (userHasNotProvidedSeleniumHost()) {
+      // rewrite the browser to be chrome since "chromedriver" is not a valid browser
+      process.env['chimp.browser'] = this.options.browser = 'chrome';
+      process.env['chimp.host'] = this.options.host = 'localhost';
+      var chromedriver = new exports.Chromedriver(this.options);
+      processes.push(chromedriver);
     }
   }
 

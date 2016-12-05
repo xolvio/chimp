@@ -38,7 +38,7 @@ module.exports = {
   conditionOutput: true,
 
   // - - - - SELENIUM  - - - -
-  browser: 'chrome',
+  browser: null,
   platform: 'ANY',
   name: '',
   user: '',

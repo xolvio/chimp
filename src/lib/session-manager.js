@@ -12,8 +12,6 @@ var requestretry = require('requestretry'),
  */
 function SessionManager(options) {
 
-  log.debug('[chimp][session-manager] options are', options);
-
   if (!options) {
      throw new Error('options is required');
    }
@@ -32,7 +30,7 @@ function SessionManager(options) {
   this.retryDelay = 3000;
   this.retry = 0;
 
-  log.debug('[chimp][session-manager] created a new SessionManager', options);
+  log.debug('[chimp][session-manager] created a new SessionManager');
 
 }
 
@@ -54,12 +52,6 @@ SessionManager.prototype._configureRemote = function (webdriverOptions, remote, 
 
     if (self.options.browser === 'phantomjs') {
       log.debug('[chimp][session-manager] browser is phantomjs, not reusing a session');
-      callback(null, browser);
-      return;
-    }
-
-    if (self.options.browser === 'chromedriver') {
-      log.debug('[chimp][session-manager] browser is chromedriver, not reusing a session');
       callback(null, browser);
       return;
     }

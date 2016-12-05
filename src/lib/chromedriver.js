@@ -84,7 +84,14 @@ Chromedriver.prototype.stop = function (callback) {
  * @api public
  */
 Chromedriver.prototype.interrupt = function (callback) {
+  log.debug('[chimp][chromedriver] interrupt called');
+  if (!this.options['watch'] || !!this.options['clean-chromedriver-server']) {
     this.stop(callback);
+  } else {
+    log.debug('[chimp][chromedriver] interrupt is not killing chromedriver because ' +
+      'clean-chromedriver-server not set');
+    callback(null);
+  }
 };
 
 
