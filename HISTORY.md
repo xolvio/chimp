@@ -2,6 +2,7 @@
 
 * Improvement/offline detection (#535) (Sam Hatoum) 
 * Improvement/custom mocha options (#534) (Sam Hatoum) 
+  - **Breaking change:** the old mochaXYZ options are not read, put mocha config in mochConfig {} object as in https://github.com/xolvio/chimp/blob/master/src/bin/default.js 
 * Improvement/chrome driver mode (#533) (Sam Hatoum) 
 
 # 0.43.0
