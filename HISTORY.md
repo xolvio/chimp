@@ -1,3 +1,8 @@
+# 0.45.0
+
+* Updates to latest wdio-sync (Sam Hatoum) 
+* mention mocha config breaking change in history.md (#539) (Dheeraj Bhaskar) 
+
 # 0.44.0
 
 * Improvement/offline detection (#535) (Sam Hatoum) 
