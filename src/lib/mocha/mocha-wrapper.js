@@ -10,26 +10,18 @@ var Mocha = require('mocha'),
 import {parseBoolean, parseNullableString, parseString} from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-var mochaOptions = {
-  ui: 'fiberized-bdd-ui',
-  timeout: process.env['chimp.mochaTimeout'],
-  slow: process.env['chimp.mochaSlow'],
-  reporter: process.env['chimp.mochaReporter']
-};
+  var mochaConfig = JSON.parse(process.env.mochaConfig);
+mochaConfig.ui = 'fiberized-bdd-ui';
 
-var mochaGrep = parseNullableString(process.env['chimp.mochaGrep']);
-
-if (parseBoolean(process.env['chimp.watch'])) {
-  mochaOptions.grep = new RegExp(parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|'));
-} else if (mochaGrep) {
-  mochaOptions.grep = mochaGrep;
-} else {
-  mochaOptions.grep = new RegExp(
-    parseString(process.env['chimp.mochaTags']).split(',').map(escapeRegExp).join('|')
+if (!mochaConfig.grep && parseBoolean(process.env['chimp.watch'])) {
+  mochaConfig.grep = new RegExp(parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|'));
+} else if (!mochaConfig.grep) {
+  mochaConfig.grep = new RegExp(
+    parseString(mochaConfig.tags).split(',').map(escapeRegExp).join('|')
   );
 }
 
-var mocha = new Mocha(mochaOptions);
+var mocha = new Mocha(mochaConfig);
 
 mocha.addFile(path.join(path.resolve(__dirname, path.join('mocha-helper.js'))));
 

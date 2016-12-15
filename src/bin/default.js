@@ -38,7 +38,7 @@ module.exports = {
   conditionOutput: true,
 
   // - - - - SELENIUM  - - - -
-  browser: 'chrome',
+  browser: null,
   platform: 'ANY',
   name: '',
   user: '',
@@ -97,13 +97,15 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
-  // mochaTags and mochaGrep only work when watch is false (disabled)
-  mochaTags: '',
-  mochaGrep: null,
-  // 'path: './tests',
-  mochaTimeout: 60000,
-  mochaReporter: 'spec',
-  mochaSlow: 10000,
+  mochaCommandLineOptions: ['--color'],
+  mochaConfig: {
+    // tags and grep only work when watch mode is false
+    tags: '',
+    grep: null,
+    timeout: 60000,
+    reporter: 'spec',
+    slow: 10000,
+  },
 
   // - - - - JASMINE  - - - -
   jasmine: false,
@@ -125,10 +127,12 @@ module.exports = {
 
   // - - - - METEOR  - - - -
   ddp: false,
+  serverExecuteTimeout: 10000,
 
   // - - - - PHANTOM  - - - -
   phantom_w: 1280,
   phantom_h: 1024,
+  phantom_ignoreSSLErrors: false,
 
   // - - - - DEBUGGING  - - - -
   log: 'info',
