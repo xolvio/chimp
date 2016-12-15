@@ -66,8 +66,12 @@ Mocha.prototype.start = function (callback) {
     _specs = this.options._.slice(2);
   }
 
+  opts.env = _.extend(process.env, {
+    mochaConfig: JSON.stringify(this.options.mochaConfig)
+  });
+
   self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), _.union(
-    ['--color'],
+    this.options.mochaCommandLineOptions,
     _specs
   ), opts);
 

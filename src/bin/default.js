@@ -38,7 +38,7 @@ module.exports = {
   conditionOutput: true,
 
   // - - - - SELENIUM  - - - -
-  browser: 'chrome',
+  browser: null,
   platform: 'ANY',
   name: '',
   user: '',
@@ -72,7 +72,7 @@ module.exports = {
       chrome: {
         // check for more recent versions of chrome driver here:
         // http://chromedriver.storage.googleapis.com/index.html
-        version: '2.24',
+        version: '2.25',
         arch: process.arch,
         baseURL: 'https://chromedriver.storage.googleapis.com'
       },
@@ -104,13 +104,15 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
-  // mochaTags and mochaGrep only work when watch is false (disabled)
-  mochaTags: '',
-  mochaGrep: null,
-  // 'path: './tests',
-  mochaTimeout: 60000,
-  mochaReporter: 'spec',
-  mochaSlow: 10000,
+  mochaCommandLineOptions: ['--color'],
+  mochaConfig: {
+    // tags and grep only work when watch mode is false
+    tags: '',
+    grep: null,
+    timeout: 60000,
+    reporter: 'spec',
+    slow: 10000,
+  },
 
   // - - - - JASMINE  - - - -
   jasmine: false,

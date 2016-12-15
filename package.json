@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.41.2",
+  "version": "0.45.0",
   "description": "Develop acceptance tests & end-to-end tests with realtime feedback.",
   "keywords": [
     "simian",
@@ -95,7 +95,7 @@
     "underscore": "~1.8.3",
     "xolvio-ddp": "^0.12.0",
     "xolvio-jasmine-expect": "^1.0.0",
-    "xolvio-sync-webdriverio": "^6.0.0"
+    "xolvio-sync-webdriverio": "^8.0.0"
   },
   "devDependencies": {
     "babel-cli": "6.x.x",
