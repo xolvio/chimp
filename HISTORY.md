@@ -1,3 +1,9 @@
+# 0.45.1
+
+* add geckodriver to seleniumstandaloneoptions (#506) (Stephen Davidson) 
+* Increase chromedriver version to 2.25. (#518) (Kyle Ian) 
+* Adds the release notes for v0.45.0 (Sam Hatoum) 
+
 # 0.45.0
 
 * Updates to latest wdio-sync (Sam Hatoum) 
