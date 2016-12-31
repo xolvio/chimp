@@ -120,6 +120,7 @@
     "git-release-notes": "0.0.2",
     "jest-cli": "Sanjo/jest#7c71094",
     "npm-watch": "^0.1.6",
+    "quibble": "^0.4.0",
     "shelljs": "^0.7.5",
     "testdouble": "^1.10.1"
   },
