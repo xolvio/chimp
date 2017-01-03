@@ -206,17 +206,14 @@ var chimpHelper = {
     };
 
     var setupDdp = function () {
-      console.log('--chimp-helper.js setupDdp()');
-      global.hello = 'hello!';
       log.debug('[chimp][helper] setup DDP');
       if (process.env['chimp.ddp0']) {
-        log.debug('[chimp][helper] connecting via DDP to', process.env['chimp.ddp']);
         try {
-          console.log('--chimp-helper.js connectin global ddp');
+          log.debug('[chimp][helper] connecting via DDP to', process.env['chimp.ddp']);
           global.ddp.connectSync();
           addServerExecute(global.ddp);
           for(let i = 0; i < global.ddp.instances.length; i++) {
-            console.log('--chimp-helper.js connectin global ddp instances[' + i + ']');
+            log.debug('[chimp][helper] connecting via DDP to ' + global.ddp.instances[i]._original.host + ':' + global.ddp.instances[i]._original.port);
             global.ddp.instances[i].connectSync();
             addServerExecute(global.ddp.instances[i]);
           }
