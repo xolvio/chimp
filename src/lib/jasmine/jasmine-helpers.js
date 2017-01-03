@@ -1,10 +1,12 @@
 import chimpHelper from '../chimp-helper';
 import log from '../log';
+import runHook from '../utils/run-hook';
 
 beforeAll(function chimpSetup() {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
   chimpHelper.init();
   chimpHelper.setupBrowserAndDDP();
+  runHook('webdriverio', 'setup', browser);
 });
 
 afterAll(function chimpTeardown() {
@@ -13,4 +15,6 @@ afterAll(function chimpTeardown() {
     global.wrapAsync(global.sessionManager.killCurrentSession, global.sessionManager)();
     log.debug('[chimp][jasmine-helpers] Ended browser sessions');
   }
+
+  runHook('webdriverio', 'teardown', browser);
 });

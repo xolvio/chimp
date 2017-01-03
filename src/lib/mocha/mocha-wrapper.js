@@ -9,6 +9,7 @@ var Mocha = require('mocha'),
 
 import {parseBoolean, parseNullableString, parseString} from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
+import runHook from '../utils/run-hook';
 
   var mochaConfig = JSON.parse(process.env.mochaConfig);
 mochaConfig.ui = 'fiberized-bdd-ui';
@@ -41,8 +42,11 @@ if (process.argv.length > 3) {
 }
 
 try {
-// Run the tests.
+  runHook('mocha', 'setup', mocha);
+
+  // Run the tests.
   mocha.run(function (failures) {
+    runHook('mocha', 'teardown', mocha);
     exit(failures);
   });
 } catch (e) {
