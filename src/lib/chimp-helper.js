@@ -54,8 +54,6 @@ var chimpHelper = {
       global.ddp = new DDP(process.env['chimp.ddp0']).connect();
       // add on instances t
       global.ddp.instances = [];
-      // make .ddp and .
-      // global.ddp = global.ddp0 = new DDP().connect(process.env['chimp.ddp']);
       for(let key in process.env) {
         if(key.indexOf('chimp.ddp') !== -1 ) {
           var index = key.match(/chimp.ddp(.*)/)[1];

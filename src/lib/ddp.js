@@ -11,7 +11,7 @@ var log = require('./log'),
  */
 function DDP(url) {
   log.debug('[chimp][ddp] creating DDP wrapper');
-  process.env.ROOT_URL = process.env.ROOT_URL || process.env['chimp.ddp'];
+  process.env.ROOT_URL = process.env.ROOT_URL || process.env['chimp.ddp0'];
 
   if (!url) {
     this.url = this._getUrl(process.env['chimp.ddp0']);

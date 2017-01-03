@@ -81,7 +81,6 @@ function handleDdpOption(options) {
     return;
   }
   if (Array.isArray(options.ddp)) {
-    // set process.env['chimp.ddp'] as first for backwards compatibility
     options.ddp.forEach(function(val, index){
       process.env['chimp.ddp' + index] = String(val);
     });
