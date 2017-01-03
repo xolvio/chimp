@@ -209,7 +209,7 @@ var chimpHelper = {
       log.debug('[chimp][helper] setup DDP');
       if (process.env['chimp.ddp0']) {
         try {
-          log.debug('[chimp][helper] connecting via DDP to', process.env['chimp.ddp']);
+          log.debug('[chimp][helper] connecting via DDP to', process.env['chimp.ddp0']);
           global.ddp.connectSync();
           addServerExecute(global.ddp);
           for(let i = 0; i < global.ddp.instances.length; i++) {
