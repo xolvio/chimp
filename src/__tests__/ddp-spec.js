@@ -22,10 +22,16 @@ describe('DDP Wrapper', function () {
       new DDP();
       expect(process.env.ROOT_URL).toEqual('http://somewhere.com:3000');
     });
-    it('parses the DDP host', function () {
+    it('parses the DDP host of [chimp.ddp0] if no url provided', function () {
       process.env['chimp.ddp0'] = 'http://here.com:3000';
       var ddp = new DDP();
       expect(ddp.url.host).toEqual('here.com:3000');
+    });
+    it('parses the DDP host of provided url', function () {
+      process.env['chimp.ddp0'] = 'http://here.com:3000';
+      process.env['chimp.ddp1'] = 'http://here.com:3001';
+      var ddp = new DDP('http://here.com:3001');
+      expect(ddp.url.host).toEqual('here.com:3001');
     });
   });
   describe('connect', function () {

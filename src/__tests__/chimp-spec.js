@@ -38,6 +38,29 @@ describe('Chimp', function () {
 
     });
 
+    it('puts single ddp option on the environment hash as [chimp.ddp0] if only one provided', function () {
+
+      var myOptions = {
+        ddp: 'http://host:port'
+      };
+      var chimp = new Chimp(myOptions);
+
+      expect(process.env['chimp.ddp0']).toBe(myOptions.ddp.toString());
+      expect(process.env['chimp.ddp1']).toBeUndefined();
+
+    });
+    it('puts multiple ddp options on the environment hash as [chimp.ddpX] if multiple provided', function () {
+
+      var myOptions = {
+        ddp: ['http://host:port1', 'http://host:port2']
+      };
+      var chimp = new Chimp(myOptions);
+
+      expect(process.env['chimp.ddp0']).toBe(myOptions.ddp[0].toString());
+      expect(process.env['chimp.ddp1']).toBe(myOptions.ddp[1].toString());
+
+    });
+
   });
 
   describe('bin path', function () {
