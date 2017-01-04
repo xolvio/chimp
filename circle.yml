@@ -2,7 +2,7 @@ machine:
   java:
     version: oraclejdk8
   node:
-    version: 6.5.0
+    version: 4.4.5
 
 general:
   branches:
