@@ -51,5 +51,25 @@ describe('Chimp', function () {
       expect(process.env['chimp.a']).to.equal(myOptions.a.toString());
       expect(process.env['chimp.b']).to.equal(myOptions.b);
     });
+    it('puts single ddp option on the environment hash as [chimp.ddp0] if only one provided', function () {
+      const myOptions = {
+        ddp: 'http://host:port'
+      };
+
+      const chimp = new Chimp(myOptions);
+
+      expect(process.env['chimp.ddp0']).to.equal(myOptions.ddp.toString());
+      expect(process.env['chimp.ddp1']).to.be.undefined;
+    });
+    it('puts multiple ddp options on the environment hash as [chimp.ddpX] if multiple provided', function () {
+      const myOptions = {
+        ddp: ['http://host:port1', 'http://host:port2']
+      };
+
+      const chimp = new Chimp(myOptions);
+
+      expect(process.env['chimp.ddp0']).to.equal(myOptions.ddp[0].toString());
+      expect(process.env['chimp.ddp1']).to.equal(myOptions.ddp[1].toString());
+    });
   });
 });
