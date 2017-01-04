@@ -207,9 +207,17 @@ SessionManager.prototype._getWebdriverSessions = function (callback) {
     retryDelay: 500,
     retryStrategy: requestretry.RetryStrategies.HTTPOrNetworkError
   }, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      log.debug('[chimp][session-manager]', 'received data', body);
-      callback(null, JSON.parse(body).value);
+    if (!error) {
+      if (response.statusCode === 200) {
+        log.debug('[chimp][session-manager]', 'received data', body);
+        callback(null, JSON.parse(body).value);
+      } else {
+        log.error('[chimp][session-manager]', 'received error', `${response.statusMessage} [${response.statusCode}]`);
+        if (response.body) {
+          log.debug('[chimp][session-manager]', 'response', response.body);
+        }
+        callback(error);
+      }
     } else {
       log.error('[chimp][session-manager]', 'received error', error, 'response', response);
       callback(error);
@@ -250,7 +258,7 @@ SessionManager.prototype.killCurrentSession = function (callback) {
 
   this._getWebdriverSessions(function (err, sessions) {
 
-    if (sessions.length) {
+    if (sessions && sessions.length) {
       sessions.forEach(function (session) {
         var sessionId = session.id;
         log.debug('[chimp][session-manager]', 'deleting wd session', sessionId);
