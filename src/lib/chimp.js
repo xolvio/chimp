@@ -61,14 +61,30 @@ function Chimp(options) {
   this.testRunnerRunOrder = [];
 
   // store all cli parameters in env hash
+  // Note: Environment variables are always strings.
   for (var option in options) {
-    // Note: Environment variables are always strings.
-    process.env['chimp.' + option] = _.isObject(options[option]) ?
-      JSON.stringify(options[option]) :
-      String(options[option]);
+    if (option === 'ddp') {
+      handleDdpOption(options);
+    } else {
+      process.env['chimp.' + option] = _.isObject(options[option]) ?
+       JSON.stringify(options[option]) :
+       String(options[option]);
+    }
   }
 
   this._handleMeteorInterrupt();
+}
+
+function handleDdpOption(options) {
+  if (typeof options.ddp === 'string') {
+    process.env['chimp.ddp0'] = String(options.ddp);
+    return;
+  }
+  if (Array.isArray(options.ddp)) {
+    options.ddp.forEach(function(val, index){
+      process.env['chimp.ddp' + index] = String(val);
+    });
+  }
 }
 
 /**

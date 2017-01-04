@@ -5,23 +5,33 @@ describe('DDP Wrapper', function () {
   describe('constructor', function () {
     beforeEach(function () {
       delete process.env.ROOT_URL;
-      delete process.env['chimp.ddp'];
+      for(var key in process.env) {
+        if(key.indexOf('chimp.ddp') !== -1) {
+          delete process.env[key];
+        }
+      }
     });
     it('sets ROOT_URL env var to be the chimp.ddp env var', function () {
-      process.env['chimp.ddp'] = 'http://here.com:3000';
+      process.env['chimp.ddp0'] = 'http://here.com:3000';
       new DDP();
       expect(process.env.ROOT_URL).toEqual('http://here.com:3000');
     });
     it('does not change the ROOT_URL when it is provided', function () {
       process.env.ROOT_URL = 'http://somewhere.com:3000';
-      process.env['chimp.ddp'] = 'http://here.com:3000';
+      process.env['chimp.ddp0'] = 'http://here.com:3000';
       new DDP();
       expect(process.env.ROOT_URL).toEqual('http://somewhere.com:3000');
     });
-    it('parses the DDP host', function () {
-      process.env['chimp.ddp'] = 'http://here.com:3000';
+    it('parses the DDP host of [chimp.ddp0] if no url provided', function () {
+      process.env['chimp.ddp0'] = 'http://here.com:3000';
       var ddp = new DDP();
       expect(ddp.url.host).toEqual('here.com:3000');
+    });
+    it('parses the DDP host of provided url', function () {
+      process.env['chimp.ddp0'] = 'http://here.com:3000';
+      process.env['chimp.ddp1'] = 'http://here.com:3001';
+      var ddp = new DDP('http://here.com:3001');
+      expect(ddp.url.host).toEqual('here.com:3001');
     });
   });
   describe('connect', function () {
