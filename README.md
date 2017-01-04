@@ -142,6 +142,29 @@ On CI, can select the browser:
 chimp --browser=firefox --ddp=http://localhost:3000
 ```
 
+#### Multiple Meteor Servers
+If you'd like to run a test with more than one Meteor app server, you can do so by running the same app on multiple ports and providing mulitple `-ddp` options to chimp:
+```
+# start first app
+meteor --port 3005
+
+# start second app in another shell 
+meteor --port 3007
+
+# run chimp in another shell
+chimp --watch --ddp=http://localhost:3005 --ddp=http://localhost:3007
+```
+Then you can access the servers in your tests on the global `server.instances` property
+```
+it('has PORT env var set', function() {
+   function getPort() {
+      return process.env.PORT;
+   }
+   expect(server.instances[0].execute(getPort)).to.equal(3005);
+   expect(server.instances[1].execute(getPort)).to.equal(3007);
+});
+```
+
 ![Analytics](https://ga-beacon-xolvio.appspot.com/UA-61850278-5/chimp/readme?pixel)
 
 
