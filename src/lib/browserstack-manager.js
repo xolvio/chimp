@@ -11,7 +11,7 @@ function BrowserStackSessionManager(options) {
 
   log.debug('[chimp][browserstack-session-manager] options are', options);
 
-  var host = options.host.replace('hub.', 'www.');
+  var host = options.host.replace(/hub\.|hub-cloud\./, 'www.');
   var browserStackBaseUrl = 'https://' + options.user + ':' + options.key + '@' + host;
   options.browserStackUrl = browserStackBaseUrl;
 
