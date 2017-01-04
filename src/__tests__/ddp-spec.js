@@ -5,7 +5,7 @@ describe('DDP Wrapper', function () {
   describe('constructor', function () {
     beforeEach(function () {
       delete process.env.ROOT_URL;
-      for(let key in process.env) {
+      for(var key in process.env) {
         if(key.indexOf('chimp.ddp') !== -1) {
           delete process.env[key];
         }
