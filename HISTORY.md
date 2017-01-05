@@ -1,3 +1,14 @@
+# 0.46.0
+
+* Feature multiple meteor servers (#549) (Evan Francis) 
+* Create jsonOutput file only when cucumber steps are defined (#548) (lucetius) 
+* Fixes received error null when using hub-cloud.browserstack.com hostname (#547) (lucetius) 
+* Updates safe-to-update npm dependencies (Sam Hatoum) 
+* Fixes weirdo babel error (Sam Hatoum) 
+* Fixes weirdo babel error (Sam Hatoum) 
+* Update circle.yml (Sam Hatoum) 
+* Adds the release notes for v0.45.1 (Sam Hatoum) 
+
 # 0.45.1
 
 * add geckodriver to seleniumstandaloneoptions (#506) (Stephen Davidson) 
