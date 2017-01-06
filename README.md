@@ -157,11 +157,11 @@ chimp --watch --ddp=http://localhost:3005 --ddp=http://localhost:3007
 Then you can access the servers in your tests on the global `server.instances` property
 ```
 it('has PORT env var set', function() {
-   function getPort() {
-      return process.env.PORT;
-   }
-   expect(server.instances[0].execute(getPort)).to.equal(3005);
-   expect(server.instances[1].execute(getPort)).to.equal(3007);
+  function getRootUrl() {
+    return process.env.ROOT_URL;
+  }
+  expect(server.instances[0].execute(getRootUrl)).to.equal('http://localhost:3005/');
+  expect(server.instances[1].execute(getRootUrl)).to.equal('http://localhost:3007/');
 });
 ```
 
