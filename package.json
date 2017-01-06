@@ -33,7 +33,8 @@
     "lint": "eslint ./src",
     "lintfix": "eslint ./src --fix",
     "start": "node ./scripts/run.js",
-    "testonly": "npm run-script prepublish && node ./scripts/run-tests.js",
+    "testonly": "npm run testunit && npm run prepublish && node ./scripts/run-tests.js",
+    "testunit": "mocha --opts ./mocha.opts `node -e \"console.log(require('./package.json').mocha.tests.join(' '))\"`",
     "test": "npm run lint && npm run testonly",
     "publish-patch": "npm version patch; npm publish; git push; git push --tags",
     "publish-minor": "npm version minor; npm publish; git push; git push --tags",
@@ -42,6 +43,17 @@
   "main": "dist/lib/chimp.js",
   "bin": {
     "chimp": "./bin/chimp.js"
+  },
+  "mocha": {
+    "files": [
+      "src/**/*.js",
+      "!src/__mocks__/**/*",
+      "!src/__tests__/**/*",
+      "!src/**/*-spec.js"
+    ],
+    "tests": [
+      "src/lib/**/*-spec.js"
+    ]
   },
   "jest": {
     "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
@@ -108,7 +120,9 @@
     "git-release-notes": "0.0.2",
     "jest-cli": "Sanjo/jest#7c71094",
     "npm-watch": "^0.1.6",
-    "shelljs": "^0.7.5"
+    "quibble": "^0.4.0",
+    "shelljs": "^0.7.5",
+    "testdouble": "^1.10.1"
   },
   "bundledDependencies": [
     "cucumber"
