@@ -30,7 +30,7 @@ if (process.argv.length > 3) {
     mocha.addFile(spec);
   });
 } else {
-  // Add each .js file to the mocha instance
+  // Add each .js file in the tests dir to the mocha instance
   var testDir = process.env['chimp.path'];
   glob.sync(path.join(testDir, '**')).filter(function (file) {
     // Only keep the .js files
@@ -38,6 +38,14 @@ if (process.argv.length > 3) {
   }).forEach(function (file) {
     mocha.addFile(file);
   });
+
+  if (process.env['chimp.files']) {
+    // Add each file specified by the "files" option to the mocha instance
+    glob.sync(process.env['chimp.files']).forEach(function (file) {
+      mocha.addFile(file);
+    });
+  }
+
 }
 
 try {
