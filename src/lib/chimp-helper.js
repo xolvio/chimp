@@ -184,7 +184,7 @@ var chimpHelper = {
           }
         }, timeout);
         try {
-          result = server.call('xolvio/backdoor', func.toString(), args);
+          result = ddpInstance.call('xolvio/backdoor', func.toString(), args);
         } catch (exception) {
           if (exception.error === 404) {
             throw new Error('[chimp] You need to install xolvio:backdoor in your meteor app before you can use server.execute()');
