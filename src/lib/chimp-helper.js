@@ -180,7 +180,7 @@ var chimpHelper = {
         var timeout = parseInt(process.env['chimp.serverExecuteTimeout']) || 10000;
         setTimeout(function() {
           if (!result) {
-            throw new Error('[chimp] server.execute timeout after ' + timeout + 'ms');
+            throw new Error('[chimp] server.execute timeout after ' + timeout + 'ms'); 
           }
         }, timeout);
         try {
