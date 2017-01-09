@@ -1,7 +1,3 @@
-// import { MochaWrapper } from './mocha-wrapper';
-import glob from 'glob';
-import path from 'path';
-
 const testDir = './tests/';
 const testDirFiles = ['fileA.js', 'fileB.js'];
 const filesGlobValue = './lib/**/*.spec.js';
@@ -13,9 +9,10 @@ describe('mocha-wrapper', function () {
     td.replace('./mocha-fiberized-ui', {});
     td.replace('exit', td.function('exit'));
     td.replace('../babel-register', td.object({}));
+    const emptyFn = () => {};
     this.mocha = td.replace('mocha');
-    this.path = td.replace('path', td.object(path));
-    this.glob = td.replace('glob', td.object(glob));
+    this.path = td.replace('path', td.object({ join: emptyFn, resolve: emptyFn }));
+    this.glob = td.replace('glob', td.object({ sync: emptyFn }));
     process.env.mochaConfig = JSON.stringify({ tags: ''});
     process.argv = [];
   });
