@@ -21,6 +21,7 @@ describe('mocha-wrapper', function () {
   });
   describe('add files', function () {
     it('adds files inside testDir', function () {
+      process.argv = [];
       process.env['chimp.path'] = testDir;
       // mock --path tests dir files
       td.when(this.path.join('mocha-helper.js')).thenReturn('mocha-helper.js');
@@ -38,6 +39,7 @@ describe('mocha-wrapper', function () {
       td.verify(this.mocha.addFile(), {times: 3, ignoreExtraArgs: true}); // verify only called three times
     });
     it('adds files specified by --files options when --path is empty dir', function() {
+      process.argv = [];
       process.env['chimp.path'] = emptyTestsDirPath;
       process.env['chimp.files'] = filesGlobValue;
       // mock empty --path tests dir files
@@ -57,6 +59,7 @@ describe('mocha-wrapper', function () {
       td.verify(this.mocha.addFile(), {times: 3, ignoreExtraArgs: true});
     });
     it('adds files specified by --files option and files in --path when both contain files', function() {
+      process.argv = [];
       process.env['chimp.path'] = testDir;
       process.env['chimp.files'] = filesGlobValue;
       // mock mocha-helper
@@ -78,6 +81,22 @@ describe('mocha-wrapper', function () {
       td.verify(this.mocha.addFile('./lib/someDir/fileB.spec.js'));
       td.verify(this.mocha.addFile('mocha-helper.js'));
       td.verify(this.mocha.addFile(), {times: 5, ignoreExtraArgs: true});
+    });
+    it('adds files specified on cli directly', function() {
+      process.argv = ['/usr/local/bin/node', 'chimp', '--mocha', 'test/fileA.js', 'test/fileB.js',  'test/fileC.js', 'fileD.js'];
+      // mock mocha-helper
+      td.when(this.path.join('mocha-helper.js')).thenReturn('mocha-helper.js');
+      td.when(this.path.resolve(__dirname, 'mocha-helper.js')).thenReturn('mocha-helper.js');
+
+      const MochaWrapper = require('./mocha-wrapper.js').MochaWrapper;
+      const mochaWrapper = new MochaWrapper();
+      td.verify(this.mocha.addFile('test/fileA.js'));
+      td.verify(this.mocha.addFile('test/fileB.js'));
+      td.verify(this.mocha.addFile('test/fileC.js'));
+      td.verify(this.mocha.addFile('fileD.js'));
+      td.verify(this.mocha.addFile('mocha-helper.js'));
+      td.verify(this.mocha.addFile(), {times: 5, ignoreExtraArgs: true});
+
     });
   });
 });
