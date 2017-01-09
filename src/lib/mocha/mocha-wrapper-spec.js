@@ -8,7 +8,7 @@ const filesGlobValue = './lib/**/*.spec.js';
 const filesGlobFiles = ['./lib/fileA.spec.js', './lib/someDir/fileB.spec.js'];
 const emptyTestsDirPath = '';
 
-describe.only('mocha-wrapper', function () {
+describe('mocha-wrapper', function () {
   beforeEach(function () {
     td.replace('./mocha-fiberized-ui', {});
     td.replace('exit', td.function('exit'));
