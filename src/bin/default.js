@@ -104,7 +104,6 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
-  mochaCommandLineOptions: ['--color'],
   mochaConfig: {
     // tags and grep only work when watch mode is false
     tags: '',
@@ -112,6 +111,7 @@ module.exports = {
     timeout: 60000,
     reporter: 'spec',
     slow: 10000,
+    useColors: true
   },
 
   // - - - - JASMINE  - - - -

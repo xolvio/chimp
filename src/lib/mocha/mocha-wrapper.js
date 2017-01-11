@@ -4,7 +4,8 @@ var Mocha = require('mocha'),
   path = require('path'),
   exit = require('exit'),
   glob = require('glob'),
-  ui = require('./mocha-fiberized-ui');
+  ui = require('./mocha-fiberized-ui'),
+    _ = require('underscore');
 
 import {parseBoolean, parseNullableString, parseString} from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
@@ -12,8 +13,11 @@ import escapeRegExp from '../utils/escape-reg-exp';
 class MochaWrapper {
   constructor() {
     let mochaConfig = JSON.parse(process.env.mochaConfig);
+    const mochaCommandLineOptions = process.env['chimp.mochaCommandLineOptions'] ? JSON.parse(process.env['chimp.mochaCommandLineOptions']) : false;
+    if (mochaCommandLineOptions && _.isObject(mochaCommandLineOptions)) {
+      _.extend(mochaConfig, mochaCommandLineOptions);
+    }
     mochaConfig.ui = 'fiberized-bdd-ui';
-
     if (!mochaConfig.grep && parseBoolean(process.env['chimp.watch'])) {
       mochaConfig.grep = new RegExp(parseString(process.env['chimp.watchTags']).split(',').map(escapeRegExp).join('|'));
     } else if (!mochaConfig.grep) {
@@ -56,7 +60,6 @@ class MochaWrapper {
     } catch (e) {
       throw (e);
     }
-
   }
 }
 
