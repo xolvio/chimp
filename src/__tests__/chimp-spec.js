@@ -9,58 +9,7 @@ describe('Chimp', function () {
   var Chimp = require('../lib/chimp');
 
   describe('constructor', function () {
-
-    it('creates the processes array', function () {
-      expect(new Chimp().processes).toEqual(jasmine.any(Array));
-    });
-
-    it('created an options object if non are passed', function () {
-      var chimp = new Chimp();
-      expect(chimp.options).toBeDefined();
-    });
-
-    it('stores the options object', function () {
-      var myOptions = {};
-      var chimp = new Chimp(myOptions);
-      expect(chimp.options).toBe(myOptions);
-    });
-
-    it('puts all the options on the environment hash prefixed with [chimp.]', function () {
-
-      var myOptions = {
-        a: 1,
-        b: 'aString'
-      };
-      var chimp = new Chimp(myOptions);
-
-      expect(process.env['chimp.a']).toBe(myOptions.a.toString());
-      expect(process.env['chimp.b']).toBe(myOptions.b);
-
-    });
-
-    it('puts single ddp option on the environment hash as [chimp.ddp0] if only one provided', function () {
-
-      var myOptions = {
-        ddp: 'http://host:port'
-      };
-      var chimp = new Chimp(myOptions);
-
-      expect(process.env['chimp.ddp0']).toBe(myOptions.ddp.toString());
-      expect(process.env['chimp.ddp1']).toBeUndefined();
-
-    });
-    it('puts multiple ddp options on the environment hash as [chimp.ddpX] if multiple provided', function () {
-
-      var myOptions = {
-        ddp: ['http://host:port1', 'http://host:port2']
-      };
-      var chimp = new Chimp(myOptions);
-
-      expect(process.env['chimp.ddp0']).toBe(myOptions.ddp[0].toString());
-      expect(process.env['chimp.ddp1']).toBe(myOptions.ddp[1].toString());
-
-    });
-
+    // moved to src/lib/chimp-specs.js
   });
 
   describe('bin path', function () {
