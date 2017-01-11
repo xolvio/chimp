@@ -104,6 +104,7 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
+  mochaCommandLineOptions: {bail: true},
   mochaConfig: {
     // tags and grep only work when watch mode is false
     tags: '',
