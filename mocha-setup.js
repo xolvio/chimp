@@ -7,6 +7,9 @@
   const td = require('testdouble');
   const quibble = require('quibble');
   global.td = td;
-  td.reset();
-  quibble.ignoreCallsFromThisFile(require.main.filename);
+
+  beforeEach(() => {
+    td.reset();
+    quibble.ignoreCallsFromThisFile(require.main.filename);
+  });
 })();
