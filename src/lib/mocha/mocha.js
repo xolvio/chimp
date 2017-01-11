@@ -70,7 +70,6 @@ Mocha.prototype.start = function (callback) {
     mochaConfig: JSON.stringify(this.options.mochaConfig)
   });
   self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), _specs, opts);
-
   self.child.stdout.pipe(process.stdout);
   self.child.stderr.pipe(process.stderr);
 
