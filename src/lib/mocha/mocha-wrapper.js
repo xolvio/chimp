@@ -5,12 +5,20 @@ var Mocha = require('mocha'),
   path = require('path'),
   exit = require('exit'),
   glob = require('glob'),
-  ui = require('./mocha-fiberized-ui');
+  ui = require('./mocha-fiberized-ui'),
+    _ = require('underscore');
 
 import {parseBoolean, parseNullableString, parseString} from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
 
   var mochaConfig = JSON.parse(process.env.mochaConfig);
+
+const mochaCommandLineOptions = process.env['chimp.mochaCommandLineOptions'] ? JSON.parse(process.env['chimp.mochaCommandLineOptions']) : false;
+
+if (mochaCommandLineOptions && _.isObject(mochaCommandLineOptions)) {
+  _.extend(mochaConfig, mochaCommandLineOptions);
+}
+
 mochaConfig.ui = 'fiberized-bdd-ui';
 
 if (!mochaConfig.grep && parseBoolean(process.env['chimp.watch'])) {
@@ -25,8 +33,8 @@ var mocha = new Mocha(mochaConfig);
 
 mocha.addFile(path.join(path.resolve(__dirname, path.join('mocha-helper.js'))));
 
-if (process.argv.length > 3) {
-  process.argv.splice(3).forEach(function (spec) {
+if (process.argv.length > 2) {
+  process.argv.splice(2).forEach(function (spec) {
     mocha.addFile(spec);
   });
 } else {
