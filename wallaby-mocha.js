@@ -10,7 +10,7 @@ module.exports = (wallaby) => {
     env: {type: 'node'},
     workers: {initial: 1, regular: 1, recycle: true},
     setup: () => {
-      require(`${wallaby.localProjectDir}/mocha-setup`);
+      wallaby.testFramework.addFile(`${wallaby.localProjectDir}/mocha-setup.js`);
     },
   }
 };
