@@ -1,3 +1,17 @@
+# 0.47.0
+
+* Fixes multiple ddp servers in watch mode (Sam Hatoum) 
+* Use new wrapper-instance (Sam Hatoum) 
+* Add commandline config example (Sam Hatoum) 
+* Feature - Enable Mocha glob pattern (#555) (Evan Francis) 
+* Fixes Selenium Hub error handling (#552) (lucetius) 
+* Fixes mochaCommandLineOptions CLI parameter (#553) (lucetius) 
+* Fixes new test stack configuration (Sam Hatoum) 
+* fix Meteor multiple servers .execute() (#556) (Evan Francis) 
+* Fixes random CircleCI fails (#559) (Sam Hatoum) 
+* Improvement/move to mocha (#551) (Sam Hatoum) 
+* Adds the release notes for v0.46.0 (Sam Hatoum) 
+
 # 0.46.0
 
 * Feature multiple meteor servers (#549) (Evan Francis) 
