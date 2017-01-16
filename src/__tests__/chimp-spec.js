@@ -2,41 +2,14 @@ jest.dontMock('../lib/chimp.js');
 jest.dontMock('../lib/boolean-helper');
 jest.dontMock('underscore');
 jest.dontMock('async');
+jest.dontMock('wrappy');
 
 describe('Chimp', function () {
 
   var Chimp = require('../lib/chimp');
 
   describe('constructor', function () {
-
-    it('creates the processes array', function () {
-      expect(new Chimp().processes).toEqual(jasmine.any(Array));
-    });
-
-    it('created an options object if non are passed', function () {
-      var chimp = new Chimp();
-      expect(chimp.options).toBeDefined();
-    });
-
-    it('stores the options object', function () {
-      var myOptions = {};
-      var chimp = new Chimp(myOptions);
-      expect(chimp.options).toBe(myOptions);
-    });
-
-    it('puts all the options on the environment hash prefixed with [chimp.]', function () {
-
-      var myOptions = {
-        a: 1,
-        b: 'aString'
-      };
-      var chimp = new Chimp(myOptions);
-
-      expect(process.env['chimp.a']).toBe(myOptions.a.toString());
-      expect(process.env['chimp.b']).toBe(myOptions.b);
-
-    });
-
+    // moved to src/lib/chimp-specs.js
   });
 
   describe('bin path', function () {
@@ -57,6 +30,7 @@ describe('Chimp', function () {
       var restore = chimp.fs.existsSync;
       chimp.fs.existsSync = jest.genMockFn().mockReturnValue(false);
 
+      chimp.informUser = jest.genMockFunction();
       chimp.exec = jest.genMockFunction();
 
       chimp.selectMode = jest.genMockFunction();
@@ -78,6 +52,7 @@ describe('Chimp', function () {
       var restore = chimp.fs.existsSync;
       chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
 
+      chimp.informUser = jest.genMockFunction();
       chimp.exec = jest.genMockFunction();
 
       chimp.selectMode = jest.genMockFunction();
@@ -100,6 +75,7 @@ describe('Chimp', function () {
       var restore = chimp.fs.existsSync;
       chimp.fs.existsSync = jest.genMockFn().mockReturnValue(true);
 
+      chimp.informUser = jest.genMockFunction();
       chimp.exec = jest.genMockFunction().mockImplementation(function (cmd, callback) {
         return callback(null);
       });
@@ -193,7 +169,7 @@ describe('Chimp', function () {
 
       chimp.watch();
 
-      expect(chokidar.watch.mock.calls[0][0]).toBe(options.path);
+      expect(chokidar.watch.mock.calls[0][0]).toEqual([options.path]);
 
     });
 
@@ -209,12 +185,12 @@ describe('Chimp', function () {
       chokidar.watcher.on = jest.genMockFunction();
 
       chimp.watch();
-      expect(chokidar.watcher.on.mock.calls[0][0]).toBe('ready');
+      expect(chokidar.watcher.once.mock.calls[0][0]).toBe('ready');
 
-      var readyCallback = chokidar.watcher.on.mock.calls[0][1];
+      var readyCallback = chokidar.watcher.once.mock.calls[0][1];
 
       readyCallback();
-      expect(chokidar.watcher.on.mock.calls[1][0]).toBe('all');
+      expect(chokidar.watcher.on.mock.calls[0][0]).toBe('all');
 
     });
 
@@ -226,14 +202,13 @@ describe('Chimp', function () {
       var chimp = new Chimp();
 
       chimp.run = jest.genMockFunction();
-      chokidar.watcher.on = jest.genMockFunction();
 
       chimp.watch();
 
-      var readyCallback = chokidar.watcher.on.mock.calls[0][1];
+      var readyCallback = chokidar.watcher.once.mock.calls[0][1];
       readyCallback();
 
-      var allCallback = chokidar.watcher.on.mock.calls[1][1];
+      var allCallback = chokidar.watcher.on.mock.calls[0][1];
 
       chimp.rerun = jest.genMockFunction();
 
@@ -254,14 +229,13 @@ describe('Chimp', function () {
       var chimp = new Chimp();
 
       chimp.run = jest.genMockFunction();
-      chokidar.watcher.on = jest.genMockFunction();
 
       chimp.watch();
 
-      var readyCallback = chokidar.watcher.on.mock.calls[0][1];
+      var readyCallback = chokidar.watcher.once.mock.calls[0][1];
       readyCallback();
 
-      var allCallback = chokidar.watcher.on.mock.calls[1][1];//s
+      var allCallback = chokidar.watcher.on.mock.calls[0][1];
 
       chimp.rerun = jest.genMockFunction();
 
@@ -282,14 +256,13 @@ describe('Chimp', function () {
       var chimp = new Chimp();
 
       chimp.run = jest.genMockFunction();
-      chokidar.watcher.on = jest.genMockFunction();
 
       chimp.watch();
 
-      var readyCallback = chokidar.watcher.on.mock.calls[0][1];
+      var readyCallback = chokidar.watcher.once.mock.calls[0][1];
       readyCallback();
 
-      var allCallback = chokidar.watcher.on.mock.calls[1][1];
+      var allCallback = chokidar.watcher.on.mock.calls[0][1];
 
       chimp.rerun = jest.genMockFunction();
 
@@ -307,11 +280,10 @@ describe('Chimp', function () {
       var chimp = new Chimp();
 
       chimp.run = jest.genMockFunction();
-      chokidar.watcher.on = jest.genMockFunction();
 
       chimp.watch();
 
-      var readyCallback = chokidar.watcher.on.mock.calls[0][1];
+      var readyCallback = chokidar.watcher.once.mock.calls[0][1];
       readyCallback();
 
       expect(chimp.run.mock.calls.length).toBe(1);

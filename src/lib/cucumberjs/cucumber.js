@@ -55,7 +55,6 @@ class Cucumber {
     }
 
     this.cucumberChild = cp.fork(path.join(__dirname, 'cucumber-wrapper.js'), args, opts);
-    process.stdin.pipe(this.cucumberChild.stdin);
 
     if (booleanHelper.isTruthy(this.options.conditionOutput)) {
       this.cucumberChild.stdout.on('data', (data) => {
@@ -80,7 +79,7 @@ class Cucumber {
         log.debug('[chimp][cucumber] Cucumber not in a stopping state');
 
         const result = jsonResults;
-        if (this.options.jsonOutput) {
+        if (this.options.jsonOutput && JSON.parse(jsonResults).length) {
           const dir = path.dirname(this.options.jsonOutput);
           log.debug('[chimp][cucumber] Ensuring directory exists', dir);
           fs.mkdirsSync(dir);
@@ -228,8 +227,10 @@ class Cucumber {
     execOptions.push(path.resolve(__dirname, path.join('../chimp-helper.js')));
     execOptions.push('-r');
     execOptions.push(path.resolve(__dirname, path.join('world.js')));
-    execOptions.push('-r');
-    execOptions.push(path.resolve(__dirname, path.join('hooks.js')));
+    if (!options.domainOnly) {
+      execOptions.push('-r');
+      execOptions.push(path.resolve(__dirname, path.join('hooks.js')));
+    }
 
     if (!options.r && !options.require) {
       execOptions.push('-r');
@@ -252,14 +253,14 @@ class Cucumber {
       if (_.contains(allowedCucumberJsOptions.long, optionName)) {
         _.forEach(optionValues, (optionValue) => {
           execOptions.push('--' + optionName);
-          if (['dry-run', 'fail-fast', 'no-colors', 'no-snippets', 'no-source', 'strict'].indexOf(optionName) === -1) {
+          if (['dry-run', 'fail-fast', 'no-colors', 'no-snippets', 'no-source', 'strict', 'backtrace'].indexOf(optionName) === -1) {
             execOptions.push(optionValue.toString());
           }
         });
       } else if (_.contains(allowedCucumberJsOptions.short, optionName)) {
         _.forEach(optionValues, (optionValue) => {
           execOptions.push('-' + optionName);
-          if (['d', 'S'].indexOf(optionName) === -1) {
+          if (['d', 'S', 'b'].indexOf(optionName) === -1) {
             execOptions.push(optionValue.toString());
           }
         });

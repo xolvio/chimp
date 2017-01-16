@@ -2,15 +2,7 @@ machine:
   java:
     version: oraclejdk8
   node:
-    version: 6.3.0 
-
-
-dependencies:
-  cache_directories:
-    - "node_modules"
-    - "~/.npm"
-    - "~/_opt"
-
+    version: 4.4.5
 
 general:
   branches:
@@ -21,7 +13,7 @@ dependencies:
   cache_directories:
     - "node_modules"
     - "~/.npm"
-    - "~/_opt"
+
   pre:
     - google-chrome --version
     - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

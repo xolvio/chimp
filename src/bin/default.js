@@ -4,16 +4,19 @@ import {isCI} from '../lib/ci';
 module.exports = {
   // - - - - CHIMP - - - -
   watch: false,
-  // @focus is recommended to use. @dev and @watch are deprecated.
-  watchTags: '@focus,@dev,@watch',
+  watchTags: '@watch,@focus',
+  domainSteps: null,
+  e2eSteps: null,
+  fullDomain: false,
+  domainOnly: false,
+  e2eTags: '@e2e',
   watchWithPolling: false,
-  criticalSteps: null,
-  criticalTag: '@critical',
   server: false,
   serverPort: 8060,
   serverHost: 'localhost',
   sync: true,
   offline: false,
+  showXolvioMessages: true,
 
   // - - - - CUCUMBER - - - -
   path: './features',
@@ -35,7 +38,7 @@ module.exports = {
   conditionOutput: true,
 
   // - - - - SELENIUM  - - - -
-  browser: 'chrome',
+  browser: null,
   platform: 'ANY',
   name: '',
   user: '',
@@ -69,7 +72,7 @@ module.exports = {
       chrome: {
         // check for more recent versions of chrome driver here:
         // http://chromedriver.storage.googleapis.com/index.html
-        version: '2.22',
+        version: '2.25',
         arch: process.arch,
         baseURL: 'https://chromedriver.storage.googleapis.com'
       },
@@ -79,6 +82,13 @@ module.exports = {
         version: '2.50.0',
         arch: 'ia32',
         baseURL: 'https://selenium-release.storage.googleapis.com'
+      },
+      firefox: {
+        // check for more recent versions of gecko  driver here:
+        // https://github.com/mozilla/geckodriver/releases
+        version: '0.11.1',
+        arch: process.arch,
+        baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
       }
     }
   },
@@ -94,13 +104,16 @@ module.exports = {
 
   // - - - - MOCHA  - - - -
   mocha: false,
-  // mochaTags and mochaGrep only work when watch is false (disabled)
-  mochaTags: '',
-  mochaGrep: null,
-  // 'path: './tests',
-  mochaTimeout: 60000,
-  mochaReporter: 'spec',
-  mochaSlow: 10000,
+  mochaCommandLineOptions: {bail: true},
+  mochaConfig: {
+    // tags and grep only work when watch mode is false
+    tags: '',
+    grep: null,
+    timeout: 60000,
+    reporter: 'spec',
+    slow: 10000,
+    useColors: true
+  },
 
   // - - - - JASMINE  - - - -
   jasmine: false,
@@ -122,10 +135,12 @@ module.exports = {
 
   // - - - - METEOR  - - - -
   ddp: false,
+  serverExecuteTimeout: 10000,
 
   // - - - - PHANTOM  - - - -
   phantom_w: 1280,
   phantom_h: 1024,
+  phantom_ignoreSSLErrors: false,
 
   // - - - - DEBUGGING  - - - -
   log: 'info',

@@ -26,7 +26,7 @@ case $semvar in
     echo prerelease
     ;;
     *)
-      echo "Usage: release-notes patch|minor|major|prepatch|preminor|premajor|prerelease"
+      echo "Usage: release patch|minor|major|prepatch|preminor|premajor|prerelease"
       exit 1
     ;;
 esac

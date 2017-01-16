@@ -15,6 +15,9 @@ var AutoupdateWatcher = function (options) {
 };
 
 AutoupdateWatcher.prototype._getUrl = function (ddpHost) {
+  if (ddpHost instanceof Array) {
+    ddpHost = ddpHost[0];
+  }
   if (ddpHost.indexOf('http://') === -1 && ddpHost.indexOf('https://') === -1) {
     throw new Error('[chimp][ddp] DDP url must contain the protocol');
   }

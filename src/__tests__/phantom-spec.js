@@ -38,7 +38,7 @@ describe('Phantom', function () {
       phantom.start();
 
       expect(processHelper.start.mock.calls.length).toBe(1);
-      expect(processHelper.start.mock.calls[0][0].args).toEqual(['--webdriver', 9876]);
+      expect(processHelper.start.mock.calls[0][0].args).toEqual(['--webdriver', 9876, '--ignore-ssl-errors', 'false']);
     });
 
     it('sets this.child to the phantom child process', function () {

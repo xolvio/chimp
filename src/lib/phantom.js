@@ -1,4 +1,4 @@
-var phantomjs = require('phantomjs2'),
+var phantomjs = require('phantomjs-prebuilt'),
   processHelper = require('./process-helper.js'),
   log = require('./log');
 
@@ -31,6 +31,7 @@ function Phantom(options) {
 Phantom.prototype.start = function (callback) {
   var self = this;
   var port = self.options.port;
+  var ignoreSSLErrors = self.options.phantom_ignoreSSLErrors || 'false';
 
   if (this.child) {
     callback();
@@ -40,7 +41,7 @@ Phantom.prototype.start = function (callback) {
   this.child = processHelper.start({
     bin: process.env['chimp.phantom_path'] || phantomjs.path,
     prefix: 'phantom',
-    args: ['--webdriver', port],
+    args: ['--webdriver', port, '--ignore-ssl-errors', ignoreSSLErrors],
     waitForMessage: /GhostDriver - Main - running on port/,
     errorMessage: /Error/
   }, callback);
