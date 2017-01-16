@@ -9,10 +9,15 @@ var log = require('./log'),
  *
  * @api public
  */
-function DDP() {
+function DDP(url) {
   log.debug('[chimp][ddp] creating DDP wrapper');
-  process.env.ROOT_URL = process.env.ROOT_URL || process.env['chimp.ddp'];
-  this.url = this._getUrl(process.env.ROOT_URL);
+  process.env.ROOT_URL = process.env.ROOT_URL || process.env['chimp.ddp0'];
+
+  if (!url) {
+    this.url = this._getUrl(process.env['chimp.ddp0']);
+  } else {
+    this.url = this._getUrl(url);
+  }
 }
 
 DDP.prototype.connect = function () {

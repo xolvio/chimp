@@ -1,3 +1,34 @@
+# 0.47.0
+
+* Fixes multiple ddp servers in watch mode (Sam Hatoum) 
+* Use new wrapper-instance (Sam Hatoum) 
+* Add commandline config example (Sam Hatoum) 
+* Feature - Enable Mocha glob pattern (#555) (Evan Francis) 
+* Fixes Selenium Hub error handling (#552) (lucetius) 
+* Fixes mochaCommandLineOptions CLI parameter (#553) (lucetius) 
+* Fixes new test stack configuration (Sam Hatoum) 
+* fix Meteor multiple servers .execute() (#556) (Evan Francis) 
+* Fixes random CircleCI fails (#559) (Sam Hatoum) 
+* Improvement/move to mocha (#551) (Sam Hatoum) 
+* Adds the release notes for v0.46.0 (Sam Hatoum) 
+
+# 0.46.0
+
+* Feature multiple meteor servers (#549) (Evan Francis) 
+* Create jsonOutput file only when cucumber steps are defined (#548) (lucetius) 
+* Fixes received error null when using hub-cloud.browserstack.com hostname (#547) (lucetius) 
+* Updates safe-to-update npm dependencies (Sam Hatoum) 
+* Fixes weirdo babel error (Sam Hatoum) 
+* Fixes weirdo babel error (Sam Hatoum) 
+* Update circle.yml (Sam Hatoum) 
+* Adds the release notes for v0.45.1 (Sam Hatoum) 
+
+# 0.45.1
+
+* add geckodriver to seleniumstandaloneoptions (#506) (Stephen Davidson) 
+* Increase chromedriver version to 2.25. (#518) (Kyle Ian) 
+* Adds the release notes for v0.45.0 (Sam Hatoum) 
+
 # 0.45.0
 
 * Updates to latest wdio-sync (Sam Hatoum) 

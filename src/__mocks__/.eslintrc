@@ -1,0 +1,21 @@
+{
+  "globals": {
+    "jest": false,
+    "jasmine": false,
+    "spyOn": false,
+    "it": false,
+    "describe": false,
+    "expect": false,
+    "after": false,
+    "before": false,
+    "beforeAll": false,
+    "beforeEach": false,
+    "afterAll": false,
+    "afterEach": false,
+    "xit": false,
+    "xdescribe": false,
+    "fit": false,
+    "fdescribe": false,
+    "pending": false
+  }
+}

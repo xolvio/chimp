@@ -48,8 +48,20 @@ var chimpHelper = {
     // Give the user access to Promise functions. E.g. Promise.all.
     global.Promise = Promise;
 
-    if (booleanHelper.isTruthy(process.env['chimp.ddp'])) {
-      global.ddp = new DDP().connect();
+    if (booleanHelper.isTruthy(process.env['chimp.ddp0'])) {
+      // add .instances[] property onto the DDP object. this way
+      // global.server is usable, but so is server.instances[0] as an alias for when using multiple ddp servers
+      global.ddp = new DDP(process.env['chimp.ddp0']).connect();
+      // add on instances t
+      global.ddp.instances = [];
+      for(let key in process.env) {
+        if(key.indexOf('chimp.ddp') !== -1 ) {
+          var index = key.match(/chimp.ddp(.*)/)[1];
+          if (index) {
+            global.ddp.instances.push(new DDP(process.env['chimp.ddp' + index]).connect());
+          }
+        }
+      }
     }
   },
 
@@ -161,18 +173,18 @@ var chimpHelper = {
 
     };
 
-    var addServerExecute = function () {
-      global.ddp.execute = function (func) {
+    var addServerExecute = function (ddpInstance) {
+      ddpInstance.execute = function (func) {
         var args = Array.prototype.slice.call(arguments, 1);
         var result;
         var timeout = parseInt(process.env['chimp.serverExecuteTimeout']) || 10000;
         setTimeout(function() {
           if (!result) {
-            throw new Error('[chimp] server.execute timeout after ' + timeout + 'ms');
+            throw new Error('[chimp] server.execute timeout after ' + timeout + 'ms'); 
           }
         }, timeout);
         try {
-          result = server.call('xolvio/backdoor', func.toString(), args);
+          result = ddpInstance.call('xolvio/backdoor', func.toString(), args);
         } catch (exception) {
           if (exception.error === 404) {
             throw new Error('[chimp] You need to install xolvio:backdoor in your meteor app before you can use server.execute()');
@@ -193,11 +205,16 @@ var chimpHelper = {
 
     var setupDdp = function () {
       log.debug('[chimp][helper] setup DDP');
-      if (process.env['chimp.ddp']) {
-        log.debug('[chimp][helper] connecting via DDP to', process.env['chimp.ddp']);
+      if (process.env['chimp.ddp0']) {
         try {
+          log.debug('[chimp][helper] connecting via DDP to', process.env['chimp.ddp0']);
           global.ddp.connectSync();
-          addServerExecute();
+          addServerExecute(global.ddp);
+          for(let i = 0; i < global.ddp.instances.length; i++) {
+            log.debug('[chimp][helper] connecting via DDP to ' + global.ddp.instances[i]._original.host + ':' + global.ddp.instances[i]._original.port);
+            global.ddp.instances[i].connectSync();
+            addServerExecute(global.ddp.instances[i]);
+          }
           log.debug('[chimp][helper] connecting via DDP had no error');
         } catch (error) {
           let errorMessage = error;
@@ -216,7 +233,7 @@ var chimpHelper = {
           expect('DDP Not Connected').to.equal('', 'You tried to use a DDP connection but it' +
             ' has not been configured. Be sure to pass --ddp=<host>');
         };
-        global.ddp = {
+        global.ddp0 = {
           call: noDdp,
           apply: noDdp,
           execute: noDdp
@@ -228,7 +245,7 @@ var chimpHelper = {
     try {
       setupBrowser();
       initBrowser();
-      if (booleanHelper.isTruthy(process.env['chimp.ddp'])) {
+      if (booleanHelper.isTruthy(process.env['chimp.ddp0'])) {
         setupDdp();
       }
     } catch (error) {
