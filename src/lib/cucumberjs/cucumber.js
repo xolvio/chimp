@@ -65,6 +65,7 @@ class Cucumber {
     }
 
     this.cucumberChild.stderr.pipe(process.stderr);
+    process.stdin.pipe(this.cucumberChild.stdin);
 
     let jsonResults = null;
     this.cucumberChild.on('message', (res) => {
