@@ -1,3 +1,10 @@
+# 0.47.2
+
+* Update cucumber to v1.3.0-chimp.2, add cucumber test for global pending (lucetius) 
+* Fix fiberize function for throwing errors in tests (lucetius) 
+* Fixes 560 pipe chimp stdin to test runner (tiagolr) 
+* Adds the release notes for v0.47.1 (Sam Hatoum) 
+
 # 0.47.1
 
 * updating chromedeiver to 2.27.2 (#562) (Gregory Parsons) 
