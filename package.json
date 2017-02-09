@@ -1,6 +1,6 @@
 {
   "name": "chimp",
-  "version": "0.47.1",
+  "version": "0.47.2",
   "description": "Develop acceptance tests & end-to-end tests with realtime feedback.",
   "keywords": [
     "simian",
