@@ -440,7 +440,7 @@ Chimp.prototype.run = function (callback) {
       if (error) {
         log.debug('[chimp] run complete with errors', error);
         if (booleanHelper.isFalsey(self.options.watch)) {
-          self.interrupt();
+          self.interrupt(() => {});
         }
       } else {
         log.debug('[chimp] run complete');
