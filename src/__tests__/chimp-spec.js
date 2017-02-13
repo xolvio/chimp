@@ -9,35 +9,7 @@ describe('Chimp', function () {
   var Chimp = require('../lib/chimp');
 
   describe('constructor', function () {
-
-    it('creates the processes array', function () {
-      expect(new Chimp().processes).toEqual(jasmine.any(Array));
-    });
-
-    it('created an options object if non are passed', function () {
-      var chimp = new Chimp();
-      expect(chimp.options).toBeDefined();
-    });
-
-    it('stores the options object', function () {
-      var myOptions = {};
-      var chimp = new Chimp(myOptions);
-      expect(chimp.options).toBe(myOptions);
-    });
-
-    it('puts all the options on the environment hash prefixed with [chimp.]', function () {
-
-      var myOptions = {
-        a: 1,
-        b: 'aString'
-      };
-      var chimp = new Chimp(myOptions);
-
-      expect(process.env['chimp.a']).toBe(myOptions.a.toString());
-      expect(process.env['chimp.b']).toBe(myOptions.b);
-
-    });
-
+    // moved to src/lib/chimp-specs.js
   });
 
   describe('bin path', function () {

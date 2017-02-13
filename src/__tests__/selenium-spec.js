@@ -94,11 +94,12 @@ describe('Selenium', function () {
         seleniumStandaloneOptions: {},
       });
       var seleniumStandalone = require('selenium-standalone');
-      var callback = function () {};
+      var callback = jest.genMockFn();
 
       selenium.install(callback);
+      seleniumStandalone.install.mock.calls[0][1]();
 
-      expect(seleniumStandalone.install.mock.calls[0][1]).toBe(callback);
+      expect(callback).toBeCalled();
     });
 
     it('does not run if chimp is offline mode', function () {

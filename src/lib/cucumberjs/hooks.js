@@ -71,7 +71,7 @@ module.exports = function hooks() {
    */
   this.After((scenario) => { // eslint-disable-line new-cap
     _.each(screenshots, (element) => {
-      const decodedImage = new Buffer(element.png, 'base64').toString('binary');
+      const decodedImage = new Buffer(element.png, 'base64');
       scenario.attach(decodedImage, 'image/png');
     });
   });

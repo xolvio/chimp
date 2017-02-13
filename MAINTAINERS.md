@@ -7,6 +7,11 @@
 * You can compile the code with `npm run prepublish`.
   This is done automatically before you publish a release.
 
+## Watch
+
+You can run `npm run watch` to use [npm-watch](https://www.npmjs.com/package/npm-watch) to 
+run the npm task `prepublish` automatically on change to `src/lib` or `src/bin`.
+
 ## Running tests
 
 You can use [Wallaby](http://wallabyjs.com/) if you own it or just run `npm test`.

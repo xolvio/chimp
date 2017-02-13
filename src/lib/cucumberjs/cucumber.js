@@ -65,6 +65,7 @@ class Cucumber {
     }
 
     this.cucumberChild.stderr.pipe(process.stderr);
+    process.stdin.pipe(this.cucumberChild.stdin);
 
     let jsonResults = null;
     this.cucumberChild.on('message', (res) => {
@@ -79,7 +80,7 @@ class Cucumber {
         log.debug('[chimp][cucumber] Cucumber not in a stopping state');
 
         const result = jsonResults;
-        if (this.options.jsonOutput) {
+        if (this.options.jsonOutput && JSON.parse(jsonResults).length) {
           const dir = path.dirname(this.options.jsonOutput);
           log.debug('[chimp][cucumber] Ensuring directory exists', dir);
           fs.mkdirsSync(dir);

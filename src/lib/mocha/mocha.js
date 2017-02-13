@@ -66,13 +66,13 @@ Mocha.prototype.start = function (callback) {
     _specs = this.options._.slice(2);
   }
 
-  self.child = cp.fork(path.join(__dirname, 'mocha-wrapper.js'), _.union(
-    ['--color'],
-    _specs
-  ), opts);
-
+  opts.env = _.extend(process.env, {
+    mochaConfig: JSON.stringify(this.options.mochaConfig)
+  });
+  self.child = cp.fork(path.join(__dirname, 'mocha-wrapper-instance.js'), _specs, opts);
   self.child.stdout.pipe(process.stdout);
   self.child.stderr.pipe(process.stderr);
+  process.stdin.pipe(self.child.stdin);
 
   var result = null;
   self.child.on('message', function (res) {

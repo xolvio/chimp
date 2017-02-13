@@ -24,6 +24,7 @@ exports.Mocha = require('./mocha/mocha.js');
 exports.Jasmine = require('./jasmine/jasmine.js');
 exports.Cucumber = require('./cucumberjs/cucumber.js');
 exports.Phantom = require('./phantom.js');
+exports.Chromedriver = require('./chromedriver.js');
 exports.Consoler = require('./consoler.js');
 exports.Selenium = require('./selenium.js');
 exports.SimianReporter = require('./simian-reporter.js');
@@ -60,14 +61,30 @@ function Chimp(options) {
   this.testRunnerRunOrder = [];
 
   // store all cli parameters in env hash
+  // Note: Environment variables are always strings.
   for (var option in options) {
-    // Note: Environment variables are always strings.
-    process.env['chimp.' + option] = _.isObject(options[option]) ?
-      JSON.stringify(options[option]) :
-      String(options[option]);
+    if (option === 'ddp') {
+      handleDdpOption(options);
+    } else {
+      process.env['chimp.' + option] = _.isObject(options[option]) ?
+       JSON.stringify(options[option]) :
+       String(options[option]);
+    }
   }
 
   this._handleMeteorInterrupt();
+}
+
+function handleDdpOption(options) {
+  if (typeof options.ddp === 'string') {
+    process.env['chimp.ddp0'] = String(options.ddp);
+    return;
+  }
+  if (Array.isArray(options.ddp)) {
+    options.ddp.forEach(function(val, index){
+      process.env['chimp.ddp' + index] = String(val);
+    });
+  }
 }
 
 /**
@@ -105,6 +122,14 @@ Chimp.prototype.informUser = function () {
   if (booleanHelper.isTruthy(this.options.criticalTag)) {
     this.options.e2eTags = this.options.criticalTag;
     log.warn('[chimp] Please use e2eTags instead of criticalTag. criticalTag is now deprecated.'.red);
+  }
+
+  if (booleanHelper.isTruthy(this.options.mochaTags)
+    || booleanHelper.isTruthy(this.options.mochaGrep)
+    || booleanHelper.isTruthy(this.options.mochaTimeout)
+    || booleanHelper.isTruthy(this.options.mochaReporter)
+    || booleanHelper.isTruthy(this.options.mochaSlow)) {
+    log.warn('[chimp] mochaXYZ style configs are now deprecated. Please use a mochaConfig object.'.red);
   }
 };
 
@@ -547,6 +572,14 @@ Chimp.prototype._createProcesses = function () {
     self.testRunnerRunOrder.push({name, type, index: processes.length - 1});
   };
 
+  const userHasNotProvidedSeleniumHost = function() {
+    return booleanHelper.isFalsey(self.options.host);
+  };
+
+  const userHasProvidedBrowser = function() {
+    return booleanHelper.isTruthy(self.options.browser);
+  };
+
   if (!this.options.domainOnly) {
     if (this.options.browser === 'phantomjs') {
       process.env['chimp.host'] = this.options.host = 'localhost';
@@ -554,10 +587,18 @@ Chimp.prototype._createProcesses = function () {
       processes.push(phantom);
     }
 
-    else if (booleanHelper.isFalsey(this.options.host)) {
+    else if (userHasProvidedBrowser() && userHasNotProvidedSeleniumHost()) {
       process.env['chimp.host'] = this.options.host = 'localhost';
       var selenium = new exports.Selenium(this.options);
       processes.push(selenium);
+    }
+
+    else if (userHasNotProvidedSeleniumHost()) {
+      // rewrite the browser to be chrome since "chromedriver" is not a valid browser
+      process.env['chimp.browser'] = this.options.browser = 'chrome';
+      process.env['chimp.host'] = this.options.host = 'localhost';
+      var chromedriver = new exports.Chromedriver(this.options);
+      processes.push(chromedriver);
     }
   }
 
