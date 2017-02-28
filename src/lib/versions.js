@@ -1,9 +1,10 @@
 const _ = require('underscore'),
+    fs = require('fs'),
     os = require('os'),
     log = require('./log'),
     async = require('async'),
     request = require('request'),
-    execSync = require('child_process').execSync,
+    spawnSync = require('child_process').spawnSync,
     selenium = require('selenium-standalone'),
     chromedriver = require('chromedriver'),
     booleanHelper = require('./boolean-helper'),
@@ -43,7 +44,7 @@ function Versions(options) {
                 return 'Unknown. Chromedriver not used directly.';
             }
             else {
-                return this._execSync(`${this.chromeDriverExec} -v`);
+                return this._spawnSync(`${this.chromeDriverExec} -v`);
             }
         }
         else {
@@ -52,7 +53,7 @@ function Versions(options) {
     };
 
     this.getJavaVersion = () => {
-        return this._execSync('java -version 2>&1');
+        return this._spawnSync('java -version');
     };
 
     this.getSeleniumVersion = () => {
@@ -121,20 +122,25 @@ function Versions(options) {
             );
         }
         else {
-            const startBrowserOptions = {
-                path: this.chromeDriverExec,
-                port: this.options.port
-            };
-            this._startBrowserDriver(startBrowserOptions, () => {
-                this._getBrowserVersion(startBrowserOptions, (err, browserVersion) => {
-                    this._stopBrowserDriver((err) => {
-                        if (err) {
-                            log.warn(err);
-                        }
-                        callback(browserVersion);
+            if (fs.existsSync(this.chromeDriverExec)) {
+                const startBrowserOptions = {
+                    path: this.chromeDriverExec,
+                    port: this.options.port
+                };
+                this._startBrowserDriver(startBrowserOptions, () => {
+                    this._getBrowserVersion(startBrowserOptions, (err, browserVersion) => {
+                        this._stopBrowserDriver((err) => {
+                            if (err) {
+                                log.warn(err);
+                            }
+                            callback(browserVersion);
+                        });
                     });
                 });
-            });
+            }
+            else {
+                callback(`Driver for selected browser not found.`);
+            }
         }
     };
 
@@ -181,7 +187,7 @@ function Versions(options) {
 
     this._stopBrowserDriver = (callback) => {
         if (this.child) {
-            var options = {
+            let options = {
                 child: this.child,
                 prefix: 'browserdriver'
             };
@@ -196,9 +202,28 @@ function Versions(options) {
         }
     };
 
-    this._execSync = (commandToRun) => {
+    this._spawnSync = (commandToRun) => {
         const endLine = new RegExp(`${os.EOL}`, 'g');
-        return execSync(commandToRun).toString().trim().replace(endLine, ', ');
+        const commandOptions = commandToRun.split(' ');
+        const command = commandOptions.shift();
+        const commandResult = spawnSync(command, commandOptions);
+        if (commandResult.status !== 0 && commandResult.error) {
+            if (commandResult.error.code === 'ENOENT') {
+                return 'No such file or directory';
+            }
+            else {
+                return `Error ${commandResult.error.code}`;
+            }
+        }
+        else {
+            let commandToReturn = '';
+            _.each(commandResult.output, (output) => {
+                if (output && output.length) {
+                    commandToReturn += output.toString().trim();
+                }
+            });
+            return commandToReturn.replace(endLine, ', ');
+        }
     }
 }
 
