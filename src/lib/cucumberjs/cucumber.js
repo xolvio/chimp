@@ -80,7 +80,7 @@ class Cucumber {
         log.debug('[chimp][cucumber] Cucumber not in a stopping state');
 
         const result = jsonResults;
-        if (this.options.jsonOutput && JSON.parse(jsonResults).length) {
+        if (this.options.jsonOutput && jsonResults && JSON.parse(jsonResults).length) {
           const dir = path.dirname(this.options.jsonOutput);
           log.debug('[chimp][cucumber] Ensuring directory exists', dir);
           fs.mkdirsSync(dir);

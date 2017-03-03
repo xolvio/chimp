@@ -83,8 +83,9 @@ function createIpcFormatter() {
   ipcFormatter.finish = function sendResultToChimp(callback) {
     finish.call(this, (error, result) => {
       const results = this.getLogs();
-      process.send(results);
-      callback(error, result);
+      process.send(results, () => {
+        callback(error, result);
+      });
     });
   };
   return ipcFormatter;
