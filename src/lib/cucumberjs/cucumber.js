@@ -23,8 +23,14 @@ class Cucumber {
     const args = this._getExecOptions(this.options);
 
     if (!fs.existsSync(this.options.path)) {
-      log.info('[chimp][cucumber] Directory', this.options.path, 'does not exist. Not running');
-      callback();
+      const infoMessage = `[chimp][cucumber] Directory ${this.options.path} does not exist. Not running`;
+      if (booleanHelper.isTruthy(this.options['fail-when-no-tests-run'])) {
+        callback(infoMessage);
+      }
+      else {
+        log.info(infoMessage);
+        callback();
+      }
       return;
     }
 
