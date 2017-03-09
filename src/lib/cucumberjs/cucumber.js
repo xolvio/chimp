@@ -95,7 +95,12 @@ class Cucumber {
           log.debug('[chimp][cucumber] Finished writing results');
         }
 
-        callback(code !== 0 ? 'Cucumber steps failed' : null, result);
+        let failWhenNoTestsRun = false;
+        if (booleanHelper.isTruthy(this.options['fail-when-no-tests-run']) && JSON.parse(result).length === 0) {
+          failWhenNoTestsRun = true;
+        }
+
+        callback(code !== 0 || (code === 0 && failWhenNoTestsRun) ? 'Cucumber steps failed' : null, result);
       }
     });
   }

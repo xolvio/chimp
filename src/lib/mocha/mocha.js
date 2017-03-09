@@ -1,6 +1,7 @@
 var path = require('path'),
   cp = require('child-process-debug'),
   processHelper = require('./../process-helper.js'),
+  booleanHelper = require('../boolean-helper'),
   log = require('./../log'),
   _ = require('underscore'),
   colors = require('colors'),
@@ -30,8 +31,14 @@ Mocha.prototype.start = function (callback) {
 
   var self = this;
   if (glob.sync(self.options.path).length === 0) {
-    log.info('[chimp][mocha] Directory', self.options.path, 'does not exist. Not running');
-    callback();
+    const infoMessage = `[chimp][mocha] Directory ${self.options.path} does not exist. Not running`;
+    if (booleanHelper.isTruthy(self.options['fail-when-no-tests-run'])) {
+      callback(infoMessage);
+    }
+    else {
+      log.info(infoMessage);
+      callback();
+    }
     return;
   }
 
@@ -74,17 +81,28 @@ Mocha.prototype.start = function (callback) {
   self.child.stderr.pipe(process.stderr);
   process.stdin.pipe(self.child.stdin);
 
+
+  let noTests = false;
+  self.child.stdout.on('data', function(data) {
+    const colorCodesRegExp = new RegExp(`\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]`, 'g');
+    const dataFromStdout = data.toString().replace(colorCodesRegExp, '').trim();
+    if (/^0 passing/.test(dataFromStdout)) {
+      noTests = true;
+    }
+  });
+
   var result = null;
   self.child.on('message', function (res) {
     log.debug('[chimp][mocha] Received message from Mocha child. Result:', res);
     result = res;
   });
 
-  self.child.on('close', function (code) {
+  self.child.on('close', (code) => {
     log.debug('[chimp][mocha] Closed with code', code);
+    const failWhenNoTestsRun = booleanHelper.isTruthy(self.options['fail-when-no-tests-run']);
     if (!self.child.stopping) {
       log.debug('[chimp][mocha] Mocha not in a stopping state');
-      callback(code !== 0 ? 'Mocha failed' : null, result);
+      callback(code !== 0 || (code === 0 && noTests && failWhenNoTestsRun) ? 'Mocha failed' : null, result);
     }
   });
 
