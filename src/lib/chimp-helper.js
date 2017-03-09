@@ -137,11 +137,15 @@ var chimpHelper = {
       log.debug('[chimp][helper] init browser callback');
 
       browser.screenshotsCount = 0;
-      browser.addCommand('capture', function (name) {
+      browser.addCommand('capture', function (name, screenshotsPathPrefix) {
         name = name.replace(/[ \\~#%&*{}/:<>?|"-]/g, '_');
         var location = (browser.screenshotsCount++) + '_' + name + '.png';
-        fs.mkdirsSync(process.env['chimp.screenshotsPath']);
-        var ssPath = path.join(process.env['chimp.screenshotsPath'], location);
+        let screenshotsPath = process.env['chimp.screenshotsPath'];
+        if (screenshotsPathPrefix) {
+          screenshotsPath = path.join(screenshotsPathPrefix, screenshotsPath);
+        }
+        fs.mkdirsSync(screenshotsPath);
+        var ssPath = path.join(screenshotsPath, location);
         log.debug('[chimp][helper] saving screenshot to', ssPath);
         this.saveScreenshot(ssPath, false);
         log.debug('[chimp][helper] saved screenshot to', ssPath);
