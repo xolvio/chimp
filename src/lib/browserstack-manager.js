@@ -94,14 +94,14 @@ BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
 
   this._getBuilds(function (err, builds) {
     if (err) {
-      log.error('[chimp][browserstack-session-manager]', 'received getBuilds error', err);
+      log.error('[chimp][browserstack-session-manager]', 'received getBuilds error');
       callback(err);
     } else {
       if (builds && builds.length) {
         log.debug('[chimp][browserstack-session-manager]', builds, builds[0]);
         var buildId = builds[0].automation_build.hashed_id;
       }
-      if (buildId !== undefined && buildId !== '') {
+      if (buildId) {
         this._getSessions(buildId, function (err, sessions) {
           if (sessions && sessions.length) {
             var options = {
