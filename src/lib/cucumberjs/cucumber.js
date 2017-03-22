@@ -79,7 +79,6 @@ class Cucumber {
       if (!this.cucumberChild.stopping) {
         log.debug('[chimp][cucumber] Cucumber not in a stopping state');
 
-        const result = jsonResults;
         if (this.options.jsonOutput && jsonResults && JSON.parse(jsonResults).length) {
           const dir = path.dirname(this.options.jsonOutput);
           log.debug('[chimp][cucumber] Ensuring directory exists', dir);
@@ -89,7 +88,7 @@ class Cucumber {
           log.debug('[chimp][cucumber] Finished writing results');
         }
 
-        callback(code !== 0 ? 'Cucumber steps failed' : null, result);
+        callback(code !== 0 ? 'Cucumber steps failed' : null, jsonResults);
       }
     });
   }
