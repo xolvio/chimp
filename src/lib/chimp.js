@@ -59,6 +59,7 @@ function Chimp(options) {
   this.exec = require('child_process').exec;
   this.fs = fs;
   this.testRunnerRunOrder = [];
+  this.watcher = undefined;
 
   // store all cli parameters in env hash
   // Note: Environment variables are always strings.
@@ -72,7 +73,7 @@ function Chimp(options) {
     }
   }
 
-  this._handleMeteorInterrupt();
+  this._handleChimpInterrupt();
 }
 
 function handleDdpOption(options) {
@@ -222,7 +223,7 @@ Chimp.prototype.watch = function () {
 
   watchDirectories.push(self.options.path);
 
-  var watcher = chokidar.watch(watchDirectories, {
+  this.watcher = chokidar.watch(watchDirectories, {
     ignored: /[\/\\](\.|node_modules)/,
     persistent: true,
     usePolling: this.options.watchWithPolling
@@ -242,7 +243,7 @@ Chimp.prototype.watch = function () {
   }
 
   // wait for initial file scan to complete
-  watcher.once('ready', function () {
+  this.watcher.once('ready', function () {
 
     var watched = [];
     if (_.isArray(self.options.watchTags)) {
@@ -256,7 +257,7 @@ Chimp.prototype.watch = function () {
     log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
 
     // start watching
-    watcher.on('all', function (event, path) {
+    self.watcher.on('all', function (event, path) {
 
       // removing feature files should not rerun
       if (event === 'unlink' && path.match(/\.feature$/)) {
@@ -443,6 +444,9 @@ Chimp.prototype.run = function (callback) {
     function (error, result) {
       if (error) {
         log.debug('[chimp] run complete with errors', error);
+        if (booleanHelper.isFalsey(self.options.watch)) {
+          self.interrupt(() => {});
+        }
       } else {
         log.debug('[chimp] run complete');
       }
@@ -481,7 +485,9 @@ Chimp.prototype.interrupt = function (callback) {
   if (!self.processes || self.processes.length === 0) {
     self.isInterrupting = false;
     log.debug('[chimp] no processes to interrupt');
-    callback();
+    if (callback) {
+      callback();
+    }
     return;
   }
 
@@ -502,7 +508,9 @@ Chimp.prototype.interrupt = function (callback) {
     if (error) {
       log.error('[chimp] with errors', error);
     }
-    callback.apply(this, arguments);
+    if (callback) {
+      callback.apply(this, arguments);
+    }
   });
 
 };
@@ -677,13 +685,15 @@ Chimp.prototype._createProcesses = function () {
  *
  * @api private
  */
-Chimp.prototype._handleMeteorInterrupt = function () {
-  if (process.env.MIRROR_PORT) {
+Chimp.prototype._handleChimpInterrupt = function () {
+  var self = this;
     process.on('SIGINT', function () {
       log.debug('[chimp] SIGINT detected, killing process');
-      process.kill();
+      self.interrupt();
+      if (booleanHelper.isTruthy(self.options.watch)) {
+        self.watcher.close();
+      }
     });
-  }
 };
 
 module.exports = Chimp;
