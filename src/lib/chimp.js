@@ -246,7 +246,12 @@ Chimp.prototype.watch = function () {
   this.watcher.once('ready', function () {
 
     var watched = [];
-    if (self.options.watchTags) {
+    if (_.isArray(self.options.watchTags)) {
+      _.each(self.options.watchTags, (watchTag) => {
+        watched.push(watchTag.split(','));
+      });
+    }
+    else if (_.isString(self.options.watchTags)) {
       watched.push(self.options.watchTags.split(','));
     }
     log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
