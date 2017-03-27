@@ -78,11 +78,12 @@ AutoupdateWatcher.prototype.watch = function (trigger) {
     host: this._url.hostname,
     port: this._url.port,
     ssl: this._url.protocol === 'https:',
+    path: this._url.pathname !== '/' ? this._url.pathname + '/websocket' : undefined,
     autoReconnect: true,
     autoReconnectTimer: 500,
     maintainCollections: true,
     ddpVersion: '1',
-    useSockJs: true
+    useSockJs: this._url.pathname === '/'
   });
 
   /*
