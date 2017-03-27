@@ -12,7 +12,8 @@ var async = require('async'),
   Hapi = require('hapi'),
   AutoupdateWatcher = require('./ddp-watcher'),
   colors = require('colors'),
-  booleanHelper = require('./boolean-helper');
+  booleanHelper = require('./boolean-helper'),
+  Versions = require('../lib/versions');
 
 colors.enabled = true;
 var DEFAULT_COLOR = 'yellow';
@@ -106,7 +107,21 @@ Chimp.prototype.init = function (callback) {
     callback(error);
     return;
   }
-  self.selectMode(callback);
+
+  if (this.options.versions || this.options.debug) {
+    const versions = new Versions(this.options);
+    if (this.options.debug) {
+      versions.show(() => {
+        self.selectMode(callback)
+      });
+    }
+    else {
+      versions.show();
+    }
+  }
+  else {
+    self.selectMode(callback);
+  }
 };
 
 Chimp.prototype.informUser = function () {

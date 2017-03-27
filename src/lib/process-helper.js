@@ -36,9 +36,24 @@ module.exports = {
   },
 
   waitForMessage: function (options, child, callback) {
-    child.stdout.on('data', function onData(data) {
+    child.stderr.on('data', onDataStdErr);
+    child.stdout.on('data', onDataStdOut);
+
+    function onDataStdErr(data) {
+      onData(data, () => {
+        child.stderr.removeListener('data', onDataStdErr);
+      });
+    }
+
+    function onDataStdOut(data) {
+      onData(data, () => {
+        child.stdout.removeListener('data', onDataStdOut);
+      });
+    }
+
+    function onData(data, removeListener) {
       if (data.toString().match(options.waitForMessage)) {
-        child.stdout.removeListener('data', onData);
+        removeListener();
         log.debug('[chimp][' + options.prefix + ']', 'started successfully');
         return callback();
       }
@@ -47,7 +62,7 @@ module.exports = {
         log.error(data.toString());
         callback(data.toString());
       }
-    });
+    }
   },
 
   kill: function (options, callback) {
