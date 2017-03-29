@@ -704,6 +704,7 @@ Chimp.prototype._handleChimpInterrupt = function () {
   var self = this;
     process.on('SIGINT', function () {
       log.debug('[chimp] SIGINT detected, killing process');
+      process.stdin.end();
       self.interrupt();
       if (booleanHelper.isTruthy(self.options.watch)) {
         self.watcher.close();
