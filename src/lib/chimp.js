@@ -12,7 +12,8 @@ var async = require('async'),
   Hapi = require('hapi'),
   AutoupdateWatcher = require('./ddp-watcher'),
   colors = require('colors'),
-  booleanHelper = require('./boolean-helper');
+  booleanHelper = require('./boolean-helper'),
+  Versions = require('../lib/versions');
 
 colors.enabled = true;
 var DEFAULT_COLOR = 'yellow';
@@ -106,7 +107,21 @@ Chimp.prototype.init = function (callback) {
     callback(error);
     return;
   }
-  self.selectMode(callback);
+
+  if (this.options.versions || this.options.debug) {
+    const versions = new Versions(this.options);
+    if (this.options.debug) {
+      versions.show(() => {
+        self.selectMode(callback)
+      });
+    }
+    else {
+      versions.show();
+    }
+  }
+  else {
+    self.selectMode(callback);
+  }
 };
 
 Chimp.prototype.informUser = function () {
@@ -246,7 +261,12 @@ Chimp.prototype.watch = function () {
   this.watcher.once('ready', function () {
 
     var watched = [];
-    if (self.options.watchTags) {
+    if (_.isArray(self.options.watchTags)) {
+      _.each(self.options.watchTags, (watchTag) => {
+        watched.push(watchTag.split(','));
+      });
+    }
+    else if (_.isString(self.options.watchTags)) {
       watched.push(self.options.watchTags.split(','));
     }
     log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
@@ -684,6 +704,7 @@ Chimp.prototype._handleChimpInterrupt = function () {
   var self = this;
     process.on('SIGINT', function () {
       log.debug('[chimp] SIGINT detected, killing process');
+      process.stdin.end();
       self.interrupt();
       if (booleanHelper.isTruthy(self.options.watch)) {
         self.watcher.close();
