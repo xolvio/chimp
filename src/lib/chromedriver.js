@@ -1,5 +1,6 @@
 var chromedriver = require('chromedriver'),
     processHelper = require('./process-helper.js'),
+    fs = require('fs'),
     log = require('./log');
 
 /**
@@ -38,13 +39,20 @@ Chromedriver.prototype.start = function (callback) {
         return;
     }
 
-    this.child = processHelper.start({
-        bin: chromedriver.path,
-        prefix: 'chromedriver',
-        args: ['--port=' + port, '--url-base=wd/hub'],
-        waitForMessage: /Starting ChromeDriver/,
-        errorMessage: /Error/
-    }, callback);
+    const chromedriverPath = chromedriver.path;
+
+    if (fs.existsSync(chromedriverPath)) {
+        this.child = processHelper.start({
+            bin: chromedriverPath,
+            prefix: 'chromedriver',
+            args: ['--port=' + port, '--url-base=wd/hub'],
+            waitForMessage: /Starting ChromeDriver/,
+            errorMessage: /Error/
+        }, callback);
+    }
+    else {
+        callback('[chimp][chromedriver] Chromedriver executable not found.');
+    }
 
 };
 

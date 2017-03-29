@@ -138,11 +138,19 @@ describe('process-helper', function () {
         waitForMessage: 'we have lift off'
       };
 
-      var eventToBeRemoved = false;
+      var eventToBeRemovedStdOut = false;
+      var eventToBeRemovedStdErr = false;
       var child = {
         stdout: {
           on: jest.genMockFn().mockImplementation(function (event, eventTrigger) {
-            eventToBeRemoved = eventTrigger;
+            eventToBeRemovedStdOut = eventTrigger;
+            eventTrigger('Huston, we have lift off!');
+          }),
+          removeListener: jest.genMockFn()
+        },
+        stderr: {
+          on: jest.genMockFn().mockImplementation(function (event, eventTrigger) {
+            eventToBeRemovedStdErr = eventTrigger;
             eventTrigger('Huston, we have lift off!');
           }),
           removeListener: jest.genMockFn()
@@ -153,10 +161,15 @@ describe('process-helper', function () {
 
       expect(child.stdout.removeListener.mock.calls.length).toBe(1);
       expect(child.stdout.removeListener.mock.calls[0][0]).toBe('data');
-      expect(child.stdout.removeListener.mock.calls[0][1]).toBe(eventToBeRemoved);
+      expect(child.stdout.removeListener.mock.calls[0][1]).toBe(eventToBeRemovedStdOut);
 
-      expect(callback.mock.calls.length).toBe(1);
+      expect(child.stderr.removeListener.mock.calls.length).toBe(1);
+      expect(child.stderr.removeListener.mock.calls[0][0]).toBe('data');
+      expect(child.stderr.removeListener.mock.calls[0][1]).toBe(eventToBeRemovedStdErr);
+
+      expect(callback.mock.calls.length).toBe(2);
       expect(callback.mock.calls[0][0]).toBeFalsy();
+      expect(callback.mock.calls[1][0]).toBeFalsy();
 
     });
 
@@ -178,13 +191,19 @@ describe('process-helper', function () {
           on: jest.genMockFn().mockImplementation(function (event, eventTrigger) {
             eventTrigger('Huston, we have a problem - engine failure!');
           })
+        },
+        stderr: {
+          on: jest.genMockFn().mockImplementation(function (event, eventTrigger) {
+            eventTrigger('Huston, we have a problem - engine failure!');
+          })
         }
       };
 
       processHelper.waitForMessage(options, child, callback);
 
-      expect(callback.mock.calls.length).toBe(1);
+      expect(callback.mock.calls.length).toBe(2);
       expect(callback.mock.calls[0][0]).toBe('Huston, we have a problem - engine failure!');
+      expect(callback.mock.calls[1][0]).toBe('Huston, we have a problem - engine failure!');
 
     });
 
