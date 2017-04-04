@@ -72,21 +72,21 @@ module.exports = {
       chrome: {
         // check for more recent versions of chrome driver here:
         // http://chromedriver.storage.googleapis.com/index.html
-        version: '2.25',
+        version: '2.28',
         arch: process.arch,
         baseURL: 'https://chromedriver.storage.googleapis.com'
       },
       ie: {
         // check for more recent versions of internet explorer driver here:
         // http://selenium-release.storage.googleapis.com/index.html
-        version: '2.50.0',
+        version: '3.0.0',
         arch: 'ia32',
         baseURL: 'https://selenium-release.storage.googleapis.com'
       },
       firefox: {
         // check for more recent versions of gecko  driver here:
         // https://github.com/mozilla/geckodriver/releases
-        version: '0.11.1',
+        version: '0.13.0',
         arch: process.arch,
         baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
       }
