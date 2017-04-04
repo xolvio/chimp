@@ -9,8 +9,12 @@ export function fiberize(fn) {
         if (fn.length === 1) {
           fn.call(self, done);
         } else {
-          fn.call(self);
-          done();
+          var res = fn.call(self);
+          if (typeof res === 'object' && res !== null && typeof res.then === 'function') {
+            res.then(() => done()).catch(done);
+          } else {
+            done();
+          }
         }
     }).run();
   };
