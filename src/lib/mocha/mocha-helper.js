@@ -23,7 +23,7 @@ afterEach(function () {
   if (screenshotHelper.shouldTakeScreenshot(this.currentTest.state)) {
     if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToDisk'])) {
       const affix = this.currentTest.state !== 'passed' ? ' (failed)' : '';
-      const fileName = this.currentTest.title + affix;
+      const fileName = this.currentTest.fullTitle() + affix;
       screenshotHelper.saveScreenshotsToDisk(fileName);
     }
   }
