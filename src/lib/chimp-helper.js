@@ -137,11 +137,25 @@ var chimpHelper = {
       log.debug('[chimp][helper] init browser callback');
 
       browser.screenshotsCount = 0;
-      browser.addCommand('capture', function (name) {
-        name = name.replace(/[ \\~#%&*{}/:<>?|"-]/g, '_');
-        var location = (browser.screenshotsCount++) + '_' + name + '.png';
-        fs.mkdirsSync(process.env['chimp.screenshotsPath']);
-        var ssPath = path.join(process.env['chimp.screenshotsPath'], location);
+      browser.addCommand('capture', function (name, screenshotsPathPrefix) {
+
+        const screenshotsCountForFileName = `${(browser.screenshotsCount++)}_`;
+        let fileName = name.replace(/[ \\~#%&*{}/:<>?|"-]/g, '_');
+        const fileExtension = '.png';
+
+        const suggestedFileNameLength = screenshotsCountForFileName.length + fileName.length + fileExtension.length;
+        if (suggestedFileNameLength > 255) {
+          const numberOfCharactersToLeave = (fileName.length - (suggestedFileNameLength - 255));
+          fileName = fileName.substr(0, numberOfCharactersToLeave);
+        }
+
+        const fullFileName = `${screenshotsCountForFileName}${fileName}${fileExtension}`;
+        let screenshotsPath = process.env['chimp.screenshotsPath'];
+        if (screenshotsPathPrefix) {
+          screenshotsPath = path.join(screenshotsPathPrefix, screenshotsPath);
+        }
+        fs.mkdirsSync(screenshotsPath);
+        var ssPath = path.join(screenshotsPath, fullFileName);
         log.debug('[chimp][helper] saving screenshot to', ssPath);
         this.saveScreenshot(ssPath, false);
         log.debug('[chimp][helper] saved screenshot to', ssPath);
