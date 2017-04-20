@@ -43,13 +43,13 @@ DDP.prototype._getOptions = function () {
     host: this.url.hostname,
     port: this.url.port,
     ssl: this.url.protocol === 'https:',
+    path: this.url.pathname !== '/' ? this.url.pathname + '/websocket' : undefined,
     // TODO extract all options
     autoReconnect: true,
     autoReconnectTimer: 500,
     maintainCollections: true,
     ddpVersion: '1',
-    useSockJs: true
-    //path: "websocket"
+    useSockJs: this.url.pathname === '/'
   };
 };
 
