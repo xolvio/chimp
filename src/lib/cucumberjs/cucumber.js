@@ -85,7 +85,6 @@ class Cucumber {
       if (!this.cucumberChild.stopping) {
         log.debug('[chimp][cucumber] Cucumber not in a stopping state');
 
-        const result = jsonResults;
         if (this.options.jsonOutput && JSON.parse(jsonResults).length) {
           const dir = path.dirname(this.options.jsonOutput);
           log.debug('[chimp][cucumber] Ensuring directory exists', dir);
@@ -95,12 +94,10 @@ class Cucumber {
           log.debug('[chimp][cucumber] Finished writing results');
         }
 
-        let failWhenNoTestsRun = false;
-        if (booleanHelper.isTruthy(this.options['fail-when-no-tests-run']) && JSON.parse(result).length === 0) {
-          failWhenNoTestsRun = true;
-        }
+        const failWhenNoTestsRun = booleanHelper.isTruthy(this.options['fail-when-no-tests-run']);
+        const noTestsFound = JSON.parse(jsonResults).length === 0;
 
-        callback(code !== 0 || (code === 0 && failWhenNoTestsRun) ? 'Cucumber steps failed' : null, result);
+        callback(code !== 0 || (code === 0 && noTestsFound && failWhenNoTestsRun) ? 'Cucumber steps failed' : null, jsonResults);
       }
     });
   }

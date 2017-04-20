@@ -82,12 +82,12 @@ Mocha.prototype.start = function (callback) {
   process.stdin.pipe(self.child.stdin);
 
 
-  let noTests = false;
+  let noTestsFound = false;
   self.child.stdout.on('data', function(data) {
     const colorCodesRegExp = new RegExp(`\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]`, 'g');
     const dataFromStdout = data.toString().replace(colorCodesRegExp, '').trim();
     if (/^0 passing/.test(dataFromStdout)) {
-      noTests = true;
+      noTestsFound = true;
     }
   });
 
@@ -102,7 +102,7 @@ Mocha.prototype.start = function (callback) {
     const failWhenNoTestsRun = booleanHelper.isTruthy(self.options['fail-when-no-tests-run']);
     if (!self.child.stopping) {
       log.debug('[chimp][mocha] Mocha not in a stopping state');
-      callback(code !== 0 || (code === 0 && noTests && failWhenNoTestsRun) ? 'Mocha failed' : null, result);
+      callback(code !== 0 || (code === 0 && noTestsFound && failWhenNoTestsRun) ? 'Mocha failed' : null, result);
     }
   });
 

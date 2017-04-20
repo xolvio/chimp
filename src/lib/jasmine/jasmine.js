@@ -74,12 +74,12 @@ Jasmine.prototype.start = function (callback) {
   self.child.stderr.pipe(process.stderr);
   process.stdin.pipe(self.child.stdin);
 
-  let noSpecsFound = false;
+  let noTestsFound = false;
   self.child.stdout.on('data', function(data) {
     const colorCodesRegExp = new RegExp(`\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]`, 'g');
     const dataFromStdout = data.toString().replace(colorCodesRegExp, '').trim();
     if (/^No specs found/.test(dataFromStdout)) {
-      noSpecsFound = true;
+      noTestsFound = true;
     }
   });
 
@@ -94,7 +94,7 @@ Jasmine.prototype.start = function (callback) {
     const failWhenNoTestsRun = booleanHelper.isTruthy(self.options['fail-when-no-tests-run']);
     if (!self.child.stopping) {
       log.debug('[chimp][jasmine] Jasmine not in a stopping state');
-      callback(code !== 0 || (code === 0 && noSpecsFound && failWhenNoTestsRun) ? 'Jasmine failed' : null, result);
+      callback(code !== 0 || (code === 0 && noTestsFound && failWhenNoTestsRun) ? 'Jasmine failed' : null, result);
     }
   });
 
