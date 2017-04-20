@@ -128,7 +128,7 @@ var chimpHelper = {
         remoteSession = wrapAsync(global.sessionManager.remote, global.sessionManager);
         global.browser = remoteSession(webdriverioOptions);
       }
-
+      global.browser.options = webdriverioOptions;
       chaiAsPromised.transferPromiseness = global.browser.transferPromiseness;
     };
 
@@ -176,12 +176,14 @@ var chimpHelper = {
 
       if (browser.instances) {
         browser.instances.forEach(function (singleBrowser) {
-          singleBrowser.initSync();
+          const desiredCapabilities = singleBrowser.initSync();
+          singleBrowser.desiredCapabilities = desiredCapabilities;
           initSingleBrowser(singleBrowser);
         });
       }
       else {
-        browser.initSync();
+        const desiredCapabilities = browser.initSync();
+        browser.desiredCapabilities = desiredCapabilities;
         initSingleBrowser(browser);
       }
 
