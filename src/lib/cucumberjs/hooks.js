@@ -2,6 +2,7 @@ const log = require('../log');
 const exit = require('exit');
 const _ = require('underscore');
 const booleanHelper = require('../boolean-helper');
+const screenshotHelper = require('../screenshot-helper');
 
 module.exports = function hooks() {
   const screenshots = {};
@@ -23,22 +24,13 @@ module.exports = function hooks() {
     }
   });
 
-
-  function shouldTakeScreenshot(stepResult) {
-    return booleanHelper.isTruthy(process.env['chimp.captureAllStepScreenshots']) ||
-      (
-        stepResult.getStatus() !== 'passed' &&
-        booleanHelper.isTruthy(process.env['chimp.screenshotsOnError'])
-      );
-  }
-
   /**
    * Capture screenshots either for erroneous / all steps
    */
   let lastStep;
   this.StepResult((stepResult) => { // eslint-disable-line new-cap
     lastStep = stepResult.getStep();
-    if (shouldTakeScreenshot(stepResult)) {
+    if (screenshotHelper.shouldTakeScreenshot(stepResult.getStatus())) {
       log.debug('[chimp][hooks] capturing screenshot');
       if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToReport'])) {
         const screenshotId = lastStep.getUri() + ':' + lastStep.getLine();
@@ -51,17 +43,12 @@ module.exports = function hooks() {
           png: global.browser.screenshot().value,
         };
       }
+
       if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToDisk'])) {
         const affix = stepResult.getStatus() !== 'passed' ? ' (failed)' : '';
         // noinspection JSUnresolvedFunction
-        var _fileName = lastStep.getKeyword() + ' ' + lastStep.getName() + affix;
-        if (global.browser.instances) {
-          global.browser.instances.forEach(function (instance, index) {
-            instance.captureSync(_fileName + '_browser_' + index);
-          });
-        } else {
-          global.browser.captureSync(_fileName);
-        }
+        const fileName = lastStep.getKeyword() + ' ' + lastStep.getName() + affix;
+        screenshotHelper.saveScreenshotsToDisk(fileName);
       }
     }
   });

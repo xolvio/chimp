@@ -23,8 +23,14 @@ class Cucumber {
     const args = this._getExecOptions(this.options);
 
     if (!fs.existsSync(this.options.path)) {
-      log.info('[chimp][cucumber] Directory', this.options.path, 'does not exist. Not running');
-      callback();
+      const infoMessage = `[chimp][cucumber] Directory ${this.options.path} does not exist. Not running`;
+      if (booleanHelper.isTruthy(this.options['fail-when-no-tests-run'])) {
+        callback(infoMessage);
+      }
+      else {
+        log.info(infoMessage);
+        callback();
+      }
       return;
     }
 
@@ -88,7 +94,10 @@ class Cucumber {
           log.debug('[chimp][cucumber] Finished writing results');
         }
 
-        callback(code !== 0 ? 'Cucumber steps failed' : null, jsonResults);
+        const failWhenNoTestsRun = booleanHelper.isTruthy(this.options['fail-when-no-tests-run']);
+        const noTestsFound = JSON.parse(jsonResults).length === 0;
+
+        callback(code !== 0 || (code === 0 && noTestsFound && failWhenNoTestsRun) ? 'Cucumber steps failed' : null, jsonResults);
       }
     });
   }
