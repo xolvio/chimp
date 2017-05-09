@@ -6,8 +6,11 @@ import _ from 'underscore';
 import {parseBoolean, parseString } from '../environment-variable-parsers';
 import escapeRegExp from '../utils/escape-reg-exp';
 import fiberizeJasmineApi from './jasmine-fiberized-api';
+import screenshotHelper from '../screenshot-helper';
+import booleanHelper from '../boolean-helper';
 
 new Fiber(function runJasmineInFiber() {
+  const projectDir = process.env.PWD;
   const testsDir = process.env['chimp.path'];
   process.chdir(testsDir);
 
@@ -31,6 +34,19 @@ new Fiber(function runJasmineInFiber() {
     );
     jasmine.jasmine.addSpecFilter((spec) => watchedSpecRegExp.test(spec.getFullName()));
   }
+
+  // Capability to capture screenshots
+  jasmine.jasmine.getEnv().addReporter({
+    specDone: function(result) {
+      if (screenshotHelper.shouldTakeScreenshot(result.status)) {
+        if (booleanHelper.isTruthy(process.env['chimp.saveScreenshotsToDisk'])) {
+          const affix = result.status !== 'passed' ? ' (failed)' : '';
+          const fileName = result.fullName + affix;
+          screenshotHelper.saveScreenshotsToDisk(fileName, projectDir);
+        }
+      }
+    }
+  });
 
   fiberizeJasmineApi(global);
 

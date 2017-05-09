@@ -100,22 +100,30 @@ BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
     if (buildId !== '') {
       this._getSessions(buildId, function (err, sessions) {
         if (sessions && sessions.length) {
-          var options = {
-            url: this.options.browserStackUrl + '/automate/sessions/' + sessions[0].automation_session.hashed_id + '.json',
-            method: 'PUT',
-            json: true,
-            body: { status: 'completed' }
-          };
-
-          request(options, function (error, response) {
-            if (!error && response.statusCode === 200) {
-              log.debug('[chimp][browserstack-session-manager]', 'stopped session');
-              callback();
-            } else {
-              log.error('[chimp][browserstack-session-manager]', 'received error', error);
-              callback(error);
+          const wdHubSession = 'http://' + this.options.host + ':' + this.options.port + '/wd/hub/session';
+          request.del(wdHubSession + '/' + sessions[0].automation_session.hashed_id, function (wdError, wdResponse) {
+            if (!wdError && wdResponse.statusCode === 200) {
+              var options = {
+                url: this.options.browserStackUrl + '/automate/sessions/' + sessions[0].automation_session.hashed_id + '.json',
+                method: 'PUT',
+                json: true,
+                body: {status: 'completed'}
+              };
+              request(options, function (error, response) {
+                if (!error && response.statusCode === 200) {
+                  log.debug('[chimp][browserstack-session-manager]', 'stopped session');
+                  callback();
+                } else {
+                  log.error('[chimp][browserstack-session-manager]', 'received error', error);
+                  callback(error);
+                }
+              });
             }
-          });
+            else {
+              log.error('[chimp][browserstack-session-manager]', 'received error', error);
+              callback(wdError);
+            }
+          }.bind(this));
         }
       }.bind(this));
     }

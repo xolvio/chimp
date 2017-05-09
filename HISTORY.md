@@ -1,3 +1,32 @@
+# 0.48.0
+
+* Limit screenshot filename (lucetius) 
+* Improve readability of failWhenNoTestsRun functionality (lucetius) 
+* Handle Promises returned by tests (#605) (Mike Cardwell) 
+* Fixes ending of process.stdin that caused errors when interrupting watch mode (lucetius) 
+* Fix Cucumber Failure output (lucetius) 
+* small clean up (Łukasz Gandecki) 
+* small clean up (Łukasz Gandecki) 
+* Add options and desired capabilities to browser instances (Tomasz Wilczek) 
+* Trigger CircleCI build on new environment Ubuntu 14.04 (lucetius) 
+* Update Selenium to 3.0.1 / Fix Firefox startup problem (lucetius) 
+* Fix closing BrowserStack session on test end (lucetius) 
+* Add support for capturing screenshots for Jasmine and Mocha (lucetius) 
+* Add support for non-zero exit code for mocha and jasmine when no tests are found. (lucetius) 
+* Add support for non-zero exit code when cucumber tests not found. (lucetius) 
+* Fix embedded screenshots in JSON output (lucetius) 
+* Update displayed github header text in tests (Tomasz Wilczek) 
+* Fix duplicate removeListener for stderr and stdout / Update tests for process-helper (lucetius) 
+* Handle chromedriver executable not found error (lucetius) 
+* Fix command not found in versions check (lucetius) 
+* Add --versions switch to output versions of Chimp dependencies (lucetius) 
+* Fixed console log for multiple watchTags (lucetius) 
+* Add path support in DDP url (lucetius) 
+* Fix calling interrupt function when error occurs (lucetius) 
+* Adds the release notes for v0.47.2 (Lukasz Gandecki) 
+* Fix terminating application (lucetius) 
+* Adds babel polyfill instead transform runtime plugin (lucetius) 
+
 # 0.47.2
 
 * Update cucumber to v1.3.0-chimp.2, add cucumber test for global pending (lucetius) 

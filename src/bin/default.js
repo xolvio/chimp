@@ -17,6 +17,7 @@ module.exports = {
   sync: true,
   offline: false,
   showXolvioMessages: true,
+  'fail-when-no-tests-run': false,
 
   // - - - - CUCUMBER - - - -
   path: './features',
