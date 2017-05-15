@@ -97,7 +97,6 @@
     "loglevel": "~1.4.0",
     "minimist": "~1.2.0",
     "mocha": "^3.2.0",
-    "phantomjs-prebuilt": "2.1.13",
     "progress": "^1.1.8",
     "request": "^2.79.0",
     "requestretry": "1.5.0",
@@ -123,6 +122,9 @@
     "quibble": "^0.4.0",
     "shelljs": "^0.7.5",
     "testdouble": "^1.10.1"
+  },
+  "optionalDependencies": {
+    "phantomjs-prebuilt": "2.1.13"
   },
   "bundledDependencies": [
     "cucumber"
