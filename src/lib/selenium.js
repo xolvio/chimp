@@ -126,7 +126,7 @@ Selenium.prototype.start = function (callback) {
     }
 
     if (self.options.seleniumDebug) {
-      self.seleniumStandaloneOptions.seleniumArgs.push('-debug');
+      self.seleniumStandaloneOptions.seleniumArgs.concat(['-debug', true]);
     }
 
     log.debug('\n[chimp][selenium] hub can be seen at http://localhost:' + port + '/wd/hub');
