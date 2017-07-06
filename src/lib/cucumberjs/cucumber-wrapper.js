@@ -70,7 +70,12 @@ function Cli(argv) {
       formatters.forEach(function (formatter) {
         runtime.attachListener(formatter);
       });
-      runtime.start(callback);
+      try {
+        runtime.start(callback);
+      } catch (e) {
+        console.log(e.stack || e)
+        callback(false)
+      }
     }
   };
   return self;
