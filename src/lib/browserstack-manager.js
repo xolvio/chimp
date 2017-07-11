@@ -44,6 +44,18 @@ BrowserStackSessionManager.prototype.remote = function (webdriverOptions, callba
 };
 
 /**
+ * Wraps the webdriver multiremote method and allows reuse options
+ *
+ * @api public
+ */
+BrowserStackSessionManager.prototype.multiremote = function (webdriverOptions, callback) {
+  log.debug('[chimp][browserstack-session-manager] creating webdriver remote ');
+  var browser = this.webdriver.multiremote(webdriverOptions);
+  callback(null, browser);
+  return;
+};
+
+/**
  * Gets a list of builds from the BrowserStack API as sessions must be queried based on Builds
  *
  * @api private
@@ -86,11 +98,41 @@ BrowserStackSessionManager.prototype._getSessions = function (buildId, callback)
 };
 
 /**
- * Kills the 1st session found running on BrowserStack
+ * Kills the all sessions in the first running build found on
+ * BrowserStack
  *
  * @api public
  */
 BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
+
+  var wdOptions = this.options;
+  const wdHubSession = 'http://' + wdOptions.host + ':' + wdOptions.port + '/wd/hub/session';
+
+  var killSession = function (session) {
+    request.del(wdHubSession + '/' + session.automation_session.hashed_id, function (wdError, wdResponse) {
+      if (!wdError && wdResponse.statusCode === 200) {
+        var options = {
+          url: wdOptions.browserStackUrl + '/automate/sessions/' + session.automation_session.hashed_id + '.json',
+          method: 'PUT',
+          json: true,
+          body: {status: 'completed'}
+        };
+        request(options, function (error, response) {
+          if (!error && response.statusCode === 200) {
+            log.debug('[chimp][browserstack-session-manager]', 'stopped session');
+            callback();
+          } else {
+            log.error('[chimp][browserstack-session-manager]', 'received error', error);
+            callback(error);
+          }
+        });
+      }
+      else {
+        log.error('[chimp][browserstack-session-manager]', 'received error', wdError);
+        callback(wdError);
+      }
+    });
+  };
 
   this._getBuilds(function (err, builds) {
     if (builds && builds.length) {
@@ -100,34 +142,11 @@ BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
     if (buildId !== '') {
       this._getSessions(buildId, function (err, sessions) {
         if (sessions && sessions.length) {
-          const wdHubSession = 'http://' + this.options.host + ':' + this.options.port + '/wd/hub/session';
-          request.del(wdHubSession + '/' + sessions[0].automation_session.hashed_id, function (wdError, wdResponse) {
-            if (!wdError && wdResponse.statusCode === 200) {
-              var options = {
-                url: this.options.browserStackUrl + '/automate/sessions/' + sessions[0].automation_session.hashed_id + '.json',
-                method: 'PUT',
-                json: true,
-                body: {status: 'completed'}
-              };
-              request(options, function (error, response) {
-                if (!error && response.statusCode === 200) {
-                  log.debug('[chimp][browserstack-session-manager]', 'stopped session');
-                  callback();
-                } else {
-                  log.error('[chimp][browserstack-session-manager]', 'received error', error);
-                  callback(error);
-                }
-              });
-            }
-            else {
-              log.error('[chimp][browserstack-session-manager]', 'received error', error);
-              callback(wdError);
-            }
-          }.bind(this));
+          sessions.forEach(killSession);
         }
-      }.bind(this));
+      });
     }
-  }.bind(this));
+  });
 };
 
 module.exports = BrowserStackSessionManager;
