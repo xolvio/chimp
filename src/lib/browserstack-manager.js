@@ -1,5 +1,6 @@
 var request = require('request'),
-  log = require('./log');
+    log = require('./log'),
+    _ = require('underscore');
 
 /**
  * SessionManager Constructor
@@ -21,6 +22,10 @@ function BrowserStackSessionManager(options) {
   this.retryDelay = 3000;
   this.retry = 0;
 
+  // this will be set by the remote and multiremote methods from
+  // desiredCapabilities
+  this.buildName = null;
+
   log.debug('[chimp][browserstack-session-manager] created a new SessionManager', options);
 
 }
@@ -39,6 +44,9 @@ BrowserStackSessionManager.prototype.remote = function (webdriverOptions, callba
   log.debug('[chimp][browserstack-session-manager] creating webdriver remote ');
   var browser = this.webdriver.remote(webdriverOptions);
 
+  this.buildName = webdriverOptions.desiredCapabilities.build;
+  log.debug('[chimp][browserstack-session-manager] BuildName: ' + this.buildName);
+
   callback(null, browser);
   return;
 };
@@ -51,6 +59,8 @@ BrowserStackSessionManager.prototype.remote = function (webdriverOptions, callba
 BrowserStackSessionManager.prototype.multiremote = function (webdriverOptions, callback) {
   log.debug('[chimp][browserstack-session-manager] creating webdriver remote ');
   var browser = this.webdriver.multiremote(webdriverOptions);
+  this.buildName = webdriverOptions['browser0'].desiredCapabilities.build;
+  log.debug('[chimp][browserstack-session-manager] BuildName: ' + this.buildName);
   callback(null, browser);
   return;
 };
@@ -98,13 +108,20 @@ BrowserStackSessionManager.prototype._getSessions = function (buildId, callback)
 };
 
 /**
- * Kills the all sessions in the first running build found on
- * BrowserStack
+ * Kills all sessions in the matching running build found on
+ * BrowserStack.
+ *
+ * If 'build' is specified in the desiredCapabilities, it will find a
+ * running build with the specified build name, else it will consider
+ * the first running build. When using multiremote, it's important to
+ * to specify a unique 'build' in desiredCapabilities so that all and
+ * only those sessions created by the current build are killed.
  *
  * @api public
  */
 BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
 
+  var self = this;
   var wdOptions = this.options;
   const wdHubSession = 'http://' + wdOptions.host + ':' + wdOptions.port + '/wd/hub/session';
 
@@ -134,13 +151,24 @@ BrowserStackSessionManager.prototype.killCurrentSession = function (callback) {
     });
   };
 
+  var findBuild = function (builds) {
+    if (self.buildName) {
+      return _.find(builds, function (b) {
+        return b.automation_build.name === self.buildName;
+      });
+    } else {
+      return builds[0];
+    }
+  };
+
   this._getBuilds(function (err, builds) {
     if (builds && builds.length) {
-      log.debug('[chimp][browserstack-session-manager]', builds, builds[0]);
-      var buildId = builds[0].automation_build.hashed_id;
+      var build = findBuild(builds);
+      log.debug('[chimp][browserstack-session-manager]', builds, build);
+      var buildId = build.automation_build.hashed_id;
     }
     if (buildId !== '') {
-      this._getSessions(buildId, function (err, sessions) {
+      self._getSessions(buildId, function (err, sessions) {
         if (sessions && sessions.length) {
           sessions.forEach(killSession);
         }
