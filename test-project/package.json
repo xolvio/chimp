@@ -1,0 +1,27 @@
+{
+  "name": "chimp-test-project",
+  "version": "1.0.0",
+  "description": "Project to test Chimp",
+  "main": "index.js",
+  "repository": "http://github.com/xolvio/chimp",
+  "scripts": {
+    "cucumber": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/cucumber --compiler js:babel-core/register",
+    "mocha": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/mocha --compilers js:babel-core/register mocha.spec.js",
+    "jest": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/jest jest.spec.js",
+    "test": "npm run cucumber && npm run mocha &&  npm run jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-node7": "^1.5.0",
+    "chimp": "file:///Users/samhatoum/WebstormProjects/chimp2/chimp",
+    "cucumber": "2.x",
+    "expect": "^1.20.2",
+    "jest": "^20.0.4",
+    "mocha": "^3.4.2"
+  }
+}

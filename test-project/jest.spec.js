@@ -1,8 +1,8 @@
 import expect from 'expect';
-import browser from '../chimp/mocha/browser';
+import {browser} from 'chimp';
 
-describe('my webdriverio tests', function () {
-  it('google test', async function () {
+describe('Chimp Jest', function () {
+  it('browser should navigate', async function () {
     await browser.url('https://google.com/');
 
     const title = await browser.getTitle();
