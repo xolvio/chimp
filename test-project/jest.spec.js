@@ -1,5 +1,5 @@
 import expect from 'expect';
-import {browser} from 'chimp';
+import browser from 'chimp/jest/browser';
 
 describe('Chimp Jest', function () {
   it('browser should navigate', async function () {

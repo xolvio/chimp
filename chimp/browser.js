@@ -22,6 +22,4 @@ const options = {
 
 const browser = webdriverio.remote(options);
 
-require('./hooker')(browser);
-
 export default browser;

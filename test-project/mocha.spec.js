@@ -1,5 +1,5 @@
 import expect from 'expect';
-import {browser} from 'chimp';
+import browser from 'chimp/mocha/browser';
 
 describe('Chimp Mocha', function () {
   it('browser should navigate', async function () {
