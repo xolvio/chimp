@@ -95,7 +95,7 @@ class Cucumber {
         }
 
         const failWhenNoTestsRun = booleanHelper.isTruthy(this.options['fail-when-no-tests-run']);
-        const noTestsFound = JSON.parse(jsonResults).length === 0;
+        const noTestsFound = jsonResults === null || JSON.parse(jsonResults).length === 0;
 
         callback(code !== 0 || (code === 0 && noTestsFound && failWhenNoTestsRun) ? 'Cucumber steps failed' : null, jsonResults);
       }

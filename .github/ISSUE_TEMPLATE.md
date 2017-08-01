@@ -12,7 +12,7 @@ Please try to get your queries answered with the Webdriver.io team first. Here a
 - webdriver.io/api.html
 
 * - - SELENIUM related issues
-Try to get selenium-standalone working WIHTOUT CHIMP. So follow the instructions and issues on these pages:
+Try to get selenium-standalone working WITHOUT CHIMP. So follow the instructions and issues on these pages:
 - github.com/vvo/selenium-standalone#command-line-interface
 - github.com/vvo/selenium-standalone/issues
 
