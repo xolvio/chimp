@@ -6,7 +6,7 @@
   "repository": "http://github.com/xolvio/chimp",
   "scripts": {
     "cucumber": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/cucumber --compiler js:babel-core/register",
-    "mocha": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/mocha --compilers js:babel-core/register mocha.spec.js",
+    "mocha": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/mocha --compilers js:babel-core/register mocha.*.js --watch --timeout 100000",
     "jest": "NODE_PRESERVE_SYMLINKS=1 ./node_modules/.bin/babel-node -- ./node_modules/.bin/jest jest.spec.js",
     "test": "npm run cucumber && npm run mocha &&  npm run jest"
   },

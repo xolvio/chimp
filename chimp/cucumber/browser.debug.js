@@ -1,4 +1,4 @@
-import browser from '../browser';
+import browser from '../browser.debug';
 import {beforeHook, afterHook} from '../hooks';
 import {Before, After} from 'cucumber';
 

@@ -1,4 +1,4 @@
-import browser from '../browser';
+import browser from '../browser.debug';
 import {beforeHook, afterHook} from '../hooks';
 
 before(beforeHook(browser, __filename));
