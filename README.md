@@ -41,3 +41,6 @@ npm link chimp
 cd test-project
 npm test
 ```
+
+* For Debugging:
+`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=~/chrome_profile http://localhost:9222`
