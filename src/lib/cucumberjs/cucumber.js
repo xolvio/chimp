@@ -251,7 +251,7 @@ class Cucumber {
       long: [
         'version', 'backtrace', 'compiler', 'dry-run', 'fail-fast', 'format',
         'no-colors', 'no-snippets', 'no-source', 'profile', 'require', 'snippet-syntax',
-        'strict', 'tags', 'help',
+        'strict', 'tags', 'help', 'name',
       ],
       short: ['v', 'b', 'd', 'f', 'p', 'r', 'S', 't'],
     };
