@@ -240,7 +240,7 @@ SessionManager.prototype.killCurrentSession = function (callback) {
     return;
   }
 
-  if (!process.env['chimp.noSessionReuse']) {
+  if (booleanHelper.isTruthy(process.env['chimp.noSessionReuse'])) {
     log.debug('[chimp][session-manager] noSessionReuse is true, , not killing session');
     callback();
     return;
