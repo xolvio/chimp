@@ -9,7 +9,9 @@
     "clean": "rm -rf node_modules && rm -rf dist && rm -rf chimp/node_modules && rm -rf test-project/node_modules",
     "transpile": "node ./scripts/prepublish.js",
     "link": "node ./scripts/link.js",
-    "watch": "npm-watch transpile"
+    "watch": "npm-watch transpile",
+    "test": "node ./scripts/test.js",
+    "setup": "node ./scripts/setup.js"
   },
   "watch": {
     "transpile": {

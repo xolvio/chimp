@@ -5,10 +5,11 @@
   "main": "index.js",
   "repository": "http://github.com/xolvio/chimp",
   "scripts": {
-    "cucumber": "cucumberjs --compiler js:babel-core/register",
-    "mocha": "mocha --compilers js:babel-core/register mocha.*.js --watch --timeout 100000",
-    "jest": "jest jest.spec.js",
-    "test": "npm run cucumber && npm run mocha &&  npm run jest"
+    "cucumber": "NODE_PRESERVE_SYMLINKS=1 cucumberjs --compiler js:babel-core/register",
+    "mocha": "NODE_PRESERVE_SYMLINKS=1 mocha --compilers js:babel-core/register mocha.*.js --timeout 100000",
+    "jest": "NODE_PRESERVE_SYMLINKS=1 jest jest.spec.js",
+    "test": "NODE_PRESERVE_SYMLINKS=1 npm run cucumber && npm run mocha &&  npm run jest",
+    "install": ""
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +19,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-node7": "^1.5.0",
-    "chimp": "2.0.0-alpha.1",
+    "chimp": "file:../dist",
     "cucumber": "2.x",
     "expect": "^1.20.2",
     "jest": "^20.0.4",
