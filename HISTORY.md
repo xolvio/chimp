@@ -1,3 +1,8 @@
+# 0.50.0
+
+* allow cucumber `name` option to run specific scenarios (tiagolr) 
+* Adds the release notes for v0.49.1 (Lukasz Gandecki) 
+
 # 0.49.1
 
 * update node to current LTS version (Lukasz Gandecki) 
