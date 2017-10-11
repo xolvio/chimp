@@ -18,7 +18,7 @@ Traditionally only available for unit testing, and now you can get super fast fe
 Set an `@focus` tag in the spec title, save a file, Chimp reruns the spec until you make it pass. 
 
 ### Want to be a Chimp Ninja?
-Checkout our new book where you can learn how to can use Chimp across the Full Stack from React to Node.JS, Mocha, Meteor and more.
+Checkout our new book where you can learn how to use Chimp across the Full Stack from React to Node.JS, Mocha, Meteor and more.
 
 [Quality Faster](http://quality.xolv.io/?utm_source=XolvOSS&utm_medium=OSSGitHub&utm_content=ChimpGitHubReadme&utm_campaign=QFLaunch) by Sam Hatoum, creator of Chimp.
 

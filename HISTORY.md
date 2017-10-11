@@ -1,3 +1,15 @@
+# 0.50.0
+
+* allow cucumber `name` option to run specific scenarios (tiagolr) 
+* Adds the release notes for v0.49.1 (Lukasz Gandecki) 
+
+# 0.49.1
+
+* update node to current LTS version (Lukasz Gandecki) 
+* lib/cucumberjs: catch runtime errors (William Boman) 
+* fix: typo (Joscha Feth) 
+* Adds the release notes for v0.49.0 (Lukasz Gandecki) 
+
 # 0.49.0
 
 * fix for 524 - slowdown overtime (Lukasz Gandecki) 
