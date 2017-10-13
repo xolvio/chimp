@@ -273,7 +273,7 @@ Chimp.prototype.watch = function () {
     log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
 
     // start watching
-    self.watcher.on('all', _.debounce(function (event, path) {
+    self.watcher.on('all', self._getDebouncedFunction(function (event, path) {
 
       // removing feature files should not rerun
       if (event === 'unlink' && path.match(/\.feature$/)) {
@@ -292,6 +292,9 @@ Chimp.prototype.watch = function () {
 
 };
 
+Chimp.prototype._getDebouncedFunction = function (func, timeout) {
+  return _.debounce(func, timeout);
+};
 
 
 /**

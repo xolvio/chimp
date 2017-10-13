@@ -35,7 +35,7 @@
     "start": "node ./scripts/run.js",
     "testonly": "npm run testunit && npm run prepublish && node ./scripts/run-tests.js",
     "testunit": "mocha --opts ./mocha.opts \"`node -e \"console.log(require('./package.json').mocha.tests.join(' '))\"`\"",
-    "test": "npm run lint && npm run testonly",
+    "test": "npm run testonly",
     "publish-patch": "./scripts/release.sh patch",
     "publish-minor": "./scripts/release.sh minor",
     "publish-major": "./scripts/release.sh major"
