@@ -20,7 +20,6 @@ describe('Chimp', function () {
 
   });
 
-
   describe('init', function () {
 
     it('calls selectMode right away if it does not find package.json', function () {
@@ -203,16 +202,22 @@ describe('Chimp', function () {
 
       chimp.run = jest.genMockFunction();
 
+      var self = this;
+      self.func = null;
+      self.timeout = null;
+      chimp._getDebouncedFunction = function(func, timeout) {
+        self.allCallback = func;
+        self.timeout = timeout;
+      };
+
       chimp.watch();
 
       var readyCallback = chokidar.watcher.once.mock.calls[0][1];
       readyCallback();
 
-      var allCallback = chokidar.watcher.on.mock.calls[0][1];
-
       chimp.rerun = jest.genMockFunction();
 
-      allCallback('not-unlink');
+      self.allCallback('not-unlink');
 
       expect(chimp.rerun.mock.calls.length).toBe(1);
 
@@ -257,16 +262,22 @@ describe('Chimp', function () {
 
       chimp.run = jest.genMockFunction();
 
+      var self = this;
+      self.func = null;
+      self.timeout = null;
+      chimp._getDebouncedFunction = function(func, timeout) {
+        self.allCallback = func;
+        self.timeout = timeout;
+      };
+
       chimp.watch();
 
       var readyCallback = chokidar.watcher.once.mock.calls[0][1];
       readyCallback();
 
-      var allCallback = chokidar.watcher.on.mock.calls[0][1];
-
       chimp.rerun = jest.genMockFunction();
 
-      allCallback('unlink', '/path/some.feature.js');
+      this.allCallback('unlink', '/path/some.feature.js');
 
       expect(chimp.rerun.mock.calls.length).toBe(1);
 

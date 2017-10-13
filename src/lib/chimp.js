@@ -240,6 +240,7 @@ Chimp.prototype.watch = function () {
 
   this.watcher = chokidar.watch(watchDirectories, {
     ignored: /[\/\\](\.|node_modules)/,
+    ignoreInitial: true,
     persistent: true,
     usePolling: this.options.watchWithPolling
   });
@@ -272,7 +273,7 @@ Chimp.prototype.watch = function () {
     log.info(`[chimp] Watching features with tagged with ${watched.join()}`.white);
 
     // start watching
-    self.watcher.on('all', function (event, path) {
+    self.watcher.on('all', self._getDebouncedFunction(function (event, path) {
 
       // removing feature files should not rerun
       if (event === 'unlink' && path.match(/\.feature$/)) {
@@ -282,7 +283,7 @@ Chimp.prototype.watch = function () {
       log.debug('[chimp] file changed');
       self.rerun();
 
-    });
+    }, 500));
 
     log.debug('[chimp] watcher ready, running for the first time');
     self.rerun();
@@ -291,6 +292,9 @@ Chimp.prototype.watch = function () {
 
 };
 
+Chimp.prototype._getDebouncedFunction = function (func, timeout) {
+  return _.debounce(func, timeout);
+};
 
 
 /**
