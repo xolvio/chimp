@@ -1,3 +1,13 @@
+# 0.50.1
+
+* update bump browser driver versions (#606) (Dheeraj Bhaskar) 
+* Add multiremote support in browserstack manager (#633) (Vineet Naik) 
+* Fixes debounce tests (Sam Hatoum) 
+* fixes https://github.com/xolvio/chimp/issues/645 (#646) (Jordan Brant Baker) 
+* Fixed issue in session-manager where &quot;noSessionReuse&quot; option was not read properly. (#643) (bjarketrux) 
+* Fix README; &#39;how to can use&#39; -&gt; &#39;how to use&#39; (#654) (daisy1754) 
+* Adds the release notes for v0.50.0 (Łukasz Gandecki) 
+
 # 0.50.0
 
 * allow cucumber `name` option to run specific scenarios (tiagolr) 
