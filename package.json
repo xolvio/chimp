@@ -123,8 +123,5 @@
     "quibble": "^0.4.0",
     "shelljs": "^0.7.5",
     "testdouble": "^1.10.1"
-  },
-  "bundledDependencies": [
-    "cucumber"
-  ]
+  }
 }
