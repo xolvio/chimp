@@ -1,3 +1,8 @@
+# 0.50.2
+
+* Removes cucumber as a bundled dependency (Sam Hatoum) 
+* Adds the release notes for v0.50.1 (Sam Hatoum) 
+
 # 0.50.1
 
 * update bump browser driver versions (#606) (Dheeraj Bhaskar) 
