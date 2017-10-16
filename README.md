@@ -55,7 +55,8 @@ import browser from 'chimp/xxxx/browser.debug';
 Chimp will give you a non-headless browser so you can do your job. This is very powerful when it's used with [Webdriver.io's REPL debug method](http://webdriver.io/api/utility/debug.html).
 
 ### Other browsers
-> *NOTE: This feature is still in development and not yet ready*
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 By default, Chimp starts a [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/) instance for you. If you would like to use other browsers like `firefox`, `safari` and `msie`, then you need to tell Webdriver.io to set the `desiredCapabilities` configuration in the `chimp.js` configuration. For example, if you wanted to use Firefox, your `chimp.js` file would look like this:
 ```javascript
 export default {
@@ -70,7 +71,8 @@ export default {
 When Chimp sees that you've used a different browser than chrome, it will automatically download and start Selenium for you. 
 
 ### The `chimp.js` configuration file
-> *NOTE: This feature is still in development and not yet ready*
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 To configure Chimp and the tools & libraries that it uses, you need to create a `chimp.js` config file that looks like this:
 ```javascript
 export default {
@@ -87,7 +89,8 @@ export default {
 ```
 
 #### Configuration options
-> *NOTE: This feature is still in development and not yet ready*
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 ##### chimp
 TODO
 
@@ -113,7 +116,8 @@ Then you can use this `server` object to make DDP calls like this:
 const result = await server.call('your-meteor-method');
 ```
 #### Executing remote code
-> *NOTE: This feature is still in development and not yet ready*
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 And if you install the `xolvio/backdoor` Meteor package, you can also run code directly on the server like this:
 ```javascript
 // write a function you'd like to run on the server
