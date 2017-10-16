@@ -1,11 +1,11 @@
-import BrowserFactory from './browser-base';
+import BrowserFactory from './browser-factory';
 
+const port = 9515;
+const host = '127.0.0.1';
 const desiredCapabilities = {
   browserName: 'chrome',
   chromeOptions: {
-    'args': [
-      '--headless'
-    ]
+    'args': ['--headless']
   }
 };
-export default BrowserFactory({desiredCapabilities});
+export default new BrowserFactory({}).create({port, host, desiredCapabilities});

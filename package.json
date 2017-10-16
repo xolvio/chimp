@@ -6,26 +6,33 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "clean": "rm -rf node_modules && rm -rf dist && rm -rf chimp/node_modules && rm -rf test-project/node_modules",
-    "transpile": "node ./scripts/prepublish.js",
-    "link": "node ./scripts/link.js",
+    "clean": "rm -rf node_modules && rm -rf package-lock.json && rm -rf dist && rm -rf chimp/node_modules && rm -rf chimp/package-lock.json && rm -rf test-project/node_modules && rm -rf test-project/package-lock.json",
     "watch": "npm-watch transpile",
+    "transpile": "node ./scripts/transpile.js",
     "test": "node ./scripts/test.js",
-    "setup": "node ./scripts/setup.js"
+    "prebpublish": "node ./scripts/prebpublish.js",
+    "install": "npm update --dev --save",
+    "setup": "npm install && node ./scripts/setup.js",
+    "reset": "npm run clean && npm run setup"
   },
   "watch": {
     "transpile": {
       "patterns": "chimp/**/*.js",
       "ignore": [
         "node_modules"
-      ]
+      ],
+      "quiet": true
     }
   },
   "distDir": "dist",
   "chimpDir": "chimp",
   "testProjectDir": "test-project",
   "devDependencies": {
-    "npm-watch": "^0.2.0",
-    "shelljs": "^0.7.8"
-  }
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "npm-watch": "^0.3.0",
+    "shelljs": "^0.7.8",
+    "source-map-support": "^0.5.0"
+  },
+  "dependencies": {}
 }

@@ -1,0 +1,6 @@
+**/*-spec.js
+./!(node_modules)
+--reporter dot
+--ui bdd
+--timeout 100000
+./.config/mocha.bootstrap.js
