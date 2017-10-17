@@ -22,10 +22,17 @@ npm i --save-dev chimp@next
 ### 2. Import the Chimp browser
 Use the import statement that matches the test framework you're using: 
 ```javascript
-import browser from 'chimp/mocha/browser'     // Mocha
-import browser from 'chimp/jest/browser'      // Jest
-import browser from 'chimp/jasmine/browser'   // Jasmine   
-import browser from 'chimp/cucumber/browser'  // Cucumber
+// Mocha
+import browser from 'chimp/mocha/browser'
+
+// Jest
+import browser from 'chimp/jest/browser'      
+
+// Jasmine
+import browser from 'chimp/jasmine/browser'
+
+// Cucumber
+import browser from 'chimp/cucumber/browser'  
 ```
 
 ### 3. Use the browser object:
@@ -181,6 +188,7 @@ TODO
 
 
 ## Releasing
-npm publish --tag next
-
+1. Increase the version in the `chimp/package.json` file
+2. `npm run publish`
+```
 
