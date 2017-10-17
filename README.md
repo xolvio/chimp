@@ -4,7 +4,7 @@
 [![Gitter](https://img.shields.io/gitter/room/xolvio/chimp.svg)](https://gitter.im/xolvio/chimp)  [![Slack Status](http://community.xolv.io/badge.svg)](http://community.xolv.io)
 
 
-An awesome developer-centric experience to writing tests using Mocha, Jest, Jasmine or Cucumber.js.
+An awesome developer-centric experience to writing tests using Mocha, Jest, Jasmine, AVA or Cucumber.js.
 
 ![Chimp by Xolv.io](./images/logo.png?raw=true)
 
@@ -32,7 +32,11 @@ import browser from 'chimp/jest/browser'
 import browser from 'chimp/jasmine/browser'
 
 // Cucumber
-import browser from 'chimp/cucumber/browser'  
+import browser from 'chimp/cucumber/browser'
+
+// AVA
+import browser from 'chimp/ava/browser'
+  
 ```
 
 ### 3. Use the browser object:
@@ -58,7 +62,7 @@ No command line runner, no complex tools to setup, you simply import the Chimp b
 Need to see what the browser is doing? No problem, just append `.debug` to your browser import like this:
 
 ```javascript
-import browser from 'chimp/xxxx/browser.debug';
+import browser from 'chimp/<test-framework>/browser.debug';
 ````
 
 Chimp will give you a non-headless browser so you can do your job. This is very powerful when it's used with [Webdriver.io's REPL debug method](http://webdriver.io/api/utility/debug.html).
