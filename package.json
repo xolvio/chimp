@@ -10,7 +10,7 @@
     "watch": "npm-watch transpile",
     "transpile": "node ./scripts/transpile.js",
     "test": "node ./scripts/test.js",
-    "prebpublish": "node ./scripts/prebpublish.js",
+    "publish": "npm run transpile",
     "install": "npm update --dev --save",
     "setup": "npm install && node ./scripts/setup.js",
     "reset": "npm run clean && npm run setup"
