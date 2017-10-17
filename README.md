@@ -1,7 +1,5 @@
 # Chimp.js
-[![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/xolvio/chimp) [![npm Version](https://img.shields.io/npm/dm/chimp.svg)](https://www.npmjs.com/package/chimp) [![Code Climate](https://codeclimate.com/github/xolvio/chimp/badges/gpa.svg)](https://codeclimate.com/github/xolvio/chimp) [![License](https://img.shields.io/npm/l/chimp.svg)](https://www.npmjs.com/package/chimp) [![OpenCollective](https://opencollective.com/chimp/backers/badge.svg)](#backers) [![OpenCollective](https://opencollective.com/chimp/sponsors/badge.svg)](#sponsors)
-
-[![Gitter](https://img.shields.io/gitter/room/xolvio/chimp.svg)](https://gitter.im/xolvio/chimp)  [![Slack Status](http://community.xolv.io/badge.svg)](http://community.xolv.io)
+[![Circle CI](https://circleci.com/gh/xolvio/chimp.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/xolvio/chimp) [![npm Version](https://img.shields.io/npm/dm/chimp.svg)](https://www.npmjs.com/package/chimp) [![License](https://img.shields.io/npm/l/chimp.svg)](https://www.npmjs.com/package/chimp) [![Gitter](https://img.shields.io/gitter/room/xolvio/chimp.svg)](https://gitter.im/xolvio/chimp)  [![Slack Status](http://community.xolv.io/badge.svg)](http://community.xolv.io)
 
 
 An awesome developer-centric experience to writing tests using Mocha, Jest, Jasmine, AVA or Cucumber.js.
@@ -68,6 +66,8 @@ import browser from 'chimp/<test-framework>/browser.debug';
 Chimp will give you a non-headless browser so you can do your job. This is very powerful when it's used with [Webdriver.io's REPL debug method](http://webdriver.io/api/utility/debug.html).
 
 ### Other browsers
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 By default, Chimp starts a [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/) instance for you. If you would like to use other browsers like `firefox`, `safari` and `msie`, then you need to tell Webdriver.io to set the `desiredCapabilities` configuration in the `chimp.js` configuration. For example, if you wanted to use Firefox, your `chimp.js` file would look like this:
 ```javascript
 export default {
@@ -82,6 +82,8 @@ export default {
 When Chimp sees that you've used a different browser than chrome, it will automatically download and start Selenium for you. 
 
 ### The `chimp.js` configuration file
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 To configure Chimp and the tools & libraries that it uses, you need to create a `chimp.js` config file that looks like this:
 ```javascript
 export default {
@@ -98,6 +100,8 @@ export default {
 ```
 
 #### Configuration options
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
+
 ##### chimp
 TODO
 
@@ -122,6 +126,8 @@ Then you can use this `server` object to make DDP calls like this:
 ```javascript
 const result = await server.call('your-meteor-method');
 ```
+#### Executing remote code
+> *NOTE: This feature is still in development and not yet ready. We're starting with the README to drive out the requirements*
 
 And if you install the `xolvio/backdoor` Meteor package, you can also run code directly on the server like this:
 ```javascript
