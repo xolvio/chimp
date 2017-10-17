@@ -1,3 +1,5 @@
+import LongRunningChildProcess from './long-running-child-process'
+
 describe('Starter', function () {
   it('should start the LongRunningChildProcess with the executable path, args and parent id', function () {
     const PATH_TO_EXECUTABLE = 4;
