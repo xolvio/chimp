@@ -1,12 +1,12 @@
 {
   "name": "chimp",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "Chimp 2.0",
   "repository": "http://github.com/xolvio/chimp",
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --opts .config/mocha.opts",
+    "test": "mocha **/*-spec.js --require babel-register --ui bdd --timeout 100000 ./.config/mocha.bootstrap.js",
     "install": "npm update --dev --save"
   },
   "dependencies": {
@@ -24,6 +24,6 @@
     "quibble": "^0.5.1",
     "require-main-filename": "^1.0.1",
     "shelljs": "^0.7.8",
-    "testdouble": "^2.0.1"
+    "testdouble": "^3.2.6"
   }
 }

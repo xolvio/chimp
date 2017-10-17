@@ -4,7 +4,6 @@ function setup() {
   }
   global.configured = true;
 
-  require("babel-polyfill");
   const main = require('require-main-filename')();
   const quibble = require('quibble');
   const chai = require('chai');
