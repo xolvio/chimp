@@ -9,6 +9,7 @@
     "cucumber": "NODE_PRESERVE_SYMLINKS=1 cucumberjs --compiler js:babel-core/register",
     "mocha": "NODE_PRESERVE_SYMLINKS=1 mocha --compilers js:babel-core/register --require source-map-support/register mocha*.js --timeout 100000",
     "jest": "NODE_PRESERVE_SYMLINKS=1 jest jest.spec.js",
+    "ava": "NODE_PRESERVE_SYMLINKS=1 ava ava.spec.js",
     "jasmine": "NODE_PRESERVE_SYMLINKS=1 ../node_modules/.bin/babel-node ./util/jasmine.js",
     "test": "NODE_PRESERVE_SYMLINKS=1 npm run cucumber && sleep 1 && npm run mocha && sleep 1 && npm run jest && sleep 1 && npm run jasmine",
     "install": "npm update --dev --save"
@@ -16,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "assert": "^1.4.1",
+    "ava": "^0.22.0",
     "chimp": "file:../dist",
     "cucumber": "2.x",
     "expect": "^1.20.2",
