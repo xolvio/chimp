@@ -4,33 +4,33 @@ describe('Forker', function () {
   describe('execute', function () {
     beforeEach(function() {
       this.forker = new Forker({fork: null});
-      this.forker.startProcess = td.function();
-      this.forker.exitSuccessfullyOnStartupMessage = td.function();
-      this.forker.exitWithErrorOnErrorMessages = td.function();
-      this.forker.exitWithErrorOnTimeout = td.function();
+      this.forker._startProcess = td.function();
+      this.forker._exitSuccessfullyOnStartupMessage = td.function();
+      this.forker._exitWithErrorOnErrorMessages = td.function();
+      this.forker._exitWithErrorOnTimeout = td.function();
     });
     it('should start the process', function () {
       const scriptPath = 'some/script.js';
       this.forker.execute({scriptPath});
 
-      td.verify(this.forker.startProcess(scriptPath));
+      td.verify(this.forker._startProcess(scriptPath));
     });
     it('should exit successfully on startup message', function () {
       const startupMessage = 'well hello';
       this.forker.execute({startupMessage});
 
-      td.verify(this.forker.exitSuccessfullyOnStartupMessage(startupMessage));
+      td.verify(this.forker._exitSuccessfullyOnStartupMessage(startupMessage));
     });
     it('should exit with error on error messages', function () {
       this.forker.execute({});
 
-      td.verify(this.forker.exitWithErrorOnErrorMessages());
+      td.verify(this.forker._exitWithErrorOnErrorMessages());
     });
     it('should exit with error on timeout', function () {
       const startupMessageTimeout = 100;
       this.forker.execute({startupMessageTimeout});
 
-      td.verify(this.forker.exitWithErrorOnTimeout(startupMessageTimeout));
+      td.verify(this.forker._exitWithErrorOnTimeout(startupMessageTimeout));
     });
   });
   describe('_startProcess', function () {

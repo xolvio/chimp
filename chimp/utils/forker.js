@@ -1,13 +1,13 @@
 export default class Forker {
-  constructor({fork = require('child_process').fork}) {
-    this.fork = fork;
+  constructor({fork}) {
+    this.fork = fork || require('child_process').fork;
   }
 
   execute({scriptPath, startupMessage, startupMessageTimeout}) {
-    this.startProcess(scriptPath);
-    this.exitSuccessfullyOnStartupMessage(startupMessage);
-    this.exitWithErrorOnErrorMessages();
-    this.exitWithErrorOnTimeout(startupMessageTimeout);
+    this._startProcess(scriptPath);
+    this._exitSuccessfullyOnStartupMessage(startupMessage);
+    this._exitWithErrorOnErrorMessages();
+    this._exitWithErrorOnTimeout(startupMessageTimeout);
   }
 
   _startProcess(scriptPath) {
@@ -35,8 +35,8 @@ export default class Forker {
 
   _exitWithErrorOnTimeout(startupMessageTimeout) {
     setTimeout(() => {
-      console.error('[Chimp.Forker]', `Startup message was not see in ${this.startupMessageTimeout}ms. Exiting...`);
+      console.error('[Chimp.Forker]', `Startup message was not see in ${startupMessageTimeout}ms. Exiting...`);
       process.exit(2);
-    }, this.startupMessageTimeout);
+    }, startupMessageTimeout);
   }
 }
