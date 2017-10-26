@@ -68,6 +68,24 @@ Mocha.prototype.start = function (callback) {
     }
   }
 
+  if (this.options.inspectMocha) {
+    port = parseInt(this.options.inspectMocha);
+    if (port > 1) {
+      opts.execArgv = ['--inspect=' + port];
+    } else {
+      opts.execArgv = ['--inspect'];
+    }
+  }
+
+  if (this.options.inspectBrkMocha) {
+    port = parseInt(this.options.inspectBrkMocha);
+    if (port > 1) {
+      opts.execArgv = ['--inspect-brk=' + port];
+    } else {
+      opts.execArgv = ['--inspect-brk'];
+    }
+  }
+
   let _specs = [];
   if (this.options._.length > 2) {
     _specs = this.options._.slice(2);
