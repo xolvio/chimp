@@ -5,4 +5,4 @@ jobs:
       - image: circleci/node:7.10
     steps:
       - checkout
-      - run: sudo npm run setup
+      - run: npm run setup
