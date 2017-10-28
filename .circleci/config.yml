@@ -5,5 +5,6 @@ jobs:
       - image: circleci/node:7.10
     steps:
       - checkout
+      - run: sudo apt-get update && sudo apt-get install libnss3 libgconf-2-4
       - run: .circleci/install-chrome.sh
       - run: npm run setup
