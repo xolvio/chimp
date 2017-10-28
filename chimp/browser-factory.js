@@ -56,7 +56,7 @@ export default class BrowserFactory {
 
   _startLongRunningProcess({executablePath, executableArgs, waitForMessage, waitForTimeout}) {
     return this.childProcess.spawnSync(process.argv[0], [
-      path.join(__dirname, 'utils', 'forker.js'),
+      path.join(__dirname, 'utils', 'forker-script.js'),
       executablePath,
       JSON.stringify(executableArgs),
       process.pid,

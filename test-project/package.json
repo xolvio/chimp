@@ -7,18 +7,20 @@
   "repository": "http://github.com/xolvio/chimp",
   "scripts": {
     "cucumber": "NODE_PRESERVE_SYMLINKS=1 cucumberjs --compiler js:babel-core/register",
-    "mocha": "NODE_PRESERVE_SYMLINKS=1 mocha --compilers js:babel-core/register --require source-map-support/register mocha*.js --timeout 100000",
-    "jest": "NODE_PRESERVE_SYMLINKS=1 jest jest.spec.js",
-    "ava": "NODE_PRESERVE_SYMLINKS=1 ava ava.spec.js",
-    "jasmine": "NODE_PRESERVE_SYMLINKS=1 ../node_modules/.bin/babel-node ./util/jasmine.js",
+    "mocha": "mocha --compilers js:babel-core/register --require source-map-support/register mocha*.js --timeout 100000",
+    "jest": "jest jest.spec.js",
+    "ava": "ava ava.spec.js",
+    "jasmine": "babel-node ./util/jasmine.js",
     "test": "NODE_PRESERVE_SYMLINKS=1 npm run cucumber && sleep 1 && npm run mocha && sleep 1 && npm run jest && sleep 1 && npm run jasmine",
-    "install": "npm update --dev --save"
+    "install": "npm update --dev --save",
+    "postinstall": "npm link chimp"
   },
   "license": "ISC",
   "devDependencies": {
     "assert": "^1.4.1",
     "ava": "^0.22.0",
-    "chimp": "file:../dist",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "cucumber": "2.x",
     "expect": "^1.20.2",
     "jasmine": "^2.8.0",

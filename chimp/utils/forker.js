@@ -1,5 +1,5 @@
 export default class Forker {
-  constructor({fork}) {
+  constructor({fork} = {}) {
     this.fork = fork || require('child_process').fork;
   }
 
