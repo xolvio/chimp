@@ -2,22 +2,24 @@ import path from 'path';
 
 export default class BrowserFactory {
   constructor({
-                chromedriver = require('chromedriver'),
-                webdriverio = require('webdriverio'),
-                childProcess = require('child_process')
-              }) {
+    chromedriver = require('chromedriver'),
+    webdriverio = require('webdriverio'),
+    childProcess = require('child_process')
+  }) {
     this.chromedriver = chromedriver;
     this.webdriverio = webdriverio;
     this.childProcess = childProcess;
   }
 
-  create({port, host, desiredCapabilities, webdriverHubImpl = 'chromedriver'}) {
+  create({ port, host, desiredCapabilities, externalHub, webdriverHubImpl }) {
     this.port = port;
     this.host = host;
     this.desiredCapabilities = desiredCapabilities;
     this.webdriverHubImpl = webdriverHubImpl;
 
-    this._maybeStartWebdriverHub();
+    if (!externalHub) {
+      this._maybeStartWebdriverHub();
+    }
     return this._startBrowser();
   }
 
@@ -25,7 +27,9 @@ export default class BrowserFactory {
     if (!global[`__webdriverHub${this.port}`]) {
       const proc = this._startWebdriverHub();
       if (proc.status !== 0) {
-        throw new Error(`[Chimp.BrowserFactory] Could not start ${this.webdriverHubImpl}`)
+        throw new Error(
+          `[Chimp.BrowserFactory] Could not start ${this.webdriverHubImpl}`
+        );
       }
       global[`__webdriverHub${this.port}`] = proc;
     }
@@ -38,7 +42,9 @@ export default class BrowserFactory {
     if (this.webdriverHubImpl === 'selenium') {
       return this._startSelenium();
     }
-    throw new Error(`Webdriver Hub Impl ${this.webdriverHubImpl} is not supported`);
+    throw new Error(
+      `Webdriver Hub Impl ${this.webdriverHubImpl} is not supported`
+    );
   }
 
   _startChromeDriver() {
@@ -54,15 +60,24 @@ export default class BrowserFactory {
     throw new Error('Not implemented');
   }
 
-  _startLongRunningProcess({executablePath, executableArgs, waitForMessage, waitForTimeout}) {
-    return this.childProcess.spawnSync(process.argv[0], [
-      path.join(__dirname, 'utils', 'forker-script.js'),
-      executablePath,
-      JSON.stringify(executableArgs),
-      process.pid,
-      waitForMessage,
-      waitForTimeout
-    ], {stdio: 'inherit'});
+  _startLongRunningProcess({
+    executablePath,
+    executableArgs,
+    waitForMessage,
+    waitForTimeout
+  }) {
+    return this.childProcess.spawnSync(
+      process.argv[0],
+      [
+        path.join(__dirname, 'utils', 'forker-script.js'),
+        executablePath,
+        JSON.stringify(executableArgs),
+        process.pid,
+        waitForMessage,
+        waitForTimeout
+      ],
+      { stdio: 'inherit' }
+    );
   }
 
   _startBrowser() {

@@ -1,11 +1,6 @@
 import BrowserFactory from './browser-factory';
+import loadConfig from './utils/load-config';
 
-const port = 9515;
-const host = '127.0.0.1';
-const desiredCapabilities = {
-  browserName: 'chrome',
-  chromeOptions: {
-    'args': ['--headless']
-  }
-};
-export default new BrowserFactory({}).create({port, host, desiredCapabilities});
+const config = loadConfig();
+
+export default new BrowserFactory({}).create(config.webdriverio);
