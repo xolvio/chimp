@@ -67,27 +67,27 @@ module.exports = {
   seleniumStandaloneOptions: {
     // check for more recent versions of selenium here:
     // http://selenium-release.storage.googleapis.com/index.html
-    version: '3.0.1',
+    version: '3.8.1',
     baseURL: 'https://selenium-release.storage.googleapis.com',
     drivers: {
       chrome: {
         // check for more recent versions of chrome driver here:
         // http://chromedriver.storage.googleapis.com/index.html
-        version: '2.28',
+        version: '2.34',
         arch: process.arch,
         baseURL: 'https://chromedriver.storage.googleapis.com'
       },
       ie: {
         // check for more recent versions of internet explorer driver here:
         // http://selenium-release.storage.googleapis.com/index.html
-        version: '3.0.0',
+        version: '3.8.0',
         arch: 'ia32',
         baseURL: 'https://selenium-release.storage.googleapis.com'
       },
       firefox: {
         // check for more recent versions of gecko  driver here:
         // https://github.com/mozilla/geckodriver/releases
-        version: '0.13.0',
+        version: '0.19.1',
         arch: process.arch,
         baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
       }
