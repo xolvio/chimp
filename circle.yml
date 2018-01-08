@@ -3,6 +3,8 @@ machine:
     version: oraclejdk8
   node:
     version: 6.11.1
+  environemnt:
+    DBUS_SESSION_BUS_ADDRESS: /dev/null
 
 general:
   branches:
@@ -21,6 +23,10 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get --only-upgrade install google-chrome-stable
     - google-chrome --version
+    - sudo apt-get update
+    - sudo apt-get install libpango1.0-0
+    - sudo apt-get install firefox
+    - sudo ln -sf /usr/lib/firefox/firefox /usr/bin/firefox
   override:
     - npm install
 
