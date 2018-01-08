@@ -3,6 +3,9 @@ machine:
     version: oraclejdk8
   node:
     version: 6.11.1
+  environemnt:
+    DBUS_SESSION_BUS_ADDRESS: /dev/null
+
 
 general:
   branches:
