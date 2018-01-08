@@ -1,3 +1,13 @@
+# 0.51.0
+
+* Attempting to fix firefox problem on circle (Sam Hatoum) 
+* Fixing circle DBUS issue (Sam Hatoum) 
+* Making Chrome update for bug fixes only (Sam Hatoum) 
+* Updates browser dependencies. Fixes #666 #670 (Sam Hatoum) 
+* Remove phantomjs as it&#39;s depcrated (Sam Hatoum) 
+* Document global `request` function. (#671) (Don Schrimsher) 
+* Adds the release notes for v0.50.2 (Sam Hatoum) 
+
 # 0.50.2
 
 * Removes cucumber as a bundled dependency (Sam Hatoum) 
