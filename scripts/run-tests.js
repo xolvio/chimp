@@ -33,4 +33,3 @@ run(1, 'Running Chimp Cucumber specs in Chrome', 'node ./bin/chimp.js --tags=~@c
 }
 
 run(2, 'Running Chimp Cucumber specs in Firefox', 'node ./bin/chimp.js --browser=firefox --tags=~@cli');
-run(3, 'Running Chimp Cucumber specs in Phantom', 'node ./bin/chimp.js --browser=phantomjs --tags=~@cli');
