@@ -100,7 +100,7 @@ Some developers love Jasmine and Mocha, and some teams love to use Cucumber for 
 
 End-to-end and acceptance testing often require you to setup data on the server and reset state between specs. 
 
-Using our synchronous version of the [request module](https://www.npmjs.com/package/request#request-options-callback), you can call your server to reset your system or setup data like this:
+Chimp exposes a global function called `request` that is a synchronous version of the popular [request module](https://www.npmjs.com/package/request#request-options-callback). Our synchronous version of the request module allows you to call your server to reset your system or setup data and receive a result back synchronously, like this:
 
 ```javascript
 var userId = request({
