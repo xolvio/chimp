@@ -87,7 +87,7 @@ Mocha.prototype.start = function (callback) {
   }
 
   let _specs = [];
-  if (this.options._.length > 2) {
+  if (this.options._ && this.options._.length > 2) {
     _specs = this.options._.slice(2);
   }
 
