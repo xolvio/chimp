@@ -1,3 +1,11 @@
+# 0.51.1
+
+* Enable minor updates to chromedriver to support chrome 65 (#681) (Colin McCulloch) 
+* Check for existence of this.options._ before checking length (Aamir Kapasi) 
+* update package.json (#675) (1996dylanriley) 
+* Add --inspectMocha &amp; --inspectBrkMocha flags for newer versions of node. (#661) (Bruce Johnson) 
+* Adds the release notes for v0.51.0 (Sam Hatoum) 
+
 # 0.51.0
 
 * Attempting to fix firefox problem on circle (Sam Hatoum) 
