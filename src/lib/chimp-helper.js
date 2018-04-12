@@ -87,6 +87,12 @@ var chimpHelper = {
             name: parseNullableString(process.env['chimp.name']),
             version: parseNullableString(process.env['chimp.browserVersion']),
             deviceName: parseNullableString(process.env['chimp.deviceName']),
+            platformName: parseNullableString(process.env['chimp.platformName']),
+            platformVersion: parseNullableString(process.env['chimp.platformVersion']),
+            automationName: parseNullableString(process.env['chimp.automationName']),
+            appName: parseNullableString(process.env['chimp.appName']),
+            bundleId: parseNullableString(process.env['chimp.bundleId']),
+            app: parseNullableString(process.env['chimp.app'])
           },
           user: parseNullableString(process.env['chimp.user'] || process.env.SAUCE_USERNAME),
           key: parseNullableString(process.env['chimp.key'] || process.env.SAUCE_ACCESS_KEY),
