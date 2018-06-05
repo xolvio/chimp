@@ -1,5 +1,8 @@
 # For NPM Chimp
 
+* You must use a Nodejs version < 7 to run the tests (ex. nodejs 6.10.3)
+* If on Windows, you'll need to use the Ubuntu Subsystem
+
 ## ES2015
 
 * We use Babel to compile our ES2015 code to ES5.
