@@ -1,6 +1,6 @@
 describe('Chimp Jasmine', () => {
   describe('Page title', () => {
-    it('should be set by the Meteor method', () => {
+    it('should get the browser page title', () => {
       browser.url('http://google.com');
       expect(browser.getTitle()).toBe('Google');
     });

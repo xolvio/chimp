@@ -107,8 +107,7 @@ module.exports = function hooks() {
     log.debug('[chimp][hooks] Forcibly exiting Cucumber');
 
     process.send(JSON.stringify(reason));
-    // Don't exit until the waitUntil uncaught promise bug is fixed in WebdriverIO
-    // exit(2);
+    exit(2);
   });
 
   process.on('SIGINT', () => {
