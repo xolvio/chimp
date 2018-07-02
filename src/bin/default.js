@@ -67,7 +67,7 @@ module.exports = {
   seleniumStandaloneOptions: {
     // check for more recent versions of selenium here:
     // http://selenium-release.storage.googleapis.com/index.html
-    version: '3.8.1',
+    version: '3.12.0',
     baseURL: 'https://selenium-release.storage.googleapis.com',
     drivers: {
       chrome: {
@@ -80,7 +80,7 @@ module.exports = {
       ie: {
         // check for more recent versions of internet explorer driver here:
         // http://selenium-release.storage.googleapis.com/index.html
-        version: '3.0.0',
+        version: '3.12.0',
         arch: 'ia32',
         baseURL: 'https://selenium-release.storage.googleapis.com'
       },
