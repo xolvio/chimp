@@ -12,7 +12,7 @@
 * Fixing circle DBUS issue (Sam Hatoum) 
 * Making Chrome update for bug fixes only (Sam Hatoum) 
 * Updates browser dependencies. Fixes #666 #670 (Sam Hatoum) 
-* Remove phantomjs as it&#39;s depcrated (Sam Hatoum) 
+* Remove phantomjs as it&#39;s deprecated (Sam Hatoum) 
 * Document global `request` function. (#671) (Don Schrimsher) 
 * Adds the release notes for v0.50.2 (Sam Hatoum) 
 
@@ -216,7 +216,7 @@
 
 # 0.40.1
 
-* Fixes history file not being commited (Sam Hatoum) 
+* Fixes history file not being committed (Sam Hatoum) 
 * Automatically writes the commit history to the HISTORY.md file (Sam Hatoum) 
 
 # 0.40.0
@@ -473,7 +473,7 @@
 * Merges Chimp and meteor-cucumber codebases (Sam Hatoum) 
 * Adds user-defined world support (Sam Hatoum) 
 * Extracts setup of browser, ddp, assertion libraries and global logic to a helper (Sam Hatoum) 
-* Fixes memory hogging screeshot logic (Sam Hatoum) 
+* Fixes memory hogging screenshot logic (Sam Hatoum) 
 * Extracts the DDP logic from the world and adds tests (Sam Hatoum) 
 * Pass through the specified host and consume in the session manager (Dane Harnett) 
 

@@ -143,7 +143,7 @@ chimp --browser=firefox --ddp=http://localhost:3000
 ```
 
 #### Multiple Meteor Servers
-If you'd like to run a test with more than one Meteor app server, you can do so by running the same app on multiple ports and providing mulitple `-ddp` options to chimp:
+If you'd like to run a test with more than one Meteor app server, you can do so by running the same app on multiple ports and providing multiple `-ddp` options to chimp:
 ```
 # start first app
 meteor --port 3005
