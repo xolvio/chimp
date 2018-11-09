@@ -1,0 +1,64 @@
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- package.json	(date 1484094772000)
++++ package.json	(revision )
+@@ -34,7 +34,7 @@
+     "lintfix": "eslint ./src --fix",
+     "start": "node ./scripts/run.js",
+     "testonly": "npm run testunit && npm run prepublish && node ./scripts/run-tests.js",
+-    "testunit": "mocha --opts ./mocha.opts `node -e \"console.log(require('./package.json').mocha.tests.join(' '))\"`",
++    "testunit": "mocha --opts ./mocha.opts \"`node -e \"console.log(require('./package.json').mocha.tests.join(' '))\"`\"",
+     "test": "npm run lint && npm run testonly",
+     "publish-patch": "npm version patch; npm publish; git push; git push --tags",
+     "publish-minor": "npm version minor; npm publish; git push; git push --tags",
+Index: mocha-setup.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mocha-setup.js	(date 1484094772000)
++++ mocha-setup.js	(revision )
+@@ -7,6 +7,9 @@
+   const td = require('testdouble');
+   const quibble = require('quibble');
+   global.td = td;
+-  td.reset();
+-  quibble.ignoreCallsFromThisFile(require.main.filename);
++
++  beforeEach(() => {
++    td.reset();
++    quibble.ignoreCallsFromThisFile(require.main.filename);
++  });
+ })();
+Index: wallaby-mocha.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- wallaby-mocha.js	(date 1484094772000)
++++ wallaby-mocha.js	(revision )
+@@ -10,7 +10,7 @@
+     env: {type: 'node'},
+     workers: {initial: 1, regular: 1, recycle: true},
+     setup: () => {
+-      require(`${wallaby.localProjectDir}/mocha-setup`);
++      wallaby.testFramework.addFile(`${wallaby.localProjectDir}/mocha-setup.js`);
+     },
+   }
+ };
+Index: mocha.opts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mocha.opts	(date 1484094772000)
++++ mocha.opts	(revision )
+@@ -1,4 +1,4 @@
+---require mocha-setup
+ --compilers js:babel-core/register
+ --reporter spec
+ --ui bdd
++mocha-setup.js
