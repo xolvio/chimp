@@ -1,4 +1,0 @@
-<changelist name="FIxes_new_test_stack_configuration__1__NPM_testunit_was_not_loading_all_the_files_as_bash_" date="1484098014208" recycled="false">
-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/FIxes_new_test_stack_configuration__1__NPM_testunit_was_not_loading_all_the_files_as_bash_/shelved.patch" />
-  <option name="DESCRIPTION" value="FIxes new test stack configuration  1. NPM testunit was not loading all the files as bash expansion was kicking in before mocha could get the glob pattern 2. The td.reset() method was not being called before each tests both in Wallby and on the command line" />
-</changelist>
