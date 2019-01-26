@@ -13,7 +13,7 @@ The second is [*Chimp 2.0*](https://github.com/xolvio/chimp), which will be deve
 For more details about this decision, [please see the full announcement here.](https://medium.com/@sam_hatoum/the-future-of-chimp-js-e911f8e9aaa6)
 
 ## Chimp 2.0
-Chimp 2.0 will be a [Yoeman](http://yeoman.io/) for quality. The intention is to have Chimp be your companion that you can call on to help you create high quality code that is optimized for changes
+Chimp 2.0 will be a [Yeoman](http://yeoman.io/) for quality. The intention is to have Chimp be your companion that you can call on to help you create high quality code that is optimized for changes
 
 
 ## Quality Faster
