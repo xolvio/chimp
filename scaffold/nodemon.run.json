@@ -1,0 +1,11 @@
+{
+    "delay": 1500,
+    "watch": [
+        "src"
+    ],
+    "ignore": [
+        "src/**/*.spec.ts",
+        "src/**/*.test.ts"
+    ],
+    "ext": "ts,graphql"
+}

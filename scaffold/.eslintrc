@@ -1,0 +1,32 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "airbnb-typescript/base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.ts", "**/*.spec.ts"] }
+    ],
+    "prettier/prettier": "error",
+    "import/prefer-default-export": 0,
+    "no-underscore-dangle": 0,
+    "no-cond-assign": ["error", "except-parens"],
+    "import/no-cycle": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+    "@typescript-eslint/camelcase": ["error",{"allow":  ["resolveReference"]}]
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "sourceMap": true,
+    "outDir": "./lib/",
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["./src/*"],
+      "@generated/*": ["./generated/*"]
+    }
+  },
+  "exclude": [
+    "./node_modules"
+  ]
+}

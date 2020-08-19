@@ -1,0 +1,3 @@
+import { {{typeName}}Resolvers } from "@generated/graphql/types";
+
+export const {{typeName}}{{capitalizedFieldName}}: {{typeName}}Resolvers["{{fieldName}}"] = (parent, {{#unless resolveReferenceType}}args,{{/unless}} context) => { throw new Error("Not implemented yet"); }

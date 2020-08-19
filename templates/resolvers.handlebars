@@ -1,0 +1,10 @@
+import merge from "lodash/merge";
+{{#each modules}}import { {{name}}Resolvers } from "./{{name}}Resolvers";{{/each}}
+
+// This file is generated. If you want to add custom resolvers please let us know why.
+// We would love to make your experience better,
+
+export const resolvers = merge(
+{},
+{{#each modules}}{{name}}Resolvers,{{/each}}
+);
