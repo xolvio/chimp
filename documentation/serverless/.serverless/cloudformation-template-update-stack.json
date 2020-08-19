@@ -1,0 +1,315 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ServerlessDeploymentBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "ServerlessDeploymentBucket"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "DomainZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "Properties": {
+        "Name": "chimpjs.com",
+        "HostedZoneConfig": {
+          "Comment": "Created on August 19 2020 to codify DNS"
+        }
+      }
+    },
+    "Certificate": {
+      "Type": "AWS::CertificateManager::Certificate",
+      "Properties": {
+        "DomainName": "*.chimpjs.com",
+        "SubjectAlternativeNames": [
+          "chimpjs.com",
+          "*.chimpjs.com"
+        ],
+        "DomainValidationOptions": [
+          {
+            "DomainName": "chimpjs.com",
+            "ValidationDomain": "chimpjs.com"
+          }
+        ]
+      }
+    },
+    "WebsiteBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "www.chimpjs.com",
+        "AccessControl": "Private",
+        "WebsiteConfiguration": {
+          "IndexDocument": "index.html",
+          "ErrorDocument": "error.html"
+        }
+      }
+    },
+    "WebsiteDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
+            "www.chimpjs.com"
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "WebsiteOriginBucket",
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "Compress": true,
+            "ForwardedValues": {
+              "QueryString": false,
+              "Cookies": {
+                "Forward": "none"
+              }
+            }
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Ref": "Certificate"
+            },
+            "SslSupportMethod": "sni-only"
+          },
+          "Origins": [
+            {
+              "Id": "WebsiteOriginBucket",
+              "DomainName": {
+                "Fn::Select": [
+                  2,
+                  {
+                    "Fn::Split": [
+                      "/",
+                      {
+                        "Fn::GetAtt": [
+                          "WebsiteBucket",
+                          "WebsiteURL"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "http-only"
+              }
+            }
+          ],
+          "CustomErrorResponses": [
+            {
+              "ErrorCode": "403",
+              "ErrorCachingMinTTL": 1,
+              "ResponseCode": 403,
+              "ResponsePagePath": "/index.html"
+            },
+            {
+              "ErrorCode": "404",
+              "ErrorCachingMinTTL": 1,
+              "ResponseCode": 404,
+              "ResponsePagePath": "/index.html"
+            },
+            {
+              "ErrorCode": "500",
+              "ErrorCachingMinTTL": 1,
+              "ResponseCode": 500,
+              "ResponsePagePath": "/index.html"
+            },
+            {
+              "ErrorCode": "502",
+              "ErrorCachingMinTTL": 1,
+              "ResponseCode": 502,
+              "ResponsePagePath": "/index.html"
+            },
+            {
+              "ErrorCode": "503",
+              "ErrorCachingMinTTL": 1,
+              "ResponseCode": 503,
+              "ResponsePagePath": "/index.html"
+            },
+            {
+              "ErrorCode": "504",
+              "ErrorCachingMinTTL": 1,
+              "ResponseCode": 504,
+              "ResponsePagePath": "/index.html"
+            }
+          ]
+        }
+      }
+    },
+    "WebsiteDNSRecords": {
+      "Type": "AWS::Route53::RecordSetGroup",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "DomainZone"
+        },
+        "RecordSets": [
+          {
+            "Name": "www.chimpjs.com.",
+            "Type": "A",
+            "AliasTarget": {
+              "HostedZoneId": "Z2FDTNDATAQYW2",
+              "DNSName": {
+                "Fn::GetAtt": [
+                  "WebsiteDistribution",
+                  "DomainName"
+                ]
+              }
+            }
+          },
+          {
+            "Name": "www.chimpjs.com.",
+            "Type": "TXT",
+            "ResourceRecords": [
+              "\"google-site-verification=TwPZPfFdTvgtB94eKQtEAbWWU7_S59xKF8WU8WtwkMQ\""
+            ],
+            "TTL": "300"
+          }
+        ]
+      }
+    },
+    "RedirectBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "chimpjs.com",
+        "AccessControl": "PublicRead",
+        "WebsiteConfiguration": {
+          "RedirectAllRequestsTo": {
+            "HostName": "www.chimpjs.com",
+            "Protocol": "https"
+          }
+        }
+      }
+    },
+    "RedirectDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
+            "chimpjs.com"
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "RedirectOriginBucket",
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "Compress": true,
+            "ForwardedValues": {
+              "QueryString": false,
+              "Cookies": {
+                "Forward": "none"
+              }
+            }
+          },
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Ref": "Certificate"
+            },
+            "SslSupportMethod": "sni-only"
+          },
+          "Origins": [
+            {
+              "Id": "RedirectOriginBucket",
+              "DomainName": {
+                "Fn::Select": [
+                  2,
+                  {
+                    "Fn::Split": [
+                      "/",
+                      {
+                        "Fn::GetAtt": [
+                          "RedirectBucket",
+                          "WebsiteURL"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "http-only"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "RedirectDNSRecords": {
+      "Type": "AWS::Route53::RecordSetGroup",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "DomainZone"
+        },
+        "RecordSets": [
+          {
+            "Name": "chimpjs.com.",
+            "Type": "A",
+            "AliasTarget": {
+              "HostedZoneId": "Z2FDTNDATAQYW2",
+              "DNSName": {
+                "Fn::GetAtt": [
+                  "RedirectDistribution",
+                  "DomainName"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    }
+  }
+}

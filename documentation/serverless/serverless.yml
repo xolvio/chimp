@@ -1,0 +1,173 @@
+custom:
+  subdomain: "www"
+  name: "chimpjs"
+  tld: "com"
+  domain: "${self:custom.name}.${self:custom.tld}"
+  url: "${self:custom.subdomain}.${self:custom.domain}"
+  prefix: "${self:custom.subdomain}-${self:custom.name}-${self:custom.tld}"
+  region: "us-east-1"
+  stage: "prod"
+
+service:
+  name: ${self:custom.prefix}
+
+provider:
+  runtime: nodejs10.x
+  name: aws
+  region: "${self:custom.region}"
+  stage: "${self:custom.stage}"
+
+resources:
+  Resources:
+    DomainZone:
+      Type: "AWS::Route53::HostedZone"
+      Properties:
+        Name: "${self:custom.domain}"
+        HostedZoneConfig:
+          Comment: "Created on August 19 2020 to codify DNS"
+
+    ## SSL CERT
+    Certificate:
+      Type: "AWS::CertificateManager::Certificate"
+      Properties:
+        DomainName: "*.${self:custom.domain}"
+        SubjectAlternativeNames:
+          - "${self:custom.domain}"
+          - "*.${self:custom.domain}"
+        DomainValidationOptions:
+          - DomainName: "${self:custom.domain}"
+            ValidationDomain: "${self:custom.domain}"
+
+    # WEBSITE, CDN, HTTP > HTTPS REDIRECT, DNS RECORD
+    WebsiteBucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: "${self:custom.url}"
+        AccessControl: Private
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: error.html
+    WebsiteDistribution:
+      Type: "AWS::CloudFront::Distribution"
+      Properties:
+        DistributionConfig:
+          Aliases:
+            - "${self:custom.url}"
+          DefaultCacheBehavior:
+            TargetOriginId: WebsiteOriginBucket
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: true
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: none
+          DefaultRootObject: index.html
+          Enabled: true
+          HttpVersion: http2
+          ViewerCertificate:
+            AcmCertificateArn:
+              Ref: Certificate
+            SslSupportMethod: "sni-only"
+          Origins:
+            - Id: WebsiteOriginBucket
+              DomainName:
+                !Select [2, !Split ["/", !GetAtt [WebsiteBucket, WebsiteURL]]]
+              CustomOriginConfig:
+                OriginProtocolPolicy: "http-only"
+          CustomErrorResponses:
+            - ErrorCode: "403"
+              ErrorCachingMinTTL: 1
+              ResponseCode: 403
+              ResponsePagePath: "/index.html"
+            - ErrorCode: "404"
+              ErrorCachingMinTTL: 1
+              ResponseCode: 404
+              ResponsePagePath: "/index.html"
+            - ErrorCode: "500"
+              ErrorCachingMinTTL: 1
+              ResponseCode: 500
+              ResponsePagePath: "/index.html"
+            - ErrorCode: "502"
+              ErrorCachingMinTTL: 1
+              ResponseCode: 502
+              ResponsePagePath: "/index.html"
+            - ErrorCode: "503"
+              ErrorCachingMinTTL: 1
+              ResponseCode: 503
+              ResponsePagePath: "/index.html"
+            - ErrorCode: "504"
+              ErrorCachingMinTTL: 1
+              ResponseCode: 504
+              ResponsePagePath: "/index.html"
+    WebsiteDNSRecords:
+      Type: AWS::Route53::RecordSetGroup
+      Properties:
+        HostedZoneId:
+          Ref: DomainZone
+        RecordSets:
+          - Name: "${self:custom.url}."
+            Type: A
+            AliasTarget:
+              HostedZoneId: Z2FDTNDATAQYW2
+              DNSName:
+                Fn::GetAtt: [WebsiteDistribution, DomainName]
+          - Name: "${self:custom.url}."
+            Type: TXT
+            ResourceRecords:
+              - '"google-site-verification=TwPZPfFdTvgtB94eKQtEAbWWU7_S59xKF8WU8WtwkMQ"'
+            TTL: "300"
+    # NAKED DOMAIN REDIRECT
+    RedirectBucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: "${self:custom.domain }"
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          RedirectAllRequestsTo:
+            HostName: "${self:custom.url}"
+            Protocol: "https"
+    RedirectDistribution:
+      Type: "AWS::CloudFront::Distribution"
+      Properties:
+        DistributionConfig:
+          Aliases:
+            - "${self:custom.domain}"
+          DefaultCacheBehavior:
+            TargetOriginId: RedirectOriginBucket
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: true
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: none
+          Enabled: true
+          HttpVersion: http2
+          ViewerCertificate:
+            AcmCertificateArn:
+              Ref: Certificate
+            SslSupportMethod: "sni-only"
+          Origins:
+            - Id: RedirectOriginBucket
+              DomainName:
+                "Fn::Select":
+                  [
+                    2,
+                    "Fn::Split":
+                      ["/", "Fn::GetAtt": ["RedirectBucket", "WebsiteURL"]],
+                  ]
+              CustomOriginConfig:
+                OriginProtocolPolicy: "http-only"
+    # TODO ENABLE THIS WHEN READY TO GO LIVE
+    RedirectDNSRecords:
+      Type: AWS::Route53::RecordSetGroup
+      Properties:
+        HostedZoneId:
+          Ref: DomainZone
+        RecordSets:
+          - Name: "${self:custom.domain}."
+            Type: A
+            AliasTarget:
+              HostedZoneId: Z2FDTNDATAQYW2
+              DNSName:
+                Fn::GetAtt: [RedirectDistribution, DomainName]
+

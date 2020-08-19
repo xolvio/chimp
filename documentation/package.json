@@ -7,7 +7,8 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
+    "deploy": "sh ./scripts/deployToS3.sh s3://www.chimpjs.com && yarn run invalidate",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id $XOLVIO_WEBSITE_DISTRIBUTION_ID --paths \"/*\"",
     "serve": "docusaurus serve"
   },
   "dependencies": {
