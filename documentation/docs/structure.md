@@ -104,7 +104,7 @@ Another important thing that happens here is the initialization of context with 
 
 ### dataSources.ts
 
-Sets up
+Sets up Apollo-compatible Data Sources.
 
 ### index.ts
 

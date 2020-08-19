@@ -4,12 +4,12 @@ title: Quick Start
 sidebar_label: Quick Start
 ---
 
-In Another section we will show you how you can add Chimp to an existing Apollo App, in this one we will focus on the essentials so you can get a feel of what is this generator all about.
+In Another section we will show you how you can add Chimp to an existing Apollo App, in this one we will focus on the essentials. This will allow you to get a feel of what is this generator all about.
 
 To bootstrap your app with the necessary tooling run:
 
 ```bash
-npx chimp init generated-app
+npx chimp gql:create generated-app
 cd generated-app
 ```
 
