@@ -16,7 +16,6 @@ cd generated-app
 This is the folder structure you will see:
 
 ```
-.
 ├── README.md
 ├── codegen.js
 ├── fix-generated.js
@@ -26,19 +25,19 @@ This is the folder structure you will see:
 ├── package.json
 ├── tsconfig.json
 └── src
-│   ├── context.ts
-│   ├── createApp.ts
-│   ├── dataSources.ts
-│   ├── index.ts
-│   ├── root.ts
-│   └── modules
-│   │   └── RemoveMe
-│   │       └── graphql
-│   │           ├── RemoveMe.graphql
-│   │           └── queries
-│   │               ├── HelloQuery.spec.ts
-│   │               └── HelloQuery.ts
-│  
+   ├── context.ts
+   ├── createApp.ts
+   ├── dataSources.ts
+   ├── index.ts
+   ├── root.ts
+   └── modules
+      └── RemoveMe
+          └── graphql
+              ├── RemoveMe.graphql
+              └── queries
+                  ├── HelloQuery.spec.ts
+                  └── HelloQuery.ts
+  
 
 ```
 

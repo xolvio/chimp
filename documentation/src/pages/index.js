@@ -5,7 +5,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
-import {GraphqlLogo} from "./components/GraphqlLogo";
+import {GraphqlLogo} from "../components/GraphqlLogo";
 
 
 const chimpFeatures = [
@@ -152,7 +152,7 @@ function Home() {
           <div className={styles.buttons}>
             <Link
               className={clsx('button button--outline button--secondary button--lg', styles.getStarted)}
-              to={useBaseUrl('docs/')}
+              to={useBaseUrl('docs/quickstart')}
             >
               View Docs
             </Link>
