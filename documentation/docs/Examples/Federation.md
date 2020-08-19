@@ -5,9 +5,8 @@ title: Overview of a more realistic Example
 
 In this section we will look at a setup that's typical to our clients.
 
-TODO - add link to the federated example
 
-This repository consists of 6 independent packages:
+This repository - https://github.com/xolvio/chimp-gql-federation-example  consists of 6 independent packages:
 
 - `graphql-gateway` TypeScript thin layer powered by [Apollo Gateway](https://www.apollographql.com/docs/apollo-server/federation/gateway/)
 - `graphql-todo-items` TypeScript Federated Graph responsible for Todo Items (and extending Lists)
