@@ -4,7 +4,7 @@
   "description": "Small Standalone Scaffold",
   "license": "ISC",
   "scripts": {
-    "graphql:codegen": "chimp graphql generate",
+    "graphql:codegen": "chimp gql:generate",
     "graphql:generateAll": "npm run graphql:codegen && npm run graphql:generateSchema && npm run graphql:typegen && npm run prettify:all",
     "graphql:generateSchema": "ts-node -r tsconfig-paths/register ./generated/graphql/printSchema.ts > ./schema.graphql",
     "graphql:typegen": "graphql-codegen --config codegen.js && node ./fix-generated",
