@@ -78,7 +78,7 @@ Now create a simple schema file for it `src/modules/Users/graphql/Users.graphql`
 type User {
   id: ID!
   name: String!
-  dateOfBirth: Int!
+  dateOfBirth: String!
 }
 
 extend type Query {
