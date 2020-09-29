@@ -16,6 +16,7 @@ program
     }
     shelljs.cp('-R', `${__dirname}/scaffold`, `${scaffoldDir}`);
     shelljs.exec(`cd ${appDirectory} && git init .`);
+    shelljs.mv(`${appDirectory}/gitignore`, `${appDirectory}/.gitignore`);
     console.log(`\n${appDirectory} created successfully!`);
     console.log(`run:
    cd ${appDirectory}
