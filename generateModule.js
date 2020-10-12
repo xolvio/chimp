@@ -90,21 +90,27 @@ const createGlobalResolvers = () => {
 
 createGlobalResolvers();
 
+// End of "Framework" "generated" files
+
+// Initial App Setup files
+
+
+
+const { stdout: schemaString, stderr } = shelljs.exec("ts-node ./generated/graphql/printSchema.ts", {cwd: projectMainPath, silent: true})
+
+if (stderr) {
+  throw new Error(`Error while combining schema: , ${stderr}`)
+}
+
 const createGlobalSchema = () => {
   const templateName = './templates/schema.ts';
-  const context = { modules };
+  const context = { modules, schemaString };
   const filePath = `${projectMainPath}/generated/graphql/`;
   const fileName = `schema.ts`;
   saveRenderedTemplate(templateName, context, filePath, fileName);
 };
 
 createGlobalSchema();
-
-// End of "Framework" "generated" files
-
-// Initial App Setup files
-
-//
 
 modules.forEach((module) => {
   const moduleName = module.name;
