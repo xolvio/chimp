@@ -4,7 +4,9 @@
 // @ts-ignore
 import { buildFederatedSchema } from "@apollo/federation";
 import { resolvers } from "@generated/graphql/resolvers";
-import typeDefs from "@generated/graphql/combineSchemas";
+import gql from 'graphql-tag'
+
+const typeDefs = gql`{{schemaString}}`
 
 const schema = buildFederatedSchema([
   {
