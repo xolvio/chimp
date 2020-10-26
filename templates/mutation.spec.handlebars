@@ -1,5 +1,5 @@
 import td from "testdouble";
-import { GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args{{/if}} } from "@generated/graphql/types";
+import { GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{mutationName}}Mutation } from "./{{mutationName}}Mutation";
 
 const test{{mutationName}} = ({{#if hasArguments}}variables: Mutation{{toUpperCase mutationName}}Args, {{/if}}context: GqlContext) => {{mutationName}}Mutation({}, {{#if hasArguments}}variables{{else}}  {} {{/if}}, context, null)
