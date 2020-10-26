@@ -1,6 +1,6 @@
 import td from "testdouble";
 
-import { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "@generated/graphql/types";
+import { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{typeName}}{{capitalizedFieldName}} } from "./{{typeName}}{{capitalizedFieldName}}";
 
 {{#if resolveReferenceType}}type ParentType = Parameters<typeof {{typeName}}{{capitalizedFieldName}}>[0];{{/if}}

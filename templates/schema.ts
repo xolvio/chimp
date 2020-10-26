@@ -3,7 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { buildFederatedSchema } from "@apollo/federation";
-import { resolvers } from "@generated/graphql/resolvers";
+import { resolvers } from "{{generatedPrefix}}/graphql/resolvers";
 import gql from 'graphql-tag'
 
 const typeDefs = gql`{{schemaString}}`

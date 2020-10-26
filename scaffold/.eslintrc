@@ -3,6 +3,11 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "extends": [
     "airbnb-typescript/base",
     "eslint:recommended",
@@ -23,7 +28,35 @@
     "no-cond-assign": ["error", "except-parens"],
     "import/no-cycle": 0,
     "@typescript-eslint/interface-name-prefix": 0,
-    "@typescript-eslint/camelcase": ["error",{"allow":  ["resolveReference"]}]
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "default",
+        "format": ["camelCase"]
+      },
+
+      {
+        "selector": "variable",
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+      },
+      {
+        "selector": "parameter",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      },
+
+      {
+        "selector": "memberLike",
+        "modifiers": ["private"],
+        "format": ["camelCase"],
+        "leadingUnderscore": "require"
+      },
+
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ]
   },
   "env": {
     "browser": true,

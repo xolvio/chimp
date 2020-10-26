@@ -60,7 +60,7 @@ module.exports = function({contextType,} = {}) {
     generates: {
       "generated/graphql/types.ts": {
         config: {
-          contextType: contextType || "@app/context#GqlContext",
+          contextType: contextType || "{{appPrefix}}/context#GqlContext",
           idFieldName: "id",
           objectIdType: "string",
           federation: true,

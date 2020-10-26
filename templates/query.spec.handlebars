@@ -1,5 +1,5 @@
 import td from "testdouble";
-import { GqlContext, {{#if hasArguments}}Query{{toUpperCase queryName}}Args{{/if}} } from "@generated/graphql/types";
+import { GqlContext, {{#if hasArguments}}Query{{toUpperCase queryName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{queryName}}Query } from "./{{queryName}}Query";
 
 
