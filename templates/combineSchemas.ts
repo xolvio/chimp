@@ -28,7 +28,7 @@ class ExtendedGraphQLFileLoader extends GraphQLFileLoader {
 const userSchema = loadTypedefsSync(graphqlPaths, {
   loaders: [new ExtendedGraphQLFileLoader()],
   assumeValidSDL: true, // this will bypass validation
-}).map((s) => { return s.document } )
+}).map((s) => { return s.document! } )
 
 const frameworkTypes = loadTypedefsSync(`
 # Generated directives
@@ -49,7 +49,7 @@ input AdditionalEntityFields {
   type: String
 }
 
-`, {loaders: []}).map((s) => s.document)
+`, {loaders: []}).map((s) => s.document!)
 
 const schema = mergeTypeDefs(
   userSchema.concat(frameworkTypes)
