@@ -193,9 +193,9 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
           }
 
           if (federatedEntities.find((e) => e === typeDef.name)) {
-            filtered = filtered.concat(
-              federatedEntities.map((e) => ({ name: { value: '__resolveReference' }, resolveReferenceType: true }))
-            );
+            filtered.push(
+              { name: { value: '__resolveReference' }, resolveReferenceType: true }
+            )
           }
 
           filtered.forEach(({ name: { value }, resolveReferenceType }) => {
