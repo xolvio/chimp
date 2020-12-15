@@ -6,6 +6,7 @@ const { Source, buildSchema } = require('graphql');
 const getModuleInfos = require('./parse-graphql/getModuleInfos');
 const getModuleNames = require('./parse-graphql/getModuleNames');
 const getFederatedEntities = require('./parse-graphql/getFederatedEntities');
+const getInterfaces = require('./parse-graphql/getInterfaces');
 // const checkIfGitStateClean = require('./helpers/checkIfGitStateClean');
 const saveRenderedTemplate = require('./helpers/saveRenderedTemplate');
 
@@ -102,7 +103,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
 
   const createGlobalSchema = () => {
     const templateName = './templates/schema.ts';
-    const context = { modules, schemaString, generatedPrefix};
+    const context = { modules, schemaString, generatedPrefix };
     const filePath = `${projectMainPath}/generated/graphql/`;
     const fileName = `schema.ts`;
     saveRenderedTemplate(templateName, context, filePath, fileName);
@@ -171,10 +172,56 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
       let typeResolvers = [];
       if (types) {
         const federatedEntities = getFederatedEntities(schemaString);
+        const interfaces = getInterfaces(schemaString);
         schemaString = schemaString.replace(/extend type/g, `type`);
         let source = new Source(schemaString);
         let schema = buildSchema(source);
         shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/types/`);
+
+        const createInterfaceType = (interfaceName) => {
+          const templateName = './templates/typeTypeResolvers.handlebars';
+          let capitalizedFieldName = capitalize('__resolveType');
+          const context = {
+            typeName: interfaceName,
+            fieldName: '__resolveType',
+            moduleName: name,
+            resolveReferenceType: true,
+            capitalizedFieldName,
+            generatedPrefix,
+          };
+          const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
+          const fileName = `${interfaceName}${capitalizedFieldName}.ts`;
+          const keepIfExists = true;
+
+          saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+        };
+
+        const createInterfaceSpec = (interfaceName) => {
+          const templateName = './templates/typeTypeResolvers.spec.handlebars';
+          let capitalizedFieldName = capitalize('__resolveType');
+          const context = {
+            typeName: interfaceName,
+            fieldName: '__resolveType',
+            moduleName: name,
+            hasArguments: false,
+            resolveReferenceType: true,
+            capitalizedFieldName,
+            generatedPrefix,
+          };
+          const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
+          const fileName = `${interfaceName}${capitalizedFieldName}.spec.ts`;
+          const keepIfExists = true;
+
+          saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+        };
+        interfaces.forEach((interfaceName) => {
+          createInterfaceType(interfaceName);
+          createInterfaceSpec(interfaceName);
+          typeResolvers.push({
+            typeName: interfaceName,
+            fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
+          });
+        });
         typeDefinitions.forEach((typeDef) => {
           let filtered = [];
           let type = schema.getType(typeDef.name);
@@ -193,9 +240,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
           }
 
           if (federatedEntities.find((e) => e === typeDef.name)) {
-            filtered.push(
-              { name: { value: '__resolveReference' }, resolveReferenceType: true }
-            )
+            filtered.push({ name: { value: '__resolveReference' }, resolveReferenceType: true });
           }
 
           filtered.forEach(({ name: { value }, resolveReferenceType }) => {
@@ -207,7 +252,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
               moduleName: name,
               resolveReferenceType,
               capitalizedFieldName,
-              generatedPrefix
+              generatedPrefix,
             };
             const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
             const fileName = `${typeDef.name}${capitalizedFieldName}.ts`;
@@ -226,7 +271,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
               hasArguments: arguments && arguments.length,
               resolveReferenceType,
               capitalizedFieldName,
-              generatedPrefix
+              generatedPrefix,
             };
             const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
             const fileName = `${typeDef.name}${capitalizedFieldName}.spec.ts`;
