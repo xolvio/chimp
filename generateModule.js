@@ -2,6 +2,7 @@
 const finder = require('find-package-json');
 const shelljs = require('shelljs');
 const { Source, buildSchema } = require('graphql');
+const path = require("path");
 
 const getModuleInfos = require('./parse-graphql/getModuleInfos');
 const getModuleNames = require('./parse-graphql/getModuleNames');
@@ -10,7 +11,7 @@ const getInterfaces = require('./parse-graphql/getInterfaces');
 // const checkIfGitStateClean = require('./helpers/checkIfGitStateClean');
 const saveRenderedTemplate = require('./helpers/saveRenderedTemplate');
 
-const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
+const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath = 'src/') => {
   const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
   const f = finder(process.cwd());
@@ -72,8 +73,8 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated') => {
   };
 
   createGetCodegenConfig();
-
-  const graphqlPaths = shelljs.ls(`${projectMainPath}/src/**/*.graphql`);
+  const modulesResolvedPath = path.join(projectMainPath, modulesPath)
+  const graphqlPaths = shelljs.ls(`${modulesResolvedPath}**/*.graphql`);
 
   const moduleNames = getModuleNames(graphqlPaths, projectMainPath);
   const modules = getModuleInfos(moduleNames);
