@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { importSchema } = require("graphql-import");
 const { isObjectType } = require("graphql");
+const { pascalCase } = require("pascal-case");
 
 let schemaString = fs
   .readFileSync("./schema.graphql")
@@ -46,7 +47,7 @@ for (const typeName in typeMap) {
           type.toConfig().astNode.name.value
         )
       ) {
-        mappers[typeName] = `${typeName}DbObject`;
+        mappers[typeName] = `${pascalCase(typeName)}DbObject`;
       }
     }
   }

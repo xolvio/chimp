@@ -52,11 +52,13 @@ program
   });
 
 program
-  .command('gql:generate [app-prefix] [generated-prefix]')
+  .command('gql:generate [app-prefix] [generated-prefix] [modules-path]')
   .description(`Generate Mutations, Queries, Type Resolvers and the scaffolding based on your graphql files
-  By default we use @app to point to your src/ and @generated to point to your generated/ folders. In some cases you might want to change those defaults, run the generator like so: chimp gql:generate '~newapp' '~newgenerated'`)
-  .action(function (appPrefix, generatedPrefix) {
-    require('./generateModule')(appPrefix, generatedPrefix);
+  By default we use @app to point to your src/ and @generated to point to your generated/ folders. In some cases you might want to change those defaults, run the generator like so: chimp gql:generate '~newapp' '~newgenerated'
+  
+  For migrating an existing app to chimp you can use the modules-path option to point to where it should look for .graphql files. It will ignore everything else.`)
+  .action(function (appPrefix, generatedPrefix, modulesPath) {
+    require('./generateModule')(appPrefix, generatedPrefix, modulesPath);
   });
 
 program.parse(process.argv);
