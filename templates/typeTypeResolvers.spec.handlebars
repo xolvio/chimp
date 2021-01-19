@@ -2,10 +2,11 @@ import td from "testdouble";
 
 import { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{typeName}}{{capitalizedFieldName}} } from "./{{typeName}}{{capitalizedFieldName}}";
+import { GraphQLResolveInfo } from 'graphql'
 
 {{#if resolveReferenceType}}type ParentType = Parameters<typeof {{typeName}}{{capitalizedFieldName}}>[0];{{/if}}
 
-    const test{{typeName}}{{capitalizedFieldName}} = (parent: {{#if resolveReferenceType}}ParentType{{else}}ResolversParentTypes["{{typeName}}"]{{/if}}, {{#if hasArguments}}variables: {{typeName}}{{capitalizedFieldName}}Args,{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}(parent, {{#unless resolveReferenceType}}{{#if hasArguments}}variables{{else}} {} {{/if}},{{/unless}} context, null)
+    const test{{typeName}}{{capitalizedFieldName}} = (parent: {{#if resolveReferenceType}}ParentType{{else}}ResolversParentTypes["{{typeName}}"]{{/if}}, {{#if hasArguments}}variables: {{typeName}}{{capitalizedFieldName}}Args,{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}?.(parent, {{#unless resolveReferenceType}}{{#if hasArguments}}variables{{else}} {} {{/if}},{{/unless}} context, {} as GraphQLResolveInfo)
 
 
 test("{{typeName}}{{capitalizedFieldName}}", async () => {
@@ -14,9 +15,9 @@ const context = td.object<GqlContext>();
 
     // td.when(context.{{moduleName}}Repository.findOne()).thenResolve()
 
-    const parent{{#if resolveReferenceType}} = {} as ParentType {{else}}: ResolversParentTypes["{{typeName}}"] = {}{{/if}}
+    const parent{{#if resolveReferenceType}} = {} as ParentType {{else}} = {} as ResolversParentTypes["{{typeName}}"]{{/if}}
     {{#if hasArguments}}
-        const variables: {{typeName}}{{capitalizedFieldName}}Args = {}
+        const variables = {} as {{typeName}}{{capitalizedFieldName}}Args
     {{/if}}
 
     const result = await test{{typeName}}{{capitalizedFieldName}}(parent, {{#if hasArguments}}variables,{{/if}} context);
