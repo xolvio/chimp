@@ -1,13 +1,5 @@
 import td from "testdouble";
-
-import { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
-import { {{typeName}}{{capitalizedFieldName}} } from "./{{typeName}}{{capitalizedFieldName}}";
-import { GraphQLResolveInfo } from 'graphql'
-
-{{#if resolveReferenceType}}type ParentType = Parameters<typeof {{typeName}}{{capitalizedFieldName}}>[0];{{/if}}
-
-    const test{{typeName}}{{capitalizedFieldName}} = (parent: {{#if resolveReferenceType}}ParentType{{else}}ResolversParentTypes["{{typeName}}"]{{/if}}, {{#if hasArguments}}variables: {{typeName}}{{capitalizedFieldName}}Args,{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}?.(parent, {{#unless resolveReferenceType}}{{#if hasArguments}}variables{{else}} {} {{/if}},{{/unless}} context, {} as GraphQLResolveInfo)
-
+import { GqlContext, ResolversParentTypes, test{{typeName}}{{capitalizedFieldName}} } from "{{generatedPrefix}}/graphql/helpers/{{typeName}}{{capitalizedFieldName}}SpecHelper"
 
 test("{{typeName}}{{capitalizedFieldName}}", async () => {
 

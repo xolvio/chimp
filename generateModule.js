@@ -21,7 +21,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
     .filter((c) => c.indexOf('package.json') == -1)
     .join('/');
 
-  shelljs.mkdir('-p', `${projectMainPath}/generated/graphql`);
+  shelljs.mkdir('-p', `${projectMainPath}/generated/graphql/helpers`);
 
   // "Framework" "generated" files - initial generation
   const createCombineSchemas = () => {
@@ -199,7 +199,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
 
         const createInterfaceSpec = (interfaceName) => {
           const templateName = './templates/typeTypeResolvers.spec.handlebars';
-          let capitalizedFieldName = capitalize('__resolveType');
+          const capitalizedFieldName = capitalize('__resolveType');
           const context = {
             typeName: interfaceName,
             fieldName: '__resolveType',
@@ -215,9 +215,31 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
+
+        const createInterfaceSpecHelper = (interfaceName) => {
+          const templateName = './templates/typeTypeResolversSpecHelper.handlebars';
+          const capitalizedFieldName = capitalize('__resolveType');
+          const context = {
+            typeName: interfaceName,
+            fieldName: '__resolveType',
+            moduleName: name,
+            hasArguments: false,
+            resolveReferenceType: true,
+            capitalizedFieldName,
+            generatedPrefix,
+            appPrefix,
+            graphqlFileRootPath,
+          };
+          const filePath = `${projectMainPath}/generated/graphql/helpers/`;
+          const fileName = `${interfaceName}${capitalizedFieldName}SpecHelper.ts`;
+          const keepIfExists = false;
+
+          saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+        };
         interfaces.forEach((interfaceName) => {
           createInterfaceType(interfaceName);
           createInterfaceSpec(interfaceName);
+          createInterfaceSpecHelper(interfaceName);
           typeResolvers.push({
             typeName: interfaceName,
             fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
@@ -262,14 +284,14 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
             saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
           });
 
-          filtered.forEach(({ name: { value }, arguments, resolveReferenceType }) => {
+          const createTypeFieldResolverSpec = (value, resolveReferenceType, resolverArguments) => {
             const templateName = './templates/typeTypeResolvers.spec.handlebars';
-            let capitalizedFieldName = capitalize(value);
+            const capitalizedFieldName = capitalize(value);
             const context = {
               typeName: typeDef.name,
               fieldName: value,
               moduleName: name,
-              hasArguments: arguments && arguments.length,
+              hasArguments: resolverArguments && resolverArguments.length,
               resolveReferenceType,
               capitalizedFieldName,
               generatedPrefix,
@@ -279,6 +301,32 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
             const keepIfExists = true;
 
             saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+          }
+          const createTypeFieldResolverSpecHelper = (value, resolveReferenceType, resolverArguments) => {
+            const templateName = './templates/typeTypeResolversSpecHelper.handlebars';
+            const capitalizedFieldName = capitalize(value);
+            const context = {
+              typeName: typeDef.name,
+              fieldName: value,
+              moduleName: name,
+              hasArguments: resolverArguments && resolverArguments.length,
+              resolveReferenceType,
+              capitalizedFieldName,
+              generatedPrefix,
+              appPrefix,
+              graphqlFileRootPath,
+            };
+            const filePath = `${projectMainPath}/generated/graphql/helpers/`;
+            const fileName = `${typeDef.name}${capitalizedFieldName}SpecHelper.ts`;
+            const keepIfExists = true;
+
+            saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+          }
+
+
+          filtered.forEach(({ name: { value }, arguments: resolverArguments, resolveReferenceType }) => {
+            createTypeFieldResolverSpec(value, resolveReferenceType, resolverArguments);
+            createTypeFieldResolverSpecHelper(value, resolveReferenceType, resolverArguments);
           });
 
           if (filtered.length) {
