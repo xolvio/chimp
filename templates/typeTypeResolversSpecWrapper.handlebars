@@ -1,0 +1,9 @@
+import { GraphQLResolveInfo } from 'graphql'
+import type { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
+import { {{typeName}}{{capitalizedFieldName}} } from "{{appPrefix}}/{{graphqlFileRootPath}}types/{{typeName}}{{capitalizedFieldName}}";
+
+{{#if resolveReferenceType}}type ParentType = Parameters<typeof {{typeName}}{{capitalizedFieldName}}>[0];{{/if}}
+
+export const test{{typeName}}{{capitalizedFieldName}} = (parent: {{#if resolveReferenceType}}ParentType{{else}}ResolversParentTypes["{{typeName}}"]{{/if}}, {{#if hasArguments}}variables: {{typeName}}{{capitalizedFieldName}}Args,{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}?.({...parent, __typename: '{{typeName}}'}, {{#unless resolveReferenceType}}{{#if hasArguments}}variables{{else}} {} {{/if}},{{/unless}} context, {} as GraphQLResolveInfo)
+
+export type {GqlContext, ResolversParentTypes}
