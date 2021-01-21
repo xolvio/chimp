@@ -1,20 +1,16 @@
 import td from "testdouble";
-import { GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
-import { {{mutationName}}Mutation } from "./{{mutationName}}Mutation";
 
-const test{{mutationName}} = ({{#if hasArguments}}variables: Mutation{{toUpperCase mutationName}}Args, {{/if}}context: GqlContext) => {{mutationName}}Mutation({}, {{#if hasArguments}}variables{{else}}  {} {{/if}}, context, null)
+import { GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args,{{/if}} test{{toUpperCase mutationName}} } from "{{generatedPrefix}}/graphql/helpers/{{mutationName}}MutationSpecWrapper"
 
 
 test("{{mutationName}}", async () => {
 
 const context = td.object<GqlContext>();
-
     // td.when(context.{{moduleName}}Repository.findOne()).thenResolve()
-
     {{#if hasArguments}}
         const variables: Mutation{{toUpperCase mutationName}}Args = {}
     {{/if}}
 
-    const result = await test{{mutationName}}({{#if hasArguments}}variables,{{/if}} context);
+    const result = await test{{toUpperCase mutationName}}({{#if hasArguments}}variables,{{/if}} context);
 
     });

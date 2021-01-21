@@ -1,6 +1,6 @@
+import { GraphQLResolveInfo } from 'graphql'
 import type { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{typeName}}{{capitalizedFieldName}} } from "{{appPrefix}}/{{graphqlFileRootPath}}types/{{typeName}}{{capitalizedFieldName}}";
-import { GraphQLResolveInfo } from 'graphql'
 
 {{#if resolveReferenceType}}type ParentType = Parameters<typeof {{typeName}}{{capitalizedFieldName}}>[0];{{/if}}
 
