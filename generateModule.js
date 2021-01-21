@@ -143,11 +143,28 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
       saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
     };
 
+    const createQuerySpecWrapper = (queryName, hasArguments) => {
+      const templateName = './templates/querySpecWrapper.handlebars';
+      const context = {
+        queryName,
+        moduleName,
+        hasArguments,
+        generatedPrefix,
+        appPrefix,
+        graphqlFileRootPath,
+      };
+      const filePath = `${projectMainPath}/generated/graphql/helpers/`;
+      const fileName = `${queryName}QuerySpecWrapper.ts`;
+      const keepIfExists = false;
+      saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+    };
+
     if (module.queries && module.queries.length) {
       shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/queries`);
       module.queries.forEach(({ name, hasArguments }) => {
         createQuery(name, hasArguments);
         createQuerySpec(name, hasArguments);
+        createQuerySpecWrapper(name, hasArguments);
       });
     }
 

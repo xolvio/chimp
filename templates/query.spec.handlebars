@@ -1,10 +1,5 @@
 import td from "testdouble";
-import { GqlContext, {{#if hasArguments}}Query{{toUpperCase queryName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
-import { {{queryName}}Query } from "./{{queryName}}Query";
-
-
-const test{{queryName}} = ({{#if hasArguments}}variables: Query{{toUpperCase queryName}}Args,{{/if}} context: GqlContext) => {{queryName}}Query({}, {{#if hasArguments}}variables{{else}} {} {{/if}}, context, null)
-
+import { GqlContext, {{#if hasArguments}}Query{{toUpperCase queryName}}Args,{{/if}} test{{toUpperCase queryName}} } from "{{generatedPrefix}}/graphql/helpers/{{queryName}}QuerySpecWrapper"
 
 test("{{queryName}}", async () => {
 
@@ -16,6 +11,6 @@ test("{{queryName}}", async () => {
         const variables: Query{{toUpperCase queryName}}Args = {}
     {{/if}}
 
-    const result = await test{{queryName}}({{#if hasArguments}}variables,{{/if}} context);
+    const result = await test{{toUpperCase queryName}}({{#if hasArguments}}variables,{{/if}} context);
 
 });
