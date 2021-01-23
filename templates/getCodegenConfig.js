@@ -1,7 +1,7 @@
 const fs = require("fs");
+const { pascalCase } = require("chimp/lib/reexports");
 const { importSchema } = require("graphql-import");
 const { isObjectType } = require("graphql");
-const { pascalCase } = require("pascal-case");
 
 let schemaString = fs
   .readFileSync("./schema.graphql")
