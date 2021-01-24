@@ -1,5 +1,5 @@
 import td from "testdouble";
-import { GqlContext, ResolversParentTypes, test{{typeName}}{{capitalizedFieldName}} } from "{{generatedPrefix}}/graphql/helpers/{{typeName}}{{capitalizedFieldName}}SpecWrapper"
+import { GqlContext, ResolversParentTypes, test{{typeName}}{{capitalizedFieldName}} {{#if hasArguments}},{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/helpers/{{typeName}}{{capitalizedFieldName}}SpecWrapper"
 
 test("{{typeName}}{{capitalizedFieldName}}", async () => {
 const context = td.object<GqlContext>();
