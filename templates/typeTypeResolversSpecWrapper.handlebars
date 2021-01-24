@@ -6,4 +6,4 @@ import { {{typeName}}{{capitalizedFieldName}} } from "{{appPrefix}}/{{graphqlFil
 
 export const test{{typeName}}{{capitalizedFieldName}} = (parent: {{#if resolveReferenceType}}ParentType{{else}}ResolversParentTypes["{{typeName}}"]{{/if}}, {{#if hasArguments}}variables: {{typeName}}{{capitalizedFieldName}}Args,{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}?.({...parent, __typename: '{{typeName}}'}, {{#unless resolveReferenceType}}{{#if hasArguments}}variables{{else}} {} {{/if}},{{/unless}} context, {} as GraphQLResolveInfo)
 
-export type {GqlContext, ResolversParentTypes}
+export type {GqlContext, ResolversParentTypes  {{#if hasArguments}},{{typeName}}{{capitalizedFieldName}}Args{{/if}} }
