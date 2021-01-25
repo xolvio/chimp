@@ -1,6 +1,6 @@
 import td from "testdouble";
 
-import { GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args,{{/if}} test{{toUpperCase mutationName}} } from "{{generatedPrefix}}/graphql/helpers/{{mutationName}}MutationSpecWrapper"
+import { GqlContext, {{#if hasArguments}}{{pascalCasedArgName}},{{/if}} test{{toUpperCase mutationName}} } from "{{generatedPrefix}}/graphql/helpers/{{mutationName}}MutationSpecWrapper"
 
 
 test("{{mutationName}}", async () => {
@@ -8,7 +8,7 @@ test("{{mutationName}}", async () => {
 const context = td.object<GqlContext>();
     // td.when(context.{{moduleName}}Repository.findOne()).thenResolve()
     {{#if hasArguments}}
-        const variables: Mutation{{toUpperCase mutationName}}Args = {}
+        const variables: {{pascalCasedArgName}} = {}
     {{/if}}
 
     const result = await test{{toUpperCase mutationName}}({{#if hasArguments}}variables,{{/if}} context);
