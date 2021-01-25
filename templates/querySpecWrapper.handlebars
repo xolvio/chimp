@@ -1,9 +1,9 @@
 import { GraphQLResolveInfo } from 'graphql'
-import { GqlContext, {{#if hasArguments}}Query{{toUpperCase queryName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
+import { GqlContext, {{#if hasArguments}}{{pascalCasedArgName}}{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{queryName}}Query } from "{{appPrefix}}/{{graphqlFileRootPath}}queries/{{queryName}}Query";
 
 
-export const test{{toUpperCase queryName}} = ({{#if hasArguments}}variables: Query{{toUpperCase queryName}}Args,{{/if}} context: GqlContext) => {{queryName}}Query?.({}, {{#if hasArguments}}variables{{else}} {} {{/if}}, context, {} as GraphQLResolveInfo)
+export const test{{toUpperCase queryName}} = ({{#if hasArguments}}variables: {{pascalCasedArgName}},{{/if}} context: GqlContext) => {{queryName}}Query?.({}, {{#if hasArguments}}variables{{else}} {} {{/if}}, context, {} as GraphQLResolveInfo)
 
 
-export type {GqlContext, {{#if hasArguments}}Query{{toUpperCase queryName}}Args{{/if}} }
+export type {GqlContext, {{#if hasArguments}}{{pascalCasedArgName}}{{/if}} }
