@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const finder = require('find-package-json');
 const shelljs = require('shelljs');
 const { Source, buildSchema } = require('graphql');
 const path = require('path');
@@ -10,17 +9,12 @@ const getFederatedEntities = require('./parse-graphql/getFederatedEntities');
 const getInterfaces = require('./parse-graphql/getInterfaces');
 // const checkIfGitStateClean = require('./helpers/checkIfGitStateClean');
 const saveRenderedTemplate = require('./helpers/saveRenderedTemplate');
+const findProjectMainPath = require('./helpers/findProjectMainPath');
+const execQuietly = require('./helpers/execQuietly');
 
 const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath = 'src/') => {
   const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
-
-  const f = finder(process.cwd());
-  const projectMainPath = f
-    .next()
-    .filename.split('/')
-    .filter((c) => c.indexOf('package.json') === -1)
-    .join('/');
-
+  const projectMainPath = findProjectMainPath();
   shelljs.mkdir('-p', `${projectMainPath}/generated/graphql/helpers`);
 
   // "Framework" "generated" files - initial generation
@@ -93,14 +87,12 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
 
   // Initial App Setup files
 
-  const { stdout: globalSchemaString, stderr } = shelljs.exec('ts-node ./generated/graphql/printSchema.ts', {
-    cwd: projectMainPath,
-    silent: true,
-  });
+  const globalSchemaString = execQuietly(
+    'ts-node ./generated/graphql/printSchema.ts',
+    { cwd: projectMainPath },
+    'Error while combining schema',
+  );
 
-  if (stderr) {
-    throw new Error(`Error while combining schema: , ${stderr}`);
-  }
 
   const createGlobalSchema = () => {
     const templateName = './templates/schema.ts';
