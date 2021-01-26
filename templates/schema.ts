@@ -6,7 +6,7 @@ import { buildFederatedSchema } from "@apollo/federation";
 import { resolvers } from "{{generatedPrefix}}/graphql/resolvers";
 import gql from 'graphql-tag'
 
-const typeDefs = gql`{{schemaString}}`
+const typeDefs = gql`{{{schemaString}}}`
 
 const schema = buildFederatedSchema([
   {

@@ -8,9 +8,9 @@ test("{{queryName}}", async () => {
     // td.when(context.{{moduleName}}Repository.findOne()).thenResolve()
 
     {{#if hasArguments}}
-        const variables: {{pascalCasedArgName}} = {}
+        // const variables: {{pascalCasedArgName}} = {}
     {{/if}}
 
-    const result = await test{{toUpperCase queryName}}({{#if hasArguments}}variables,{{/if}} context);
+    // const result = await test{{toUpperCase queryName}}({{#if hasArguments}}variables,{{/if}} context);
 
 });

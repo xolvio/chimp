@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "sourceMap": true,
+    "outDir": "./lib/",
+    "esModuleInterop": true,
+    "baseUrl": "./",
+  },
+  "exclude": [
+    "./node_modules",
+    "./test-module"
+  ]
+}

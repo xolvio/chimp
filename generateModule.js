@@ -3,6 +3,7 @@ const shelljs = require('shelljs');
 const { Source, buildSchema } = require('graphql');
 const path = require('path');
 const { pascalCase } = require('pascal-case');
+const fs = require('fs');
 
 const getModuleInfos = require('./parse-graphql/getModuleInfos');
 const getModuleNames = require('./parse-graphql/getModuleNames');
@@ -13,6 +14,12 @@ const getScalars = require('./parse-graphql/getScalars');
 const saveRenderedTemplate = require('./helpers/saveRenderedTemplate');
 const findProjectMainPath = require('./helpers/findProjectMainPath');
 const execQuietly = require('./helpers/execQuietly');
+
+const generateSchema = (projectMainPath) => {
+  execQuietly(`ts-node -r tsconfig-paths/register ./generated/graphql/printSchema.ts > ./schema.graphql`, {
+    cwd: projectMainPath,
+  });
+};
 
 const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath = 'src/') => {
   const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
@@ -89,12 +96,9 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
 
   // Initial App Setup files
 
-  const globalSchemaString = execQuietly(
-    'ts-node ./generated/graphql/printSchema.ts',
-    { cwd: projectMainPath },
-    'Error while combining schema',
-  );
+  generateSchema(projectMainPath);
 
+  const globalSchemaString = fs.readFileSync(path.join(projectMainPath, 'schema.graphql')); // read file
 
   const createGlobalSchema = () => {
     const templateName = './templates/schema.ts';

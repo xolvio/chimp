@@ -1,12 +1,11 @@
 const shelljs = require('shelljs');
 
 module.exports = function execQuietly(command, options, errorMessage) {
-  const { stdout, stderr } = shelljs.exec(command, {
+  const { stdout, stderr, code } = shelljs.exec(command, {
     ...options,
-    silent: true,
   });
 
-  if (stderr) {
+  if (code !== 0) {
     throw new Error(`${errorMessage}: , ${stderr}`);
   }
   return stdout;

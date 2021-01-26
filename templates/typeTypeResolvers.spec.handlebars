@@ -4,11 +4,11 @@ import { GqlContext, ParentType, test{{typeName}}{{capitalizedFieldName}} {{#if 
 test("{{typeName}}{{capitalizedFieldName}}", async () => {
 const context = td.object<GqlContext>();
     // td.when(context.{{moduleName}}Repository.findOne()).thenResolve()
-    const parent = {} as ParentType
+    // const parent: ParentType = {}
     {{#if hasArguments}}
-        const variables = {} as {{pascalCasedArgName}}
+        // const variables: {{pascalCasedArgName}} = {}
     {{/if}}
 
-    const result = await test{{typeName}}{{capitalizedFieldName}}(parent, {{#if hasArguments}}variables,{{/if}} context);
+    // const result = await test{{typeName}}{{capitalizedFieldName}}(parent, {{#if hasArguments}}variables,{{/if}} context);
 
     });

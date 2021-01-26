@@ -1,0 +1,36 @@
+scalar Odd
+scalar Even
+
+type Numbers {
+  one: Odd
+  two: Odd
+  three: Odd
+  computed: String @computed
+}
+
+extend type ExtendedType @key(fields: "id") {
+  id: ID! @external
+  fieldOnExtended: String! @external
+  addedToExtended: String @computed
+  addedUsingExternalField: Int @requires(fields: "fieldOnExtended")
+}
+
+type Internal @key(fields: "id") {
+  id: ID!
+  computedOnInternal: String @computed
+}
+
+input MyInput {
+  name: String!
+}
+
+type Mutation {
+  WithoutArguments: String!
+  WithArguments(arg: String!): ExtendedType!
+  WithInput(input: MyInput!): String!
+}
+
+extend type Query {
+  GetNumbers: Numbers
+  WithArguments(arg: String!): Internal!
+}
