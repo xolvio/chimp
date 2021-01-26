@@ -3,12 +3,12 @@ id: structure
 title: Structure Explained
 ---
 
-A fresh project will consist of a following structure:
+A fresh project will consist of a following structure (* are optional):
 
 ```
 ├── README.md
-├── codegen.js
-├── fix-generated.js
+├── codegen.js *
+├── fix-generated.js *
 ├── jest.config.js
 ├── jest.setup.js
 ├── nodemon.run.json

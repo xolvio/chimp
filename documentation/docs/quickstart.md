@@ -17,8 +17,6 @@ This is the folder structure you will see:
 
 ```
 ├── README.md
-├── codegen.js
-├── fix-generated.js
 ├── jest.config.js
 ├── jest.setup.js
 ├── nodemon.run.json
@@ -91,7 +89,7 @@ extend type Query {
 Let's run the generation now:
 
 ```bash
-npm run graphql:generateAll
+npm run graphql:generate
 ```
 
 That command will create Mutations/Queries/Type resolvers, tests for them, types and perform all the necessary connection between the main schema, contexts, etc.  
