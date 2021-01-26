@@ -9,6 +9,7 @@ const getModuleInfos = require('./parse-graphql/getModuleInfos');
 const getModuleNames = require('./parse-graphql/getModuleNames');
 const getFederatedEntities = require('./parse-graphql/getFederatedEntities');
 const getInterfaces = require('./parse-graphql/getInterfaces');
+const getScalars = require('./parse-graphql/getScalars');
 // const checkIfGitStateClean = require('./helpers/checkIfGitStateClean');
 const saveRenderedTemplate = require('./helpers/saveRenderedTemplate');
 
@@ -405,6 +406,29 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
           }
         });
       }
+
+      const scalars = getScalars(schemaString);
+
+      const createScalarResolvers = () => {
+        if (scalars && scalars.length) {
+          shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/scalars/`);
+        }
+        scalars.forEach((scalarName) => {
+          const templateName = './templates/scalarResolver.handlebars';
+          const context = {
+            scalarName,
+            moduleName: name,
+            generatedPrefix,
+          };
+          const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/scalars/`;
+          const fileName = `${scalarName}.ts`;
+          const keepIfExists = true;
+
+          saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
+        });
+      };
+      createScalarResolvers();
+
       const moduleName = name;
       const createModuleResolvers = () => {
         const templateName = './templates/moduleResolvers.handlebars';
@@ -415,6 +439,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
           typeResolvers,
           graphqlFileRootPath,
           appPrefix,
+          scalars,
         };
         const filePath = `${projectMainPath}/generated/graphql/`;
         const fileName = `${moduleName}Resolvers.ts`;

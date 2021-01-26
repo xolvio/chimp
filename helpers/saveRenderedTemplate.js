@@ -4,7 +4,12 @@ const path = require('path');
 
 Handlebars.registerHelper('toUpperCase', function(str) {
   return str.replace(/^\w/, c => c.toUpperCase());
+})
+
+Handlebars.registerHelper('toLowerCase', function(str) {
+  return str.replace(/^\w/, c => c.toLowerCase());
 });
+
 
 module.exports = function saveRenderedTemplate (templateName, context, filePath, fileName, keepIfExists = false) {
   const combinedPath = path.join(filePath, fileName);
