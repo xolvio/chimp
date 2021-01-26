@@ -1,5 +1,4 @@
-// @ts-ignore
-const { print } = require("graphql");
-const schema = require("chimp/runtime-config-helpers/combineSchemas").default
-// @ts-ignore
+import {print} from "graphql";
+
+import schema from "./combineSchemas";
 console.log(print(schema));

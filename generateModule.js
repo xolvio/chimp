@@ -2,6 +2,7 @@
 const shelljs = require('shelljs');
 const { Source, buildSchema } = require('graphql');
 const path = require('path');
+const { pascalCase } = require('pascal-case');
 
 const getModuleInfos = require('./parse-graphql/getModuleInfos');
 const getModuleNames = require('./parse-graphql/getModuleNames');
@@ -128,6 +129,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
         moduleName,
         hasArguments,
         generatedPrefix,
+        pascalCasedArgName: `Query${pascalCase(queryName)}Args`,
       };
       const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/queries/`;
       const fileName = `${queryName}Query.spec.ts`;
@@ -144,6 +146,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
         generatedPrefix,
         appPrefix,
         graphqlFileRootPath,
+        pascalCasedArgName: `Query${pascalCase(queryName)}Args`,
       };
       const filePath = `${projectMainPath}/generated/graphql/helpers/`;
       const fileName = `${queryName}QuerySpecWrapper.ts`;
@@ -183,6 +186,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
         generatedPrefix,
         appPrefix,
         graphqlFileRootPath,
+        pascalCasedArgName: `Mutation${pascalCase(mutationName)}Args`,
       };
       const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/mutations/`;
       const fileName = `${mutationName}Mutation.spec.ts`;
@@ -199,6 +203,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
         generatedPrefix,
         appPrefix,
         graphqlFileRootPath,
+        pascalCasedArgName: `Mutation${pascalCase(mutationName)}Args`,
       };
       const filePath = `${projectMainPath}/generated/graphql/helpers/`;
 
@@ -311,8 +316,12 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
             );
           }
 
+          let isFederatedAndExternal = false;
           if (federatedEntities.find((e) => e === typeDef.name)) {
             filtered.push({ name: { value: '__resolveReference' }, resolveReferenceType: true });
+            isFederatedAndExternal =
+              type.astNode &&
+              !!type.astNode.fields.find((field) => field.directives.find((d) => d.name.value === 'external'));
           }
 
           filtered.forEach(({ name: { value }, resolveReferenceType }) => {
@@ -344,6 +353,7 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
               resolveReferenceType,
               capitalizedFieldName,
               generatedPrefix,
+              pascalCasedArgName: `${typeDef.name}${pascalCase(capitalizedFieldName)}Args`,
             };
             const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
             const fileName = `${typeDef.name}${capitalizedFieldName}.spec.ts`;
@@ -364,6 +374,8 @@ const execute = (appPrefix = '@app', generatedPrefix = '@generated', modulesPath
               generatedPrefix,
               appPrefix,
               graphqlFileRootPath,
+              isFederatedAndExternal,
+              pascalCasedArgName: `${typeDef.name}${pascalCase(capitalizedFieldName)}Args`,
             };
             const filePath = `${projectMainPath}/generated/graphql/helpers/`;
             const fileName = `${typeDef.name}${capitalizedFieldName}SpecWrapper.ts`;

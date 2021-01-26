@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql'
-import { GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/types";
+import { GqlContext, {{#if hasArguments}}{{pascalCasedArgName}}{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{mutationName}}Mutation } from "{{appPrefix}}/{{graphqlFileRootPath}}mutations/{{mutationName}}Mutation";
 
-export const test{{toUpperCase mutationName}} = ({{#if hasArguments}}variables: Mutation{{toUpperCase mutationName}}Args, {{/if}}context: GqlContext) => {{mutationName}}Mutation?.({}, {{#if hasArguments}}variables{{else}}  {} {{/if}}, context, {} as GraphQLResolveInfo)
+export const test{{toUpperCase mutationName}} = ({{#if hasArguments}}variables: {{pascalCasedArgName}}, {{/if}}context: GqlContext) => {{mutationName}}Mutation?.({}, {{#if hasArguments}}variables{{else}}  {} {{/if}}, context, {} as GraphQLResolveInfo)
 
-export type {GqlContext, {{#if hasArguments}}Mutation{{toUpperCase mutationName}}Args{{/if}} }
+export type {GqlContext, {{#if hasArguments}}{{pascalCasedArgName}}{{/if}} }

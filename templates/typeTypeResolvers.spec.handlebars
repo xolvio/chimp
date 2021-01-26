@@ -1,12 +1,12 @@
 import td from "testdouble";
-import { GqlContext, ResolversParentTypes, test{{typeName}}{{capitalizedFieldName}} {{#if hasArguments}},{{typeName}}{{capitalizedFieldName}}Args{{/if}} } from "{{generatedPrefix}}/graphql/helpers/{{typeName}}{{capitalizedFieldName}}SpecWrapper"
+import { GqlContext, ParentType, test{{typeName}}{{capitalizedFieldName}} {{#if hasArguments}},{{pascalCasedArgName}}{{/if}} } from "{{generatedPrefix}}/graphql/helpers/{{typeName}}{{capitalizedFieldName}}SpecWrapper"
 
 test("{{typeName}}{{capitalizedFieldName}}", async () => {
 const context = td.object<GqlContext>();
     // td.when(context.{{moduleName}}Repository.findOne()).thenResolve()
-    const parent{{#if resolveReferenceType}} = {} as ParentType {{else}} = {} as ResolversParentTypes["{{typeName}}"]{{/if}}
+    const parent = {} as ParentType
     {{#if hasArguments}}
-        const variables = {} as {{typeName}}{{capitalizedFieldName}}Args
+        const variables = {} as {{pascalCasedArgName}}
     {{/if}}
 
     const result = await test{{typeName}}{{capitalizedFieldName}}(parent, {{#if hasArguments}}variables,{{/if}} context);

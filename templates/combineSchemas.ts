@@ -4,7 +4,7 @@ import {
   GraphQLFileLoaderOptions,
 } from "@graphql-tools/graphql-file-loader";
 import { mergeTypeDefs } from "@graphql-tools/merge";
-
+// @ts-ignore
 import shelljs from "shelljs";
 
 const graphqlPaths = shelljs.ls(
