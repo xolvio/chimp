@@ -1,12 +1,10 @@
 chimp
 =====
 
-Your development companion for doing quality, faster.
+Your development companion for doing quality, faster. For a full documentation please go to [chimpjs.com](https://www.chimpjs.com/).
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/chimp.svg)](https://npmjs.org/package/chimp)
-[![CircleCI](https://circleci.com/gh/xolvio/chimp2/tree/master.svg?style=shield)](https://circleci.com/gh/xolvio/chimp2/tree/master)
-[![Codecov](https://codecov.io/gh/xolvio/chimp2/branch/master/graph/badge.svg)](https://codecov.io/gh/xolvio/chimp2)
 [![Downloads/week](https://img.shields.io/npm/dw/chimp.svg)](https://npmjs.org/package/chimp)
 [![License](https://img.shields.io/npm/l/chimp.svg)](https://github.com/xolvio/chimp2/blob/master/package.json)
 
