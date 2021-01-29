@@ -3,6 +3,8 @@ id: Federation
 title: Overview of a more realistic Example
 ---
 
+Note: This repo was not updated to the chimp 3.0 yet.
+
 In this section we will look at a setup that's typical to our clients.
 
 

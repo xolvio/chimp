@@ -7,8 +7,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["./src/*"],
-      "@generated/*": ["./generated/*"]
+      "~app/*": ["./src/*"],
+      "~generated/*": ["./generated/*"]
     }
   },
   "exclude": [
