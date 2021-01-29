@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
     "module": "commonjs",
-    "target": "es2019",
-    "sourceMap": true,
-    "outDir": "./lib/",
-    "esModuleInterop": true,
-    "baseUrl": "./",
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": true,
+    "target": "es2017",
+    "esModuleInterop": true
   },
-  "exclude": [
-    "./node_modules",
-    "./test-module"
-  ]
+  "include": ["src/**/*", "scripts/**/*"],
+  "exclude": ["src/generate/templates", "documentation/"]
 }

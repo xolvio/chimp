@@ -1,4 +1,4 @@
-import { QueryResolvers } from "@generated/graphql/types";
+import { QueryResolvers } from "~generated/graphql/types";
 
 export const GetNumbersQuery: QueryResolvers["GetNumbers"] = (
   parent,

@@ -1,8 +1,8 @@
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import cookieParser from "cookie-parser";
-import { schema } from "@generated/graphql/schema";
-import { appContext } from "@app/context";
+import { schema } from "~generated/graphql/schema";
+import { appContext } from "~app/context";
 import { dataSources } from "./dataSources";
 import { root } from "./root";
 

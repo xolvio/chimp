@@ -1,5 +1,5 @@
 import td from "testdouble";
-import { GqlContext, QueryHelloArgs } from "@generated/graphql/types";
+import { GqlContext, QueryHelloArgs } from "~generated/graphql/types";
 import { HelloQuery } from "./HelloQuery";
 
 const testHello = (variables: QueryHelloArgs, context: GqlContext) =>

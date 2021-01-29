@@ -89,7 +89,7 @@ extend type Query {
 Let's run the generation now:
 
 ```bash
-npm run graphql:generate
+npm run chimp
 ```
 
 That command will create Mutations/Queries/Type resolvers, tests for them, types and perform all the necessary connection between the main schema, contexts, etc.  

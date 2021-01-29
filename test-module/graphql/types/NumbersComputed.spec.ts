@@ -3,7 +3,7 @@ import {
   GqlContext,
   ParentType,
   testNumbersComputed,
-} from "@generated/graphql/helpers/NumbersComputedSpecWrapper";
+} from "~generated/graphql/helpers/NumbersComputedSpecWrapper";
 
 test("NumbersComputed", async () => {
   const context = td.object<GqlContext>();

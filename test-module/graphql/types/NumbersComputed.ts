@@ -1,4 +1,4 @@
-import { NumbersResolvers } from "@generated/graphql/types";
+import { NumbersResolvers } from "~generated/graphql/types";
 
 export const NumbersComputed: NumbersResolvers["computed"] = (
   parent,

@@ -2,7 +2,7 @@ import td from "testdouble";
 import {
   GqlContext,
   testGetNumbers,
-} from "@generated/graphql/helpers/GetNumbersQuerySpecWrapper";
+} from "~generated/graphql/helpers/GetNumbersQuerySpecWrapper";
 
 test("GetNumbers", async () => {
   const context = td.object<GqlContext>();
