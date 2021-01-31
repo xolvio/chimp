@@ -24,8 +24,8 @@ const userSchema = loadTypedefsSync(graphqlPaths, {
 const frameworkTypes = loadTypedefsSync(
   `
 # Generated directives
-directive @entity(embedded: Boolean) on OBJECT
-directive @chimp(embedded: Boolean) on OBJECT
+directive @entity(embedded: Boolean]) on OBJECT
+directive @chimp(embedded: Boolean]) on OBJECT
 
 directive @column(overrideType: String) on FIELD_DEFINITION
 

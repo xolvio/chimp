@@ -1,10 +1,15 @@
 import gql from 'graphql-tag';
 
-export default (graphqlString: string) => {
+export default (graphqlString: string): string[] => {
   const graphqlAST = gql`
     ${graphqlString}
   `;
 
-  // @ts-ignore
-  return graphqlAST.definitions.filter((d) => d.kind === 'ScalarTypeDefinition').map((f) => f.name.value);
+  return (
+    graphqlAST.definitions
+      .filter((d) => d.kind === 'ScalarTypeDefinition')
+      // @ts-ignore
+      .map((f) => f.name.value)
+      .filter((s) => s !== 'Upload')
+  );
 };

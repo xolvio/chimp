@@ -3,6 +3,7 @@ import * as path from 'path';
 // @ts-ignore
 import shelljs from 'shelljs';
 import { Command, flags } from '@oclif/command';
+import { getChimpVersion } from '../helpers/get-chimp-version';
 
 function updatePrefixes(appDirectory: string, appPrefix: string, generatedPrefix: string) {
   if (appPrefix || generatedPrefix) {
@@ -29,6 +30,8 @@ function updatePrefixes(appDirectory: string, appPrefix: string, generatedPrefix
       `chimp generate${gqlGenerateCustomPrefixString}`,
       `${appDirectory}/package.json`,
     );
+    const currentChimpVersion = getChimpVersion();
+    shelljs.sed('-i', '"chimp": "latest"', `"chimp": "${currentChimpVersion}"`, `${appDirectory}/package.json`);
   }
 }
 

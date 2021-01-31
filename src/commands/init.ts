@@ -8,6 +8,7 @@ import { findProjectMainPath } from '../generate/helpers/findProjectMainPath';
 import { ListrRenderer, newTask } from '../generate/helpers/ListrHelper';
 import { assertModulePathInTopLevelSrc } from '../init/assert-module-path-in-top-level-src';
 import { assertGitCleanState } from '../init/assert-git-clean-state';
+import { getChimpVersion } from '../helpers/get-chimp-version';
 const DEFAULT_MODULES_PATH = './src/modules';
 
 const debug = configDebug('commands:init');
@@ -26,7 +27,7 @@ const addProjectDependencies = async (projectMainPath: string, modulesPath: stri
     chimpCommand = `${chimpCommand} -p ${modulesPath}`;
     // }
     packageJsonFile.scripts.chimp = chimpCommand;
-    packageJsonFile.devDependencies.chimp = 'latest';
+    packageJsonFile.devDependencies.chimp = getChimpVersion();
   }
 
   function addDevDependenciesWithMatchingVersions(packages: string[]) {
