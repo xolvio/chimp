@@ -27,7 +27,7 @@ quietExec('./chimp/bin/run create chimp-test-repo', { cwd: pathToRunFrom });
 shelljs.cp('-R', './test-module', '../chimp-test-repo/src/modules/');
 const pathToRunFromChimp = path.join(process.cwd(), '../chimp-test-repo');
 console.log('GOZDECKI pathToRunFromChimp', pathToRunFromChimp);
-shelljs.sed('-i', /"chimp": "latest"/, '"chimp": "../chimp"', path.join(pathToRunFromChimp, 'package.json'));
+shelljs.sed('-i', /"chimp": "0.0.0-development"/, '"chimp": "../chimp"', path.join(pathToRunFromChimp, 'package.json'));
 
 quietExec('npm install', { cwd: pathToRunFromChimp });
 quietExec('npm run type-check', { cwd: pathToRunFromChimp });
