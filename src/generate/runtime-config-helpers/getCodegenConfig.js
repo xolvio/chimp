@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { pascalCase } = require('pascal-case');
-const { importSchema } = require('graphql-import');
-const { isObjectType } = require('graphql');
+const { isObjectType, Source, buildSchema } = require('graphql');
 
 let schemaString = fs
   .readFileSync('./schema.graphql')
@@ -29,7 +28,9 @@ scalar Upload
     '@union(discriminatorField: String, additionalFields: [AdditionalEntityFields])',
   )
   .replace('@chimp(embedded: Boolean)', '@chimp(embedded: Boolean, additionalFields: [AdditionalEntityFields])');
-const schema = importSchema(schemaString, {}, { out: 'GraphQLSchema' });
+
+const source = new Source(schemaString);
+const schema = buildSchema(source, { assumeValidSDL: true });
 const typeMap = schema.getTypeMap();
 
 const getConfig = (type) => (type.toConfig ? type.toConfig().astNode : type.astNode);
