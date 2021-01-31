@@ -29,7 +29,7 @@
     "apollo-server-express": "2.16.1",
     "cookie-parser": "1.4.5",
     "express": "4.17.1",
-    "graphql": "15.3.0",
+    "graphql": "15.5.0",
     "graphql-tag": "2.11.0",
     "lodash": "4.17.19",
     "portable-fetch": "3.0.0",
