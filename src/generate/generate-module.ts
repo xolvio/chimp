@@ -85,7 +85,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   debug('createGetCodegenConfig');
   createGetCodegenConfig();
   const modulesResolvedPath = path.join(projectMainPath, modulesPath);
-  const graphqlPaths = shelljs.ls(`${modulesResolvedPath}**/*.graphql`);
+  const graphqlPaths = shelljs.ls(path.join(modulesResolvedPath, '**/*.graphql'));
 
   const moduleNames = getModuleNames(graphqlPaths, projectMainPath);
   const modules = getModuleInfos(moduleNames);

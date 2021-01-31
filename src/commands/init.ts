@@ -88,6 +88,8 @@ const addProjectDependencies = async (projectMainPath: string, modulesPath: stri
   // TODO shelljs? ?
   addDependenciesWithMatchingVersions(['@apollo/federation', 'lodash', 'graphql-tag', 'tsconfig-paths']);
 
+  packageJsonFile.dependencies.graphql = scaffoldPackageJsonFile.dependencies.graphql;
+
   debug('saving package.json changes');
   await fs.promises.writeFile(packageJsonPath, JSON.stringify(packageJsonFile, null, 2));
   // TODO prettify the file
@@ -207,7 +209,7 @@ export default class Init extends Command {
         newTask('Configure tsconfig.json', async () => configureTsconfig(projectMainPath)),
         newTask('Configure jest', async () => configureJest(projectMainPath)),
         newTask('Add empty GraphQL context file', async () => addContext(projectMainPath)),
-        newTask('Install packages', async () => addContext(projectMainPath)),
+        // newTask('Install packages', async () => addContext(projectMainPath)),
       ],
       { renderer: ListrRenderer },
     );
