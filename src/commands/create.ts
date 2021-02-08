@@ -56,7 +56,7 @@ const create = (appDirectory: string, appPrefix: string, generatedPrefix: string
 };
 
 export default class Create extends Command {
-  static description = 'describe the command here';
+  static description = 'create (scaffold) a new app';
 
   static examples = ['$ chimp create my-new-app', '$ chimp create my-new-app -a ~src -g ~chimp-helpers'];
 
