@@ -9,7 +9,7 @@ In Another section we will show you how you can add Chimp to an existing Apollo 
 To bootstrap your app with the necessary tooling run:
 
 ```bash
-npx chimp gql:create generated-app
+npx chimp create generated-app
 cd generated-app
 ```
 
