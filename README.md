@@ -35,7 +35,7 @@ USAGE
 
 ## `chimp create [NAME]`
 
-describe the command here
+create (scaffold) a new app
 
 ```
 USAGE
@@ -115,3 +115,18 @@ EXAMPLES
 
 _See code: [src/commands/init.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/init.ts)_
 <!-- commandsstop -->
+
+## Updating jest.config.js after chimp init
+
+Please manually add pathsToModuleNameMapper like so:
+
+```javascript
+const { pathsToModuleNameMapper } = require("ts-jest/utils");
+const { compilerOptions } = require("./tsconfig");
+// ...
+module.exports = {
+  // ...,
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+  prefix: "<rootDir>/"
+})
+```

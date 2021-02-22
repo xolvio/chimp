@@ -145,16 +145,9 @@ async function configureJest(projectMainPath: string) {
   const jestConfigPath = path.join(projectMainPath, 'jest.config.js');
 
   if (fs.existsSync(jestConfigPath)) {
-    console.warn(`Sorry! We do not have the functionality yet to adjust your jest.config.js to work with chimp, please manually add pathsToModuleNameMapper like so:
-const { pathsToModuleNameMapper } = require("ts-jest/utils");
-const { compilerOptions } = require("./tsconfig");
-// ...
- module.exports = {
-  // ...,
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: "<rootDir>/"
-  })
-`);
+    console.warn(
+      `Sorry! We do not have the functionality yet to adjust your jest.config.js to work with chimp, please take a look at https://github.com/xolvio/chimp#updating-jestconfigjs-after-chimp-init to see how to do so manually`,
+    );
   } else {
     await fs.promises.copyFile(path.join(__dirname, '../../scaffold/jest.config.js'), jestConfigPath);
     await fs.promises.copyFile(
