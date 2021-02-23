@@ -3,8 +3,6 @@ id: Federation
 title: Overview of a more realistic Example
 ---
 
-Note: This repo was not updated to the chimp 3.0 yet.
-
 In this section we will look at a setup that's typical to our clients.
 
 
@@ -55,10 +53,12 @@ If your project needs any of those things, feel free to reuse what you see, but 
 ### Working with pagination
 
 Relevant files:
+```
 graphql-todo-lists/src/modules/Lists/graphql/queries/PagedListsQuery.ts
 graphql-todo-lists/src/modules/Lists/graphql/queries/PagedListsQuery.spec.ts
 graphql-todo-lists/src/helpers/Paginator.ts
 graphql-todo-lists/src/helpers/Paginator.spec.ts
+```
 
 Pagination allows to narrow query results to a specific subset that satisfies pagination arguments passed in the query.
 
@@ -66,7 +66,7 @@ The implementation of pagination mechanism in this repo is based on Relay standa
 
 There are four pagination arguments that can be passed to a query
 
-```text
+```graphql
 input PaginationInput {
     first: Int
     after: ID
@@ -88,7 +88,7 @@ Additionally, `connection` also contains `pageInfo` which provides information a
 
 Example:
 
-```text
+```graphql
 type PageInfo {
     hasNextPage: Boolean!
     hasPreviousPage: Boolean!
@@ -113,14 +113,16 @@ More information on format of returned data can be found at https://relay.dev/gr
 ### Working with filtering
 
 Relevant files:
+```
 graphql-todo-lists/src/modules/Lists/common/filterLists.ts
 graphql-todo-lists/src/modules/Lists/common/filterLists.spec.ts
+```
 
 Another mechanism that allows narrowing of result number is filtering, by returning only items that are satisfying predicates constructed based on query arguments.
 
 Example:
 
-```text
+```graphql
 input ListFilterQueryInput {
     partialName: String
 }
