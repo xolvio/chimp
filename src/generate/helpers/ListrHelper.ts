@@ -13,6 +13,9 @@ export const newTask = (
       debug('%O', error);
       throw new Error(`${title}\n${error}\n`);
     }),
+  options: {
+    persistentOutput: true,
+  },
 });
 
 // @ts-ignore

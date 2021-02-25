@@ -141,13 +141,12 @@ async function configureTsconfig(projectMainPath: string) {
   await fs.promises.writeFile(tsconfigJsonPath, JSON.stringify(tsconfig, null, 2));
 }
 
-async function configureJest(projectMainPath: string) {
+async function configureJest(projectMainPath: string, task: ListrTaskWrapper<ListrContext, ListrRendererFactory>) {
   const jestConfigPath = path.join(projectMainPath, 'jest.config.js');
 
   if (fs.existsSync(jestConfigPath)) {
-    console.warn(
-      `Sorry! We do not have the functionality yet to adjust your jest.config.js to work with chimp, please take a look at https://github.com/xolvio/chimp#updating-jestconfigjs-after-chimp-init to see how to do so manually`,
-    );
+    task.output =
+      "Sorry! We can't adjust existing jest.config.js automatically yet, please take a look at https://github.com/xolvio/chimp#updating-jestconfigjs-after-chimp-init to see how to do so manually";
   } else {
     await fs.promises.copyFile(path.join(__dirname, '../../scaffold/jest.config.js'), jestConfigPath);
     await fs.promises.copyFile(
@@ -195,16 +194,14 @@ export default class Init extends Command {
     assertModulePathInTopLevelSrc(projectMainPath, modulesPath);
     const tasks = new Listr(
       [
-        newTask('Creating example code', async (task: ListrTaskWrapper<ListrContext, ListrRendererFactory>) =>
-          createExampleCode(task, path.join(projectMainPath, modulesPath)),
-        ),
-        newTask('Add project dependencies', async () => addProjectDependencies(projectMainPath, modulesPath)),
-        newTask('Configure tsconfig.json', async () => configureTsconfig(projectMainPath)),
-        newTask('Configure jest', async () => configureJest(projectMainPath)),
-        newTask('Add empty GraphQL context file', async () => addContext(projectMainPath)),
+        newTask('Creating example code', (task) => createExampleCode(task, path.join(projectMainPath, modulesPath))),
+        newTask('Add project dependencies', () => addProjectDependencies(projectMainPath, modulesPath)),
+        newTask('Configure tsconfig.json', () => configureTsconfig(projectMainPath)),
+        newTask('Configure jest', (task) => configureJest(projectMainPath, task)),
+        newTask('Add empty GraphQL context file', () => addContext(projectMainPath)),
         // newTask('Install packages', async () => addContext(projectMainPath)),
       ],
-      { renderer: ListrRenderer },
+      { renderer: ListrRenderer, rendererOptions: { formatOutput: 'wrap' } },
     );
 
     // eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
