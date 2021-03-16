@@ -13,21 +13,23 @@ module.exports = {
       switchConfig: {
         darkIcon: '◑',
         darkIconStyle: {
-          color: '#ffffff'
+          color: '#ffffff',
         },
         lightIcon: '◑',
         lightIconStyle: {
-          color: '#ffffff'
+          color: '#ffffff',
         },
-      }
+      },
     },
     navbar: {
       hideOnScroll: true,
       title: '',
       logo: {
+        href: 'https://www.chimpjs.com/',
         alt: 'Chimp.js Logo',
         src: 'img/logo.svg',
         srcDark: 'img/logo-dark.svg',
+        target: '_self',
       },
       items: [],
     },
