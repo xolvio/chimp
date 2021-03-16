@@ -10,7 +10,7 @@ A fresh project will consist of a following structure (* are optional):
 ├── codegen.js *
 ├── fix-generated.js *
 ├── jest.config.js
-├── jest.setup.js
+├── jest.setup.js *
 ├── nodemon.run.json
 ├── package.json
 ├── tsconfig.json
@@ -29,7 +29,7 @@ A fresh project will consist of a following structure (* are optional):
                     └── HelloQuery.ts
 ```
 
-It's advisable to initialize an app to look into specific files while reading this page, but you can also look here: (TODO)
+It's advisable to initialize an app to look into specific files while reading this page, but you can also look here [github.com/xolvio/chimp-gql-tiny-example](https://github.com/xolvio/chimp-gql-tiny-example): 
 
 ## Top Level /
 
