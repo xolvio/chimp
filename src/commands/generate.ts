@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import { findProjectMainPath } from '../generate/helpers/findProjectMainPath';
 import { newTask, ListrRenderer } from '../generate/helpers/ListrHelper';
 
-const runTypeGen = async (projectMainPath: string) => {
+const runTypeGen = async (projectMainPath: string, appPrefix: string) => {
   const customCodegenConfig = path.join(projectMainPath, './codegen.js');
   let codegenConfigPath;
   if (fs.existsSync(customCodegenConfig)) {
@@ -15,7 +15,9 @@ const runTypeGen = async (projectMainPath: string) => {
   } else {
     codegenConfigPath = path.join(__dirname, '../generate/runtime-config-helpers/codegen.js');
   }
-  await execQuietly(`npx graphql-codegen --config ${codegenConfigPath}`, { cwd: projectMainPath });
+  await execQuietly(`APP_PREFIX=${appPrefix} npx graphql-codegen --config ${codegenConfigPath}`, {
+    cwd: projectMainPath,
+  });
 };
 
 const fixGenerated = async (projectMainPath: string) => {
@@ -68,7 +70,7 @@ export default class Generate extends Command {
         newTask('Generating code', async () =>
           executeGeneration(flags.appPrefix, flags.generatedPrefix, flags.modulesPath),
         ),
-        newTask('Generating types', async () => runTypeGen(projectMainPath)),
+        newTask('Generating types', async () => runTypeGen(projectMainPath, flags.appPrefix)),
         newTask('Tweak the generated types', async () => fixGenerated(projectMainPath)),
         newTask('Prettify the generated code', async () => prettifyGenerated(projectMainPath, flags.modulesPath)),
       ],
