@@ -340,13 +340,21 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
           let isFederatedAndExternal = false;
           if (federatedEntities.find((e) => e === typeDef.name)) {
-            filtered.push({ name: { value: '__resolveReference' }, resolveReferenceType: true });
             isFederatedAndExternal =
               Boolean(type!.astNode) &&
               Boolean(
                 // @ts-ignore
                 type?.astNode.fields.find((field) => field.directives.find((d) => d.name.value === 'external')),
               );
+
+            const foundComputed = type?.astNode?.directives?.find((d) => d.name.value === 'computed');
+            const notComputed = Boolean(!foundComputed);
+
+            // If it's a federated and external but NOT marked with a computed directive, we do not want to
+            // create the resolveReference files for it.
+            if (!(isFederatedAndExternal && notComputed)) {
+              filtered.push({ name: { value: '__resolveReference' }, resolveReferenceType: true });
+            }
           }
 
           filtered.forEach(({ name: { value }, resolveReferenceType }) => {
