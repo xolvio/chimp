@@ -53,3 +53,31 @@ test('ignore built-in Upload scalar', () => {
 
   expect(res).toEqual(['First', 'ThirdOne']);
 });
+
+test('ignore predefined scalars', () => {
+  const schemaString = gql`
+    type TodoItem @key(fields: "id") {
+      id: ID!
+      list: List
+    }
+
+    extend type List {
+      id: ID!
+      todos: [TodoItem!]!
+      incompleteCount: Int!
+    }
+
+    type InMemory {
+      id: ID!
+    }
+
+    scalar First
+    scalar Predefined @predefined
+    scalar Upload
+    scalar ThirdOne
+  `;
+
+  const res = getScalars(schemaString);
+
+  expect(res).toEqual(['First', 'ThirdOne']);
+});
