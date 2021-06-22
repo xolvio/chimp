@@ -41,6 +41,7 @@ input AdditionalEntityFields {
   type: String
 }
 
+directive @predefined on SCALAR
 `,
   { loaders: [] },
 ).map((s) => s.document!);
