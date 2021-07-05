@@ -2,10 +2,14 @@ import { GraphQLResolveInfo } from 'graphql'
 import type { GqlContext, ResolversParentTypes, {{#if hasArguments}}{{pascalCasedArgName}}{{/if}} } from "{{generatedPrefix}}/graphql/types";
 import { {{typeName}}{{capitalizedFieldName}} } from "{{appPrefix}}/{{graphqlFileRootPath}}types/{{typeName}}{{capitalizedFieldName}}";
 
+type Params = Parameters<NonNullable<typeof {{typeName}}{{capitalizedFieldName}}>>
 {{#if resolveReferenceType}}type ParentType = Parameters<NonNullable<typeof {{typeName}}{{capitalizedFieldName}}>>[0];{{else}}
-        type ParentType = ResolversParentTypes["{{typeName}}"]
+type ParentType = Params[0]
+{{/if}}
+{{#if hasArguments}}
+type ArgsType = Params[1]
 {{/if}}
 
-    export const test{{typeName}}{{capitalizedFieldName}} = (parent: ParentType, {{#if hasArguments}}variables: {{pascalCasedArgName}},{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}?.({...parent, {{#if isFederatedAndExternal}}__typename: '{{typeName}}'{{/if}} }, {{#unless resolveReferenceType}}{{#if hasArguments}}variables{{else}} {} {{/if}},{{/unless}} context, {} as GraphQLResolveInfo)
+    export const test{{typeName}}{{capitalizedFieldName}} = (parent: ParentType, {{#if hasArguments}}args: ArgsType,{{/if}} context: GqlContext) => {{typeName}}{{capitalizedFieldName}}?.({...parent, {{#if isFederatedAndExternal}}__typename: '{{typeName}}'{{/if}} }, {{#unless resolveReferenceType}}{{#if hasArguments}}args{{else}} {} {{/if}},{{/unless}} context, {} as GraphQLResolveInfo)
 
-    export type {GqlContext, ParentType, ResolversParentTypes {{#if hasArguments}},{{pascalCasedArgName}}{{/if}} }
+    export type {GqlContext, ParentType, ResolversParentTypes {{#if hasArguments}}, ArgsType, {{pascalCasedArgName}}{{/if}} }
