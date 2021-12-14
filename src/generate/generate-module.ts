@@ -333,7 +333,10 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             filtered = type.astNode.fields.filter((field) =>
               field.directives.find(
                 (d: { name: { value: string } }) =>
-                  d.name.value === 'computed' || d.name.value === 'link' || d.name.value === 'requires' || d.name.value === 'map',
+                  d.name.value === 'computed' ||
+                  d.name.value === 'link' ||
+                  d.name.value === 'requires' ||
+                  d.name.value === 'map',
               ),
             );
           }
