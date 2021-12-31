@@ -262,7 +262,6 @@ ${schemaString}`
         // eslint-disable-next-line no-param-reassign
         schemaString = schemaString.replace(/extend type/g, 'type');
         const source = new Source(schemaString);
-        console.log("MICHAL: schemaString", schemaString);
         const schema = buildSchema(source, { assumeValidSDL: true });
         shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/types/`);
 
