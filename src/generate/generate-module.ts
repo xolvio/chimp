@@ -82,13 +82,16 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
     saveRenderedTemplate(templateName, { appPrefix }, filePath, fileName);
   };
 
+  const isSharedModule = (module: {name: string}) => module.name.toLowerCase() === 'shared';
+
   debug('createGetCodegenConfig');
   createGetCodegenConfig();
   const modulesResolvedPath = path.join(projectMainPath, modulesPath);
   const graphqlPaths = shelljs.ls(path.join(modulesResolvedPath, '**/*.graphql'));
 
   const moduleNames = getModuleNames(graphqlPaths, projectMainPath);
-  const modules = getModuleInfos(moduleNames);
+  const modules = getModuleInfos(moduleNames).sort((a) => (isSharedModule(a) ? -1 : 1));
+  const hasSharedModule = modules.length && isSharedModule(modules[0]);
 
   const createGlobalResolvers = () => {
     const templateName = './templates/resolvers.handlebars';
@@ -239,8 +242,16 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   });
 
   const createTypeResolvers = () => {
-    modules.forEach(({ name, typeDefinitions, types, schemaString, queries, mutations, graphqlFileRootPath }) => {
+    const sharedInterfaces: string[] = [];
+    const sharedTypeDefinitions: {name: string}[] = [];
+    modules.forEach(({ name, typeDefinitions, types, schemaString: schemaSDL, queries, mutations, graphqlFileRootPath }, moduleIndex) => {
       const typeResolvers: { typeName: string; fieldName: { name: string; capitalizedName: string }[] }[] = [];
+
+      let schemaString = schemaSDL;
+      if (hasSharedModule && !isSharedModule({name})) {
+        schemaString = `${modules[0].schemaString}
+${schemaString}`
+      }
 
       if (types) {
         debug(`create type resolvers for module ${name}`);
@@ -311,7 +322,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
-        interfaces.forEach((interfaceName) => {
+        interfaces.filter(i => !sharedInterfaces.includes(i)).forEach((interfaceName) => {
           createInterfaceType(interfaceName);
           createInterfaceSpec(interfaceName);
           createInterfaceSpecWrapper(interfaceName);
@@ -320,8 +331,13 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
           });
         });
+
+        if(isSharedModule({name})) {
+          sharedInterfaces.push(...interfaces)
+          sharedTypeDefinitions.push(...typeDefinitions)
+        }
         type FilteredType = { name: { value: string }; resolveReferenceType: boolean; arguments?: string[] };
-        typeDefinitions.forEach((typeDef) => {
+        typeDefinitions.filter(t => !sharedTypeDefinitions.includes(t)).forEach((typeDef) => {
           let filtered: FilteredType[] = [];
           let type = schema.getType(typeDef.name);
           if (!type) {

@@ -19,7 +19,7 @@ $ npm install -g chimp
 $ chimp COMMAND
 running command...
 $ chimp (-v|--version|version)
-chimp/0.0.0-development darwin-x64 node-v12.16.2
+chimp/0.0.0-development darwin-x64 node-v14.15.4
 $ chimp --help [COMMAND]
 USAGE
   $ chimp COMMAND
