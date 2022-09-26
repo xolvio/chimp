@@ -15,6 +15,7 @@ import getScalars from './parse-graphql/getScalars';
 import { saveRenderedTemplate } from './helpers/saveRenderedTemplate';
 import { findProjectMainPath } from './helpers/findProjectMainPath';
 import { execQuietly } from './helpers/execQuietly';
+import getUnions from './parse-graphql/getUnions';
 
 const debug = configureDebug('generate-module');
 
@@ -247,6 +248,8 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
         const federatedEntities = getFederatedEntities(schemaString);
         const interfaces = getInterfaces(schemaString);
+        const unions = getUnions(schemaString);
+
         // Leaving this for now
         // eslint-disable-next-line no-param-reassign
         schemaString = schemaString.replace(/extend type/g, 'type');
@@ -254,11 +257,11 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
         const schema = buildSchema(source, { assumeValidSDL: true });
         shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/types/`);
 
-        const createInterfaceType = (interfaceName: string) => {
+        const createResolveType = (resolverTypeName: string) => {
           const templateName = './templates/typeTypeResolvers.handlebars';
           const capitalizedFieldName = capitalize('__resolveType');
           const context = {
-            typeName: interfaceName,
+            typeName: resolverTypeName,
             fieldName: '__resolveType',
             moduleName: name,
             resolveReferenceType: true,
@@ -266,17 +269,17 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             generatedPrefix,
           };
           const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
-          const fileName = `${interfaceName}${capitalizedFieldName}.ts`;
+          const fileName = `${resolverTypeName}${capitalizedFieldName}.ts`;
           const keepIfExists = true;
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
 
-        const createInterfaceSpec = (interfaceName: string) => {
+        const createResolveTypeSpec = (resoverTypeName: string) => {
           const templateName = './templates/typeTypeResolvers.spec.handlebars';
           const capitalizedFieldName = capitalize('__resolveType');
           const context = {
-            typeName: interfaceName,
+            typeName: resoverTypeName,
             fieldName: '__resolveType',
             moduleName: name,
             hasArguments: false,
@@ -285,17 +288,17 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             generatedPrefix,
           };
           const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
-          const fileName = `${interfaceName}${capitalizedFieldName}.spec.ts`;
+          const fileName = `${resoverTypeName}${capitalizedFieldName}.spec.ts`;
           const keepIfExists = true;
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
 
-        const createInterfaceSpecWrapper = (interfaceName: string) => {
+        const createResolveTypeSpecWrapper = (resolverTypeName: string) => {
           const templateName = './templates/typeTypeResolversSpecWrapper.handlebars';
           const capitalizedFieldName = capitalize('__resolveType');
           const context = {
-            typeName: interfaceName,
+            typeName: resolverTypeName,
             fieldName: '__resolveType',
             moduleName: name,
             hasArguments: false,
@@ -306,20 +309,31 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             graphqlFileRootPath,
           };
           const filePath = `${projectMainPath}/generated/graphql/helpers/`;
-          const fileName = `${interfaceName}${capitalizedFieldName}SpecWrapper.ts`;
+          const fileName = `${resolverTypeName}${capitalizedFieldName}SpecWrapper.ts`;
           const keepIfExists = false;
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
         interfaces.forEach((interfaceName) => {
-          createInterfaceType(interfaceName);
-          createInterfaceSpec(interfaceName);
-          createInterfaceSpecWrapper(interfaceName);
+          createResolveType(interfaceName);
+          createResolveTypeSpec(interfaceName);
+          createResolveTypeSpecWrapper(interfaceName);
           typeResolvers.push({
             typeName: interfaceName,
             fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
           });
         });
+
+        unions.forEach((unionName) => {
+          createResolveType(unionName);
+          createResolveTypeSpec(unionName);
+          createResolveTypeSpecWrapper(unionName);
+          typeResolvers.push({
+            typeName: unionName,
+            fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
+          });
+        });
+
         type FilteredType = { name: { value: string }; resolveReferenceType: boolean; arguments?: string[] };
         typeDefinitions.forEach((typeDef) => {
           let filtered: FilteredType[] = [];
@@ -333,7 +347,10 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             filtered = type.astNode.fields.filter((field) =>
               field.directives.find(
                 (d: { name: { value: string } }) =>
-                  d.name.value === 'computed' || d.name.value === 'link' || d.name.value === 'requires',
+                  d.name.value === 'computed' ||
+                  d.name.value === 'link' ||
+                  d.name.value === 'requires' ||
+                  d.name.value === 'map',
               ),
             );
           }
