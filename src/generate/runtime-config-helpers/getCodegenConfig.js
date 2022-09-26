@@ -59,6 +59,7 @@ module.exports = function ({ contextType } = {}) {
           objectIdType: 'string',
           federation: true,
           mappers,
+          makeResolverTypeCallable: true,
           scalars: {
             Upload: 'Promise<GraphQLFileUpload>',
           },
@@ -68,16 +69,18 @@ module.exports = function ({ contextType } = {}) {
           'typescript-resolvers',
           'typescript-operations',
           'chimp-graphql-codegen-plugin',
-          { add: 'export {GqlContext};' },
+          { add: { content: 'export {GqlContext};'} },
           {
-            add: `
+            add: {
+              content: `
             import { ReadStream } from "fs-capacitor";
           interface GraphQLFileUpload {
   filename: string;
   mimetype: string;
   encoding: string;
   createReadStream(options?:{encoding?: string, highWaterMark?: number}): ReadStream;
-}`,
+}`
+            },
           },
         ],
       },
