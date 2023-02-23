@@ -1,5 +1,5 @@
 {
-  "name": "@jmvtrinidad/chimp",
+  "name": "chimp",
   "description": "Your development companion for doing quality, faster.",
   "version": "0.0.0-development",
   "author": "Lukasz Gandecki lukasz@xolv.io",
@@ -73,8 +73,9 @@
       "@oclif/plugin-help"
     ]
   },
+  "repository": "xolvio/chimp",
   "release": {
-    "branches": ["main"]
+    "branches": ["master"]
   },
   "publishConfig": {
     "access": "public"
