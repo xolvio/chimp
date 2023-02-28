@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 // @ts-ignore
 import shelljs from 'shelljs';
 import path from 'path';
