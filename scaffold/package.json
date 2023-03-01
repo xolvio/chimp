@@ -36,12 +36,12 @@
     "tsconfig-paths": "3.9.0"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "1.17.7",
-    "@graphql-codegen/cli": "1.20.1",
-    "@graphql-codegen/typescript": "1.20.2",
-    "@graphql-codegen/typescript-mongodb": "1.18.0",
-    "@graphql-codegen/typescript-operations": "1.17.14",
-    "@graphql-codegen/typescript-resolvers": "1.18.1",
+    "@graphql-codegen/add": "^4.0.1",
+    "@graphql-codegen/cli": "^3.2.1",
+    "@graphql-codegen/typescript": "^3.0.1",
+    "@graphql-codegen/typescript-mongodb": "2.4.6",
+    "@graphql-codegen/typescript-operations": "^3.0.1",
+    "@graphql-codegen/typescript-resolvers": "^3.1.0",
     "@graphql-tools/graphql-file-loader": "6.0.14",
     "@graphql-tools/load": "6.0.14",
     "@graphql-tools/merge": "6.0.14",
