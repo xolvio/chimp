@@ -42,6 +42,7 @@
     "globby": "^10",
     "jest": "29.6.2",
     "nyc": "15.1.0",
+    "oclif": "^3.11.2",
     "prettier": "^2.2.1",
     "testdouble": "^3.16.1",
     "testdouble-jest": "^2.0.0",
@@ -78,9 +79,10 @@
     "access": "public"
   },
   "scripts": {
+    "build": "rm -rf lib && tsc -b",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --cache",
-    "prepack": "rm -rf lib && tsc -b && oclif manifest && oclif readme && copyfiles -u 1 src/generate/templates/* src/generate/runtime-config-helpers/* lib",
+    "prepack": "yarn build && oclif manifest && oclif readme && copyfiles -u 1 src/generate/templates/* src/generate/runtime-config-helpers/* lib",
     "test": "jest",
     "version": "oclif readme && git add README.md",
     "type-check": "tsc --noEmit",
