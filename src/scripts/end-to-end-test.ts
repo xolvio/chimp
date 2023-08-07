@@ -1,12 +1,12 @@
 // @ts-ignore
 import shelljs from 'shelljs';
-import path from 'path';
+import path from 'node:path';
 // @ts-ignore
 import waitOn from 'wait-on';
 // @ts-ignore
 import axios from 'axios';
-import assert from 'assert';
-import { spawn } from 'child_process';
+import assert from 'node:assert';
+import { spawn } from 'node:child_process';
 
 function quietExec(command: string, options: {}, errorMessage = '') {
   const { stdout, stderr, code } = shelljs.exec(command, {
@@ -16,6 +16,7 @@ function quietExec(command: string, options: {}, errorMessage = '') {
   if (code !== 0) {
     throw new Error(`${errorMessage}: , ${stderr}`);
   }
+
   return stdout;
 }
 
@@ -57,7 +58,7 @@ const checkGraphQl = async () => {
       query: '{ GetNumbers { one two three computed } }',
     });
     assert.deepStrictEqual(data?.data?.GetNumbers, { one: 1, two: null, three: 3, computed: '1 2 3' });
-    console.log('Looking good! Got: ', data?.data?.GetNumbers);
+    console.log('Looking good! Got:', data?.data?.GetNumbers);
   } catch (error) {
     console.error('Error', error);
     process.exit(1);

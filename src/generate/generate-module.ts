@@ -1,7 +1,6 @@
-#!/usr/bin/env node
 import getModuleInfos from './parse-graphql/get-module-infos';
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 // @ts-ignore
 import * as shelljs from 'shelljs';
 import configureDebug from 'debug';
@@ -122,7 +121,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   debug('createGlobalSchema');
   createGlobalSchema();
 
-  modules.forEach((module) => {
+  for (const module of modules) {
     const moduleName = module.name;
     const { graphqlFileRootPath } = module;
     const createQuery = (queryName: string, hasArguments: boolean) => {
@@ -231,16 +230,16 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
     if (module.mutations && module.mutations.length > 0) {
       shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/mutations`);
-      module.mutations.forEach(({ name, hasArguments }) => {
+      for (const { name, hasArguments } of module.mutations) {
         createMutation(name, hasArguments);
         createMutationSpec(name, hasArguments);
         createMutationSpecWrapper(name, hasArguments);
-      });
+      }
     }
-  });
+  }
 
   const createTypeResolvers = () => {
-    modules.forEach(({ name, typeDefinitions, types, schemaString, queries, mutations, graphqlFileRootPath }) => {
+    for (let { name, typeDefinitions, types, schemaString, queries, mutations, graphqlFileRootPath } of modules) {
       const typeResolvers: { typeName: string; fieldName: { name: string; capitalizedName: string }[] }[] = [];
 
       if (types) {
@@ -314,7 +313,8 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
-        interfaces.forEach((interfaceName) => {
+
+        for (const interfaceName of interfaces) {
           createResolveType(interfaceName);
           createResolveTypeSpec(interfaceName);
           createResolveTypeSpecWrapper(interfaceName);
@@ -322,9 +322,9 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             typeName: interfaceName,
             fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
           });
-        });
+        }
 
-        unions.forEach((unionName) => {
+        for (const unionName of unions) {
           createResolveType(unionName);
           createResolveTypeSpec(unionName);
           createResolveTypeSpecWrapper(unionName);
@@ -332,16 +332,17 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             typeName: unionName,
             fieldName: [{ name: '__resolveType', capitalizedName: capitalize('__resolveType') }],
           });
-        });
+        }
 
         type FilteredType = { name: { value: string }; resolveReferenceType: boolean; arguments?: string[] };
-        typeDefinitions.forEach((typeDef) => {
+        for (const typeDef of typeDefinitions) {
           let filtered: FilteredType[] = [];
           let type = schema.getType(typeDef.name);
           if (!type) {
             const newSchemaString = schemaString.replace(`extend type ${typeDef.name}`, `type ${typeDef.name}`);
             type = buildSchema(new Source(newSchemaString)).getType(typeDef.name);
           }
+
           if (type?.astNode) {
             // @ts-ignore
             filtered = type.astNode.fields.filter((field) =>
@@ -374,7 +375,10 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             }
           }
 
-          filtered.forEach(({ name: { value }, resolveReferenceType }) => {
+          for (const {
+            name: { value },
+            resolveReferenceType,
+          } of filtered) {
             const templateName = './templates/typeTypeResolvers.handlebars';
             const capitalizedFieldName = capitalize(value);
             const context = {
@@ -390,7 +394,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             const keepIfExists = true;
 
             saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
-          });
+          }
 
           const createTypeFieldResolverSpec = (
             value: string,
@@ -415,6 +419,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
             saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
           };
+
           const createTypeFieldResolverSpecWrapper = (
             value: string,
             resolveReferenceType: boolean,
@@ -442,10 +447,14 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
           };
 
-          filtered.forEach(({ name: { value }, arguments: resolverArguments, resolveReferenceType }) => {
+          for (const {
+            name: { value },
+            arguments: resolverArguments,
+            resolveReferenceType,
+          } of filtered) {
             createTypeFieldResolverSpec(value, resolveReferenceType, resolverArguments);
             createTypeFieldResolverSpecWrapper(value, resolveReferenceType, resolverArguments);
-          });
+          }
 
           if (filtered.length > 0) {
             typeResolvers.push({
@@ -453,7 +462,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
               fieldName: filtered.map(({ name: { value } }) => ({ name: value, capitalizedName: capitalize(value) })),
             });
           }
-        });
+        }
       }
 
       const scalars = getScalars(schemaString);
@@ -462,7 +471,8 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
         if (scalars && scalars.length > 0) {
           shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/scalars/`);
         }
-        scalars.forEach((scalarName) => {
+
+        for (const scalarName of scalars) {
           const templateName = './templates/scalarResolver.handlebars';
           const context = {
             scalarName,
@@ -474,8 +484,9 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
           const keepIfExists = true;
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
-        });
+        }
       };
+
       createScalarResolvers();
 
       const moduleName = name;
@@ -496,7 +507,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
       };
 
       createModuleResolvers();
-    });
+    }
   };
 
   debug('createTypeResolvers');

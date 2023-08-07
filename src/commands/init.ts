@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { Listr, ListrContext, ListrRendererFactory, ListrTaskWrapper } from 'listr2';
-import { Command, flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import configDebug from 'debug';
 import { findProjectMainPath } from '../generate/helpers/findProjectMainPath';
 import { ListrRenderer, newTask } from '../generate/helpers/ListrHelper';
@@ -16,6 +16,7 @@ const readJsonFile = async (path: string) => {
   if (!fs.existsSync(path)) {
     throw new Error(`Can't find ${path} for your project.`);
   }
+
   const fileContent = await fs.promises.readFile(path, { encoding: 'utf-8' });
   return JSON.parse(fileContent);
 };
@@ -33,15 +34,17 @@ const addProjectDependencies = async (projectMainPath: string, modulesPath: stri
   function addDevDependenciesWithMatchingVersions(packages: string[]) {
     addDependencies(packages, 'devDependencies');
   }
+
   function addDependenciesWithMatchingVersions(packages: string[]) {
     addDependencies(packages, 'dependencies');
   }
+
   function addDependencies(packages: string[], type: string) {
-    packages.forEach((packageName) => {
+    for (const packageName of packages) {
       if (!packageJsonFile[type][packageName]) {
         packageJsonFile[type][packageName] = scaffoldPackageJsonFile[type][packageName];
       }
-    });
+    }
   }
 
   debug('reading package.json');
@@ -52,6 +55,7 @@ const addProjectDependencies = async (projectMainPath: string, modulesPath: stri
   if (!packageJsonFile.scripts) {
     packageJsonFile.scripts = {};
   }
+
   if (!packageJsonFile.devDependencies) {
     packageJsonFile.devDependencies = {};
   }
@@ -105,6 +109,7 @@ const createExampleCode = async (task: ListrTaskWrapper<ListrContext, ListrRende
     if (newDir === '') {
       newDir = exampleDir;
     }
+
     await createExampleCode(task, newDir);
   } else {
     const exampleModulePath = `${targetDir}/RemoveMe/graphql/`;
@@ -175,8 +180,8 @@ export default class Init extends Command {
   static examples = ['$ chimp init', '$ chimp init -p ./src/chimp-modules'];
 
   static flags = {
-    help: flags.help({ char: 'h' }),
-    modulesPath: flags.string({
+    help: Flags.help({ char: 'h' }),
+    modulesPath: Flags.string({
       char: 'p',
       description: 'path to the GraphQL modules.',
       default: DEFAULT_MODULES_PATH,
@@ -188,7 +193,7 @@ export default class Init extends Command {
 
     const {
       flags: { modulesPath },
-    } = this.parse(Init);
+    } = await this.parse(Init);
     const projectMainPath = findProjectMainPath();
 
     assertModulePathInTopLevelSrc(projectMainPath, modulesPath);

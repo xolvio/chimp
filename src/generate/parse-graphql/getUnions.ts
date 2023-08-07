@@ -7,7 +7,7 @@ export default (graphqlString: string) => {
   `;
 
   const unionTypeDefinitions = graphqlAST.definitions
-    .filter((d) => ['UnionTypeDefinition'].indexOf(d.kind) > -1)
+    .filter((d) => ['UnionTypeDefinition'].includes(d.kind))
     // @ts-ignore
     .map((f) => f.name.value);
 

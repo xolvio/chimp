@@ -7,7 +7,7 @@ export default (graphqlString: string) => {
   `;
 
   const interfacesTypeDefs = graphqlAST.definitions
-    .filter((d) => ['InterfaceTypeDefinition'].indexOf(d.kind) > -1)
+    .filter((d) => ['InterfaceTypeDefinition'].includes(d.kind))
     // @ts-ignore
     .map((f) => f.name.value);
 
