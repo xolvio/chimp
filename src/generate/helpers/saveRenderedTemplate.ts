@@ -1,8 +1,8 @@
-import path from 'path';
+import path from 'node:path';
 
 import Handlebars from 'handlebars';
 
-import fs from 'fs';
+import fs from 'node:fs';
 
 Handlebars.registerHelper('toUpperCase', function (str: string) {
   return str.replace(/^\w/, (c) => c.toUpperCase());
@@ -23,6 +23,7 @@ export function saveRenderedTemplate(
   if (keepIfExists && fs.existsSync(combinedPath)) {
     return;
   }
+
   const template = fs.readFileSync(path.join(__dirname, '../', templateName), 'utf8');
   const generateIndex = () => Handlebars.compile(template)(context);
 

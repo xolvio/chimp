@@ -1,5 +1,5 @@
 // chunks of the code taken from git-state package.
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
 
 const EOL = /\r?\n/;
 
@@ -8,15 +8,15 @@ const statusSync = function (repoPath: string) {
     cwd: repoPath,
   }).toString();
   const status = { dirty: 0, untracked: 0, changed: false };
-  stdout
+  for (const file of stdout
     .trim()
     .split(EOL)
-    .filter((file) => file)
-    .forEach(function (file) {
-      status.changed = true;
-      if (file.substr(0, 2) === '??') status.untracked++;
-      else status.dirty++;
-    });
+    .filter((file) => file)) {
+    status.changed = true;
+    if (file.slice(0, 2) === '??') status.untracked++;
+    else status.dirty++;
+  }
+
   return status;
 };
 

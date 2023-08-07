@@ -33,8 +33,8 @@ export default function (graphqlString: string): parsedGraphQL {
       })),
     typeDefinitions: graphqlAST.definitions
       // @ts-ignore
-      .filter((d) => ['Mutation', 'Query', 'Subscription'].indexOf(d.name.value) === -1)
-      .filter((d) => ['ObjectTypeDefinition', 'ObjectTypeExtension'].indexOf(d.kind) > -1)
+      .filter((d) => !['Mutation', 'Query', 'Subscription'].includes(d.name.value))
+      .filter((d) => ['ObjectTypeDefinition', 'ObjectTypeExtension'].includes(d.kind))
       // @ts-ignore
       .map((f) => ({ name: f.name.value })),
   };

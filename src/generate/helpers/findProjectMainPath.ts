@@ -5,6 +5,6 @@ export function findProjectMainPath() {
   return f
     .next()
     .filename.split('/')
-    .filter((c: string) => c.indexOf('package.json') === -1)
+    .filter((c: string) => !c.includes('package.json'))
     .join('/');
 }

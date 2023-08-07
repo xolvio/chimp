@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 
 export function assertModulePathInTopLevelSrc(projectMainPath: string, modulePath: string) {
   if (path.join(projectMainPath, modulePath).indexOf(path.join(projectMainPath, './src')) !== 0) {
