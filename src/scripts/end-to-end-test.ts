@@ -21,12 +21,10 @@ function quietExec(command: string, options: Record<string, unknown>, errorMessa
 }
 
 const pathToRunFrom = path.join(process.cwd(), '../');
-console.log('GOZDECKI pathToRunFrom', pathToRunFrom);
 quietExec('./chimp/bin/run create chimp-test-repo', { cwd: pathToRunFrom });
-//
+
 shelljs.cp('-R', './test-module', '../chimp-test-repo/src/modules/');
 const pathToRunFromChimp = path.join(process.cwd(), '../chimp-test-repo');
-console.log('GOZDECKI pathToRunFromChimp', pathToRunFromChimp);
 shelljs.sed('-i', /"chimp": "0.0.0-development"/, '"chimp": "../chimp"', path.join(pathToRunFromChimp, 'package.json'));
 
 quietExec('npm install', { cwd: pathToRunFromChimp });
