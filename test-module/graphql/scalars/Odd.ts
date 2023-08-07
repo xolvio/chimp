@@ -1,6 +1,9 @@
 import { GraphQLScalarType, Kind } from "graphql";
 
-function oddValue(value) {
+function oddValue(value: unknown) {
+  if (typeof value !== "number") {
+    return null;
+  }
   return value % 2 === 1 ? value : null;
 }
 

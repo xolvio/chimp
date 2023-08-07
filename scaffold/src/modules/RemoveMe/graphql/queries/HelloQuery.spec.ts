@@ -1,9 +1,9 @@
 import td from "testdouble";
-import { GqlContext, QueryHelloArgs } from "~generated/graphql/types";
-import { HelloQuery } from "./HelloQuery";
-
-const testHello = (variables: QueryHelloArgs, context: GqlContext) =>
-  HelloQuery({}, variables, context, null);
+import {
+  GqlContext,
+  QueryHelloArgs,
+  testHello,
+} from "~generated/graphql/helpers/HelloQuerySpecWrapper";
 
 test("Hello", async () => {
   const context = td.object<GqlContext>();
