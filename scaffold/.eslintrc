@@ -13,42 +13,60 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "rules": {
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*.test.ts", "**/*.spec.ts"] }
+      {
+        "devDependencies": [
+          "**/*.test.ts",
+          "**/*.spec.ts"
+        ]
+      }
     ],
-    "prettier/prettier": "error",
     "import/prefer-default-export": 0,
     "no-underscore-dangle": 0,
-    "no-cond-assign": ["error", "except-parens"],
+    "no-cond-assign": [
+      "error",
+      "except-parens"
+    ],
     "import/no-cycle": 0,
     "@typescript-eslint/interface-name-prefix": 0,
+    "@typescript-eslint/no-unused-vars": 1,
     "@typescript-eslint/naming-convention": [
       "error",
       {
         "selector": "default",
-        "format": ["camelCase"]
+        "format": [
+          "camelCase"
+        ]
       },
       {
         "selector": "variable",
         "format": null,
         "filter": {
-          "regex": ".*resolveReference$",
+          "regex": ".*(resolveReference|resolveType)$",
           "match": true
         }
       },
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+        "format": [
+          "camelCase",
+          "UPPER_CASE",
+          "PascalCase"
+        ]
       },
       {
         "selector": "typeLike",
-        "format": ["PascalCase"]
+        "format": [
+          "PascalCase"
+        ]
       }
     ]
   },
