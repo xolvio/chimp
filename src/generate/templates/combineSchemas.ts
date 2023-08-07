@@ -46,6 +46,7 @@ directive @predefined on SCALAR
   { loaders: [] },
 ).map((s) => s.document!);
 
-const schema = mergeTypeDefs({ ...userSchema, ...frameworkTypes });
+// eslint-disable-next-line unicorn/prefer-spread
+const schema = mergeTypeDefs(userSchema.concat(frameworkTypes));
 
 export default schema;
