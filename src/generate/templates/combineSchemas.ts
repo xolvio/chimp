@@ -46,6 +46,6 @@ directive @predefined on SCALAR
   { loaders: [] },
 ).map((s) => s.document!);
 
-const schema = mergeTypeDefs(userSchema.concat(frameworkTypes));
+const schema = mergeTypeDefs({ ...userSchema, ...frameworkTypes });
 
 export default schema;

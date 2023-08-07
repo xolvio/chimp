@@ -123,7 +123,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
 
   for (const module of modules) {
     const moduleName = module.name;
-    const { graphqlFileRootPath } = module;
+    const { graphqlFileRootPath, queries, mutations } = module;
     const createQuery = (queryName: string, hasArguments: boolean) => {
       const templateName = './templates/query.handlebars';
       const context = {
@@ -170,13 +170,13 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
       saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
     };
 
-    if (module.queries && module.queries.length > 0) {
+    if (queries && queries.length > 0) {
       shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/queries`);
-      module.queries.forEach(({ name, hasArguments }: { name: string; hasArguments: boolean }) => {
+      for (const { name, hasArguments } of queries) {
         createQuery(name, hasArguments);
         createQuerySpec(name, hasArguments);
         createQuerySpecWrapper(name, hasArguments);
-      });
+      }
     }
 
     const createMutation = (mutationName: string, hasArguments: boolean) => {
@@ -228,9 +228,9 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
       saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
     };
 
-    if (module.mutations && module.mutations.length > 0) {
+    if (mutations && mutations.length > 0) {
       shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/mutations`);
-      for (const { name, hasArguments } of module.mutations) {
+      for (const { name, hasArguments } of mutations) {
         createMutation(name, hasArguments);
         createMutationSpec(name, hasArguments);
         createMutationSpecWrapper(name, hasArguments);
@@ -239,7 +239,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   }
 
   const createTypeResolvers = () => {
-    for (let { name, typeDefinitions, types, schemaString, queries, mutations, graphqlFileRootPath } of modules) {
+    for (const { name, typeDefinitions, types, schemaString, queries, mutations, graphqlFileRootPath } of modules) {
       const typeResolvers: { typeName: string; fieldName: { name: string; capitalizedName: string }[] }[] = [];
 
       if (types) {
@@ -250,9 +250,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
         const unions = getUnions(schemaString);
 
         // Leaving this for now
-        // eslint-disable-next-line no-param-reassign
-        schemaString = schemaString.replace(/extend type/g, 'type');
-        const source = new Source(schemaString);
+        const source = new Source(schemaString.replace(/extend type/g, 'type'));
         const schema = buildSchema(source, { assumeValidSDL: true });
         shelljs.mkdir('-p', `${projectMainPath}/src/${graphqlFileRootPath}/types/`);
 
@@ -274,11 +272,11 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
         };
 
-        const createResolveTypeSpec = (resoverTypeName: string) => {
+        const createResolveTypeSpec = (resolverTypeName: string) => {
           const templateName = './templates/typeTypeResolvers.spec.handlebars';
           const capitalizedFieldName = capitalize('__resolveType');
           const context = {
-            typeName: resoverTypeName,
+            typeName: resolverTypeName,
             fieldName: '__resolveType',
             moduleName: name,
             hasArguments: false,
@@ -287,7 +285,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
             generatedPrefix,
           };
           const filePath = `${projectMainPath}/src/${graphqlFileRootPath}/types/`;
-          const fileName = `${resoverTypeName}${capitalizedFieldName}.spec.ts`;
+          const fileName = `${resolverTypeName}${capitalizedFieldName}.spec.ts`;
           const keepIfExists = true;
 
           saveRenderedTemplate(templateName, context, filePath, fileName, keepIfExists);
@@ -357,7 +355,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
           }
 
           let isFederatedAndExternal = false;
-          if (federatedEntities.find((e) => e === typeDef.name)) {
+          if (federatedEntities.includes((e: any) => e === typeDef.name)) {
             isFederatedAndExternal =
               Boolean(type!.astNode) &&
               Boolean(
@@ -407,7 +405,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
               typeName: typeDef.name,
               fieldName: value,
               moduleName: name,
-              hasArguments: resolverArguments && resolverArguments.length,
+              hasArguments: resolverArguments && resolverArguments.length > 0,
               resolveReferenceType,
               capitalizedFieldName,
               generatedPrefix,
@@ -431,7 +429,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
               typeName: typeDef.name,
               fieldName: value,
               moduleName: name,
-              hasArguments: resolverArguments && resolverArguments.length,
+              hasArguments: resolverArguments && resolverArguments.length > 0,
               resolveReferenceType,
               capitalizedFieldName,
               generatedPrefix,

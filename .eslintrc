@@ -12,5 +12,13 @@
     "unicorn/filename-case": "off",
     "unicorn/no-abusive-eslint-disable": "off",
     "unicorn/consistent-function-scoping": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/generate/templates/schema.ts"],
+      "rules": {
+        "node/no-missing-import": "off"
+      }
+    }
+  ]
 }

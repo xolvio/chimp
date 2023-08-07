@@ -8,7 +8,7 @@ import axios from 'axios';
 import assert from 'node:assert';
 import { spawn } from 'node:child_process';
 
-function quietExec(command: string, options: {}, errorMessage = '') {
+function quietExec(command: string, options: Record<string, unknown>, errorMessage = '') {
   const { stdout, stderr, code } = shelljs.exec(command, {
     ...options,
   });

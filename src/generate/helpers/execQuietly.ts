@@ -1,7 +1,7 @@
 // @ts-ignore
 import shelljs from 'shelljs';
 
-export async function execQuietly(command: string, options: {}, errorMessage = '') {
+export async function execQuietly(command: string, options: Record<string, unknown>, errorMessage = '') {
   return new Promise((resolve, reject) => {
     const child = shelljs.exec(command, {
       ...options,
