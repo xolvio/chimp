@@ -32,7 +32,7 @@ const fixGenerated = async (projectMainPath: string) => {
 };
 
 const prettifyGenerated = async (projectMainPath: string, modulesPath = 'src') => {
-  await execQuietly(`npx prettier --write "${modulesPath}/**/*.ts" "generated/**/*.ts" --loglevel error`, {
+  await execQuietly(`npx prettier --write "${modulesPath}/**/*.ts" "generated/**/*.ts" --log-level error`, {
     cwd: projectMainPath,
   });
 };
