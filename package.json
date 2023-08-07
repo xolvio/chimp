@@ -79,10 +79,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -rf lib && tsc -b",
+    "build": "rm -rf lib && tsc -b && copyfiles -u 1 src/generate/templates/* src/generate/runtime-config-helpers/* lib",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --cache",
-    "prepack": "yarn build && oclif manifest && oclif readme && copyfiles -u 1 src/generate/templates/* src/generate/runtime-config-helpers/* lib",
+    "prepack": "yarn build && oclif manifest && oclif readme",
     "test": "jest",
     "version": "oclif readme && git add README.md",
     "type-check": "tsc --noEmit",
