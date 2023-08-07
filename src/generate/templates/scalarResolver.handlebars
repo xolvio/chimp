@@ -1,6 +1,6 @@
 import { GraphQLScalarType } from "graphql";
 
-const {{toLowerCase scalarName}}Serialize = (value) => value || null;
+const {{toLowerCase scalarName}}Serialize = (value: unknown) => value || null;
 
 export const {{scalarName}}: GraphQLScalarType = new GraphQLScalarType({
 name: "{{scalarName}}",
