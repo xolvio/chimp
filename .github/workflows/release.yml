@@ -10,6 +10,7 @@ jobs:
           node-version: '18'
       - run: yarn
       - run: yarn test
+      - run: yarn pack
       - run: yarn end-to-end-test
       - name: Release
         env:
