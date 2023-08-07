@@ -5,7 +5,7 @@ import type * as fsTypes from 'node:fs';
 
 testdoubleJest(td, jest);
 
-const fs = td.replace('fs') as typeof fsTypes;
+const fs = td.replace('node:fs') as typeof fsTypes;
 
 td.when(fs.readFileSync('/src/modules/Accounts/graphql/Accounts.graphql', 'utf8')).thenReturn(`type Query {
     me: User
