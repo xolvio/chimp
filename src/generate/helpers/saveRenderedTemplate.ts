@@ -14,7 +14,7 @@ Handlebars.registerHelper('toLowerCase', function (str: string) {
 
 export function saveRenderedTemplate(
   templateName: string,
-  context: {},
+  context: Record<string, unknown>,
   filePath: string,
   fileName: string,
   keepIfExists = false,
