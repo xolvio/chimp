@@ -19,7 +19,7 @@ $ npm install -g chimp
 $ chimp COMMAND
 running command...
 $ chimp (--version)
-chimp/0.0.0-development darwin-arm64 node-v18.1.0
+chimp/6.0.0-alpha.0 darwin-arm64 node-v18.1.0
 $ chimp --help [COMMAND]
 USAGE
   $ chimp COMMAND
@@ -58,7 +58,7 @@ EXAMPLES
   $ chimp create my-new-app -a ~src -g ~chimp-helpers
 ```
 
-_See code: [src/commands/create.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/create.ts)_
+_See code: [src/commands/create.ts](https://github.com/xolvio/chimp/blob/v6.0.0-alpha.0/src/commands/create.ts)_
 
 ## `chimp generate`
 
@@ -84,7 +84,7 @@ EXAMPLES
   $ chimp generate -a ~src -g ~chimp-helpers
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/generate.ts)_
+_See code: [src/commands/generate.ts](https://github.com/xolvio/chimp/blob/v6.0.0-alpha.0/src/commands/generate.ts)_
 
 ## `chimp help [COMMANDS]`
 
@@ -127,7 +127,7 @@ EXAMPLES
   $ chimp init -p ./src/chimp-modules
 ```
 
-_See code: [src/commands/init.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/xolvio/chimp/blob/v6.0.0-alpha.0/src/commands/init.ts)_
 <!-- commandsstop -->
 
 ## Updating jest.config.js after chimp init

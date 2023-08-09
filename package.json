@@ -1,7 +1,7 @@
 {
   "name": "chimp",
   "description": "Your development companion for doing quality, faster.",
-  "version": "0.0.0-development",
+  "version": "6.0.0-alpha.0",
   "author": "Lukasz Gandecki lukasz@xolv.io",
   "bin": {
     "chimp": "./bin/run"
