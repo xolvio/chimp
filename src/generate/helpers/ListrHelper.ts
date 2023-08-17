@@ -1,12 +1,19 @@
-import { DefaultRenderer } from 'listr2/dist/renderer/default.renderer';
 import debugConfigurator from 'debug';
-import { ListrContext, ListrRendererFactory, ListrTaskWrapper } from 'listr2';
+import {
+  DefaultRenderer,
+  Listr,
+  ListrContext,
+  ListrRendererFactory,
+  ListrTask,
+  ListrTaskWrapper,
+  Spinner,
+} from 'listr2';
 const debug = debugConfigurator('Listr');
 
 export const newTask = (
   title: string,
   taskFunction: (task: ListrTaskWrapper<ListrContext, ListrRendererFactory>) => Promise<void>,
-) => ({
+): ListrTask => ({
   title,
   task: async (ctx: ListrContext, task: ListrTaskWrapper<ListrContext, ListrRendererFactory>) =>
     taskFunction(task).catch((error) => {
@@ -18,7 +25,15 @@ export const newTask = (
   },
 });
 
+const spinner = new Spinner();
 // @ts-ignore
-export class ListrRenderer extends DefaultRenderer {
-  spinner = ['🙈 ', '🙈 ', '🙉 ', '🙉 ', '🙊 ', '🙊 '];
-}
+spinner.spinner = ['🙈 ', '🙈 ', '🙉 ', '🙉 ', '🙊 ', '🙊 '];
+
+export const setupListr = (tasks: ListrTask[]) =>
+  new Listr(tasks, {
+    renderer: DefaultRenderer,
+    rendererOptions: {
+      spinner,
+    },
+    fallbackRendererCondition: (): boolean => debug.enabled,
+  });

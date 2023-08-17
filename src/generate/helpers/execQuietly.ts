@@ -1,4 +1,3 @@
-// @ts-ignore
 import shelljs from 'shelljs';
 
 export async function execQuietly(command: string, options: Record<string, unknown>, errorMessage = '') {
@@ -16,17 +15,16 @@ export async function execQuietly(command: string, options: Record<string, unkno
       stdoutData += data;
     });
 
-    child.stdout.on('end', () => {
-      resolve(stdoutData);
-    });
-
     child.stderr.on('data', (data: string) => {
       stderrData += data;
     });
 
-    child.stderr.on('end', () => {
-      if (stderrData) {
-        reject(new Error(`${stdoutData} ${errorMessage}: , ${stderrData}`));
+    // Listen for the exit event to get the exit code
+    child.on('exit', (code: number) => {
+      if (code === 0) {
+        resolve(stdoutData);
+      } else {
+        reject(new Error(`${stdoutData} ${errorMessage}: ${stderrData}`));
       }
     });
   });
