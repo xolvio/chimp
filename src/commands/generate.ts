@@ -1,11 +1,10 @@
 import { Command, Flags } from '@oclif/core';
 import { executeGeneration } from '../generate/generate-module';
 import { execQuietly } from '../generate/helpers/execQuietly';
-import { Listr } from 'listr2';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import { findProjectMainPath } from '../generate/helpers/findProjectMainPath';
-import { newTask, ListrRenderer } from '../generate/helpers/ListrHelper';
+import { newTask, setupListr } from '../generate/helpers/ListrHelper';
 
 const runTypeGen = async (projectMainPath: string, appPrefix: string) => {
   const customCodegenConfig = path.join(projectMainPath, './codegen.js');
@@ -59,19 +58,19 @@ export default class Generate extends Command {
     const { flags } = await this.parse(Generate);
     const projectMainPath = findProjectMainPath();
 
-    const tasks = new Listr(
-      [
-        newTask('Generating code', async () =>
-          executeGeneration(flags.appPrefix, flags.generatedPrefix, flags.modulesPath),
-        ),
-        newTask('Generating types', async () => runTypeGen(projectMainPath, flags.appPrefix)),
-        newTask('Tweak the generated types', async () => fixGenerated(projectMainPath)),
-        newTask('Prettify the generated code', async () => prettifyGenerated(projectMainPath, flags.modulesPath)),
-      ],
-      { renderer: ListrRenderer },
-    );
+    const tasks = setupListr([
+      newTask('Generating code', async () =>
+        executeGeneration(flags.appPrefix, flags.generatedPrefix, flags.modulesPath),
+      ),
+      newTask('Generating types', async () => runTypeGen(projectMainPath, flags.appPrefix)),
+      newTask('Tweak the generated types', async () => fixGenerated(projectMainPath)),
+      newTask('Prettify the generated code', async () => prettifyGenerated(projectMainPath, flags.modulesPath)),
+    ]);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
-    await tasks.run().catch(() => {});
+    try {
+      await tasks.run();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

@@ -5,7 +5,7 @@ import { Listr, ListrContext, ListrRendererFactory, ListrTaskWrapper } from 'lis
 import { Command, Flags } from '@oclif/core';
 import configDebug from 'debug';
 import { findProjectMainPath } from '../generate/helpers/findProjectMainPath';
-import { ListrRenderer, newTask } from '../generate/helpers/ListrHelper';
+import { newTask, setupListr } from '../generate/helpers/ListrHelper';
 import { assertModulePathInTopLevelSrc } from '../init/assert-module-path-in-top-level-src';
 import { assertGitCleanState } from '../init/assert-git-clean-state';
 import { getChimpVersion } from '../helpers/get-chimp-version';
@@ -197,17 +197,14 @@ export default class Init extends Command {
     const projectMainPath = findProjectMainPath();
 
     assertModulePathInTopLevelSrc(projectMainPath, modulesPath);
-    const tasks = new Listr(
-      [
-        newTask('Creating example code', (task) => createExampleCode(task, path.join(projectMainPath, modulesPath))),
-        newTask('Add project dependencies', () => addProjectDependencies(projectMainPath, modulesPath)),
-        newTask('Configure tsconfig.json', () => configureTsconfig(projectMainPath)),
-        newTask('Configure jest', (task) => configureJest(projectMainPath, task)),
-        newTask('Add empty GraphQL context file', () => addContext(projectMainPath)),
-        // newTask('Install packages', async () => addContext(projectMainPath)),
-      ],
-      { renderer: ListrRenderer, rendererOptions: { formatOutput: 'wrap' } },
-    );
+    const tasks = setupListr([
+      newTask('Creating example code', (task) => createExampleCode(task, path.join(projectMainPath, modulesPath))),
+      newTask('Add project dependencies', () => addProjectDependencies(projectMainPath, modulesPath)),
+      newTask('Configure tsconfig.json', () => configureTsconfig(projectMainPath)),
+      newTask('Configure jest', (task) => configureJest(projectMainPath, task)),
+      newTask('Add empty GraphQL context file', () => addContext(projectMainPath)),
+      // newTask('Install packages', async () => addContext(projectMainPath)),
+    ]);
 
     // eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
     await tasks.run().catch(() => {
