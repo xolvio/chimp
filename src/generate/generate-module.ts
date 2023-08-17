@@ -63,17 +63,6 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   debug('createGenericDataModelSchema');
   createGenericDataModelSchema();
 
-  const createFrameworkSchema = () => {
-    const templateName = './templates/frameworkSchema.graphql';
-    const filePath = `${projectMainPath}/generated/graphql/`;
-    const fileName = 'frameworkSchema.graphql';
-
-    saveRenderedTemplate(templateName, {}, filePath, fileName);
-  };
-
-  debug('createFrameworkSchema');
-  createFrameworkSchema();
-
   const createGetCodegenConfig = () => {
     const templateName = './templates/getCodegenConfig.js';
     const filePath = `${projectMainPath}/generated/graphql/`;
@@ -333,6 +322,7 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
         }
 
         type FilteredType = { name: { value: string }; resolveReferenceType: boolean; arguments?: string[] };
+
         for (const typeDef of typeDefinitions) {
           let filtered: FilteredType[] = [];
           let type = schema.getType(typeDef.name);
@@ -355,22 +345,14 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
           }
 
           let isFederatedAndExternal = false;
-          if (federatedEntities.includes((e: any) => e === typeDef.name)) {
+          if (federatedEntities.includes(typeDef.name)) {
+            filtered.push({ name: { value: '__resolveReference' }, resolveReferenceType: true });
             isFederatedAndExternal =
               Boolean(type!.astNode) &&
               Boolean(
                 // @ts-ignore
                 type?.astNode.fields.find((field) => field.directives.find((d) => d.name.value === 'external')),
               );
-
-            const foundComputed = type?.astNode?.directives?.find((d) => d.name.value === 'computed');
-            const notComputed = Boolean(!foundComputed);
-
-            // If it's a federated and external but NOT marked with a computed directive, we do not want to
-            // create the resolveReference files for it.
-            if (!(isFederatedAndExternal && notComputed)) {
-              filtered.push({ name: { value: '__resolveReference' }, resolveReferenceType: true });
-            }
           }
 
           for (const {
