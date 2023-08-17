@@ -1,4 +1,4 @@
-# Mongo types
+# This file is needed so the IDEs recognize the Apollo / Chimp annotations
 directive @entity(embedded: Boolean, additionalFields: [AdditionalEntityFields]) on OBJECT
 directive @chimp(embedded: Boolean, additionalFields: [AdditionalEntityFields]) on OBJECT
 
