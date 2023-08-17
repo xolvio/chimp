@@ -1,4 +1,9 @@
 import { print } from 'graphql';
-
+import path from 'path';
+import fs from 'fs';
 import schema from './combineSchemas';
-console.log(print(schema));
+
+const printed = print(schema);
+
+const outputPath = path.join(process.cwd(), './schema.graphql');
+fs.writeFileSync(outputPath, printed);
