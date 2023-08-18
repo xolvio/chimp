@@ -11,9 +11,12 @@ const runTypeGen = async (projectMainPath: string, appPrefix: string) => {
   const codegenConfigPath = fs.existsSync(customCodegenConfig)
     ? customCodegenConfig
     : path.join(__dirname, '../generate/runtime-config-helpers/codegen.js');
-  await execQuietly(`APP_PREFIX=${appPrefix} npx graphql-codegen --config ${codegenConfigPath}`, {
-    cwd: projectMainPath,
-  });
+  await execQuietly(
+    `PROJECT_PATH=${projectMainPath} APP_PREFIX=${appPrefix} npx graphql-codegen --config ${codegenConfigPath}`,
+    {
+      cwd: path.join(__dirname, '../../'),
+    },
+  );
 };
 
 const fixGenerated = async (projectMainPath: string) => {

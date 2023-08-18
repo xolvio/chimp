@@ -3,7 +3,7 @@ const { pascalCase } = require('pascal-case');
 const { isObjectType, Source, buildSchema } = require('graphql');
 
 let schemaString = fs
-  .readFileSync('./schema.graphql')
+  .readFileSync(`${process.env.PROJECT_PATH}/schema.graphql`)
   .toString()
   .replace(/extend type/g, `type`);
 
@@ -52,7 +52,7 @@ module.exports = function ({ contextType } = {}) {
     overwrite: true,
     schema: schemaString,
     generates: {
-      'generated/graphql/types.ts': {
+      [`${process.env.PROJECT_PATH}/generated/graphql/types.ts`]: {
         config: {
           contextType: contextType || `${process.env.APP_PREFIX}/context#GqlContext`,
           idFieldName: 'id',
@@ -69,7 +69,7 @@ module.exports = function ({ contextType } = {}) {
           'typescript-resolvers',
           'typescript-operations',
           'chimp-graphql-codegen-plugin',
-          { add: { content: 'export {GqlContext};'} },
+          { add: { content: 'export {GqlContext};' } },
           {
             add: {
               content: `
@@ -79,7 +79,7 @@ module.exports = function ({ contextType } = {}) {
   mimetype: string;
   encoding: string;
   createReadStream(options?:{encoding?: string, highWaterMark?: number}): ReadStream;
-}`
+}`,
             },
           },
         ],

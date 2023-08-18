@@ -1,10 +1,13 @@
 import shelljs from 'shelljs';
+import debugConfigurator from 'debug';
+
+const debug = debugConfigurator('execQuietly');
 
 export async function execQuietly(command: string, options: Record<string, unknown>, errorMessage = '') {
   return new Promise((resolve, reject) => {
     const child = shelljs.exec(command, {
       ...options,
-      silent: true,
+      silent: !debug.enabled,
       async: true,
     });
 

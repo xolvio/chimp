@@ -19,9 +19,10 @@ import getUnions from './parse-graphql/getUnions';
 const debug = configureDebug('generate-module');
 
 const generateSchema = async (projectMainPath: string) => {
-  await execQuietly(`npx ts-node -r tsconfig-paths/register ./generated/graphql/printSchema.ts`, {
-    cwd: projectMainPath,
-  });
+  await execQuietly(
+    `PROJECT_PATH=${projectMainPath} npx tsx -r tsconfig-paths/register ${__dirname}/templates/printSchema.ts`,
+    {},
+  );
 };
 
 export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~generated', modulesPath = 'src/') => {
@@ -30,27 +31,6 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   shelljs.mkdir('-p', `${projectMainPath}/generated/graphql/helpers`);
 
   // "Framework" "generated" files - initial generation
-  const createCombineSchemas = () => {
-    const templateName = './templates/combineSchemas.ts';
-    const filePath = `${projectMainPath}/generated/graphql/`;
-    const fileName = 'combineSchemas.ts';
-
-    saveRenderedTemplate(templateName, {}, filePath, fileName);
-  };
-
-  debug('createCombineSchemas');
-  createCombineSchemas();
-
-  const createPrintSchema = () => {
-    const templateName = './templates/printSchema.ts';
-    const filePath = `${projectMainPath}/generated/graphql/`;
-    const fileName = 'printSchema.ts';
-
-    saveRenderedTemplate(templateName, {}, filePath, fileName);
-  };
-
-  debug('createPrintSchema');
-  createPrintSchema();
 
   const createGenericDataModelSchema = () => {
     const templateName = './templates/genericDataModelSchema.graphql';
