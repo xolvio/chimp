@@ -63,16 +63,6 @@ export const executeGeneration = async (appPrefix = '~app', generatedPrefix = '~
   debug('createGenericDataModelSchema');
   createGenericDataModelSchema();
 
-  const createGetCodegenConfig = () => {
-    const templateName = './templates/getCodegenConfig.js';
-    const filePath = `${projectMainPath}/generated/graphql/`;
-    const fileName = 'getCodegenConfig.js';
-
-    saveRenderedTemplate(templateName, { appPrefix }, filePath, fileName);
-  };
-
-  debug('createGetCodegenConfig');
-  createGetCodegenConfig();
   const modulesResolvedPath = path.join(projectMainPath, modulesPath);
   const graphqlPaths = shelljs.ls(path.join(modulesResolvedPath, '**/*.graphql'));
 
