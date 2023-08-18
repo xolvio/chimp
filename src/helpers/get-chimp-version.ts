@@ -5,5 +5,5 @@ export const getChimpVersion = () => {
   const f = finder(__dirname);
   const packageJson = f.next();
 
-  return packageJson.value.version;
+  return packageJson!.value!.version;
 };

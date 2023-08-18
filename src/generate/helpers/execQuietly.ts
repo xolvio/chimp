@@ -11,11 +11,11 @@ export async function execQuietly(command: string, options: Record<string, unkno
     let stdoutData = '';
     let stderrData = '';
 
-    child.stdout.on('data', (data: string) => {
+    child.stdout!.on('data', (data: string) => {
       stdoutData += data;
     });
 
-    child.stderr.on('data', (data: string) => {
+    child.stderr!.on('data', (data: string) => {
       stderrData += data;
     });
 
@@ -24,7 +24,7 @@ export async function execQuietly(command: string, options: Record<string, unkno
       if (code === 0) {
         resolve(stdoutData);
       } else {
-        reject(new Error(`${stdoutData} ${errorMessage}: ${stderrData}`));
+        reject(new Error(`${stdoutData} ${errorMessage}: ${stderrData} ${command}`));
       }
     });
   });

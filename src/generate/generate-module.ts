@@ -19,7 +19,7 @@ import getUnions from './parse-graphql/getUnions';
 const debug = configureDebug('generate-module');
 
 const generateSchema = async (projectMainPath: string) => {
-  await execQuietly(`ts-node -r tsconfig-paths/register ./generated/graphql/printSchema.ts`, {
+  await execQuietly(`npx ts-node -r tsconfig-paths/register ./generated/graphql/printSchema.ts`, {
     cwd: projectMainPath,
   });
 };
