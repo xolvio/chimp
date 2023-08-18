@@ -3,8 +3,15 @@ import { GraphQLFileLoader, GraphQLFileLoaderOptions } from '@graphql-tools/grap
 import { mergeTypeDefs } from '@graphql-tools/merge';
 // @ts-ignore
 import shelljs from 'shelljs';
+import debugConfigurator from 'debug';
 
-const graphqlPaths = shelljs.ls(`${__dirname}/../../src/**/*.graphql`);
+const debug = debugConfigurator('combineSchemas.ts');
+
+const graphqlPaths = shelljs.ls(`${process.env.PROJECT_PATH || ''}/src/**/*.graphql`);
+debug(
+  'path to GraphQL Schemas',
+  graphqlPaths.filter((p) => p),
+);
 
 class ExtendedGraphQLFileLoader extends GraphQLFileLoader {
   handleFileContent(rawSDL: string, pointer: string, options: GraphQLFileLoaderOptions) {
