@@ -20,11 +20,14 @@ const runTypeGen = async (projectMainPath: string, appPrefix: string) => {
 };
 
 const fixGenerated = async (projectMainPath: string) => {
+  const fixGeneratedPath = path.join(__dirname, '../generate/runtime-config-helpers/fix-generated.js');
+  await execQuietly(`node ${fixGeneratedPath}`, {});
+
   const customFixGenerated = path.join(projectMainPath, 'fix-generated.js');
-  const fixGeneratedPath = fs.existsSync(customFixGenerated)
-    ? customFixGenerated
-    : path.join(__dirname, '../generate/runtime-config-helpers/fix-generated.js');
-  await execQuietly(`node ${fixGeneratedPath}`, { cwd: projectMainPath });
+  const fixCustomGeneratedPath = fs.existsSync(customFixGenerated) ? customFixGenerated : null;
+  if (fixCustomGeneratedPath) {
+    await execQuietly(`node ${fixCustomGeneratedPath}`, { cwd: projectMainPath });
+  }
 };
 
 const prettifyGenerated = async (projectMainPath: string, modulesPath = 'src') => {
