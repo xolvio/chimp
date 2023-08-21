@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { Listr, ListrContext, ListrRendererFactory, ListrTaskWrapper } from 'listr2';
+import { ListrContext, ListrRendererFactory, ListrTaskWrapper } from 'listr2';
 import { Command, Flags } from '@oclif/core';
 import configDebug from 'debug';
 import { findProjectMainPath } from '../generate/helpers/findProjectMainPath';
