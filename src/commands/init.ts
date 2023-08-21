@@ -69,20 +69,9 @@ const addProjectDependencies = async (projectMainPath: string, modulesPath: stri
   debug('adding dev dependencies');
   // TODO figure out remaining dependencies
   addDevDependenciesWithMatchingVersions([
-    '@graphql-codegen/add',
-    '@graphql-codegen/cli',
-    '@graphql-codegen/typescript',
-    '@graphql-codegen/typescript-mongodb',
-    '@graphql-codegen/typescript-operations',
-    '@graphql-codegen/typescript-resolvers',
-    '@graphql-tools/graphql-file-loader',
-    '@graphql-tools/load',
-    '@graphql-tools/merge',
     '@types/jest',
-    'chimp-graphql-codegen-plugin',
     'jest',
     'prettier',
-    'shelljs',
     'typescript',
     'ts-jest',
     'testdouble',
@@ -90,7 +79,7 @@ const addProjectDependencies = async (projectMainPath: string, modulesPath: stri
   ]);
   debug('adding dependencies');
   // TODO shelljs? ?
-  addDependenciesWithMatchingVersions(['@apollo/federation', 'lodash', 'graphql-tag', 'tsconfig-paths']);
+  addDependenciesWithMatchingVersions(['@apollo/subgraph', 'lodash', 'graphql-tag', 'tsconfig-paths']);
 
   packageJsonFile.dependencies.graphql = scaffoldPackageJsonFile.dependencies.graphql;
 
