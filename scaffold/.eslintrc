@@ -70,6 +70,14 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["generated/graphql/**/*"],
+      "rules": {
+        "@typescript-eslint/naming-convention": "off"
+      }
+    }
+  ],
   "env": {
     "browser": true,
     "jest": true
