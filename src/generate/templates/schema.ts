@@ -2,9 +2,9 @@
 
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { resolvers } from '{{generatedPrefix}}/graphql/resolvers';
-import gql from 'graphql-tag';
+import gqltag from 'graphql-tag';
 
-const typeDefs = gql`{{{schemaString}}}`;
+const typeDefs = gqltag`{{{schemaString}}}`;
 
 const schema = buildSubgraphSchema([
   {
