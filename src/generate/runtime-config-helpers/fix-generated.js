@@ -7,3 +7,10 @@ shell.sed(
   '',
   path.join(process.cwd(), './generated/graphql/types.ts'),
 );
+
+shell.sed(
+  '-i',
+  /(import { ReadStream } from "fs-capacitor";)/,
+  '// @ts-ignore\n$1',
+  path.join(process.cwd(), './generated/graphql/types.ts'),
+);
