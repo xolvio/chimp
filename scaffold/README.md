@@ -29,11 +29,10 @@ To run lint:
 
 Your schema files have to be in a structure of `./src/modules/MODULE_NAME/graphql/MODULE_NAME.graphql`, for example `./src/modules/Lists/graphql/Lists.graphql`.
 
-Anytime you modify one of your graphql files remember to run `npm run graphql:generateAll`.
+Anytime you modify one of your graphql files remember to run `npm run chimp`.
 
 It will create Mutations/Queries/Type resolvers, tests for them, types and perform all the necessary connection between the main schema, contexts, etc.
-It's advisable to create a new module, fill it with schema, run the generation to see what are the resulting changes.
-Remember to start with a clean, commited state. It's difficult to compare and verify the generation results if you've had changes in the code already, so that's blocked by default.
+Remember to start with a clean, committed state. It's difficult to compare and verify the generation results if you've had changes in the code already, so that's blocked by default.
 The tooling will only allow you to run the generation if there are no changes, or if .graphql files are the only one changed.
 
 Let's assume we've created a new module named Users:
@@ -57,8 +56,8 @@ extend type Mutation {
 }
 ```
 
-> Please note, we extend Queries and Mutations, as those are defined something else - that helps IDEs to understand that we don't have conflicting types defined in our project
+> Please note, we extend Queries and Mutations, as those are defined somewhere else - that helps IDEs to understand that we don't have conflicting types defined in our project
 
 Let's run the generation now:
 
-`npm run graphql:generateAll`
+`npm run chimp`
