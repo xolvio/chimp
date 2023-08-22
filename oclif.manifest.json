@@ -48,7 +48,7 @@
     },
     "eject": {
       "id": "eject",
-      "description": "eject from chimp",
+      "description": "Eject from chimp. While chimp is not a runtime dependency and your project will still run after removing it, ejecting offers a cleaner development environment. While we hope you never need to eject, it is reassuring to know you have the option. If you choose to eject or are considering it, please inform us. Remember, you are always just one command away from this choice.",
       "strict": true,
       "pluginName": "chimp",
       "pluginAlias": "chimp",

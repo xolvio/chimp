@@ -120,7 +120,8 @@ function moveCode(projectMainPath: string, chimpMainPath: string) {
 }
 
 export default class Eject extends Command {
-  static description = 'eject from chimp';
+  static description =
+    'Eject from chimp. While chimp is not a runtime dependency and your project will still run after removing it, ejecting offers a cleaner development environment. While we hope you never need to eject, it is reassuring to know you have the option. If you choose to eject or are considering it, please inform us. Remember, you are always just one command away from this choice.';
 
   static examples = ['$ chimp eject'];
 
