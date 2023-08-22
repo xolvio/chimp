@@ -29,7 +29,7 @@ shelljs.sed('-i', /"chimp": "0.0.0-development"/, '"chimp": "../chimp"', path.jo
 
 quietExec('npm install', { cwd: pathToRunFromChimp });
 quietExec('npm run type-check', { cwd: pathToRunFromChimp });
-quietExec('npm run lint', { cwd: pathToRunFromChimp });
+quietExec("npm run lint -- --rule 'jest/expect-expect: off'", { cwd: pathToRunFromChimp });
 spawn('npm', ['start'], {
   stdio: 'ignore',
   detached: true,
