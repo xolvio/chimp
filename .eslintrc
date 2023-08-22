@@ -15,7 +15,7 @@
   },
   "overrides": [
     {
-      "files": ["src/generate/templates/schema.ts"],
+      "files": ["src/generate/templates/schema.ts", "src/generate/templates/ejectedSchema.ts"],
       "rules": {
         "node/no-missing-import": "off"
       }
