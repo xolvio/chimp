@@ -11,7 +11,8 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "unicorn/filename-case": "off",
     "unicorn/no-abusive-eslint-disable": "off",
-    "unicorn/consistent-function-scoping": "off"
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/prefer-module": "off"
   },
   "overrides": [
     {
