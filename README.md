@@ -19,7 +19,7 @@ $ npm install -g chimp
 $ chimp COMMAND
 running command...
 $ chimp (--version)
-chimp/6.0.0-alpha.0 darwin-arm64 node-v18.1.0
+chimp/0.0.0-development darwin-arm64 node-v18.1.0
 $ chimp --help [COMMAND]
 USAGE
   $ chimp COMMAND
@@ -29,6 +29,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`chimp create NAME`](#chimp-create-name)
+* [`chimp eject`](#chimp-eject)
 * [`chimp generate`](#chimp-generate)
 * [`chimp help [COMMANDS]`](#chimp-help-commands)
 * [`chimp init`](#chimp-init)
@@ -58,7 +59,30 @@ EXAMPLES
   $ chimp create my-new-app -a ~src -g ~chimp-helpers
 ```
 
-_See code: [src/commands/create.ts](https://github.com/xolvio/chimp/blob/v6.0.0-alpha.0/src/commands/create.ts)_
+_See code: [src/commands/create.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/create.ts)_
+
+## `chimp eject`
+
+Eject from chimp. While chimp is not a runtime dependency and your project will still run after removing it, ejecting offers a cleaner development environment. While we hope you never need to eject, it is reassuring to know you have the option. If you choose to eject or are considering it, please inform us. Remember, you are always just one command away from this choice.
+
+```
+USAGE
+  $ chimp eject [-h]
+
+FLAGS
+  -h, --help  Show CLI help.
+
+DESCRIPTION
+  Eject from chimp. While chimp is not a runtime dependency and your project will still run after removing it, ejecting
+  offers a cleaner development environment. While we hope you never need to eject, it is reassuring to know you have the
+  option. If you choose to eject or are considering it, please inform us. Remember, you are always just one command away
+  from this choice.
+
+EXAMPLES
+  $ chimp eject
+```
+
+_See code: [src/commands/eject.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/eject.ts)_
 
 ## `chimp generate`
 
@@ -84,7 +108,7 @@ EXAMPLES
   $ chimp generate -a ~src -g ~chimp-helpers
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/xolvio/chimp/blob/v6.0.0-alpha.0/src/commands/generate.ts)_
+_See code: [src/commands/generate.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/generate.ts)_
 
 ## `chimp help [COMMANDS]`
 
@@ -127,7 +151,7 @@ EXAMPLES
   $ chimp init -p ./src/chimp-modules
 ```
 
-_See code: [src/commands/init.ts](https://github.com/xolvio/chimp/blob/v6.0.0-alpha.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/xolvio/chimp/blob/v0.0.0-development/src/commands/init.ts)_
 <!-- commandsstop -->
 
 ## Updating jest.config.js after chimp init
