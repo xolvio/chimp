@@ -3,7 +3,7 @@ import debugConfigurator from 'debug';
 
 const debug = debugConfigurator('execQuietly');
 
-export async function execQuietly(command: string, options: Record<string, unknown>, errorMessage = '') {
+export async function execQuietly(command: string, options: Record<string, unknown>, errorMessage = ''): Promise<void> {
   return new Promise((resolve, reject) => {
     const child = shelljs.exec(command, {
       ...options,
@@ -25,7 +25,7 @@ export async function execQuietly(command: string, options: Record<string, unkno
     // Listen for the exit event to get the exit code
     child.on('exit', (code: number) => {
       if (code === 0) {
-        resolve(stdoutData);
+        resolve();
       } else {
         reject(new Error(`${stdoutData} ${errorMessage}: ${stderrData} ${command}`));
       }
