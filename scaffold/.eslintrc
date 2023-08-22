@@ -15,26 +15,17 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "import"
-  ],
+  "plugins": ["@typescript-eslint", "import"],
   "rules": {
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": [
-          "**/*.test.ts",
-          "**/*.spec.ts"
-        ]
+        "devDependencies": ["**/*.test.ts", "**/*.spec.ts"]
       }
     ],
     "import/prefer-default-export": 0,
     "no-underscore-dangle": 0,
-    "no-cond-assign": [
-      "error",
-      "except-parens"
-    ],
+    "no-cond-assign": ["error", "except-parens"],
     "import/no-cycle": 0,
     "@typescript-eslint/interface-name-prefix": 0,
     "@typescript-eslint/no-unused-vars": 1,
@@ -42,9 +33,7 @@
       "error",
       {
         "selector": "default",
-        "format": [
-          "camelCase"
-        ]
+        "format": ["camelCase"]
       },
       {
         "selector": "variable",
@@ -55,18 +44,20 @@
         }
       },
       {
+        "selector": "property",
+        "format": null,
+        "filter": {
+          "regex": ".*(typename)$",
+          "match": true
+        }
+      },
+      {
         "selector": "variable",
-        "format": [
-          "camelCase",
-          "UPPER_CASE",
-          "PascalCase"
-        ]
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
       },
       {
         "selector": "typeLike",
-        "format": [
-          "PascalCase"
-        ]
+        "format": ["PascalCase"]
       }
     ]
   },
@@ -75,6 +66,19 @@
       "files": ["generated/graphql/**/*"],
       "rules": {
         "@typescript-eslint/naming-convention": "off"
+      }
+    },
+    {
+      "files": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended"],
+      "rules": {
+        "jest/expect-expect": [
+          "error",
+          {
+            "assertFunctionNames": ["expect", "td.verify"]
+          }
+        ]
       }
     }
   ],
